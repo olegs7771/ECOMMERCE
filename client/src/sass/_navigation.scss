@@ -1,0 +1,27 @@
+.nav {
+  //   background-color: lightblue;
+  border-bottom: 0.3px solid $color-grey;
+  padding: 2rem 4rem;
+  &__list {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+  }
+
+  &__user,
+  &__auth {
+    display: flex;
+  }
+
+  &__link:link,
+  &__link:visited {
+    margin-right: 5rem;
+    font-size: 1.8rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.2s;
+    &:hover {
+      color: lightblue;
+    }
+  }
+}
