@@ -1,0 +1,45 @@
+.register {
+  &__container {
+    background-color: lightblue;
+    width: 50%;
+    margin: 10rem auto;
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  &__heading {
+    font-size: 2rem;
+    font-weight: 400;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 0;
+    // border: 1px solid black;
+
+    &-group {
+      margin-bottom: 1rem;
+    }
+    &-label--name {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      text-align: left;
+    }
+
+    &-input {
+      border: none;
+      border-radius: 3px;
+      padding: 1rem 2rem;
+      outline: none;
+
+      &:focus {
+        border: 1px solid rebeccapurple;
+      }
+    }
+  }
+}
+
+.btn-auth {
+  margin-top: 1rem;
+}

@@ -5,6 +5,9 @@ import Home from './components/home/Home';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 
+import configureStore from './store/configureStore/configStore';
+const store = configureStore();
+
 const App = () => {
   return (
     <Router>
