@@ -1,8 +1,5 @@
-const express = require('express');
+const app = require('./app');
 const mongoose = require('mongoose');
-
-const app = express();
-
 const PORT = process.env.PORT || 5000;
 
 require('dotenv').config();
@@ -17,6 +14,7 @@ mongoose
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .then(() => console.log(`connected to ${DB}`))
   .catch((err) => console.log('error to connect to DB', err));
@@ -24,5 +22,3 @@ mongoose
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
-
-console.log('mode:', process.env.NODE_ENV);
