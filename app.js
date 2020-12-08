@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const errorControl = require('./controllers/errorController');
 
 const users = require('./routes/users');
 
@@ -12,14 +13,20 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-  res.send('Entering app');
-});
-app.post('/api/v1/users/signup', (req, res, next) => {
-  console.log('pipeline');
-  next();
+app.use('/api/v1/users', users);
+
+//Errors for missing routes
+
+app.all('*', (req, res, next) => {
+  // res.status(404).json({ error: `Page  ${req.originalUrl} not found ` });
+
+  const err = new Error(`Page  ${req.originalUrl} not found `);
+  err.status = 'fail';
+  err.statusCode = 404;
+  next(err);
 });
 
-app.use('/api/v1/users', users);
+//Error handling for app
+app.use(errorControl);
 
 module.exports = app;
