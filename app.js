@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const errorControl = require('./controllers/errorController');
-
+const globalErrorHandler = require('./controllers/errorController');
+const AppErrorClass = require('./utils/AppError');
 const users = require('./routes/users');
 
 //Body parser with limitted body
@@ -18,15 +18,10 @@ app.use('/api/v1/users', users);
 //Errors for missing routes
 
 app.all('*', (req, res, next) => {
-  // res.status(404).json({ error: `Page  ${req.originalUrl} not found ` });
-
-  const err = new Error(`Page  ${req.originalUrl} not found `);
-  err.status = 'fail';
-  err.statusCode = 404;
-  next(err);
+  next(new AppErrorClass(`Page  ${req.originalUrl} not found `, 404));
 });
 
 //Error handling for app
-app.use(errorControl);
+app.use(globalErrorHandler);
 
 module.exports = app;
