@@ -48,19 +48,45 @@ const userSchema = new mongoose.Schema({
   active: {
     type: Boolean,
     default: true,
-    select: false,
+    select: true,
   },
 });
 
 //Methods
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+  if (!this.isModified('password')) return next(); //exit here if password not modified
+
   //Incrypt password
   this.password = await bcrypt.hash(this.password, 12);
-  this.passwordConfirm = undefined;
+  this.passwordConfirm = undefined; // delete from model
 
   next();
 });
+
+// Instance Method Compare Passwords
+userSchema.methods.correctPassword = async function (
+  incomingPassword,
+  existingPassword
+) {
+  return await bcrypt.compare(incomingPassword, existingPassword);
+};
+
+//  Instance Method For protect route middleware
+//  Test if recently assigned Token owner change password after
+//  token was issued
+
+userSchema.methods.changedPassword = function (tokenTimeStampItp) {
+  console.log('this', this);
+  if (this.passwordChangedAt) {
+    console.log('pass changed');
+    const passwordChangedAt = this.passwordChangedAt.getTime() / 1000;
+    //Password was changed
+
+    return passwordChangedAt > tokenTimeStampItp;
+  }
+  //by default user not changed his password
+  return false;
+};
 
 const User = mongoose.model('User', userSchema);
 

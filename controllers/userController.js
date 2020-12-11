@@ -4,7 +4,7 @@ const AppError = require('../utils/AppError');
 
 exports.getUser = asyncCatch(async (req, res, next) => {
   console.log('req.params', req.params);
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).select('-__v');
 
   //Using class for errors
   if (!user) return next(new AppError(`User not found`, 404));

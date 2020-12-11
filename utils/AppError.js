@@ -1,4 +1,5 @@
 //This class will handle all OPERATIONAL ERRORS
+// We send operational errors to the client
 
 class AppError extends Error {
   constructor(message, statusCode) {
