@@ -9,11 +9,26 @@ require('dotenv').config();
 const users = require('./routes/users');
 
 //Body parser with limitted body
-app.use(express.json({ limit: '10k' }));
+app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
+
+app.all('/', (req, res, next) => {
+  console.log('re.headers', req.headers);
+});
+
+//Public Folder
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.setHeader('set-cookie', ['SameSite=Strict;SameSite=Strict']);
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 //Test middleware
 

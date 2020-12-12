@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { loginUserAction } from '../../store/actions/authAction';
 
-const Login = () => {
+const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const _submitLogin = (e) => {
+    e.preventDefault();
+    const data = {
+      email,
+      password,
+    };
+    props.loginUserAction(data, props.history);
+  };
 
   return (
     <div className="register">
       <div className="register__container">
         <h2 className="register__heading">Login</h2>
-        <form className="register__form">
+        <form onSubmit={_submitLogin} className="register__form">
           <div className="register__form-group">
             <label>
               <div className="register__form-label--name">email</div>
@@ -41,4 +52,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+const setStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(setStateToProps, { loginUserAction })(Login);

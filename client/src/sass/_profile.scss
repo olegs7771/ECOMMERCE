@@ -1,0 +1,37 @@
+.profile {
+  text-align: center;
+
+  &__heading {
+    margin: 4rem 0;
+    font-weight: 400;
+    font-family: italic;
+    font-size: 3rem;
+  }
+
+  &__card-container {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    margin: 0 auto;
+    padding: 4rem;
+    &-lable {
+      font-size: 1.6rem;
+      border-bottom: 0.3px solid $color-grey;
+      display: inline-block;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
+
+    &--left {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    &--right {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

@@ -6,11 +6,37 @@
     display: flex;
     justify-content: space-between;
     list-style: none;
+    align-items: center;
+    height: 7rem;
+  }
+  &__item {
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
   }
 
+  &__auth-box {
+    // border: 1px solid black;
+    display: flex;
+    align-items: center;
+  }
+  &__auth--name {
+    font-size: 1.8rem;
+    text-transform: uppercase;
+  }
+
+  &__img-box {
+    width: 8rem;
+    clip-path: circle(40%);
+  }
+  &__img {
+    width: 100%;
+    display: block;
+  }
   &__user,
   &__auth {
     display: flex;
+    align-items: center;
   }
 
   &__link:link,

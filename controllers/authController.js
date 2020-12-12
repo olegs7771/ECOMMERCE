@@ -12,7 +12,15 @@ const AppErrorHandler = require('../utils/AppError');
 //Create res object with token for cookies
 
 const createSendToken = (user, statusCode, req, res) => {
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+  // CREATE PAYLOAD FOR TOKEN
+  const payload = {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  };
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: parseInt(process.env.JWT_EXP),
   });
   //Send token to cookies
@@ -50,7 +58,8 @@ const login = asyncCatch(async (req, res, next) => {
   // 1) check if email and password exists in body
   if (!email || !password)
     return next(new AppErrorHandler('no empty fields', 400));
-  const user = await User.findOne({ email }).select('password');
+  const user = await User.findOne({ email });
+  console.log('user', user);
 
   // 2) check if user exists and password is correct
   if (!user || !(await user.correctPassword(password, user.password)))
