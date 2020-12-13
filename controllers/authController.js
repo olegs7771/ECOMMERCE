@@ -92,7 +92,7 @@ const protect = asyncCatch(async (req, res, next) => {
   // 2) Check if token signature is valid
 
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  console.log('decoded', decoded);
+  // console.log('decoded', decoded);
 
   // 3) Check if user still exists
   const user = await User.findById(decoded.id);

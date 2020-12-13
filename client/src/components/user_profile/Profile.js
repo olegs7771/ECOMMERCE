@@ -23,6 +23,14 @@ const Profile = (props) => {
               {props.auth.user.role}
             </span>
           </div>
+          <div className="profile__card-container--right">
+            <img
+              src={
+                'https://ecommmerce.s3.amazonaws.com/hero_5fd39c009e1ae53a545b80ca.jpg'
+              }
+              alt="hero user"
+            />
+          </div>
         </div>
       </div>
     );

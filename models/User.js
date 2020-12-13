@@ -76,9 +76,9 @@ userSchema.methods.correctPassword = async function (
 //  token was issued
 
 userSchema.methods.changedPassword = function (tokenTimeStampItp) {
-  console.log('this', this);
+  // console.log('this', this);
   if (this.passwordChangedAt) {
-    console.log('pass changed');
+    // console.log('pass changed');
     const passwordChangedAt = this.passwordChangedAt.getTime() / 1000;
     //Password was changed
 
