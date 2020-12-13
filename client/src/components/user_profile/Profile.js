@@ -1,6 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+// Initialize the Amazon Cognito credentials provider
+// AWS.config.region = 'us-east-1'; // Region
+// AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+//   IdentityPoolId: 'us-east-1:86f07793-9acd-45d5-8d2d-c340e106915e',
+// });
+
 const Profile = (props) => {
   if (props.auth.isAuthenticated) {
     return (
@@ -26,7 +32,7 @@ const Profile = (props) => {
           <div className="profile__card-container--right">
             <img
               src={
-                'https://ecommmerce.s3.amazonaws.com/hero_5fd39c009e1ae53a545b80ca.jpg'
+                'https://my-ecommerce-bucket.s3.amazonaws.com/avatars/hero_5fd39c009e1ae53a545b80ca.jpg'
               }
               alt="hero user"
             />

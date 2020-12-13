@@ -33,7 +33,7 @@ exports.uploadAvatar = asyncCatch(async (req, res, next) => {
     return next(new AppError('Please select file', 400));
 
   const file = req.files.hero;
-  // console.log('file', file);
+  console.log('file', file);
 
   //2) Check for mime type
   if (!file.mimetype.startsWith('image'))
@@ -54,40 +54,36 @@ exports.uploadAvatar = asyncCatch(async (req, res, next) => {
         region: 'us-east-1',
       });
       const s3 = new AWS.S3();
-      const response = await s3
-        .ListObjects({
-          Bucket: 'my-ecommerce-bucket',
-        })
-        .promise();
+      // const response = await s3
+      //   .listObjectVersions({
+      //     Bucket: 'my-ecommerce-bucket',
+      //   })
+      //   .promise();
+      // console.log('response', response);
 
-      console.log('response', response);
+      const params = {
+        Bucket: process.env.S3_BUCKET,
+        Key: file.name,
+        Body: Blob,
+      };
+
+      s3.upload(params, (err, data) => {
+        if (err) return console.log('err to upload to s3', err);
+        console.log('data', data);
+      });
+
+      //5) After Blob uploaded to AWS S3
+      const newAvatar = await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          avatar: file.name,
+        },
+        { new: true }
+      );
+
+      res.json({ message: 'success', newAvatar });
     } catch (err) {
       console.log('error ', err);
     }
   })();
-
-  debugger;
-
-  // const s3 = new AWS.S3();
-  // const params = {
-  //   Bucket: process.env.S3_BUCKET,
-  //   Key: file.name,
-  //   Body: Blob,
-  // };
-
-  // s3.upload(params, (err, data) => {
-  //   if (err) return console.log('err to upload to s3', err);
-  //   console.log('data', data);
-  // });
-
-  // //5) After Blob uploaded to AWS S3
-  // const newAvatar = await User.findByIdAndUpdate(
-  //   req.params.id,
-  //   {
-  //     avatar: file.name,
-  //   },
-  //   { new: true }
-  // );
-
-  // res.json({ message: 'success', newAvatar });
 });
