@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import UploadAvatar from './UploadAvatar';
+import { css } from '@emotion/core';
+import ScaleLoader from 'react-spinners/ScaleLoader';
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 const Profile = (props) => {
   const [openEditAvatar, setEditAvatar] = useState(false);
 
@@ -49,11 +56,22 @@ const Profile = (props) => {
             </div>
           </div>
         </div>
-        <UploadAvatar
-          id={props.auth.user.id}
-          history={props.history}
-          open={openEditAvatar}
-        />
+        {true ? (
+          <div className="loading">
+            <ScaleLoader
+              css={override}
+              size={150}
+              color={'#123abc'}
+              loading={true}
+            />
+          </div>
+        ) : (
+          <UploadAvatar
+            id={props.auth.user.id}
+            history={props.history}
+            open={openEditAvatar}
+          />
+        )}
       </div>
     );
   } else {
@@ -63,6 +81,7 @@ const Profile = (props) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  loading: state.loading.loading,
 });
 
 export default connect(mapStateToProps, {})(Profile);
