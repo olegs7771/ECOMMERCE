@@ -15,7 +15,7 @@ export const loginUserAction = (data, history) => async (dispatch) => {
       // SET TOKEN IN localStorage
       localStorage.setItem('jwtToken', token);
 
-      //SET TOKEN TO EVERY HTTP REQUEST HEADERS
+      //SET TOKEN
       setAuthToken();
 
       const decoded = jwt_decoded(token);

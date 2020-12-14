@@ -1,11 +1,12 @@
 .profile {
   text-align: center;
+  padding: 4rem 0;
 
   &__heading {
-    margin: 4rem 0;
     font-weight: 400;
     font-family: italic;
     font-size: 3rem;
+    margin-bottom: 3rem;
   }
 
   &__card-container {
@@ -15,6 +16,7 @@
     width: 60%;
     margin: 0 auto;
     padding: 4rem;
+
     &-lable {
       font-size: 1.6rem;
       border-bottom: 0.3px solid $color-grey;
@@ -22,16 +24,63 @@
       margin-bottom: 2rem;
       text-transform: uppercase;
     }
-
-    &--left {
+    &--image {
       width: 100%;
-      display: flex;
-      flex-direction: column;
+      clip-path: circle(35%);
     }
-    &--right {
+
+    &-elem {
       width: 100%;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  &__image-block {
+    // border: 1px solid black;
+
+    &--btn-group {
+      // border: 1px solid black;
+      padding: 2rem 0;
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    &--btn-edit {
+      margin-right: 3px;
+    }
+  }
+  // UploadAvatar Component
+
+  &__avatar {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    margin: 0 auto;
+    padding: 4rem;
+    margin-top: 1rem;
+    flex-direction: column;
+    opacity: 1;
+    transition: 0.2s;
+
+    &-container {
+      &--preview {
+        padding: 2rem;
+      }
+
+      &--preview-img {
+        width: 100%;
+      }
+    }
+
+    &-form {
+      margin: 3rem 0;
+      border: 1px solid lightblue;
+    }
+    &--hide {
+      opacity: 0;
     }
   }
 }

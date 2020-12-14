@@ -21,8 +21,9 @@ exports.getUser = asyncCatch(async (req, res, next) => {
 
 //UPLOAD AVATAR
 exports.uploadAvatar = asyncCatch(async (req, res, next) => {
+  console.log('req.body', req.body);
   //1) Find user byID in PARAMS
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.body.id);
   if (!user) return next(new AppError('User not found', 401));
   //2 Upload image file from client
   ///////////////////////////////////////////
@@ -31,8 +32,9 @@ exports.uploadAvatar = asyncCatch(async (req, res, next) => {
   // console.log('req.files', req.files);
   if (!req.files || Object.keys(req.files).length === 0)
     return next(new AppError('Please select file', 400));
+  console.log('req.files', req.files);
 
-  const file = req.files.hero;
+  const file = req.files.file;
   console.log('file', file);
 
   //2) Check for mime type
@@ -43,7 +45,7 @@ exports.uploadAvatar = asyncCatch(async (req, res, next) => {
   file.name = `hero_${user._id}${path.parse(file.name).ext}`;
 
   //4) Create Blob for AWS S3 upload
-  const Blob = req.files.hero.data;
+  const Blob = req.files.file.data;
 
   (async () => {
     try {
@@ -54,12 +56,6 @@ exports.uploadAvatar = asyncCatch(async (req, res, next) => {
         region: 'us-east-1',
       });
       const s3 = new AWS.S3();
-      // const response = await s3
-      //   .listObjectVersions({
-      //     Bucket: 'my-ecommerce-bucket',
-      //   })
-      //   .promise();
-      // console.log('response', response);
 
       const params = {
         Bucket: process.env.S3_BUCKET,
@@ -67,21 +63,21 @@ exports.uploadAvatar = asyncCatch(async (req, res, next) => {
         Body: Blob,
       };
 
-      s3.upload(params, (err, data) => {
+      s3.upload(params, async (err, data) => {
         if (err) return console.log('err to upload to s3', err);
+
         console.log('data', data);
+        //5) After Blob uploaded to AWS S3
+        const newAvatar = await User.findByIdAndUpdate(
+          req.body.id,
+          {
+            avatar: file.name,
+          },
+          { new: true }
+        );
+
+        res.json({ message: 'success', newAvatar });
       });
-
-      //5) After Blob uploaded to AWS S3
-      const newAvatar = await User.findByIdAndUpdate(
-        req.params.id,
-        {
-          avatar: file.name,
-        },
-        { new: true }
-      );
-
-      res.json({ message: 'success', newAvatar });
     } catch (err) {
       console.log('error ', err);
     }

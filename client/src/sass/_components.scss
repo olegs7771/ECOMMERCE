@@ -1,6 +1,11 @@
 .btn {
-  padding: 0.5rem 2rem;
+  padding: 1rem 3rem;
   font-size: 1.2rem;
   text-transform: uppercase;
   border: none;
+  background-color: #eee;
+  border-radius: 3px;
+  &:hover {
+    background-color: #cac9c9;
+  }
 }

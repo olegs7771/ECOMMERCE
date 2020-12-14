@@ -1,24 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-
-// Initialize the Amazon Cognito credentials provider
-// AWS.config.region = 'us-east-1'; // Region
-// AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-//   IdentityPoolId: 'us-east-1:86f07793-9acd-45d5-8d2d-c340e106915e',
-// });
+import UploadAvatar from './UploadAvatar';
 
 const Profile = (props) => {
+  const [openEditAvatar, setEditAvatar] = useState(false);
+
   if (props.auth.isAuthenticated) {
     return (
       <div className="profile">
         <h1 className="profile__heading">Profile</h1>
         <div className="profile__card-container">
-          <div className="profile__card-container--left">
+          <div className="profile__card-container-elem">
             <span className="profile__card-container-lable">Name</span>
             <span className="profile__card-container-lable">Email</span>
             <span className="profile__card-container-lable">Role</span>
           </div>
-          <div className="profile__card-container--right">
+          <div className="profile__card-container-elem">
             <span className="profile__card-container-lable">
               {props.auth.user.name}
             </span>
@@ -29,15 +26,34 @@ const Profile = (props) => {
               {props.auth.user.role}
             </span>
           </div>
-          <div className="profile__card-container--right">
+
+          <div className="profile__card-container-elem  profile__image-block">
             <img
-              src={
-                'https://my-ecommerce-bucket.s3.amazonaws.com/avatars/hero_5fd39c009e1ae53a545b80ca.jpg'
-              }
+              src={`https://my-ecommerce-bucket.s3.amazonaws.com/avatars/hero_${props.auth.user.id}.jpg`}
               alt="hero user"
+              className="profile__card-container--image"
             />
+            <div className="profile__image-block--btn-group">
+              <button
+                className=" btn profile__image-block--btn-edit"
+                onClick={() => setEditAvatar(true)}
+              >
+                Edit
+              </button>
+              <button
+                className=" btn profile__image-block--btn-cancel"
+                onClick={() => setEditAvatar(false)}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
+        <UploadAvatar
+          id={props.auth.user.id}
+          history={props.history}
+          open={openEditAvatar}
+        />
       </div>
     );
   } else {

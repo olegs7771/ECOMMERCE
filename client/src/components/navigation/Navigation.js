@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import img_user from '../../img/user.jpg';
 import { clearOutUser } from '../../store/actions/authAction';
 import { withRouter } from 'react-router-dom';
 
@@ -43,7 +42,11 @@ const Navigation = (props) => {
             <li className="nav__item">
               <div className="nav__auth-box">
                 <div className="nav__img-box">
-                  <img src={img_user} alt="auth img" className="nav__img" />
+                  <img
+                    src={`https://my-ecommerce-bucket.s3.amazonaws.com/avatars/hero_${props.auth.user.id}.jpg`}
+                    alt="auth img"
+                    className="nav__img"
+                  />
                 </div>
                 <span className="nav__auth--name">{props.auth.user.name}</span>
               </div>

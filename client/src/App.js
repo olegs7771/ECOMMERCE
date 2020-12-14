@@ -29,8 +29,6 @@ if (localStorage.jwtToken) {
   };
   store.dispatch(setCurrentUser(dataToRedux));
 
-  console.log('decoded in App', decoded);
-
   const timeNow = parseInt(Date.now() / 1000, 10);
   if (decoded.exp > timeNow) {
     clearOutUser();
