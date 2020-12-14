@@ -77,10 +77,15 @@
 
     &-form {
       margin: 3rem 0;
-      border: 1px solid lightblue;
+      &--input {
+      }
     }
     &--hide {
       opacity: 0;
     }
   }
+}
+
+.loading {
+  margin-top: 10rem;
 }

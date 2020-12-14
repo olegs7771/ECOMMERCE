@@ -69,24 +69,6 @@ class UploadAvatar extends Component {
   }
 }
 
-// this.setState({
-//     selectedImage: URL.createObjectURL(e.target.files[0]),
-//     uploadImage: e.target.files[0]
-//   });
-
-// {
-/* <img
-onLoad={this._onLoadImage}
-src={this.state.selectedImage}
-alt=""
-className="rounded"
-style={{
-  width: "100%",
-  transform: `rotate(${this.state.rotation}deg)`
-}}
-/> */
-// }
-
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = { updateAvatar };

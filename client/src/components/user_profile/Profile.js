@@ -56,13 +56,13 @@ const Profile = (props) => {
             </div>
           </div>
         </div>
-        {true ? (
+        {props.loading ? (
           <div className="loading">
             <ScaleLoader
               css={override}
               size={150}
-              color={'#123abc'}
-              loading={true}
+              color={'#939090'}
+              loading={props.loading}
             />
           </div>
         ) : (
