@@ -9,3 +9,14 @@
     background-color: #cac9c9;
   }
 }
+
+.error {
+  background-color: rgb(248, 217, 210);
+  width: 60%;
+  margin: 1rem auto;
+  padding: 2rem 0;
+  &--text {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+  }
+}

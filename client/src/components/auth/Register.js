@@ -79,9 +79,19 @@ const Register = (props) => {
           </div>
           <input type="submit" value="submit" className="btn" />
         </form>
+        {/* HANDLE ERROR FROM API  */}
+        {props.error ? (
+          <div className="error">
+            <span className="error--text">{props.error}</span>
+          </div>
+        ) : null}
       </div>
     </div>
   );
 };
 
-export default connect(null, { signupUserAction })(Register);
+const mapStateToProps = (state) => ({
+  error: state.error.error,
+});
+
+export default connect(mapStateToProps, { signupUserAction })(Register);

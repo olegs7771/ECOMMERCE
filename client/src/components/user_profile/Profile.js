@@ -19,8 +19,8 @@ const Profile = (props) => {
 
         {/* HANDLE ERROR FROM API  */}
         {props.error ? (
-          <div className="profile__error">
-            <span className="profile__error--text">{props.error}</span>
+          <div className="error">
+            <span className="error--text">{props.error}</span>
           </div>
         ) : null}
 

@@ -43,7 +43,6 @@ module.exports = (err, req, res, next) => {
     ///////////////////////////
     ///////////PROD///////////////////
   } else if (process.env.NODE_ENV === 'production') {
-    console.log('error im controller', err.name);
     ///////////////////////////////////
     //Handle Mongoose Errors in Prod
     // For CastError if wrong id param

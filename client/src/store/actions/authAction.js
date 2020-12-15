@@ -1,12 +1,21 @@
 import axios from 'axios';
-import { SET_CURRENT_USER, CLEAR_OUT_USER } from './types';
+import { SET_CURRENT_USER, CLEAR_OUT_USER, GET_API_ERROR } from './types';
 import jwt_decoded from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 
 //SIGN NEW USER
-
 export const signupUserAction = (data, history) => async (dispatch) => {
   console.log('data in action', data);
+  try {
+    const res = await axios.post('/api/v1/users/signup', data);
+    console.log('res.data', res.data);
+  } catch (err) {
+    console.log('err', err.response.data);
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data.message,
+    });
+  }
 };
 
 // LOGIN USER

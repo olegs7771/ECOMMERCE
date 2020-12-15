@@ -50,6 +50,10 @@ const userSchema = new mongoose.Schema({
     default: true,
     select: true,
   },
+  activatedByEmail: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 //Methods
