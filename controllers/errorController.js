@@ -43,6 +43,7 @@ module.exports = (err, req, res, next) => {
     ///////////////////////////
     ///////////PROD///////////////////
   } else if (process.env.NODE_ENV === 'production') {
+    console.log('error im controller', err.name);
     ///////////////////////////////////
     //Handle Mongoose Errors in Prod
     // For CastError if wrong id param
@@ -56,9 +57,7 @@ module.exports = (err, req, res, next) => {
     if (err.name === 'ValidationError') {
       return res.status(404).json({
         status: 'error',
-        error: err.message,
-
-        // error: ` ${err.stringValue} Not found on this server`,
+        message: err.message,
       });
     }
     //HANDLE VALIDATION MONGOOSE DUBLICATE FIELDS
@@ -68,7 +67,7 @@ module.exports = (err, req, res, next) => {
       if (Object.keys(err.keyValue)[0] === 'email') {
         return res.status(404).json({
           status: 'error',
-          error: 'User with such email already exists',
+          message: 'User with such email already exists',
         });
       }
     }
@@ -77,13 +76,13 @@ module.exports = (err, req, res, next) => {
     if (err.name === 'JsonWebTokenError') {
       return res.status(401).json({
         status: 'fail',
-        error: 'Authentication failed. Please log in!',
+        message: 'Authentication failed. Please log in!',
       });
     }
     if (err.name === 'TokenExpiredError') {
       return res.status(401).json({
         status: 'fail',
-        error: 'Authentication expired. Please log in!',
+        message: 'Authentication expired. Please log in!',
       });
     }
 

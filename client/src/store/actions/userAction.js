@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOADING } from './types';
+import { LOADING, GET_API_MESSAGE, GET_API_ERROR } from './types';
 
 // UPDATE USER AVATAR
 
@@ -19,9 +19,23 @@ export const updateAvatar = (data, history) => async (dispatch) => {
     console.log('res.data', res.data);
     //    AFTER AVATAR UPDATE SIGN OUT USER
     if (res.data) {
-      history.push('/');
+      dispatch({
+        type: GET_API_MESSAGE,
+        payload: res.data.message,
+      });
+      setTimeout(() => {
+        history.push('/');
+      }, 4000);
     }
   } catch (err) {
     console.log('err to upload avatar', err.response.data);
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data.message,
+    });
   }
 };

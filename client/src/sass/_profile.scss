@@ -19,7 +19,7 @@
 
     &-lable {
       font-size: 1.6rem;
-      border-bottom: 0.3px solid $color-grey;
+      border-bottom: 0.3px solid $color-grey-light;
       display: inline-block;
       margin-bottom: 2rem;
       text-transform: uppercase;
@@ -66,6 +66,9 @@
     transition: 0.2s;
 
     &-container {
+      display: flex;
+      flex-direction: column;
+
       &--preview {
         padding: 2rem;
       }
@@ -77,11 +80,27 @@
 
     &-form {
       margin: 3rem 0;
-      &--input {
+      &--message {
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        background-color: rgb(179, 248, 179);
+        padding: 1rem 2rem;
+        align-self: center;
       }
     }
     &--hide {
       opacity: 0;
+    }
+  }
+
+  &__error {
+    background-color: rgb(248, 217, 210);
+    width: 60%;
+    margin: 1rem auto;
+    padding: 2rem 0;
+    &--text {
+      font-size: 1.8rem;
+      text-transform: uppercase;
     }
   }
 }

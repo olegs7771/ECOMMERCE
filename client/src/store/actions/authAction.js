@@ -3,6 +3,12 @@ import { SET_CURRENT_USER, CLEAR_OUT_USER } from './types';
 import jwt_decoded from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 
+//SIGN NEW USER
+
+export const signupUserAction = (data, history) => async (dispatch) => {
+  console.log('data in action', data);
+};
+
 // LOGIN USER
 export const loginUserAction = (data, history) => async (dispatch) => {
   console.log('data in action', data);

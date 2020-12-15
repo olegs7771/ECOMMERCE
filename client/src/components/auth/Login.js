@@ -24,11 +24,12 @@ const Login = (props) => {
             <label>
               <div className="register__form-label--name">email</div>
               <input
-                type="text"
+                type="email"
                 name="email"
                 className="register__form-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </label>
           </div>
@@ -36,11 +37,12 @@ const Login = (props) => {
             <label>
               <div className="register__form-label--name">password</div>
               <input
-                type="text"
+                type="password"
                 name="password"
                 className="register__form-input"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </label>
           </div>

@@ -73,13 +73,20 @@ const login = asyncCatch(async (req, res, next) => {
 //PROTECTION OF ROUTES
 
 const protect = asyncCatch(async (req, res, next) => {
+  console.log('req.headers protect', req.headers);
+  console.log('req.headers.cookie', req.headers.cookie.substring(4));
   // 1) Check if token exists
   let token;
+  // TOKEN IN HEADER AUTHORIZATION
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  }
+  // TOKEN IN COOKIE
+  if (req.headers.cookie && req.headers.cookie.startsWith('jwt')) {
+    token = req.headers.cookie.substring(4);
   }
   // console.log('token', token);
   if (!token)

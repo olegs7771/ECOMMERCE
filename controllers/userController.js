@@ -56,14 +56,19 @@ exports.uploadAvatar = asyncCatch(async (req, res, next) => {
         region: 'us-east-1',
       });
       const s3 = new AWS.S3();
+      var bucketParams = {
+        Bucket: 'my-ecommerce-bucket',
+      };
 
       const params = {
         Bucket: process.env.S3_BUCKET,
         Key: file.name,
         Body: Blob,
+        ACL: 'bucket-owner-full-control',
+        CacheControl: 'no-cache',
       };
 
-      s3.upload(params, async (err, data) => {
+      s3.putObject(params, async (err, data) => {
         if (err) return console.log('err to upload to s3', err);
 
         console.log('data', data);
@@ -76,7 +81,7 @@ exports.uploadAvatar = asyncCatch(async (req, res, next) => {
           { new: true }
         );
 
-        res.json({ message: 'success', newAvatar });
+        res.json({ message: 'avatar was updated', newAvatar });
       });
     } catch (err) {
       console.log('error ', err);

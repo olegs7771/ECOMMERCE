@@ -43,7 +43,7 @@ const Navigation = (props) => {
               <div className="nav__auth-box">
                 <div className="nav__img-box">
                   <img
-                    src={`https://my-ecommerce-bucket.s3.amazonaws.com/avatars/hero_${props.auth.user.id}.jpg`}
+                    src={`https://test-ecommerce-bucket-1.s3.amazonaws.com/avatars/hero_${props.auth.user.id}.jpg`}
                     alt="auth img"
                     className="nav__img"
                   />

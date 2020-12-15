@@ -1,22 +1,22 @@
 .register {
+  background-color: $color-grey-light;
+  padding: 4rem 0;
+  height: 100vh;
   &__container {
-    background-color: lightblue;
     width: 50%;
-    margin: 10rem auto;
+    margin: 0 auto;
     text-align: center;
     padding: 2rem 0;
+    background-color: #fff;
   }
 
   &__heading {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 400;
+    color: $color-grey-dark;
   }
   &__form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 2rem 0;
-    // border: 1px solid black;
+    padding: 4rem;
 
     &-group {
       margin-bottom: 1rem;
@@ -28,13 +28,18 @@
     }
 
     &-input {
-      border: none;
-      border-radius: 3px;
-      padding: 1rem 2rem;
+      width: 100%;
+      padding: 12px 2rem;
+      margin: 0.8rem 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 0.4rem;
       outline: none;
-
       &:focus {
-        border: 1px solid rebeccapurple;
+        border-bottom: 3px solid $color-valid;
+      }
+      &:focus:invalid {
+        border-bottom: 3px solid $color-invalid;
       }
     }
   }
@@ -43,3 +48,14 @@
 .btn-auth {
   margin-top: 1rem;
 }
+
+// input[type='text'],
+// select {
+//   width: 100%;
+//   padding: 12px 20px;
+//   margin: 8px 0;
+//   display: inline-block;
+//   border: 1px solid #ccc;
+//   border-radius: 4px;
+//   box-sizing: border-box;
+// }

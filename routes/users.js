@@ -11,6 +11,6 @@ router.route('/login').post(login);
 router.route('/:id').get(protect, getUser);
 
 //Upload Image Avatar by User
-router.route('/photo').post(uploadAvatar);
+router.route('/photo').post(protect, uploadAvatar);
 
 module.exports = router;

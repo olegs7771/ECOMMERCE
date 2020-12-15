@@ -63,6 +63,14 @@ class UploadAvatar extends Component {
               Submit
             </button>
           </form>
+          {/* PROPS COMING FROM PARENT  */}
+          {this.props.message ? (
+            <div className="profile__avatar-form--message">
+              <span className="profile__avatar-form--message-text">
+                {this.props.message}
+              </span>
+            </div>
+          ) : null}
         </div>
       </div>
     );

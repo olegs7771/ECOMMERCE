@@ -16,6 +16,14 @@ const Profile = (props) => {
     return (
       <div className="profile">
         <h1 className="profile__heading">Profile</h1>
+
+        {/* HANDLE ERROR FROM API  */}
+        {props.error ? (
+          <div className="profile__error">
+            <span className="profile__error--text">{props.error}</span>
+          </div>
+        ) : null}
+
         <div className="profile__card-container">
           <div className="profile__card-container-elem">
             <span className="profile__card-container-lable">Name</span>
@@ -36,7 +44,7 @@ const Profile = (props) => {
 
           <div className="profile__card-container-elem  profile__image-block">
             <img
-              src={`https://my-ecommerce-bucket.s3.amazonaws.com/avatars/hero_${props.auth.user.id}.jpg`}
+              src={`https://test-ecommerce-bucket-1.s3.amazonaws.com/avatars/hero_${props.auth.user.id}.jpg`}
               alt="hero user"
               className="profile__card-container--image"
             />
@@ -69,19 +77,22 @@ const Profile = (props) => {
           <UploadAvatar
             id={props.auth.user.id}
             history={props.history}
+            message={props.message}
             open={openEditAvatar}
           />
         )}
       </div>
     );
   } else {
-    return <div>Loading..</div>;
+    return <div>Not Authorized to view this page!</div>;
   }
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
   loading: state.loading.loading,
+  message: state.message.message,
+  error: state.error.error,
 });
 
 export default connect(mapStateToProps, {})(Profile);
