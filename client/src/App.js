@@ -30,8 +30,9 @@ if (localStorage.jwtToken) {
   store.dispatch(setCurrentUser(dataToRedux));
 
   const timeNow = parseInt(Date.now() / 1000, 10);
-  if (decoded.exp > timeNow) {
-    clearOutUser();
+
+  if (decoded.exp < timeNow) {
+    store.dispatch(clearOutUser());
   }
 }
 

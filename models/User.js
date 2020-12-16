@@ -57,6 +57,14 @@ const userSchema = new mongoose.Schema({
 });
 
 //Methods
+
+// CONFIRMATION OF REGISTRATION
+//CREATE TOKEN FOR SENDING TO NEWLY REGISTERED USER EMAIL
+userSchema.methods.createConfirmationToken = function () {
+  const token = crypto.randomBytes(32).toString('hex');
+  console.log('token ', token.length);
+};
+
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next(); //exit here if password not modified
 

@@ -1,14 +1,23 @@
 const express = require('express');
-const app = express();
+const path = require('path');
+const AppErrorClass = require('./utils/AppError');
 const fileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const globalErrorHandler = require('./controllers/errorController');
-const AppErrorClass = require('./utils/AppError');
 require('dotenv').config();
-const users = require('./routes/users');
+const app = express();
 
+app.enable('trust proxy'); //Heroku works through proxies
+//in order in authController.js createSendToken function
+// be able to use  secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+
+const users = require('./routes/users');
+//FOR UPLOADING FILES
 app.use(fileUpload());
+//USING PUG TEMPLATE ENGINE
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
 //Body parser with limitted body
 app.use(express.json());

@@ -1,6 +1,7 @@
 const app = require('./app');
 // require('dotenv').config();
 const mongoose = require('mongoose');
+
 const PORT = process.env.PORT || 5000;
 
 const DB = process.env.DATABASE.replace(

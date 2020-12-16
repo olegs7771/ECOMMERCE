@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const asyncCatch = require('../utils/asyncCatch');
 const AppErrorHandler = require('../utils/AppError');
+const Email = require('../utils/mail');
 
 //Create res object with token for cookies
 
@@ -21,13 +22,14 @@ const createSendToken = (user, statusCode, req, res) => {
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: parseInt(process.env.JWT_EXP),
+    expiresIn: parseInt(process.env.JWT_TOKEN_EXP), //2d
   });
   //Send token to cookies
   res.cookie('jwt', token, {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000
+      Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000 //2d
     ),
+    // maxAge: parseInt(process.env.JWT_COOKIE_EXP, 10), ///60s
     httpOnly: true,
     secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   });
@@ -49,9 +51,20 @@ const signup = asyncCatch(async (req, res, next) => {
 
   const url = `${req.protocol}://${req.get('host')}`;
   console.log('url', url);
+  // //SEND EMAIL WITH CONFIRMATION LINK
+  await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 200, req, res);
 });
+
+//CONFIRM USER ACCOUNT BY EMAIL LINK
+const confirm = asyncCatch(async (req, res, next) => {
+  console.log('req.params', req.params);
+  const user = await User.findById(req.params.id);
+  user.createConfirmationToken();
+});
+
+//////////////////////////////////////////////////////////////////
 //  LOGIN
 const login = asyncCatch(async (req, res, next) => {
   const { email, password } = req.body;
@@ -73,19 +86,22 @@ const login = asyncCatch(async (req, res, next) => {
 //PROTECTION OF ROUTES
 
 const protect = asyncCatch(async (req, res, next) => {
-  console.log('req.headers protect', req.headers);
-  console.log('req.headers.cookie', req.headers.cookie.substring(4));
+  // console.log('req.headers protect', req.headers);
+  console.log('protect');
   // 1) Check if token exists
   let token;
-  // TOKEN IN HEADER AUTHORIZATION
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    token = req.headers.authorization.split(' ')[1];
-  }
+  // TOKEN IN HEADER AUTHORIZATION !!! USING ONLY TOKEN IN COOKIES FOR MORE PROTECTION
+  // TOKEN IN localStorage USING ONLY FOR REACT STORE USAGE
+
+  // if (
+  //   req.headers.authorization &&
+  //   req.headers.authorization.startsWith('Bearer')
+  // ) {
+  //   token = req.headers.authorization.split(' ')[1];
+  // }
   // TOKEN IN COOKIE
   if (req.headers.cookie && req.headers.cookie.startsWith('jwt')) {
+    console.log('token', token);
     token = req.headers.cookie.substring(4);
   }
   // console.log('token', token);
@@ -121,4 +137,4 @@ const protect = asyncCatch(async (req, res, next) => {
   next();
 });
 
-module.exports = { signup, login, protect };
+module.exports = { signup, confirm, login, protect };
