@@ -42,6 +42,7 @@ const userSchema = new mongoose.Schema({
       message: 'No match',
     },
   },
+  confirmationToken: String,
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpired: Date,
@@ -62,7 +63,21 @@ const userSchema = new mongoose.Schema({
 //CREATE TOKEN FOR SENDING TO NEWLY REGISTERED USER EMAIL
 userSchema.methods.createConfirmationToken = function () {
   const token = crypto.randomBytes(32).toString('hex');
-  console.log('token ', token.length);
+  console.log('token randomBytes ', token);
+  this.confirmationToken = crypto
+    .createHash('sha256')
+    .update(token)
+    .digest('hex');
+  return {
+    token: this.confirmationToken,
+    id: this._id,
+  };
+};
+
+// COMPARING TOKEN WITH INCOMIN CANDIDATE
+userSchema.methods.compareToken = function (candidate) {
+  console.log('in model', this.confirmationToken, candidate);
+  return this.confirmationToken === candidate;
 };
 
 userSchema.pre('save', async function (next) {

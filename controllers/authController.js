@@ -12,7 +12,7 @@ const Email = require('../utils/mail');
 
 //Create res object with token for cookies
 
-const createSendToken = (user, statusCode, req, res) => {
+const createSendToken = (user, statusCode, message, req, res) => {
   // CREATE PAYLOAD FOR TOKEN
   const payload = {
     id: user._id,
@@ -33,7 +33,9 @@ const createSendToken = (user, statusCode, req, res) => {
     httpOnly: true,
     secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   });
-  res.status(statusCode).json({ status: 'success', token, data: user });
+  res
+    .status(statusCode)
+    .json({ status: 'success', message, token, data: user });
 };
 
 //CONTROLLERS
@@ -49,19 +51,50 @@ const signup = asyncCatch(async (req, res, next) => {
     passwordConfirm: req.body.password2,
   });
 
-  const url = `${req.protocol}://${req.get('host')}`;
+  const { id, token } = await newUser.createConfirmationToken();
+
+  console.log('token create in signup', token);
+  await newUser.save({ validateBeforeSave: false }); //save token temporary to the DB
+  //  URL CONTAINS ID AND CONFIRM TOKEN AS PARAMS
+  // const url = `${req.protocol}://${req.get(
+  //   'host'
+  // )}/api/v1/users/confirm/${id}/${token}`;
+  //  REDIRECT TO REACT CONFIRMATION PAGE
+  let url;
+  if (process.env.NODE_ENV === 'development') {
+    url = `http://127.0.0.1:3000/confirm/${id}/${token}`;
+  }
+
   console.log('url', url);
   // //SEND EMAIL WITH CONFIRMATION LINK
   await new Email(newUser, url).sendWelcome();
 
-  createSendToken(newUser, 200, req, res);
+  const message = `User ${req.body.name} was create. 
+  Pleace check your email ${req.body.email} `;
+  res.status(200).json({ status: 'success', message });
 });
 
+/////////////////////////////////////////////////////////////////////
 //CONFIRM USER ACCOUNT BY EMAIL LINK
 const confirm = asyncCatch(async (req, res, next) => {
-  console.log('req.params', req.params);
-  const user = await User.findById(req.params.id);
-  user.createConfirmationToken();
+  console.log('req.body', req.body);
+  // 1) FIND USER AND COMPARE TEMP TOKEN
+  const user = await User.findById(req.body.id);
+  if (!user || !user.compareToken(req.body.token))
+    return next(
+      new AppErrorHandler(
+        'User not found or registration been expired.Please repeat signup',
+        404
+      )
+    );
+
+  // 2)UPDATE USER  IN DB
+  user.activatedByEmail = true;
+  user.confirmationToken = undefined;
+  await user.save({ validateBeforeSave: false });
+
+  console.log('user', user);
+  res.json({ message: 'success' });
 });
 
 //////////////////////////////////////////////////////////////////
@@ -80,7 +113,8 @@ const login = asyncCatch(async (req, res, next) => {
 
   // 3) if everything is ok , send token to user
   // createSendToken = (user, statusCode, req, res)
-  createSendToken(user, 200, req, res);
+  const message = 'Login succefull';
+  createSendToken(user, 200, message, req, res);
 });
 
 //PROTECTION OF ROUTES

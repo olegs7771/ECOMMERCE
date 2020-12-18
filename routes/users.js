@@ -10,7 +10,7 @@ const {
 const { getUser, uploadAvatar } = require('../controllers/userController');
 
 router.route('/signup').post(signup);
-router.route('/confirm/:id/:token').post(confirm);
+router.route('/confirm').post(confirm);
 router.route('/login').post(login);
 
 // router.use(protect);

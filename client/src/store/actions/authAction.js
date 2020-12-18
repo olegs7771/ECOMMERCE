@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { SET_CURRENT_USER, CLEAR_OUT_USER, GET_API_ERROR } from './types';
+import {
+  SET_CURRENT_USER,
+  CLEAR_OUT_USER,
+  GET_API_ERROR,
+  LOADING,
+} from './types';
 import jwt_decoded from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 
@@ -15,6 +20,32 @@ export const signupUserAction = (data, history) => async (dispatch) => {
       type: GET_API_ERROR,
       payload: err.response.data.message,
     });
+  }
+};
+
+//CONFIRM BY EMAIL
+//USER RECEIVES EMAIL  LINK WITH ID AND TOKEN AND REDIRECTS
+// TO REACT PAGE
+
+export const confirmUser = (data) => async (dispatch) => {
+  console.log('confirm actin data', data);
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+  try {
+    const res = await axios.post('/api/v1/users/confirm', data);
+    console.log('res.data', res.data);
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+  } catch (err) {
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    console.log('error confirm ', err.response.data);
   }
 };
 
