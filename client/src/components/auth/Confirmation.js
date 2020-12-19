@@ -31,6 +31,7 @@ const Confirmation = (props) => {
           </div>
         )}
       </div>
+      {/* HANDLE MESSAGE FROM API  */}
       {props.messsage ? (
         <div className="confirmation__container">
           <div className="confirmation__container-text message">

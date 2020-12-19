@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import UploadAvatar from './UploadAvatar';
 import { css } from '@emotion/core';
 import ScaleLoader from 'react-spinners/ScaleLoader';
+import { deleteUser } from '../../store/actions/userAction';
 
 const override = css`
   display: block;
@@ -12,6 +13,12 @@ const override = css`
 const Profile = (props) => {
   const [openEditAvatar, setEditAvatar] = useState(false);
 
+  const _deleteUser = (e) => {
+    e.preventDefault();
+    const data = { id: props.auth.user.id };
+    props.deleteUser(data, props.history);
+  };
+
   if (props.auth.isAuthenticated) {
     return (
       <div className="profile">
@@ -20,7 +27,7 @@ const Profile = (props) => {
         {/* HANDLE ERROR FROM API  */}
         {props.error ? (
           <div className="error">
-            <span className="error--text">{props.error}</span>
+            <span className="error--text">{props.error.message}</span>
           </div>
         ) : null}
 
@@ -50,8 +57,11 @@ const Profile = (props) => {
                 <button className="profile__card-cta-block-btn-group--edit btn">
                   Edit
                 </button>
-                <button className="profile__card-cta-block-btn-group--delete btn btn-delete">
-                  Delete
+                <button
+                  className="profile__card-cta-block-btn-group--delete btn btn-delete "
+                  onClick={_deleteUser}
+                >
+                  {props.loading ? 'processing..' : 'delete'}
                 </button>
               </div>
             </div>
@@ -81,6 +91,17 @@ const Profile = (props) => {
             </div>
           </div>
         </div>
+        {/* HANDLE MESSAGE FROM API  */}
+        {props.messsage ? (
+          <div className="profile__container">
+            <div className="profile__container-text message">
+              <p className="profile__container-text--message message--text">
+                {props.message}
+              </p>
+            </div>
+          </div>
+        ) : null}
+
         {props.loading ? (
           <div className="loading">
             <ScaleLoader
@@ -112,4 +133,4 @@ const mapStateToProps = (state) => ({
   error: state.error.error,
 });
 
-export default connect(mapStateToProps, {})(Profile);
+export default connect(mapStateToProps, { deleteUser })(Profile);

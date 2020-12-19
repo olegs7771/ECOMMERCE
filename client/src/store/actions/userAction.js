@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { LOADING, GET_API_MESSAGE, GET_API_ERROR } from './types';
+import { clearOutUser } from '../actions/authAction';
 
 // UPDATE USER AVATAR
 
@@ -37,5 +38,43 @@ export const updateAvatar = (data, history) => async (dispatch) => {
       type: GET_API_ERROR,
       payload: err.response.data.message,
     });
+  }
+};
+
+export const deleteUser = (data, history) => async (dispatch) => {
+  console.log('delete data in action', data, history);
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+
+  try {
+    const res = await axios.post('/api/v1/users', data);
+    console.log('res.data', res.data);
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    dispatch({
+      type: GET_API_MESSAGE,
+      payload: res.data.message,
+    });
+    //SIGN OUT AFTER 5 SEC
+    setTimeout(() => {
+      dispatch(clearOutUser());
+    }, 5000);
+    history.push('/');
+  } catch (err) {
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data,
+    });
+
+    console.log('err to delete', err.response.data);
+    // console.log('err', err);
   }
 };

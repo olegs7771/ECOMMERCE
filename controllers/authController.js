@@ -113,13 +113,11 @@ const login = asyncCatch(async (req, res, next) => {
   const user = await User.findOne({ email });
   // 2) CHECK IF USER EXISTS IN DB
   if (!user) return next(new AppErrorHandler('Such a user not exists!'));
-
-  if (!user)
-    if (!user.active)
-      // 3)CHECK IF USER ACTIVATED BY EMAIL
-      return next(
-        new AppErrorHandler('Account was deleted.Please sign up again', 400)
-      );
+  // 3)CHECK IF USER ACTIVE
+  if (!user.active)
+    return next(
+      new AppErrorHandler('Account was deleted.Please sign up again', 400)
+    );
   // 4)CHECK IF USER ACTIVATED BY EMAIL
   if (!user.activatedByEmail)
     return next(new AppErrorHandler('Account still not activated', 400));

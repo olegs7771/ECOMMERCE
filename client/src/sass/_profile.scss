@@ -18,8 +18,12 @@
     max-width: 120rem;
     margin: 0 auto;
     padding: 4rem;
+
     &-cta-block-btn-group--edit {
       margin-right: 4px;
+    }
+    &-cta-block-btn-group--delete {
+      width: 14.669rem;
     }
 
     // PROFILE SECTION
@@ -28,7 +32,7 @@
       margin-right: 2rem;
       border-radius: 3px;
       width: 100%;
-      padding: 6rem 18rem 4.1rem 18rem;
+      padding: 6rem 10rem 4.1rem 10rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
