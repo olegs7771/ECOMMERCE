@@ -31,20 +31,29 @@ const Confirmation = (props) => {
           </div>
         )}
       </div>
-
-      <div className="confirmation__container">
-        <div className="confirmation__container-text">
-          <p className="confirmation__container-text--message">
-            Please login using your creadentials
-          </p>
+      {props.messsage ? (
+        <div className="confirmation__container">
+          <div className="confirmation__container-text message">
+            <p className="confirmation__container-text--message message--text">
+              Please login using your creadentials
+            </p>
+          </div>
         </div>
-      </div>
+      ) : null}
+      {/* HANDLE ERROR FROM API  */}
+      {props.error ? (
+        <div className="error">
+          <span className="error--text">{props.error.message}</span>
+        </div>
+      ) : null}
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   loading: state.loading.loading,
+  message: state.message.message,
+  error: state.error.error,
 });
 
 export default connect(mapStateToProps, { confirmUser })(Confirmation);

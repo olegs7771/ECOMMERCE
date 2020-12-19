@@ -12,6 +12,14 @@ class UploadAvatar extends Component {
   };
 
   _onChange = (e) => {
+    console.log('changed', e.target.files[0]);
+    if (!e.target.files[0]) {
+      return this.setState({
+        selectedFilePreview: null,
+        showPreview: false,
+      });
+    }
+
     this.setState({
       showPreview: true,
       selectedFile: e.target.files[0],

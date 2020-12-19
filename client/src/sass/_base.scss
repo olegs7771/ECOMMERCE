@@ -1,11 +1,21 @@
 // COLORS
-$color-grey-light: #faf9f9;
+
+$color-blue: #227c9d;
+$color-blue-light: #17c3b2;
+$color-yellow: #ffcb77;
+$color-grey: #fef9ef;
+$color-red: #fe6d73;
 $color-grey-dark: rgb(93, 92, 92);
+
+$color-grey-light: #faf9f9;
+$color-grey-light-2: #dfdede;
 
 $color-valid: #419e41;
 $color-invalid: rgb(241, 105, 105);
 
 $font-primary: 'Andika New Basic', sans-serif;
+$box-shadow-big: 0px 10px 24px -5px rgba(0, 0, 0, 0.75);
+$box-shadow-small: 0px 5px 10px -8px rgba(0, 0, 0, 0.75);
 
 *,
 *::before,

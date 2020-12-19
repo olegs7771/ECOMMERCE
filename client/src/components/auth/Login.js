@@ -49,6 +49,12 @@ const Login = (props) => {
 
           <input type="submit" value="submit" className="btn btn-auth" />
         </form>
+        {/* HANDLE ERROR FROM API  */}
+        {props.error ? (
+          <div className="error">
+            <span className="error--text">{props.error.message}</span>
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -56,6 +62,7 @@ const Login = (props) => {
 
 const setStateToProps = (state) => ({
   auth: state.auth,
+  error: state.error.error,
 });
 
 export default connect(setStateToProps, { loginUserAction })(Login);

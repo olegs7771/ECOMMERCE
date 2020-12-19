@@ -27,6 +27,7 @@ if (localStorage.jwtToken) {
     email: decoded.email,
     name: decoded.name,
     role: decoded.role,
+    avatar: decoded.avatar,
   };
   store.dispatch(setCurrentUser(dataToRedux));
 

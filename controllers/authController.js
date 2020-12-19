@@ -9,6 +9,7 @@ const User = require('../models/User');
 const asyncCatch = require('../utils/asyncCatch');
 const AppErrorHandler = require('../utils/AppError');
 const Email = require('../utils/mail');
+const { APIGateway } = require('aws-sdk');
 
 //Create res object with token for cookies
 
@@ -19,6 +20,7 @@ const createSendToken = (user, statusCode, message, req, res) => {
     name: user.name,
     email: user.email,
     role: user.role,
+    avatar: user.avatar,
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -78,8 +80,12 @@ const signup = asyncCatch(async (req, res, next) => {
 //CONFIRM USER ACCOUNT BY EMAIL LINK
 const confirm = asyncCatch(async (req, res, next) => {
   console.log('req.body', req.body);
-  // 1) FIND USER AND COMPARE TEMP TOKEN
+  // 1) FIND USER
   const user = await User.findById(req.body.id);
+  // 2) CHECK IF USER ALREADY ACTIVATED VIA EMAIL
+  if (user.activatedByEmail)
+    return next(new AppErrorHandler('User alredy activated', 400));
+
   if (!user || !user.compareToken(req.body.token))
     return next(
       new AppErrorHandler(
@@ -88,13 +94,13 @@ const confirm = asyncCatch(async (req, res, next) => {
       )
     );
 
-  // 2)UPDATE USER  IN DB
+  // 3)UPDATE USER  IN DB
   user.activatedByEmail = true;
   user.confirmationToken = undefined;
   await user.save({ validateBeforeSave: false });
 
   console.log('user', user);
-  res.json({ message: 'success' });
+  res.json({ message: 'Please sign in using your credentials' });
 });
 
 //////////////////////////////////////////////////////////////////
@@ -105,13 +111,24 @@ const login = asyncCatch(async (req, res, next) => {
   if (!email || !password)
     return next(new AppErrorHandler('no empty fields', 400));
   const user = await User.findOne({ email });
-  console.log('user', user);
+  // 2) CHECK IF USER EXISTS IN DB
+  if (!user) return next(new AppErrorHandler('Such a user not exists!'));
 
-  // 2) check if user exists and password is correct
+  if (!user)
+    if (!user.active)
+      // 3)CHECK IF USER ACTIVATED BY EMAIL
+      return next(
+        new AppErrorHandler('Account was deleted.Please sign up again', 400)
+      );
+  // 4)CHECK IF USER ACTIVATED BY EMAIL
+  if (!user.activatedByEmail)
+    return next(new AppErrorHandler('Account still not activated', 400));
+
+  // 5) check if user exists and password is correct
   if (!user || !(await user.correctPassword(password, user.password)))
     return next(new AppErrorHandler('Incorrect email or password', 401));
 
-  // 3) if everything is ok , send token to user
+  // 6) if everything is ok , send token to user
   // createSendToken = (user, statusCode, req, res)
   const message = 'Login succefull';
   createSendToken(user, 200, message, req, res);

@@ -24,39 +24,56 @@ const Profile = (props) => {
           </div>
         ) : null}
 
-        <div className="profile__card-container">
-          <div className="profile__card-container-elem">
-            <span className="profile__card-container-lable">Name</span>
-            <span className="profile__card-container-lable">Email</span>
-            <span className="profile__card-container-lable">Role</span>
+        <div className="profile__card">
+          {/* PROFILE  */}
+          <div className="profile__card-detail">
+            <div className="profile__card-detail-block">
+              <div className="profile__card-elem">
+                <span className="profile__card-lable">Name</span>
+                <span className="profile__card-lable">Email</span>
+                <span className="profile__card-lable">Role</span>
+              </div>
+              <div className="profile__card-elem">
+                <span className="profile__card-lable">
+                  {props.auth.user.name}
+                </span>
+                <span className="profile__card-lable">
+                  {props.auth.user.email}
+                </span>
+                <span className="profile__card-lable">
+                  {props.auth.user.role}
+                </span>
+              </div>
+            </div>
+            <div className="profile__card-cta-block">
+              <div className="profile__card-cta-block-btn-group">
+                <button className="profile__card-cta-block-btn-group--edit btn">
+                  Edit
+                </button>
+                <button className="profile__card-cta-block-btn-group--delete btn btn-delete">
+                  Delete
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="profile__card-container-elem">
-            <span className="profile__card-container-lable">
-              {props.auth.user.name}
-            </span>
-            <span className="profile__card-container-lable">
-              {props.auth.user.email}
-            </span>
-            <span className="profile__card-container-lable">
-              {props.auth.user.role}
-            </span>
-          </div>
-
-          <div className="profile__card-container-elem  profile__image-block">
-            <img
-              src={`https://test-ecommerce-bucket-1.s3.amazonaws.com/avatars/hero_${props.auth.user.id}.jpg`}
-              alt="hero user"
-              className="profile__card-container--image"
-            />
-            <div className="profile__image-block--btn-group">
+          {/* AVATAR  */}
+          <div className="profile__card-avatar">
+            <div className="profile__card-avatar-image-block">
+              <img
+                src={`https://test-ecommerce-bucket-1.s3.amazonaws.com/avatars/${props.auth.user.avatar}`}
+                alt="hero user"
+                className="profile__card-avatar--image"
+              />
+            </div>
+            <div className="profile__card-avatar-btn-group">
               <button
-                className=" btn profile__image-block--btn-edit"
+                className=" btn profile__card-avatar-btn-group--edit"
                 onClick={() => setEditAvatar(true)}
               >
                 Edit
               </button>
               <button
-                className=" btn profile__image-block--btn-cancel"
+                className=" btn profile__image-block-btn--cancel"
                 onClick={() => setEditAvatar(false)}
               >
                 Cancel

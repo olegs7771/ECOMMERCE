@@ -3,6 +3,7 @@ import {
   SET_CURRENT_USER,
   CLEAR_OUT_USER,
   GET_API_ERROR,
+  GET_API_MESSAGE,
   LOADING,
 } from './types';
 import jwt_decoded from 'jwt-decode';
@@ -40,10 +41,18 @@ export const confirmUser = (data) => async (dispatch) => {
       type: LOADING,
       payload: false,
     });
+    dispatch({
+      type: GET_API_MESSAGE,
+      payload: res.data.message,
+    });
   } catch (err) {
     dispatch({
       type: LOADING,
       payload: false,
+    });
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data,
     });
     console.log('error confirm ', err.response.data);
   }
@@ -71,12 +80,17 @@ export const loginUserAction = (data, history) => async (dispatch) => {
         email: decoded.email,
         name: decoded.name,
         role: decoded.role,
+        avatar: decoded.avatar,
       };
       dispatch(setCurrentUser(dataToRedux));
       history.push('/');
     }
   } catch (err) {
     console.log('err:', err.response.data);
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data,
+    });
   }
 };
 

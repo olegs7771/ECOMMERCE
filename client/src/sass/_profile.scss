@@ -1,6 +1,9 @@
 .profile {
   text-align: center;
   padding: 4rem 0;
+  height: 100vh;
+  background-color: $color-grey-light;
+  color: $color-grey;
 
   &__heading {
     font-weight: 400;
@@ -9,13 +12,66 @@
     margin-bottom: 3rem;
   }
 
-  &__card-container {
-    border: 1px solid black;
+  &__card {
     display: flex;
     justify-content: center;
-    width: 60%;
+    max-width: 120rem;
     margin: 0 auto;
     padding: 4rem;
+    &-cta-block-btn-group--edit {
+      margin-right: 4px;
+    }
+
+    // PROFILE SECTION
+    &-detail {
+      background-color: $color-blue-light;
+      margin-right: 2rem;
+      border-radius: 3px;
+      width: 100%;
+      padding: 6rem 18rem 4.1rem 18rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      &-block {
+        display: flex;
+      }
+    }
+
+    // AVATAR SECTION
+    &-avatar {
+      background-color: $color-blue-light;
+      border-radius: 3px;
+
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      &-image-block {
+        width: 30rem;
+      }
+
+      &--image {
+        width: 100%;
+        clip-path: circle(35%);
+      }
+
+      &-btn-group {
+        // border: 1px solid black;
+        padding: 2rem 0;
+        display: flex;
+        justify-content: space-evenly;
+
+        &--edit {
+          margin-right: 3px;
+        }
+        &--cancel {
+          margin-right: 3px;
+        }
+      }
+    }
 
     &-lable {
       font-size: 1.6rem;
@@ -23,10 +79,6 @@
       display: inline-block;
       margin-bottom: 2rem;
       text-transform: uppercase;
-    }
-    &--image {
-      width: 100%;
-      clip-path: circle(35%);
     }
 
     &-elem {
@@ -37,24 +89,11 @@
     }
   }
 
-  &__image-block {
-    // border: 1px solid black;
-
-    &--btn-group {
-      // border: 1px solid black;
-      padding: 2rem 0;
-      display: flex;
-      justify-content: space-evenly;
-    }
-
-    &--btn-edit {
-      margin-right: 3px;
-    }
-  }
   // UploadAvatar Component
 
   &__avatar {
-    border: 1px solid black;
+    border-radius: 3px;
+    background-color: $color-blue-light;
     display: flex;
     justify-content: center;
     width: 60%;
@@ -92,8 +131,4 @@
       opacity: 0;
     }
   }
-}
-
-.loading {
-  margin-top: 10rem;
 }
