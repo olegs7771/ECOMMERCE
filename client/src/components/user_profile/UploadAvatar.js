@@ -68,13 +68,13 @@ class UploadAvatar extends Component {
               onChange={this._onChange}
             />
             <button className="btn" type="submit">
-              Submit
+              {this.props.loading ? 'Loading..' : 'Submit'}
             </button>
           </form>
           {/* PROPS COMING FROM PARENT  */}
           {this.props.message ? (
-            <div className="profile__avatar-form--message">
-              <span className="profile__avatar-form--message-text">
+            <div className=" profile__avatar-form--message  message">
+              <span className="profile__avatar-form--message-text ">
                 {this.props.message}
               </span>
             </div>

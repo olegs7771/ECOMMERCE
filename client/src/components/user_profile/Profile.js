@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import UploadAvatar from './UploadAvatar';
-import { css } from '@emotion/core';
-import ScaleLoader from 'react-spinners/ScaleLoader';
 import { deleteUser } from '../../store/actions/userAction';
 
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
 const Profile = (props) => {
   const [openEditAvatar, setEditAvatar] = useState(false);
 
@@ -27,7 +20,9 @@ const Profile = (props) => {
         {/* HANDLE ERROR FROM API  */}
         {props.error ? (
           <div className="error">
-            <span className="error--text">{props.error.message}</span>
+            <span className="error--text">
+              {props.error.message || props.error}
+            </span>
           </div>
         ) : null}
 
@@ -92,7 +87,7 @@ const Profile = (props) => {
           </div>
         </div>
         {/* HANDLE MESSAGE FROM API  */}
-        {props.messsage ? (
+        {props.message ? (
           <div className="profile__container">
             <div className="profile__container-text message">
               <p className="profile__container-text--message message--text">
@@ -102,23 +97,13 @@ const Profile = (props) => {
           </div>
         ) : null}
 
-        {props.loading ? (
-          <div className="loading">
-            <ScaleLoader
-              css={override}
-              size={150}
-              color={'#939090'}
-              loading={props.loading}
-            />
-          </div>
-        ) : (
-          <UploadAvatar
-            id={props.auth.user.id}
-            history={props.history}
-            message={props.message}
-            open={openEditAvatar}
-          />
-        )}
+        <UploadAvatar
+          id={props.auth.user.id}
+          history={props.history}
+          message={props.message}
+          open={openEditAvatar}
+          loading={props.loading}
+        />
       </div>
     );
   } else {

@@ -53,8 +53,16 @@
     text-transform: uppercase;
     transition: 0.2s;
     color: $color-grey;
+    display: flex;
+
     &:hover {
       color: lightblue;
     }
   }
+}
+.nav__link-icon {
+  height: 2.5rem;
+  width: 2.5rem;
+  margin-right: 1rem;
+  fill: currentColor;
 }

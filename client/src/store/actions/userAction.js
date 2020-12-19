@@ -62,8 +62,9 @@ export const deleteUser = (data, history) => async (dispatch) => {
     //SIGN OUT AFTER 5 SEC
     setTimeout(() => {
       dispatch(clearOutUser());
+      localStorage.removeItem('jwtToken');
+      history.push('/');
     }, 5000);
-    history.push('/');
   } catch (err) {
     dispatch({
       type: LOADING,

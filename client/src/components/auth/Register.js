@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { signupUserAction } from '../../store/actions/authAction';
 import { connect } from 'react-redux';
+import sprite from '../../img/sprite.svg';
 
 const Register = (props) => {
   const [name, setName] = useState('');
@@ -19,6 +20,8 @@ const Register = (props) => {
 
     props.signupUserAction(data, props.history);
   };
+
+  console.log('test', process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
   return (
     <div className="register">
@@ -79,6 +82,12 @@ const Register = (props) => {
           </div>
           <input type="submit" value="submit" className="btn" />
         </form>
+        <button className="btn register__form-google-btn ">
+          <svg className="nav__link-icon">
+            <use href={sprite + '#icon-google-plus'} />
+          </svg>
+          Continue with Google
+        </button>
         {/* HANDLE ERROR FROM API  */}
         {props.error ? (
           <div className="error">

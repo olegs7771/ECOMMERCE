@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { clearOutUser } from '../../store/actions/authAction';
 import { withRouter } from 'react-router-dom';
+import sprite from '../../img/sprite.svg';
 
 const Navigation = (props) => {
   const _logotUser = () => {
@@ -17,7 +18,10 @@ const Navigation = (props) => {
           <div className="nav__user">
             <li className="nav__item">
               <a href="/" className="nav__link">
-                Home
+                <svg className="nav__link-icon">
+                  <use href={sprite + '#icon-home'} />
+                </svg>
+                home
               </a>
             </li>
             <li className="nav__item">
@@ -30,6 +34,9 @@ const Navigation = (props) => {
           <div className="nav__user">
             <li className="nav__item">
               <a href="/" className="nav__link">
+                <svg className="nav__link-icon">
+                  <use href={sprite + '#icon-home'} />
+                </svg>
                 Home
               </a>
             </li>
@@ -61,11 +68,17 @@ const Navigation = (props) => {
           <div className="nav__auth">
             <li className="nav__item">
               <a href="/login" className="nav__link">
+                <svg className="nav__link-icon">
+                  <use href={sprite + '#icon-user'} />
+                </svg>
                 Login
               </a>
             </li>
             <li className="nav__item">
               <a href="/register" className="nav__link">
+                <svg className="nav__link-icon">
+                  <use href={sprite + '#icon-user-plus'} />
+                </svg>
                 Register
               </a>
             </li>
