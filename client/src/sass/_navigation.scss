@@ -1,16 +1,48 @@
 .nav {
   //   background-color: lightblue;
-  border-bottom: 0.3px solid $color-grey;
+
   padding: 2rem 4rem;
+  background-color: $color-blue;
+  color: $color-grey;
+
   &__list {
     display: flex;
     justify-content: space-between;
     list-style: none;
+    align-items: center;
+    height: 7rem;
+    padding: 0 5rem;
   }
 
   &__user,
   &__auth {
     display: flex;
+    align-items: center;
+
+    &-box {
+      // border: 1px solid black;
+      display: flex;
+      align-items: center;
+    }
+    &--name {
+      font-size: 1.8rem;
+      text-transform: uppercase;
+    }
+  }
+
+  &__item {
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+
+  &__img-box {
+    width: 8rem;
+    clip-path: circle(40%);
+  }
+  &__img {
+    width: 100%;
+    display: block;
   }
 
   &__link:link,
@@ -20,8 +52,17 @@
     text-decoration: none;
     text-transform: uppercase;
     transition: 0.2s;
+    color: $color-grey;
+    display: flex;
+
     &:hover {
       color: lightblue;
     }
   }
+}
+.nav__link-icon {
+  height: 2.5rem;
+  width: 2.5rem;
+  margin-right: 1rem;
+  fill: currentColor;
 }

@@ -1,0 +1,137 @@
+.profile {
+  text-align: center;
+  padding: 4rem 0;
+  height: 100vh;
+  background-color: $color-grey-light;
+  color: $color-grey;
+
+  &__heading {
+    font-weight: 400;
+    font-family: italic;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  &__card {
+    display: flex;
+    justify-content: center;
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 4rem;
+
+    &-cta-block-btn-group--edit {
+      margin-right: 4px;
+    }
+    &-cta-block-btn-group--delete {
+      width: 14.669rem;
+    }
+
+    // PROFILE SECTION
+    &-detail {
+      background-color: $color-blue-light;
+      margin-right: 2rem;
+      border-radius: 3px;
+      width: 100%;
+      padding: 6rem 10rem 4.1rem 10rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      &-block {
+        display: flex;
+      }
+    }
+
+    // AVATAR SECTION
+    &-avatar {
+      background-color: $color-blue-light;
+      border-radius: 3px;
+
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      &-image-block {
+        width: 30rem;
+      }
+
+      &--image {
+        width: 100%;
+        clip-path: circle(35%);
+      }
+
+      &-btn-group {
+        // border: 1px solid black;
+        padding: 2rem 0;
+        display: flex;
+        justify-content: space-evenly;
+
+        &--edit {
+          margin-right: 3px;
+        }
+        &--cancel {
+          margin-right: 3px;
+        }
+      }
+    }
+
+    &-lable {
+      font-size: 1.6rem;
+      border-bottom: 0.3px solid $color-grey-light;
+      display: inline-block;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
+
+    &-elem {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  // UploadAvatar Component
+
+  &__avatar {
+    border-radius: 3px;
+    background-color: $color-blue-light;
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    margin: 0 auto;
+    padding: 4rem;
+    margin-top: 1rem;
+    flex-direction: column;
+    opacity: 1;
+    transition: 0.2s;
+
+    &-container {
+      display: flex;
+      flex-direction: column;
+
+      &--preview {
+        padding: 2rem;
+      }
+
+      &--preview-img {
+        width: 100%;
+      }
+    }
+
+    &-form {
+      margin: 3rem 0;
+      &--message {
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        padding: 1rem 2rem;
+        align-self: center;
+      }
+    }
+    &--hide {
+      opacity: 0;
+    }
+  }
+}
