@@ -32,12 +32,10 @@ const Confirmation = (props) => {
         )}
       </div>
       {/* HANDLE MESSAGE FROM API  */}
-      {props.messsage ? (
-        <div className="confirmation__container">
-          <div className="confirmation__container-text message">
-            <p className="confirmation__container-text--message message--text">
-              Please login using your creadentials
-            </p>
+      {props.message ? (
+        <div className="confirmation__message">
+          <div className="message">
+            <p className="message--text">{props.message}</p>
           </div>
         </div>
       ) : null}

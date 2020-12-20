@@ -9,19 +9,21 @@ class GoogleoAUth extends Component {
   };
 
   responseGoogle = (response) => {
-    console.log('response', response.profileObj);
-    const data = {
-      name: response.profileObj.name,
-      email: response.profileObj.email,
-      password1: response.profileObj.googleId,
-      password2: response.profileObj.googleId,
-      avatar: response.profileObj.imageUrl,
-    };
-    this.setState({
-      data,
-    });
+    if (!response.error) {
+      console.log('response', response.profileObj);
+      const data = {
+        name: response.profileObj.name,
+        email: response.profileObj.email,
+        password1: response.profileObj.googleId,
+        password2: response.profileObj.googleId,
+        avatar: response.profileObj.imageUrl,
+      };
+      this.setState({
+        data,
+      });
 
-    this.props.signupUserAction(this.state.data);
+      this.props.signupUserAction(this.state.data, this.props.history);
+    }
   };
 
   render() {

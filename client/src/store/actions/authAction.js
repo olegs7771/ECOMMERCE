@@ -13,15 +13,41 @@ import setAuthToken from '../../utils/setAuthToken';
 //SIGN NEW USER WITH FORM OR OAUTH2 GOOGLE
 export const signupUserAction = (data, history) => async (dispatch) => {
   console.log('data in signup action', data);
+  ////////////////////////////////////////////////////////////////////
   //1) CHECK IF SIGNINGUP WITH data.avatar THAN IT'S oAUth2 GOOGLE
   if (data.avatar) {
     console.log('AUTH2 in action');
     try {
       const res = await axios.post('/api/v1/users/signup', data);
       console.log('res.data', res.data);
+
       //2) CHECK IF USER ALREADY CREATED THEN LOG IN
       if (res.data.message.startsWith('Login')) {
-        console.log('Login User');
+        console.log('Login Existing User');
+        if (res.data.token) {
+          const { token } = res.data;
+
+          // SET TOKEN IN localStorage
+          localStorage.setItem('jwtToken', token);
+
+          //SET TOKEN
+          setAuthToken();
+
+          const decoded = jwt_decoded(token);
+          console.log('decoded', decoded);
+          const dataToRedux = {
+            id: decoded.id,
+            email: decoded.email,
+            name: decoded.name,
+            role: decoded.role,
+            avatar: decoded.avatar,
+          };
+          dispatch(setCurrentUser(dataToRedux));
+          history.push('/');
+        }
+      } else {
+        // USER NOT EXISTS SIGNUP AND LOGIN
+        console.log('Login New User');
         if (res.data.token) {
           const { token } = res.data;
 
@@ -46,17 +72,35 @@ export const signupUserAction = (data, history) => async (dispatch) => {
       }
     } catch (err) {
       console.log('err:', err);
-      // dispatch({
-      //   type: GET_API_ERROR,
-      //   payload: err.response.data.message,
-      // });
+      dispatch({
+        type: GET_API_ERROR,
+        payload: err.response.data.message,
+      });
     }
   } else {
+    //////////////////////////////////////////////////////////////////////////
+    // SIGNING UP WITH FORM
     try {
+      dispatch({
+        type: LOADING,
+        payload: true,
+      });
       const res = await axios.post('/api/v1/users/signup', data);
       console.log('res.data', res.data);
+      dispatch({
+        type: LOADING,
+        payload: false,
+      });
+      dispatch({
+        type: GET_API_MESSAGE,
+        payload: res.data.message,
+      });
     } catch (err) {
       console.log('err', err.response.data);
+      dispatch({
+        type: LOADING,
+        payload: false,
+      });
       dispatch({
         type: GET_API_ERROR,
         payload: err.response.data.message,

@@ -50,23 +50,25 @@ const signup = asyncCatch(async (req, res, next) => {
     //CHECK IF USER ALREADY EXISTS
     const user = await User.findOne({ email: req.body.email });
     // IF USER ALREDY IN DB LOGIN HIM
-    const message = 'Login succefull';
-    if (user) return createSendToken(user, 200, message, req, res);
+
+    if (user) return createSendToken(user, 200, 'Login succefull', req, res);
 
     //PERFORM SIGNUP WITH oAUth2 WITHOUT CONFIRMATION
     //LOGIN INSTANTLY
-    // const newUser = await User.create({
-    //   name: req.body.name,
-    //   email: req.body.email,
-    //   password: req.body.password1,
-    //   passwordConfirm: req.body.password2,
-    //   avatar: req.body.avatar,
-    //   active: true,
-    //   activatedByEmail: true,
-    // });
+    const newUser = await User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password1,
+      passwordConfirm: req.body.password2,
+      avatar: req.body.avatar,
+      active: true,
+      activatedByEmail: true,
+    });
 
-    // const message = 'Registration Successful';
-    // createSendToken(newUser, 200, message, req, res);
+    const message = 'Registration Successful';
+    createSendToken(newUser, 200, message, req, res);
+
+    // SIGNING WITH FORM
   } else {
     const newUser = await User.create({
       name: req.body.name,
@@ -93,7 +95,7 @@ const signup = asyncCatch(async (req, res, next) => {
     // //SEND EMAIL WITH CONFIRMATION LINK
     await new Email(newUser, url).sendWelcome();
 
-    const message = `User ${req.body.name} was create. 
+    const message = `User ${req.body.name} was created. 
   Pleace check your email ${req.body.email} `;
     res.status(200).json({ status: 'success', message });
   }
@@ -172,6 +174,7 @@ const protect = asyncCatch(async (req, res, next) => {
   //   token = req.headers.authorization.split(' ')[1];
   // }
   // TOKEN IN COOKIE
+  console.log('req.headers', req.headers);
   if (req.headers.cookie && req.headers.cookie.startsWith('jwt')) {
     console.log('token', token);
     token = req.headers.cookie.substring(4);

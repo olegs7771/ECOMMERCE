@@ -49,9 +49,13 @@ const Navigation = (props) => {
             <li className="nav__item">
               <div className="nav__auth-box">
                 <div className="nav__img-box">
-                  {/* CHECK IF USERS */}
+                  {/* CHECK IF USERS SIGNED WITH oAUTH2 */}
                   <img
-                    src={`https://test-ecommerce-bucket-1.s3.amazonaws.com/avatars/${props.auth.user.avatar}`}
+                    src={
+                      props.auth.user.avatar.startsWith('https://lh3')
+                        ? `${props.auth.user.avatar}`
+                        : `https://test-ecommerce-bucket-1.s3.amazonaws.com/avatars/${props.auth.user.avatar}`
+                    }
                     alt="auth img"
                     className="nav__img"
                   />

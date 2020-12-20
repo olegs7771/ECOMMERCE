@@ -65,7 +65,11 @@ const Profile = (props) => {
           <div className="profile__card-avatar">
             <div className="profile__card-avatar-image-block">
               <img
-                src={`https://test-ecommerce-bucket-1.s3.amazonaws.com/avatars/${props.auth.user.avatar}`}
+                src={
+                  props.auth.user.avatar.startsWith('https://lh3')
+                    ? `${props.auth.user.avatar}`
+                    : `https://test-ecommerce-bucket-1.s3.amazonaws.com/avatars/${props.auth.user.avatar}`
+                }
                 alt="hero user"
                 className="profile__card-avatar--image"
               />
