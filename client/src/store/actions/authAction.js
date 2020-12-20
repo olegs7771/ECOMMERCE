@@ -5,22 +5,63 @@ import {
   GET_API_ERROR,
   GET_API_MESSAGE,
   LOADING,
+  GOOGLE_OAUTH2,
 } from './types';
 import jwt_decoded from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 
-//SIGN NEW USER
+//SIGN NEW USER WITH FORM OR OAUTH2 GOOGLE
 export const signupUserAction = (data, history) => async (dispatch) => {
-  console.log('data in action', data);
-  try {
-    const res = await axios.post('/api/v1/users/signup', data);
-    console.log('res.data', res.data);
-  } catch (err) {
-    console.log('err', err.response.data);
-    dispatch({
-      type: GET_API_ERROR,
-      payload: err.response.data.message,
-    });
+  console.log('data in signup action', data);
+  //1) CHECK IF SIGNINGUP WITH data.avatar THAN IT'S oAUth2 GOOGLE
+  if (data.avatar) {
+    console.log('AUTH2 in action');
+    try {
+      const res = await axios.post('/api/v1/users/signup', data);
+      console.log('res.data', res.data);
+      //2) CHECK IF USER ALREADY CREATED THEN LOG IN
+      if (res.data.message.startsWith('Login')) {
+        console.log('Login User');
+        if (res.data.token) {
+          const { token } = res.data;
+
+          // SET TOKEN IN localStorage
+          localStorage.setItem('jwtToken', token);
+
+          //SET TOKEN
+          setAuthToken();
+
+          const decoded = jwt_decoded(token);
+          console.log('decoded', decoded);
+          const dataToRedux = {
+            id: decoded.id,
+            email: decoded.email,
+            name: decoded.name,
+            role: decoded.role,
+            avatar: decoded.avatar,
+          };
+          dispatch(setCurrentUser(dataToRedux));
+          history.push('/');
+        }
+      }
+    } catch (err) {
+      console.log('err:', err);
+      // dispatch({
+      //   type: GET_API_ERROR,
+      //   payload: err.response.data.message,
+      // });
+    }
+  } else {
+    try {
+      const res = await axios.post('/api/v1/users/signup', data);
+      console.log('res.data', res.data);
+    } catch (err) {
+      console.log('err', err.response.data);
+      dispatch({
+        type: GET_API_ERROR,
+        payload: err.response.data.message,
+      });
+    }
   }
 };
 
@@ -92,6 +133,17 @@ export const loginUserAction = (data, history) => async (dispatch) => {
       payload: err.response.data,
     });
   }
+};
+
+// OAUTH2 GOOGLE API
+export const googleOAUth2 = (googleResponse) => async (dispatch) => {
+  if (typeof googleResponse === 'undefined') {
+    googleResponse = [];
+  }
+  dispatch({
+    type: GOOGLE_OAUTH2,
+    payload: googleResponse,
+  });
 };
 
 //SET CURRENT USER

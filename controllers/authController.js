@@ -9,7 +9,6 @@ const User = require('../models/User');
 const asyncCatch = require('../utils/asyncCatch');
 const AppErrorHandler = require('../utils/AppError');
 const Email = require('../utils/mail');
-const { APIGateway } = require('aws-sdk');
 
 //Create res object with token for cookies
 
@@ -42,38 +41,62 @@ const createSendToken = (user, statusCode, message, req, res) => {
 
 //CONTROLLERS
 
-// SIGNIN
+// SIGNIN WITH FORM OR OAUTH2 GOOGLE
 const signup = asyncCatch(async (req, res, next) => {
   console.log('req.body', req.body);
 
-  const newUser = await User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password1,
-    passwordConfirm: req.body.password2,
-  });
+  //1) CHECK IF req.body CONTAINS avatar key
+  if (req.body.avatar) {
+    //CHECK IF USER ALREADY EXISTS
+    const user = await User.findOne({ email: req.body.email });
+    // IF USER ALREDY IN DB LOGIN HIM
+    const message = 'Login succefull';
+    if (user) return createSendToken(user, 200, message, req, res);
 
-  const { id, token } = await newUser.createConfirmationToken();
+    //PERFORM SIGNUP WITH oAUth2 WITHOUT CONFIRMATION
+    //LOGIN INSTANTLY
+    // const newUser = await User.create({
+    //   name: req.body.name,
+    //   email: req.body.email,
+    //   password: req.body.password1,
+    //   passwordConfirm: req.body.password2,
+    //   avatar: req.body.avatar,
+    //   active: true,
+    //   activatedByEmail: true,
+    // });
 
-  console.log('token create in signup', token);
-  await newUser.save({ validateBeforeSave: false }); //save token temporary to the DB
-  //  URL CONTAINS ID AND CONFIRM TOKEN AS PARAMS
-  // const url = `${req.protocol}://${req.get(
-  //   'host'
-  // )}/api/v1/users/confirm/${id}/${token}`;
-  //  REDIRECT TO REACT CONFIRMATION PAGE
-  let url;
-  if (process.env.NODE_ENV === 'development') {
-    url = `http://127.0.0.1:3000/confirm/${id}/${token}`;
-  }
+    // const message = 'Registration Successful';
+    // createSendToken(newUser, 200, message, req, res);
+  } else {
+    const newUser = await User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password1,
+      passwordConfirm: req.body.password2,
+    });
 
-  console.log('url', url);
-  // //SEND EMAIL WITH CONFIRMATION LINK
-  await new Email(newUser, url).sendWelcome();
+    const { id, token } = await newUser.createConfirmationToken();
 
-  const message = `User ${req.body.name} was create. 
+    console.log('token create in signup', token);
+    await newUser.save({ validateBeforeSave: false }); //save token temporary to the DB
+    //  URL CONTAINS ID AND CONFIRM TOKEN AS PARAMS
+    // const url = `${req.protocol}://${req.get(
+    //   'host'
+    // )}/api/v1/users/confirm/${id}/${token}`;
+    //  REDIRECT TO REACT CONFIRMATION PAGE
+    let url;
+    if (process.env.NODE_ENV === 'development') {
+      url = `http://127.0.0.1:3000/confirm/${id}/${token}`;
+    }
+
+    console.log('url', url);
+    // //SEND EMAIL WITH CONFIRMATION LINK
+    await new Email(newUser, url).sendWelcome();
+
+    const message = `User ${req.body.name} was create. 
   Pleace check your email ${req.body.email} `;
-  res.status(200).json({ status: 'success', message });
+    res.status(200).json({ status: 'success', message });
+  }
 });
 
 /////////////////////////////////////////////////////////////////////

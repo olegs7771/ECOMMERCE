@@ -49,6 +49,7 @@ const Navigation = (props) => {
             <li className="nav__item">
               <div className="nav__auth-box">
                 <div className="nav__img-box">
+                  CHECK IF USERS
                   <img
                     src={`https://test-ecommerce-bucket-1.s3.amazonaws.com/avatars/${props.auth.user.avatar}`}
                     alt="auth img"
