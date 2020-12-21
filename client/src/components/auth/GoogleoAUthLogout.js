@@ -8,7 +8,7 @@ export class GoogleoAUthLogout extends Component {
   };
 
   logout = (response) => {
-    console.log('response logout', response);
+    console.log('google user logged out');
   };
 
   render() {
