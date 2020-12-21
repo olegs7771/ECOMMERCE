@@ -5,7 +5,6 @@ import {
   GET_API_ERROR,
   GET_API_MESSAGE,
   LOADING,
-  GOOGLE_OAUTH2,
 } from './types';
 import jwt_decoded from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
@@ -190,17 +189,6 @@ export const loginUserAction = (data, history) => async (dispatch) => {
       payload: err.response.data,
     });
   }
-};
-
-// OAUTH2 GOOGLE API
-export const googleOAUth2 = (googleResponse) => async (dispatch) => {
-  if (typeof googleResponse === 'undefined') {
-    googleResponse = [];
-  }
-  dispatch({
-    type: GOOGLE_OAUTH2,
-    payload: googleResponse,
-  });
 };
 
 //SET CURRENT USER

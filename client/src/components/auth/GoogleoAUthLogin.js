@@ -1,7 +1,12 @@
+// THIS COMPONENT PERFORMS SIGNIN AND LOGIN
+
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import { connect } from 'react-redux';
-import { googleOAUth2, signOauth2Action } from '../../store/actions/authAction';
+import {
+  signOauth2Action,
+  loginUserAction,
+} from '../../store/actions/authAction';
 
 class GoogleoAUth extends Component {
   state = {
@@ -22,7 +27,16 @@ class GoogleoAUth extends Component {
         data,
       });
 
-      this.props.signOauth2Action(this.state.data, this.props.history);
+      // IF USED AS SIGNUP or LOGIN
+      if (this.props.signup) {
+        this.props.signOauth2Action(this.state.data, this.props.history);
+      } else if (this.props.login) {
+        const data = {
+          email: response.profileObj.email,
+          password: response.profileObj.googleId,
+        };
+        this.props.loginUserAction(data, this.props.history);
+      }
     }
   };
 
@@ -30,7 +44,7 @@ class GoogleoAUth extends Component {
     return (
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-        buttonText="Sign in with Google"
+        buttonText={this.props.text}
         onSuccess={this.responseGoogle}
         onFailure={this.responseGoogle}
         cookiePolicy={'single_host_origin'}
@@ -40,4 +54,7 @@ class GoogleoAUth extends Component {
   }
 }
 
-export default connect(null, { googleOAUth2, signOauth2Action })(GoogleoAUth);
+export default connect(null, {
+  signOauth2Action,
+  loginUserAction,
+})(GoogleoAUth);

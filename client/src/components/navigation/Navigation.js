@@ -1,16 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { clearOutUser } from '../../store/actions/authAction';
+
 import { withRouter } from 'react-router-dom';
 import sprite from '../../img/sprite.svg';
-import GoogleoAUthLogout from '../auth/GoogleoAUthLogout';
-const Navigation = (props) => {
-  const _logotUser = () => {
-    props.clearOutUser(); /// clear redux state
-    localStorage.removeItem('jwtToken');
-    props.history.push('/');
-  };
+import GoogleLogout from '../auth/GoogleoAUthLogout';
 
+const Navigation = (props) => {
   return (
     <nav className="nav">
       <ul className="nav__list">
@@ -56,20 +51,16 @@ const Navigation = (props) => {
                         ? `${props.auth.user.avatar}`
                         : `https://test-ecommerce-bucket-1.s3.amazonaws.com/avatars/${props.auth.user.avatar}`
                     }
-                    alt="auth img"
+                    alt="user img"
                     className="nav__img"
                   />
                 </div>
                 <span className="nav__auth--name">{props.auth.user.name}</span>
               </div>
             </li>
+
             <li className="nav__item">
-              <button className="btn" onClick={_logotUser}>
-                Logout
-              </button>
-            </li>
-            <li className="nav__item">
-              <GoogleoAUthLogout />
+              <GoogleLogout history={props.history} />
             </li>
           </div>
         ) : (
@@ -101,6 +92,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { clearOutUser })(
-  withRouter(Navigation)
-);
+export default connect(mapStateToProps, {})(withRouter(Navigation));

@@ -105,7 +105,11 @@ const Register = (props) => {
         </svg>
         Continue with Google
       </button> */}
-          <GoogleoAUthLogin history={props.history} />
+          <GoogleoAUthLogin
+            history={props.history}
+            text="Sign up with Google"
+            signup={true}
+          />
 
           {/* HANDLE ERROR FROM API  */}
           {props.error ? (

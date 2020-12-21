@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { loginUserAction } from '../../store/actions/authAction';
+import GoogleoAUthLogin from './GoogleoAUthLogin';
 
 const Login = (props) => {
   const [email, setEmail] = useState('');
@@ -49,6 +50,11 @@ const Login = (props) => {
 
           <input type="submit" value="submit" className="btn btn-auth" />
         </form>
+        <GoogleoAUthLogin
+          text="Login with Google"
+          history={props.history}
+          login={true}
+        />
         {/* HANDLE ERROR FROM API  */}
         {props.error ? (
           <div className="error">

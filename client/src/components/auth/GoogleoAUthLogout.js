@@ -1,29 +1,27 @@
+// THIS COMPONENT LOGOUT GOOGLE USER AND SERVE AS LOGOUT BUTTON FOR APP
+
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { GoogleLogout } from 'react-google-login';
+import { connect } from 'react-redux';
+import { clearOutUser } from '../../store/actions/authAction';
 
-export class GoogleoAUthLogout extends Component {
-  state = {
-    data: {},
-  };
-
-  logout = (response) => {
-    console.log('google user logged out');
-  };
-
+class GoogleoAUthLogout extends Component {
   render() {
+    const responseLogout = () => {
+      this.props.clearOutUser();
+      localStorage.removeItem('jwtToken');
+      this.props.history.push('/');
+    };
+
     return (
       <GoogleLogout
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         buttonText="Logout"
-        onLogoutSuccess={this.logout}
+        onLogoutSuccess={responseLogout}
+        icon={false}
       />
     );
   }
 }
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GoogleoAUthLogout);
+export default connect(null, { clearOutUser })(GoogleoAUthLogout);
