@@ -41,64 +41,60 @@ const createSendToken = (user, statusCode, message, req, res) => {
 
 //CONTROLLERS
 
-// SIGNIN WITH FORM OR OAUTH2 GOOGLE
+const signOauth2 = asyncCatch(async (req, res, next) => {
+  // 1) CHECK IF USER ALREADY EXISTS
+  const user = await User.findOne({ email: req.body.email });
+  // IF USER ALREDY IN DB LOGIN HIM
+  if (user) return createSendToken(user, 200, 'Login succefull', req, res);
+
+  //PERFORM SIGNUP WITH oAUth2 WITHOUT CONFIRMATION
+  //LOGIN INSTANTLY
+  const newUser = await User.create({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password1,
+    passwordConfirm: req.body.password2,
+    avatar: req.body.avatar,
+    active: true,
+    activatedByEmail: true,
+  });
+
+  const message = 'Registration Successful';
+  createSendToken(newUser, 200, message, req, res);
+});
+
+// SIGNIN WITH FORM
 const signup = asyncCatch(async (req, res, next) => {
   console.log('req.body', req.body);
 
-  //1) CHECK IF req.body CONTAINS avatar key
-  if (req.body.avatar) {
-    //CHECK IF USER ALREADY EXISTS
-    const user = await User.findOne({ email: req.body.email });
-    // IF USER ALREDY IN DB LOGIN HIM
+  const newUser = await User.create({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password1,
+    passwordConfirm: req.body.password2,
+  });
 
-    if (user) return createSendToken(user, 200, 'Login succefull', req, res);
+  const { id, token } = await newUser.createConfirmationToken();
 
-    //PERFORM SIGNUP WITH oAUth2 WITHOUT CONFIRMATION
-    //LOGIN INSTANTLY
-    const newUser = await User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password1,
-      passwordConfirm: req.body.password2,
-      avatar: req.body.avatar,
-      active: true,
-      activatedByEmail: true,
-    });
-
-    const message = 'Registration Successful';
-    createSendToken(newUser, 200, message, req, res);
-
-    // SIGNING WITH FORM
-  } else {
-    const newUser = await User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password1,
-      passwordConfirm: req.body.password2,
-    });
-
-    const { id, token } = await newUser.createConfirmationToken();
-
-    console.log('token create in signup', token);
-    await newUser.save({ validateBeforeSave: false }); //save token temporary to the DB
-    //  URL CONTAINS ID AND CONFIRM TOKEN AS PARAMS
-    // const url = `${req.protocol}://${req.get(
-    //   'host'
-    // )}/api/v1/users/confirm/${id}/${token}`;
-    //  REDIRECT TO REACT CONFIRMATION PAGE
-    let url;
-    if (process.env.NODE_ENV === 'development') {
-      url = `http://127.0.0.1:3000/confirm/${id}/${token}`;
-    }
-
-    console.log('url', url);
-    // //SEND EMAIL WITH CONFIRMATION LINK
-    await new Email(newUser, url).sendWelcome();
-
-    const message = `User ${req.body.name} was created. 
-  Pleace check your email ${req.body.email} `;
-    res.status(200).json({ status: 'success', message });
+  console.log('token create in signup', token);
+  await newUser.save({ validateBeforeSave: false }); //save token temporary to the DB
+  //  URL CONTAINS ID AND CONFIRM TOKEN AS PARAMS
+  // const url = `${req.protocol}://${req.get(
+  //   'host'
+  // )}/api/v1/users/confirm/${id}/${token}`;
+  //  REDIRECT TO REACT CONFIRMATION PAGE
+  let url;
+  if (process.env.NODE_ENV === 'development') {
+    url = `http://127.0.0.1:3000/confirm/${id}/${token}`;
   }
+
+  console.log('url', url);
+  // //SEND EMAIL WITH CONFIRMATION LINK
+  await new Email(newUser, url).sendWelcome();
+
+  const message = `User ${req.body.name} was created. 
+  Pleace check your email ${req.body.email} `;
+  res.status(200).json({ status: 'success', message });
 });
 
 /////////////////////////////////////////////////////////////////////
@@ -174,8 +170,15 @@ const protect = asyncCatch(async (req, res, next) => {
   //   token = req.headers.authorization.split(' ')[1];
   // }
   // TOKEN IN COOKIE
-  console.log('req.headers', req.headers);
-  if (req.headers.cookie && req.headers.cookie.startsWith('jwt')) {
+  // req.headers.cookie.startsWith('G_AUTHUSER_H')
+  // console.log('req.headers.cookie', req.headers.cookie.split(';')[1]);
+
+  // IF COOKIE COMES WITH G_AUTHUSER_H
+  if (req.headers.cookie && req.headers.cookie.startsWith('G_AUTHUSER_H')) {
+    token = req.headers.cookie.split(';')[1].substring(5);
+    console.log('token1', token);
+    // IF COOKIE COMES WITH jwt only
+  } else if (req.headers.cookie && req.headers.cookie.startsWith('jwt')) {
     console.log('token', token);
     token = req.headers.cookie.substring(4);
   }
@@ -212,4 +215,4 @@ const protect = asyncCatch(async (req, res, next) => {
   next();
 });
 
-module.exports = { signup, confirm, login, protect };
+module.exports = { signup, signOauth2, confirm, login, protect };

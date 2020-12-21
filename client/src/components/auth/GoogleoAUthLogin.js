@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import { connect } from 'react-redux';
-import { googleOAUth2, signupUserAction } from '../../store/actions/authAction';
+import { googleOAUth2, signOauth2Action } from '../../store/actions/authAction';
 
 class GoogleoAUth extends Component {
   state = {
@@ -22,7 +22,7 @@ class GoogleoAUth extends Component {
         data,
       });
 
-      this.props.signupUserAction(this.state.data, this.props.history);
+      this.props.signOauth2Action(this.state.data, this.props.history);
     }
   };
 
@@ -30,7 +30,7 @@ class GoogleoAUth extends Component {
     return (
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-        buttonText="Login"
+        buttonText="Sign in with Google"
         onSuccess={this.responseGoogle}
         onFailure={this.responseGoogle}
         cookiePolicy={'single_host_origin'}
@@ -40,4 +40,4 @@ class GoogleoAUth extends Component {
   }
 }
 
-export default connect(null, { googleOAUth2, signupUserAction })(GoogleoAUth);
+export default connect(null, { googleOAUth2, signOauth2Action })(GoogleoAUth);
