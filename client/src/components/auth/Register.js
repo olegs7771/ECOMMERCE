@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { signupUserAction } from '../../store/actions/authAction';
 import { connect } from 'react-redux';
 // import sprite from '../../img/sprite.svg';
-import GoogleoAUth from './GoogleoAUth';
+import GoogleoAUthLogin from './GoogleoAUthLogin';
 
 const Register = (props) => {
   const [name, setName] = useState('');
@@ -105,7 +105,7 @@ const Register = (props) => {
         </svg>
         Continue with Google
       </button> */}
-          <GoogleoAUth history={props.history} />
+          <GoogleoAUthLogin history={props.history} />
 
           {/* HANDLE ERROR FROM API  */}
           {props.error ? (

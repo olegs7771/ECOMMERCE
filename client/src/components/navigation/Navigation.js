@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { clearOutUser } from '../../store/actions/authAction';
 import { withRouter } from 'react-router-dom';
 import sprite from '../../img/sprite.svg';
-
+import GoogleoAUthLogout from '../auth/GoogleoAUthLogout';
 const Navigation = (props) => {
   const _logotUser = () => {
     props.clearOutUser(); /// clear redux state
@@ -67,6 +67,9 @@ const Navigation = (props) => {
               <button className="btn" onClick={_logotUser}>
                 Logout
               </button>
+            </li>
+            <li className="nav__item">
+              <GoogleoAUthLogout />
             </li>
           </div>
         ) : (
