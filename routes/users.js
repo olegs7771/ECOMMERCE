@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
   signup,
+  signOauth2,
   confirm,
   login,
   protect,
@@ -14,6 +15,7 @@ const {
 } = require('../controllers/userController');
 
 router.route('/signup').post(signup);
+router.route('/signupOauth2').post(signOauth2);
 router.route('/confirm').post(confirm);
 router.route('/login').post(login);
 

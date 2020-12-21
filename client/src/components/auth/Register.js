@@ -95,7 +95,7 @@ const Register = (props) => {
             </div>
             <input
               type="submit"
-              value={props.loading ? 'Proccessing' : 'submit'}
+              value={props.loading ? 'Proccessing..' : 'submit'}
               className="btn"
             />
           </form>
