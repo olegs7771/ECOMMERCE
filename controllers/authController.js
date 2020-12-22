@@ -28,11 +28,13 @@ const createSendToken = (user, statusCode, message, req, res) => {
   //Send token to cookies
   res.cookie('jwt', token, {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000 //2d
+      Date.now() +
+        parseInt(process.env.JWT_COOKIE_EXP, 10) * 24 * 60 * 60 * 1000
     ),
     // maxAge: parseInt(process.env.JWT_COOKIE_EXP, 10), ///60s
     httpOnly: true,
     secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    sameSite: true,
   });
   res
     .status(statusCode)
@@ -44,8 +46,21 @@ const createSendToken = (user, statusCode, message, req, res) => {
 const signOauth2 = asyncCatch(async (req, res, next) => {
   // 1) CHECK IF USER ALREADY EXISTS
   const user = await User.findOne({ email: req.body.email });
+  // 2) CHECK IF USER ACTIVE (not deleted)
+  // IF USER WAS DELETED THEN WE UPDATE ACTIVE:true
+  if (!user.active) {
+    user.active = true;
+    user.save({ validateBeforeSave: false });
+    return createSendToken(user, 200, `Welcome back ${user.name}`, req, res);
+  }
+
   // IF USER ALREDY IN DB LOGIN HIM
-  if (user) return createSendToken(user, 200, 'Login succefull', req, res);
+  if (user && user.active)
+    return next(
+      new AppErrorHandler(
+        `User ${req.body.email} already exists in database.Please log in`
+      )
+    );
 
   //PERFORM SIGNUP WITH oAUth2 WITHOUT CONFIRMATION
   //LOGIN INSTANTLY

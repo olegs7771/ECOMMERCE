@@ -14,6 +14,7 @@ class GoogleoAUth extends Component {
   };
 
   responseGoogle = (response) => {
+    console.log('response.tokenId', response.tokenId);
     if (!response.error) {
       console.log('response', response.profileObj);
       const data = {
@@ -22,21 +23,22 @@ class GoogleoAUth extends Component {
         password1: response.profileObj.googleId,
         password2: response.profileObj.googleId,
         avatar: response.profileObj.imageUrl,
+        tokenId: response.tokenId,
       };
       this.setState({
         data,
       });
 
       // IF USED AS SIGNUP or LOGIN
-      if (this.props.signup) {
-        this.props.signOauth2Action(this.state.data, this.props.history);
-      } else if (this.props.login) {
-        const data = {
-          email: response.profileObj.email,
-          password: response.profileObj.googleId,
-        };
-        this.props.loginUserAction(data, this.props.history);
-      }
+      // if (this.props.signup) {
+      //   this.props.signOauth2Action(this.state.data, this.props.history);
+      // } else if (this.props.login) {
+      //   const data = {
+      //     email: response.profileObj.email,
+      //     password: response.profileObj.googleId,
+      //   };
+      //   this.props.loginUserAction(data, this.props.history);
+      // }
     }
   };
 

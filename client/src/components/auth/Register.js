@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { signupUserAction } from '../../store/actions/authAction';
 import { connect } from 'react-redux';
 // import sprite from '../../img/sprite.svg';

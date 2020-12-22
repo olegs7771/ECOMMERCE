@@ -4,15 +4,14 @@ import { confirmUser } from '../../store/actions/authAction';
 
 const Confirmation = (props) => {
   //  RECEIVING PARAMS
-  const id = props.match.params.id;
-  const token = props.match.params.token;
 
-  const data = { id, token };
-  const confirm = () => {
-    return props.confirmUser(data);
-  };
-
-  useEffect(() => {
+  useEffect((props) => {
+    const id = props.match.params.id;
+    const token = props.match.params.token;
+    const data = { id, token };
+    const confirm = () => {
+      return props.confirmUser(data);
+    };
     confirm();
   }, []);
 

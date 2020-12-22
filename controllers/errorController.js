@@ -38,6 +38,7 @@ module.exports = (err, req, res, next) => {
   /////////DEV//////////////
   //////////////////////////
   if (process.env.NODE_ENV === 'development') {
+    console.log('err ❗', err);
     sendErrorDev(err, res);
     ////////////////////////////
     ///////////////////////////

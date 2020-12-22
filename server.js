@@ -22,3 +22,7 @@ mongoose
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+const date = new Date(
+  Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000
+);
