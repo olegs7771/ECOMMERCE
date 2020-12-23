@@ -20,13 +20,14 @@ const Navigation = (props) => {
                 home
               </a>
             </li>
-            <li className="nav__item drop-menu">
+            <li className="nav__item " id="drop-menu">
               <a href="/" className="nav__link">
                 <svg className="nav__link-icon">
                   <use href={sprite + '#icon-menu'} />
                 </svg>
                 Details
               </a>
+              <DropMenu />
             </li>
             <li className="nav__item">
               <a href="/profile" className="nav__link">
@@ -93,7 +94,6 @@ const Navigation = (props) => {
           </div>
         )}
       </ul>
-      <DropMenu />
     </nav>
   );
 };

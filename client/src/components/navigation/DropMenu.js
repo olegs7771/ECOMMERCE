@@ -14,6 +14,11 @@ const DropMenu = () => {
             Contacts
           </a>
         </li>
+        <li className="drop-menu__item">
+          <a href="#" className="drop-menu__link">
+            Career
+          </a>
+        </li>
       </ul>
     </div>
   );

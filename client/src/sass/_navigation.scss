@@ -66,14 +66,33 @@
 }
 
 // DROP-MENU
+#drop-menu {
+  position: relative;
+  &:hover > .drop-menu {
+    animation: drop-menu 0.5s;
+    opacity: 1;
+  }
+}
 
-.drop-menu:link {
+.drop-menu {
+  position: absolute;
+  border: 1px solid black;
+  transform: translate(2rem, 2rem);
+  opacity: 0;
+
+  width: 10rem;
   &__list {
     list-style: none;
   }
   &__item {
+    padding: 1rem 0;
+    border: 1px solid black;
+    text-align: center;
+    background-color: lightblue;
   }
-  &__link {
+  &__link:link,
+  &__linked:visited {
     text-decoration: none;
+    font-size: 1.4rem;
   }
 }
