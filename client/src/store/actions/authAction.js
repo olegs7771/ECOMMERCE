@@ -10,6 +10,7 @@ import jwt_decoded from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 
 // SIGN NEW USER WITH OAUTH2 GOOGLE
+
 export const signOauth2Action = (data, history) => async (dispatch) => {
   console.log('data in sign oAUth2 action', data);
   dispatch({

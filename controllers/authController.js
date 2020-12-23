@@ -45,37 +45,42 @@ const createSendToken = (user, statusCode, message, req, res) => {
 
 const signOauth2 = asyncCatch(async (req, res, next) => {
   // 1) CHECK IF USER ALREADY EXISTS
-  const user = await User.findOne({ email: req.body.email });
-  // 2) CHECK IF USER ACTIVE (not deleted)
-  // IF USER WAS DELETED THEN WE UPDATE ACTIVE:true
-  if (!user.active) {
-    user.active = true;
-    user.save({ validateBeforeSave: false });
-    return createSendToken(user, 200, `Welcome back ${user.name}`, req, res);
-  }
+  //INCOMING BODY req.body.tokeId
+  console.log('req.body.tokenId', req.body.tokenId);
+  if (!req.body.tokenId && !req.body.tokenId.startsWith('eyJhbG'))
+    return next(new AppErrorHandler('Registration failed'));
 
-  // IF USER ALREDY IN DB LOGIN HIM
-  if (user && user.active)
-    return next(
-      new AppErrorHandler(
-        `User ${req.body.email} already exists in database.Please log in`
-      )
-    );
+  // const user = await User.findOne({ email: req.body.email });
+  // // 2) CHECK IF USER ACTIVE (not deleted)
+  // // IF USER WAS DELETED THEN WE UPDATE ACTIVE:true
+  // if (!user.active) {
+  //   user.active = true;
+  //   user.save({ validateBeforeSave: false });
+  //   return createSendToken(user, 200, `Welcome back ${user.name}`, req, res);
+  // }
 
-  //PERFORM SIGNUP WITH oAUth2 WITHOUT CONFIRMATION
-  //LOGIN INSTANTLY
-  const newUser = await User.create({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password1,
-    passwordConfirm: req.body.password2,
-    avatar: req.body.avatar,
-    active: true,
-    activatedByEmail: true,
-  });
+  // // IF USER ALREDY IN DB LOGIN HIM
+  // if (user && user.active)
+  //   return next(
+  //     new AppErrorHandler(
+  //       `User ${req.body.email} already exists in database.Please log in`
+  //     )
+  //   );
 
-  const message = 'Registration Successful';
-  createSendToken(newUser, 200, message, req, res);
+  // //PERFORM SIGNUP WITH oAUth2 WITHOUT CONFIRMATION
+  // //LOGIN INSTANTLY
+  // const newUser = await User.create({
+  //   name: req.body.name,
+  //   email: req.body.email,
+  //   password: req.body.password1,
+  //   passwordConfirm: req.body.password2,
+  //   avatar: req.body.avatar,
+  //   active: true,
+  //   activatedByEmail: true,
+  // });
+
+  // const message = 'Registration Successful';
+  // createSendToken(newUser, 200, message, req, res);
 });
 
 // SIGNIN WITH FORM

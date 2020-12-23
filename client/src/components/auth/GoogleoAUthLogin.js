@@ -1,22 +1,23 @@
 // THIS COMPONENT PERFORMS SIGNIN AND LOGIN
 
-import React, { Component } from 'react';
+import React from 'react';
 import GoogleLogin from 'react-google-login';
 import { connect } from 'react-redux';
 import {
   signOauth2Action,
   loginUserAction,
 } from '../../store/actions/authAction';
+import { oAUth2GoogleRefreshToken } from '../../utils/oAUth2GoogleRefreshToken';
 
-class GoogleoAUth extends Component {
-  state = {
-    data: {},
-  };
+const GoogleoAUth = (props) => {
+  ///////////////////////////////////////////
+  const responseGoogle = (response) => {
+    oAUth2GoogleRefreshToken(response);
 
-  responseGoogle = (response) => {
     console.log('response.tokenId', response.tokenId);
     if (!response.error) {
-      console.log('response', response.profileObj);
+      console.log('response', response);
+      console.log('response.profileObj', response.profileObj);
       const data = {
         name: response.profileObj.name,
         email: response.profileObj.email,
@@ -25,36 +26,31 @@ class GoogleoAUth extends Component {
         avatar: response.profileObj.imageUrl,
         tokenId: response.tokenId,
       };
-      this.setState({
-        data,
-      });
 
       // IF USED AS SIGNUP or LOGIN
-      // if (this.props.signup) {
-      //   this.props.signOauth2Action(this.state.data, this.props.history);
-      // } else if (this.props.login) {
-      //   const data = {
-      //     email: response.profileObj.email,
-      //     password: response.profileObj.googleId,
-      //   };
-      //   this.props.loginUserAction(data, this.props.history);
-      // }
+      if (props.signup) {
+        props.signOauth2Action(data, props.history);
+      } else if (props.login) {
+        const data = {
+          email: response.profileObj.email,
+          password: response.profileObj.googleId,
+        };
+        props.loginUserAction(data, props.history);
+      }
     }
   };
 
-  render() {
-    return (
-      <GoogleLogin
-        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-        buttonText={this.props.text}
-        onSuccess={this.responseGoogle}
-        onFailure={this.responseGoogle}
-        cookiePolicy={'single_host_origin'}
-        isSignedIn={true}
-      />
-    );
-  }
-}
+  return (
+    <GoogleLogin
+      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+      buttonText={props.text}
+      onSuccess={responseGoogle}
+      onFailure={responseGoogle}
+      cookiePolicy={'single_host_origin'}
+      isSignedIn={true}
+    />
+  );
+};
 
 export default connect(null, {
   signOauth2Action,
