@@ -30,10 +30,8 @@
     }
   }
 
-  &__item {
-    &:not(:last-child) {
-      margin-right: 2rem;
-    }
+  &__item--user {
+    margin-right: 2rem;
   }
 
   &__img-box {
@@ -47,8 +45,8 @@
 
   &__link:link,
   &__link:visited {
-    margin-right: 5rem;
-    font-size: 1.8rem;
+    margin-right: 3rem;
+    font-size: 1.4rem;
     text-decoration: none;
     text-transform: uppercase;
     transition: 0.2s;
@@ -65,4 +63,17 @@
   width: 2.5rem;
   margin-right: 1rem;
   fill: currentColor;
+}
+
+// DROP-MENU
+
+.drop-menu:link {
+  &__list {
+    list-style: none;
+  }
+  &__item {
+  }
+  &__link {
+    text-decoration: none;
+  }
 }

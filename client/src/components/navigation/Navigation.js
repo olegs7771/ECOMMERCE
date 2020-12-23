@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import sprite from '../../img/sprite.svg';
 import GoogleLogout from '../auth/GoogleoAUthLogout';
+import DropMenu from './DropMenu';
 
 const Navigation = (props) => {
   return (
@@ -17,6 +18,14 @@ const Navigation = (props) => {
                   <use href={sprite + '#icon-home'} />
                 </svg>
                 home
+              </a>
+            </li>
+            <li className="nav__item drop-menu">
+              <a href="/" className="nav__link">
+                <svg className="nav__link-icon">
+                  <use href={sprite + '#icon-menu'} />
+                </svg>
+                Details
               </a>
             </li>
             <li className="nav__item">
@@ -41,7 +50,7 @@ const Navigation = (props) => {
         {/* TOGGLE AUTH BLOCK  */}
         {props.auth.isAuthenticated ? (
           <div className="nav__auth">
-            <li className="nav__item">
+            <li className="nav__item--user">
               <div className="nav__auth-box">
                 <div className="nav__img-box">
                   {/* CHECK IF USERS SIGNED WITH oAUTH2 */}
@@ -84,6 +93,7 @@ const Navigation = (props) => {
           </div>
         )}
       </ul>
+      <DropMenu />
     </nav>
   );
 };
