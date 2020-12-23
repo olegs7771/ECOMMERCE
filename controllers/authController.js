@@ -9,6 +9,7 @@ const User = require('../models/User');
 const asyncCatch = require('../utils/asyncCatch');
 const AppErrorHandler = require('../utils/AppError');
 const Email = require('../utils/mail');
+const GoogleAuth = require('../utils/GoogleAuth');
 
 //Create res object with token for cookies
 
@@ -44,43 +45,50 @@ const createSendToken = (user, statusCode, message, req, res) => {
 //CONTROLLERS
 
 const signOauth2 = asyncCatch(async (req, res, next) => {
-  // 1) CHECK IF USER ALREADY EXISTS
-  //INCOMING BODY req.body.tokeId
-  console.log('req.body.tokenId', req.body.tokenId);
+  // CHECK FOR INCOMING BODY req.body.tokeId
   if (!req.body.tokenId && !req.body.tokenId.startsWith('eyJhbG'))
     return next(new AppErrorHandler('Registration failed'));
+  const payload = await GoogleAuth(req.body.tokenId);
+  console.log('payload', payload);
 
-  // const user = await User.findOne({ email: req.body.email });
-  // // 2) CHECK IF USER ACTIVE (not deleted)
-  // // IF USER WAS DELETED THEN WE UPDATE ACTIVE:true
-  // if (!user.active) {
-  //   user.active = true;
-  //   user.save({ validateBeforeSave: false });
-  //   return createSendToken(user, 200, `Welcome back ${user.name}`, req, res);
-  // }
+  // 2) CHECK IF USER  EXISTS
+  const user = await User.findOne({ email: payload.email });
+  console.log('user', user);
+  if (user) {
+    // // 2) CHECK IF USER ACTIVE (not deleted)
+    // // IF USER WAS DELETED THEN WE UPDATE ACTIVE:true
+    if (!user.active) {
+      user.active = true;
+      user.save({ validateBeforeSave: false });
+      return createSendToken(user, 200, `Welcome back ${user.name}`, req, res);
+    }
+    // // IF USER ALREDY IN DB ===> ERROR TO CLIENT
+    if (user.active)
+      return next(
+        new AppErrorHandler(
+          `User ${payload.email} already exists in database.Please log in`
+        )
+      );
+  } else {
+    // USER NOT EXISTS IN DB
+    // //PERFORM SIGNUP WITH oAUth2 WITHOUT CONFIRMATION
+    //PASSWORD WE TAKE USER GOOGLE ID
 
-  // // IF USER ALREDY IN DB LOGIN HIM
-  // if (user && user.active)
-  //   return next(
-  //     new AppErrorHandler(
-  //       `User ${req.body.email} already exists in database.Please log in`
-  //     )
-  //   );
+    const newUser = await User.create({
+      name: payload.name,
+      email: payload.email,
+      password: payload.sub,
+      passwordConfirm: payload.sub,
+      avatar: payload.picture,
+      active: true,
+      activatedByEmail: true,
+      createdByOauth2: true,
+    });
 
-  // //PERFORM SIGNUP WITH oAUth2 WITHOUT CONFIRMATION
-  // //LOGIN INSTANTLY
-  // const newUser = await User.create({
-  //   name: req.body.name,
-  //   email: req.body.email,
-  //   password: req.body.password1,
-  //   passwordConfirm: req.body.password2,
-  //   avatar: req.body.avatar,
-  //   active: true,
-  //   activatedByEmail: true,
-  // });
-
-  // const message = 'Registration Successful';
-  // createSendToken(newUser, 200, message, req, res);
+    // //LOGIN INSTANTLY
+    const message = 'Registration Successful.';
+    createSendToken(newUser, 200, message, req, res);
+  }
 });
 
 // SIGNIN WITH FORM

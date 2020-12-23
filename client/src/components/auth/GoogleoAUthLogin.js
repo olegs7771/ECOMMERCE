@@ -12,18 +12,12 @@ import { oAUth2GoogleRefreshToken } from '../../utils/oAUth2GoogleRefreshToken';
 const GoogleoAUth = (props) => {
   ///////////////////////////////////////////
   const responseGoogle = (response) => {
+    //SEPARATE FUNCTION
     oAUth2GoogleRefreshToken(response);
-
+    // IN RESPONSE WE TAKE ONLY GOOGLE TOKEN
     console.log('response.tokenId', response.tokenId);
     if (!response.error) {
-      console.log('response', response);
-      console.log('response.profileObj', response.profileObj);
       const data = {
-        name: response.profileObj.name,
-        email: response.profileObj.email,
-        password1: response.profileObj.googleId,
-        password2: response.profileObj.googleId,
-        avatar: response.profileObj.imageUrl,
         tokenId: response.tokenId,
       };
 

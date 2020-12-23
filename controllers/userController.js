@@ -104,5 +104,6 @@ exports.deleteUser = asyncCatch(async (req, res, next) => {
     { new: true }
   );
   const message = ` the user ${updatedUser.name} was deleted.`;
+  res.cookie('jwt', 'deleted');
   res.status(200).json({ status: 'success', message });
 });

@@ -10,8 +10,8 @@ import jwt_decoded from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 
 // SIGN NEW USER WITH OAUTH2 GOOGLE
-
 export const signOauth2Action = (data, history) => async (dispatch) => {
+  //data={tokenId: response.tokenId}
   console.log('data in sign oAUth2 action', data);
   dispatch({
     type: LOADING,
@@ -26,29 +26,52 @@ export const signOauth2Action = (data, history) => async (dispatch) => {
       payload: false,
     });
 
-    //2) CHECK IF USER ALREADY CREATED THEN LOG IN
+    //2) CHECK IF USER ALREADY EXISTS THEN LOG IN
     if (res.data.message.startsWith('Login')) {
       console.log('Login Existing User');
-      if (res.data.token) {
-        const { token } = res.data;
+      //PERFORM LOGIN API WITH RES.DATA {email,password}
 
-        // SET TOKEN IN localStorage
-        localStorage.setItem('jwtToken', token);
+      dispatch({
+        type: LOADING,
+        payload: true,
+      });
 
-        //SET TOKEN
-        setAuthToken();
+      try {
+        const res = await axios.post('/api/v1/users/login', res.data);
+        console.log('res.data', res.data);
 
-        const decoded = jwt_decoded(token);
-        console.log('decoded', decoded);
-        const dataToRedux = {
-          id: decoded.id,
-          email: decoded.email,
-          name: decoded.name,
-          role: decoded.role,
-          avatar: decoded.avatar,
-        };
-        dispatch(setCurrentUser(dataToRedux));
-        history.push('/');
+        dispatch({
+          type: LOADING,
+          payload: false,
+        });
+
+        if (res.data.token) {
+          const { token } = res.data;
+
+          // SET TOKEN IN localStorage
+          localStorage.setItem('jwtToken', token);
+
+          //SET TOKEN
+          setAuthToken();
+
+          const decoded = jwt_decoded(token);
+          console.log('decoded', decoded);
+          const dataToRedux = {
+            id: decoded.id,
+            email: decoded.email,
+            name: decoded.name,
+            role: decoded.role,
+            avatar: decoded.avatar,
+          };
+          dispatch(setCurrentUser(dataToRedux));
+          history.push('/');
+        }
+      } catch (err) {
+        console.log('err:', err.response.data);
+        dispatch({
+          type: GET_API_ERROR,
+          payload: err.response.data,
+        });
       }
     } else {
       // USER NOT EXISTS SIGNUP AND LOGIN
