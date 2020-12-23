@@ -91,6 +91,29 @@ const signOauth2 = asyncCatch(async (req, res, next) => {
   }
 });
 
+// LOGIN WITH OAUTH2
+
+const loginOauth2 = asyncCatch(async (req, res, next) => {
+  console.log('req.body loginOauth2', req.body);
+
+  try {
+    const payload = await GoogleAuth(req.body.tokenId);
+    console.log('payload', payload);
+    // // 1) CHECK IF USER EXISTS
+    const user = await User.findOne({ email: payload.email });
+    console.log('user', user);
+    // LOG ONLY IF USER WAS CREATED WITH OAUTH2
+    if (!user.createdByOauth2 || !user)
+      return next(new AppErrorHandler(`User ${payload.email} not found`));
+    if (!user.active) return next(new AppErrorHandler('User was deleted', 400));
+    //LOGIN USER
+    const message = 'Login Successful.';
+    createSendToken(user, 200, message, req, res);
+  } catch (err) {
+    console.log('payload error in login oauth2', err);
+  }
+});
+
 // SIGNIN WITH FORM
 const signup = asyncCatch(async (req, res, next) => {
   console.log('req.body', req.body);
@@ -243,4 +266,21 @@ const protect = asyncCatch(async (req, res, next) => {
   next();
 });
 
-module.exports = { signup, signOauth2, confirm, login, protect };
+const clearCookies = asyncCatch(async (req, res, next) => {
+  console.log('req.headers', req.headers.cookie.split(';')[1]);
+  console.log(!req.headers.cookie && !req.headers.cookie.split(';')[1]);
+  if (!req.headers.cookie && !req.headers.cookie.split(';')[1]) return next();
+  console.log('send cookie');
+  res.cookie('jwt', 'delete');
+  res.json({ message: 'logged out' });
+});
+
+module.exports = {
+  signup,
+  signOauth2,
+  loginOauth2,
+  confirm,
+  login,
+  protect,
+  clearCookies,
+};

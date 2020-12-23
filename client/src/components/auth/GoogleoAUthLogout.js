@@ -3,13 +3,18 @@
 import React, { Component } from 'react';
 import { GoogleLogout } from 'react-google-login';
 import { connect } from 'react-redux';
-import { clearOutUser } from '../../store/actions/authAction';
+import {
+  clearOutUser,
+  clearCookiesAction,
+} from '../../store/actions/authAction';
 
 class GoogleoAUthLogout extends Component {
   render() {
     const responseLogout = () => {
       this.props.clearOutUser();
+      this.props.clearCookiesAction();
       localStorage.removeItem('jwtToken');
+
       this.props.history.push('/');
     };
 
@@ -24,4 +29,6 @@ class GoogleoAUthLogout extends Component {
   }
 }
 
-export default connect(null, { clearOutUser })(GoogleoAUthLogout);
+export default connect(null, { clearOutUser, clearCookiesAction })(
+  GoogleoAUthLogout
+);

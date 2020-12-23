@@ -4,9 +4,11 @@ const router = express.Router();
 const {
   signup,
   signOauth2,
+  loginOauth2,
   confirm,
   login,
   protect,
+  clearCookies,
 } = require('../controllers/authController');
 const {
   getUser,
@@ -16,8 +18,10 @@ const {
 
 router.route('/signup').post(signup);
 router.route('/signupOauth2').post(signOauth2);
+router.route('/loginOauth2').post(loginOauth2);
 router.route('/confirm').post(confirm);
 router.route('/login').post(login);
+router.route('/clearCookies').get(clearCookies);
 
 // router.use(protect);
 router.route('/:id').get(protect, getUser);

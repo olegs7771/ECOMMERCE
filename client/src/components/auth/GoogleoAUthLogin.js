@@ -5,7 +5,7 @@ import GoogleLogin from 'react-google-login';
 import { connect } from 'react-redux';
 import {
   signOauth2Action,
-  loginUserAction,
+  loginOauth2Action,
 } from '../../store/actions/authAction';
 import { oAUth2GoogleRefreshToken } from '../../utils/oAUth2GoogleRefreshToken';
 
@@ -15,7 +15,7 @@ const GoogleoAUth = (props) => {
     //SEPARATE FUNCTION
     oAUth2GoogleRefreshToken(response);
     // IN RESPONSE WE TAKE ONLY GOOGLE TOKEN
-    console.log('response.tokenId', response.tokenId);
+
     if (!response.error) {
       const data = {
         tokenId: response.tokenId,
@@ -26,10 +26,9 @@ const GoogleoAUth = (props) => {
         props.signOauth2Action(data, props.history);
       } else if (props.login) {
         const data = {
-          email: response.profileObj.email,
-          password: response.profileObj.googleId,
+          tokenId: response.tokenId,
         };
-        props.loginUserAction(data, props.history);
+        props.loginOauth2Action(data, props.history);
       }
     }
   };
@@ -48,5 +47,5 @@ const GoogleoAUth = (props) => {
 
 export default connect(null, {
   signOauth2Action,
-  loginUserAction,
+  loginOauth2Action,
 })(GoogleoAUth);

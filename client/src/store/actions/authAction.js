@@ -26,93 +26,90 @@ export const signOauth2Action = (data, history) => async (dispatch) => {
       payload: false,
     });
 
-    //2) CHECK IF USER ALREADY EXISTS THEN LOG IN
-    if (res.data.message.startsWith('Login')) {
-      console.log('Login Existing User');
-      //PERFORM LOGIN API WITH RES.DATA {email,password}
+    // USER NOT EXISTS SIGNUP AND LOGIN
+    console.log('Login New User with data', data);
+    if (res.data.token) {
+      const { token } = res.data;
 
+      // SET TOKEN IN localStorage
+      localStorage.setItem('jwtToken', token);
+
+      //SET TOKEN
+      setAuthToken();
+
+      const decoded = jwt_decoded(token);
+      console.log('decoded', decoded);
+      const dataToRedux = {
+        id: decoded.id,
+        email: decoded.email,
+        name: decoded.name,
+        role: decoded.role,
+        avatar: decoded.avatar,
+      };
+      dispatch(setCurrentUser(dataToRedux));
       dispatch({
-        type: LOADING,
-        payload: true,
+        type: GET_API_MESSAGE,
+        payload: res.data.message,
       });
-
-      try {
-        const res = await axios.post('/api/v1/users/login', res.data);
-        console.log('res.data', res.data);
-
-        dispatch({
-          type: LOADING,
-          payload: false,
-        });
-
-        if (res.data.token) {
-          const { token } = res.data;
-
-          // SET TOKEN IN localStorage
-          localStorage.setItem('jwtToken', token);
-
-          //SET TOKEN
-          setAuthToken();
-
-          const decoded = jwt_decoded(token);
-          console.log('decoded', decoded);
-          const dataToRedux = {
-            id: decoded.id,
-            email: decoded.email,
-            name: decoded.name,
-            role: decoded.role,
-            avatar: decoded.avatar,
-          };
-          dispatch(setCurrentUser(dataToRedux));
-          history.push('/');
-        }
-      } catch (err) {
-        console.log('err:', err.response.data);
-        dispatch({
-          type: GET_API_ERROR,
-          payload: err.response.data,
-        });
-      }
-    } else {
-      // USER NOT EXISTS SIGNUP AND LOGIN
-      console.log('Login New User with data', data);
-      if (res.data.token) {
-        const { token } = res.data;
-
-        // SET TOKEN IN localStorage
-        localStorage.setItem('jwtToken', token);
-
-        //SET TOKEN
-        setAuthToken();
-
-        const decoded = jwt_decoded(token);
-        console.log('decoded', decoded);
-        const dataToRedux = {
-          id: decoded.id,
-          email: decoded.email,
-          name: decoded.name,
-          role: decoded.role,
-          avatar: decoded.avatar,
-        };
-        dispatch(setCurrentUser(dataToRedux));
-        dispatch({
-          type: GET_API_MESSAGE,
-          payload: res.data.message,
-        });
-      }
     }
   } catch (err) {
-    console.log('err:', err);
-    dispatch({
-      type: LOADING,
-      payload: false,
-    });
     dispatch({
       type: GET_API_ERROR,
       payload: err.response.data.message,
     });
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
   }
 };
+
+// LOGIN OAUTH2 USER
+export const loginOauth2Action = (data, history) => async (dispatch) => {
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+
+  try {
+    const res = await axios.post('/api/v1/users/loginOauth2', data);
+    console.log('res.data', res.data);
+
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+
+    if (res.data.token) {
+      const { token } = res.data;
+
+      // SET TOKEN IN localStorage
+      localStorage.setItem('jwtToken', token);
+
+      //SET TOKEN
+      setAuthToken();
+
+      const decoded = jwt_decoded(token);
+      console.log('decoded', decoded);
+      const dataToRedux = {
+        id: decoded.id,
+        email: decoded.email,
+        name: decoded.name,
+        role: decoded.role,
+        avatar: decoded.avatar,
+      };
+      dispatch(setCurrentUser(dataToRedux));
+      history.push('/');
+    }
+  } catch (err) {
+    console.log('err:', err.response.data);
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data,
+    });
+  }
+};
+
 //////////////////////////////////////////////////////////////////////////////////////
 //SIGN NEW USER WITH FORM
 export const signupUserAction = (data, history) => async (dispatch) => {
@@ -212,6 +209,16 @@ export const loginUserAction = (data, history) => async (dispatch) => {
       type: GET_API_ERROR,
       payload: err.response.data,
     });
+  }
+};
+
+// CLEAR COOKIES ON LOGOUT
+export const clearCookiesAction = () => async (dispatch) => {
+  try {
+    const res = await await axios.get('/api/v1/users/clearCookies');
+    console.log('res.data', res.data);
+  } catch (err) {
+    console.log('error to logout and clear cookies');
   }
 };
 
