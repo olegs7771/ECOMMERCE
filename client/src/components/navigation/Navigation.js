@@ -7,10 +7,6 @@ import GoogleLogout from '../auth/GoogleoAUthLogout';
 import DropMenu from './DropMenu';
 
 class Navigation extends Component {
-  state = {
-    dropMenuOpen: false,
-  };
-
   render() {
     return (
       <nav className="nav">
@@ -25,19 +21,13 @@ class Navigation extends Component {
                   home
                 </a>
               </li>
-              <li
-                className="nav__item "
-                id="drop-menu"
-                onClick={() =>
-                  this.setState({ dropMenuOpen: !this.state.dropMenuOpen })
-                }
-              >
+              <div className="nav__item " id="drop-menu">
                 <svg className="nav__link-icon">
                   <use href={sprite + '#icon-menu'} />
                 </svg>
                 <span className="nav__link">Details</span>
-                <DropMenu open={this.state.dropMenuOpen} />
-              </li>
+                <DropMenu />
+              </div>
               <li className="nav__item">
                 <a href="/profile" className="nav__link">
                   User

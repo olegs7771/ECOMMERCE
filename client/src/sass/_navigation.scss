@@ -2,7 +2,8 @@
   padding: 2rem 4rem;
   background-color: $color-blue;
   color: $color-grey;
-  position: relative;
+  // position: relative;
+  z-index: 1000;
 
   &__list {
     display: flex;
@@ -17,6 +18,7 @@
   &__auth {
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
 
     &-box {
       // border: 1px solid black;
@@ -66,39 +68,52 @@
 
 // DROP-MENU
 #drop-menu {
+  margin-right: 3rem;
   position: relative;
   display: flex;
   align-items: center;
+  transition: 0.2s;
+  cursor: pointer;
 
-  &:focus > .drop-menu {
+  &:hover .drop-menu {
     animation: drop-menu 0.5s;
-    opacity: 1;
+    display: block;
   }
 }
 
 .drop-menu {
+  transform: translate(-1rem, 7.7rem);
+  display: none;
   position: absolute;
-  border: 1px solid black;
-  transform: translate(2rem, 2rem);
-  opacity: 0;
+  border-radius: 3px;
 
-  width: 10rem;
+  // border: 1px solid black;
+
+  width: 11rem;
   &__list {
     list-style: none;
   }
   &__item {
     padding: 1rem 0;
-    border: 1px solid black;
     text-align: center;
-    background-color: lightblue;
+    background-color: #1b5d75;
+
+    &:not(:last-child) {
+      margin-bottom: 0.2rem;
+    }
+    &:hover {
+      background-color: $color-blue-light;
+    }
   }
   &__link:link,
-  &__linked:visited {
+  &__link:visited {
     text-decoration: none;
     font-size: 1.4rem;
+    color: $color-grey;
   }
 }
 
 span.nav__link {
   font-size: 1.4rem;
+  text-transform: uppercase;
 }
