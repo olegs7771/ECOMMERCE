@@ -12,9 +12,14 @@
 //SLIDING DOWN DROP-MENU
 @keyframes drop-menu {
   0% {
-    transform: translate(2rem, -5rem);
+    transform: translate(2rem, -10rem);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
   }
   100% {
     transform: translate(2rem, 2rem);
+    opacity: 1;
   }
 }

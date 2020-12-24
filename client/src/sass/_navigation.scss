@@ -1,9 +1,8 @@
 .nav {
-  //   background-color: lightblue;
-
   padding: 2rem 4rem;
   background-color: $color-blue;
   color: $color-grey;
+  position: relative;
 
   &__list {
     display: flex;
@@ -30,7 +29,7 @@
     }
   }
 
-  &__item--user {
+  &__item {
     margin-right: 2rem;
   }
 
@@ -68,7 +67,10 @@
 // DROP-MENU
 #drop-menu {
   position: relative;
-  &:hover > .drop-menu {
+  display: flex;
+  align-items: center;
+
+  &:focus > .drop-menu {
     animation: drop-menu 0.5s;
     opacity: 1;
   }
@@ -95,4 +97,8 @@
     text-decoration: none;
     font-size: 1.4rem;
   }
+}
+
+span.nav__link {
+  font-size: 1.4rem;
 }
