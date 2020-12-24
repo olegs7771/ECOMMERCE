@@ -13,6 +13,7 @@ app.enable('trust proxy'); //Heroku works through proxies
 // be able to use  secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
 
 const users = require('./routes/users');
+const category = require('./routes/category');
 //FOR UPLOADING FILES
 app.use(fileUpload());
 //USING PUG TEMPLATE ENGINE
@@ -44,6 +45,7 @@ if (process.env.NODE_ENV === 'production') {
 //Test middleware
 
 app.use('/api/v1/users', users);
+app.use('/api/v1/category', category);
 
 //Errors for missing routes
 

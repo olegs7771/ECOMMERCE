@@ -12,9 +12,10 @@
 //SLIDING DOWN DROP-MENU
 @keyframes drop-menu {
   0% {
-    transform: translate(2rem, -5rem);
+    transform: translate(-1rem, 6rem);
   }
+
   100% {
-    transform: translate(2rem, 2rem);
+    transform: translate(-1rem, 7.7rem);
   }
 }

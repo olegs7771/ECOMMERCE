@@ -29,6 +29,6 @@ router.route('/:id').get(protect, getUser);
 //Upload Image Avatar by User
 router.route('/photo').post(protect, uploadAvatar);
 //DELETE USER BY USER
-router.route('/').post(deleteUser);
+router.route('/').post(protect, deleteUser);
 
 module.exports = router;

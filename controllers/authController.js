@@ -207,21 +207,21 @@ const login = asyncCatch(async (req, res, next) => {
 //PROTECTION OF ROUTES
 
 const protect = asyncCatch(async (req, res, next) => {
-  // console.log('req.headers protect', req.headers);
+  console.log('req.headers protect', req.headers);
   console.log('protect');
   // 1) Check if token exists
   let token;
   // TOKEN IN HEADER AUTHORIZATION !!! USING ONLY TOKEN IN COOKIES FOR MORE PROTECTION
   // TOKEN IN localStorage USING ONLY FOR REACT STORE USAGE
 
-  // if (
-  //   req.headers.authorization &&
-  //   req.headers.authorization.startsWith('Bearer')
-  // ) {
-  //   token = req.headers.authorization.split(' ')[1];
-  // }
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  }
   // TOKEN IN COOKIE
-  // req.headers.cookie.startsWith('G_AUTHUSER_H')
+  // req.headers.cookie.startsWith('G_AUTHUSER_H');
   // console.log('req.headers.cookie', req.headers.cookie.split(';')[1]);
 
   // IF COOKIE COMES WITH G_AUTHUSER_H
@@ -263,8 +263,22 @@ const protect = asyncCatch(async (req, res, next) => {
     );
   }
 
+  // STORE FOUND USER IN req OBJECT PIPELINE
+  req.user = user;
+  res.locals.user = user;
+
   next();
 });
+
+// RESTRICTED ROUTER ONLY FOR ADMIN
+const restrictTo = (...roles) => {
+  return (req, res, next) => {
+    console.log('restricted req.user', req.user);
+    if (!roles.includes(req.user.role))
+      return next(new AppErrorHandler('Access restricted. Only for admin'));
+    next();
+  };
+};
 
 const clearCookies = asyncCatch(async (req, res, next) => {
   console.log('req.headers', req.headers.cookie.split(';')[1]);
@@ -282,5 +296,6 @@ module.exports = {
   confirm,
   login,
   protect,
+  restrictTo,
   clearCookies,
 };
