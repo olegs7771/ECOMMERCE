@@ -21,6 +21,7 @@ const createSendToken = (user, statusCode, message, req, res) => {
     email: user.email,
     role: user.role,
     avatar: user.avatar,
+    role: user.role,
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, {

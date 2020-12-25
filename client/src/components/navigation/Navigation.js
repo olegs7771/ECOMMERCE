@@ -50,6 +50,17 @@ class Navigation extends Component {
           {/* TOGGLE AUTH BLOCK  */}
           {this.props.auth.isAuthenticated ? (
             <div className="nav__auth">
+              {/* SHOW ONLY IF ROLE ADMIN  */}
+              {this.props.auth.user.role === 'admin' ? (
+                <li className="nav__item">
+                  <a href="/dashboard-admin" className="nav__link">
+                    <svg className="nav__link-icon">
+                      <use href={sprite + '#icon-user-tie'} />
+                    </svg>
+                    Admin
+                  </a>
+                </li>
+              ) : null}
               <li className="nav__item">
                 <div className="nav__auth-box">
                   <div className="nav__img-box">
