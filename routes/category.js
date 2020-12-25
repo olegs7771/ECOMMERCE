@@ -14,10 +14,10 @@ const {
 router.route('/').get(list); //get all categories
 router.route('/:slug').get(read);
 
-//ALL ROUTES PASS AUTHORIZATION
+//ALL ROUTES PASS AUTHORIZATION MIDDLEWARE
 router.use(protect);
 
-//ALL ROUTES RESTRICTED ONLY FOR ADMIN
+//ALL ROUTES RESTRICTED ONLY FOR ADMIN MIDDLEWARE
 router.use(restrictTo('admin'));
 
 router.route('/').post(create);

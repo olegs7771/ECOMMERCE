@@ -207,7 +207,7 @@ const login = asyncCatch(async (req, res, next) => {
 //PROTECTION OF ROUTES
 
 const protect = asyncCatch(async (req, res, next) => {
-  console.log('req.headers protect', req.headers);
+  // console.log('req.headers protect', req.headers);
   console.log('protect');
   // 1) Check if token exists
   let token;
@@ -272,8 +272,9 @@ const protect = asyncCatch(async (req, res, next) => {
 
 // RESTRICTED ROUTER ONLY FOR ADMIN
 const restrictTo = (...roles) => {
+  console.log('restrictTo admin');
   return (req, res, next) => {
-    console.log('restricted req.user', req.user);
+    // console.log('restricted req.user', req.user);
     if (!roles.includes(req.user.role))
       return next(new AppErrorHandler('Access restricted. Only for admin'));
     next();
