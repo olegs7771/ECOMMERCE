@@ -25,5 +25,9 @@ categorySchema.pre('save', function (next) {
   next();
 });
 
+// categorySchema.pre(/^find/, function (next) {
+//   console.log('this in find query', this);
+// });
+
 const Category = mongoose.model('Category', categorySchema);
 module.exports = Category;

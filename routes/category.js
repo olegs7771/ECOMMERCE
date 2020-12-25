@@ -12,6 +12,7 @@ const {
 
 //PUBLIC
 router.route('/').get(list); //get all categories
+router.route('/:slug').get(read);
 
 //ALL ROUTES PASS AUTHORIZATION
 router.use(protect);
@@ -20,6 +21,6 @@ router.use(protect);
 router.use(restrictTo('admin'));
 
 router.route('/').post(create);
-router.route('/:slug').get(read).put(update).delete(remove);
+router.route('/:slug').put(update).delete(remove);
 
 module.exports = router;
