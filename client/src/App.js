@@ -20,8 +20,9 @@ import Login from './components/auth/Login';
 import Profile from './components/user_profile/Profile';
 //ADMIN
 import DashboardAdmin from './components/admin/DashboardAdmin';
+const store = reload(); //ON EVERY RELOAD RESET AUTH USER REDUX STATE
 
-const store = reload();
+// REDIREXTS AUTH
 
 const App = () => {
   return (
