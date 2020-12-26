@@ -8,3 +8,6 @@ export const GET_API_ERROR = 'GET_API_ERROR';
 // Auth
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const CLEAR_OUT_USER = 'CLEAR_OUT_USER';
+
+//CATEGORY
+export const GET_CATEGORIES_LIST = 'GET_CATEGORIES_LIST';
