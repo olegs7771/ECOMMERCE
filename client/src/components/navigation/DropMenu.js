@@ -1,12 +1,15 @@
 import React from 'react';
 
-const DropMenu = () => {
+const DropMenu = (props) => {
   return (
     <div className="drop-menu">
       <ul className="drop-menu__list">
         <li className="drop-menu__item">
-          <a href="!#" className="drop-menu__link">
-            Products
+          <a
+            href={props.auth.user.role === 'admin' ? '/admin' : '/dashboard'}
+            className="drop-menu__link"
+          >
+            Dashboard
           </a>
         </li>
         <li className="drop-menu__item">

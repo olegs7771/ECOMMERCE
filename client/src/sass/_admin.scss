@@ -1,0 +1,23 @@
+.admin {
+  &__navigation {
+    padding: 2rem;
+    background-color: $color-blue-light;
+
+    &-list {
+      list-style: none;
+      display: flex;
+      justify-content: space-evenly;
+    }
+    &-item {
+    }
+    &-link {
+      text-decoration: none;
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      color: $color-grey;
+      &:hover {
+        color: #f4e4c5;
+      }
+    }
+  }
+}

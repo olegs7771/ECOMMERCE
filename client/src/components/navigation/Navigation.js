@@ -26,7 +26,7 @@ class Navigation extends Component {
                   <use href={sprite + '#icon-menu'} />
                 </svg>
                 <span className="nav__link">Details</span>
-                <DropMenu />
+                <DropMenu auth={this.props.auth} />
               </div>
               <li className="nav__item">
                 <a href="/profile" className="nav__link">

@@ -201,7 +201,11 @@ export const loginUserAction = (data, history) => async (dispatch) => {
         avatar: decoded.avatar,
       };
       dispatch(setCurrentUser(dataToRedux));
-      history.push('/');
+      if (decoded.role === 'admin') {
+        history.push('/admin');
+      } else {
+        history.push('/dashboard');
+      }
     }
   } catch (err) {
     console.log('err:', err.response.data);
