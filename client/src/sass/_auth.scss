@@ -16,41 +16,7 @@
     font-size: 2.5rem;
     font-weight: 400;
   }
-  &__form {
-    padding: 4rem;
 
-    &-group {
-      margin-bottom: 1rem;
-    }
-    &-label--name {
-      font-size: 1.2rem;
-      text-transform: uppercase;
-      text-align: left;
-    }
-
-    &-input {
-      width: 100%;
-      padding: 12px 2rem;
-      margin: 0.8rem 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 0.4rem;
-      outline: none;
-      border-bottom: 3px solid transparent;
-      &:focus {
-        border-bottom: 3px solid $color-valid;
-      }
-      &:focus:invalid {
-        border-bottom: 3px solid $color-red;
-      }
-    }
-    &-google-btn {
-      display: flex;
-      margin: 0 auto;
-      align-items: center;
-      background-color: $color-red !important;
-    }
-  }
   &__message {
     display: flex;
     flex-direction: column;

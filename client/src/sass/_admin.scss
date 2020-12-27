@@ -21,3 +21,19 @@
     }
   }
 }
+///////////////////////////////////////////////
+// CATEGORY
+.category {
+  border: 1px solid black;
+  text-align: center;
+  max-width: 120rem;
+  margin: 2rem auto;
+  &__heading &__container {
+    display: flex;
+    flex-direction: column;
+  }
+  &__btn-group {
+    display: flex;
+    justify-content: space-around;
+  }
+}

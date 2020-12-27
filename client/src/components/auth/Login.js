@@ -20,27 +20,27 @@ const Login = (props) => {
     <div className="register">
       <div className="register__container">
         <h2 className="register__heading">Login</h2>
-        <form onSubmit={_submitLogin} className="register__form">
-          <div className="register__form-group">
+        <form onSubmit={_submitLogin} className="form">
+          <div className="form-group">
             <label>
-              <div className="register__form-label--name">email</div>
+              <div className="form-label--name">email</div>
               <input
                 type="email"
                 name="email"
-                className="register__form-input"
+                className="form-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </label>
           </div>
-          <div className="register__form-group">
+          <div className="form-group">
             <label>
-              <div className="register__form-label--name">password</div>
+              <div className="form-label--name">password</div>
               <input
                 type="password"
                 name="password"
-                className="register__form-input"
+                className="form-input"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
