@@ -21,3 +21,37 @@
     }
   }
 }
+///////////////////////////////////////////////
+// CATEGORY
+.category {
+  height: 100vh;
+  border: 1px solid black;
+  text-align: center;
+  max-width: 120rem;
+  margin: 2rem auto;
+  &__heading &__container {
+    display: flex;
+    flex-direction: column;
+  }
+  &__btn-group {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &__list-box {
+    padding: 2rem 4rem;
+  }
+  &__list {
+    list-style: none;
+  }
+  &__item {
+    border-bottom: 0.1px solid black;
+    padding: 1rem 0;
+    text-align: left;
+  }
+  &__link {
+    font-size: 1.6rem;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+}

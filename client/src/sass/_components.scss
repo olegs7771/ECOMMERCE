@@ -46,6 +46,36 @@
   }
 }
 
+.form {
+  padding: 4rem;
+
+  &-group {
+    margin-bottom: 1rem;
+  }
+  &-label--name {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  &-input {
+    width: 100%;
+    padding: 12px 2rem;
+    margin: 0.8rem 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 0.4rem;
+    outline: none;
+    border-bottom: 3px solid transparent;
+    &:focus {
+      border-bottom: 3px solid $color-valid;
+    }
+    &:focus:invalid {
+      border-bottom: 3px solid $color-red;
+    }
+  }
+}
+
 .error {
   background-color: $color-red;
   width: 60%;
@@ -70,6 +100,20 @@
     color: #fff;
   }
 }
-.loading {
-  margin-top: 10rem;
+.sweet-loading {
+  margin: 3rem 0;
+}
+
+// MARGINS
+.mb-sm {
+  margin-bottom: 2rem;
+}
+.mb-md {
+  margin-bottom: 4rem;
+}
+.mb-lg {
+  margin-bottom: 6rem;
+}
+.mb-xlg {
+  margin-bottom: 8rem;
 }
