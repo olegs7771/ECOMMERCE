@@ -1,46 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCategoriesList } from '../../../store/actions/categoryAction';
 import { Spinner } from '../../../utils/LoadingComponent';
-export const Category = (props) => {
+import Form from './CategoryForm';
+
+export default function Category(props) {
+  const dispatch = useDispatch();
+  const categoryList = useSelector((state) => state.category.categories);
+  const auth = useSelector((state) => state.auth);
+  const loading = useSelector((state) => state.loading.loading);
   const [categories, setCategories] = useState([]);
 
+  //DISPATCH GET LIST OF CATEGORIES
+
   useEffect(() => {
-    props.getCategoriesList();
+    dispatch(getCategoriesList());
   }, []);
 
+  //SET STATE CATEGORIES IN COMPONENT
   useEffect(() => {
-    setCategories(props.categories);
-  });
-
-  console.log('categories', categories);
+    setCategories(categoryList);
+  }, [categoryList]);
 
   return (
     <div className="category ">
       <h1 className="heading-1 mb-md">Category</h1>
 
       {/* CHECK ADMIN  */}
-      {props.auth.isAuthenticated && props.auth.user.role === 'admin' ? (
+      {auth.isAuthenticated && auth.user.role === 'admin' ? (
         <div className="category__container">
-          <div className="category__btn-group">
-            <button className="btn">Add Category</button>
+          <div className="category__form-box">
+            <h3 className=" heading-3">Add Category</h3>
+            <Form history={props.history} />
           </div>
 
-          {props.loading ? (
-            <Spinner loading={props.loading} />
-          ) : (
-            <div className="category__list-box">
-              {categories.map((c, i) => (
-                <ul className="category__list">
+          <div className="category__list-box">
+            {loading ? (
+              <Spinner loading={props.loading} />
+            ) : (
+              <ul className="category__list">
+                {categories.map((c, i) => (
                   <li className="category__item" key={i}>
                     <a href="!#" className="category__link">
                       {c.name}
                     </a>
                   </li>
-                </ul>
-              ))}
-            </div>
-          )}
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       ) : (
         <div className="admin__container">
@@ -50,12 +58,12 @@ export const Category = (props) => {
       )}
     </div>
   );
-};
+}
 
-const mapStateToProps = (state) => ({
-  categories: state.category.categories,
-  auth: state.auth,
-  loading: state.loading.loading,
-});
+// const mapStateToProps = (state) => ({
+//   categories: state.category.categories,
+//   auth: state.auth,
+//   loading: state.loading.loading,
+// });
 
-export default connect(mapStateToProps, { getCategoriesList })(Category);
+// export default connect(mapStateToProps, { getCategoriesList })(Category);

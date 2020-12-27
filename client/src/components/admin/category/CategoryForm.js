@@ -1,24 +1,35 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { createCategoryAction } from '../../../store/actions/categoryAction';
 
-export default function CategoryForm() {
+export default function CategoryForm({ history }) {
+  const [name, setName] = useState('');
+
+  const dispatch = useDispatch();
+  const data = { name };
+
+  const _onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(createCategoryAction(data, history));
+  };
+
   return (
-    <form onSubmit={_submitLogin} className="form">
+    <form onSubmit={_onSubmit} className="form">
       <div className="form-group">
         <label>
           <div className="form-label--name">email</div>
           <input
-            type="email"
-            name="email"
+            type="name"
+            name="name"
             className="form-input"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
         </label>
       </div>
 
-      <input type="submit" value="submit" className="btn btn-auth" />
+      <input type="submit" value="add" className="btn btn-auth" />
     </form>
   );
 }
