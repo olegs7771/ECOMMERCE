@@ -1,8 +1,15 @@
+// style _category.scss
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategoriesList } from '../../../store/actions/categoryAction';
+import {
+  getCategoriesList,
+  deleteCategoryAction,
+} from '../../../store/actions/categoryAction';
 import { Spinner } from '../../../utils/LoadingComponent';
+import sprite from '../../../img/sprite.svg';
 import Form from './CategoryForm';
+import CategoryItem from './CategoryItem';
 
 export default function Category(props) {
   const dispatch = useDispatch();
@@ -15,12 +22,16 @@ export default function Category(props) {
 
   useEffect(() => {
     dispatch(getCategoriesList());
-  }, []);
+  }, [dispatch]);
 
   //SET STATE CATEGORIES IN COMPONENT
   useEffect(() => {
     setCategories(categoryList);
   }, [categoryList]);
+
+  const _deleteCategory = (e) => {
+    dispatch(deleteCategoryAction({ slug: e }));
+  };
 
   return (
     <div className="category ">
@@ -31,7 +42,7 @@ export default function Category(props) {
         <div className="category__container">
           <div className="category__form-box">
             <h3 className=" heading-3">Add Category</h3>
-            <Form history={props.history} />
+            <Form history />
           </div>
 
           <div className="category__list-box">
@@ -40,11 +51,12 @@ export default function Category(props) {
             ) : (
               <ul className="category__list">
                 {categories.map((c, i) => (
-                  <li className="category__item" key={i}>
-                    <a href="!#" className="category__link">
-                      {c.name}
-                    </a>
-                  </li>
+                  <CategoryItem
+                    c={c}
+                    i={i}
+                    _deleteCategory={_deleteCategory}
+                    sprite={sprite}
+                  />
                 ))}
               </ul>
             )}
@@ -59,11 +71,3 @@ export default function Category(props) {
     </div>
   );
 }
-
-// const mapStateToProps = (state) => ({
-//   categories: state.category.categories,
-//   auth: state.auth,
-//   loading: state.loading.loading,
-// });
-
-// export default connect(mapStateToProps, { getCategoriesList })(Category);

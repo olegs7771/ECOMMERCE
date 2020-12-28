@@ -51,6 +51,7 @@ const update = asyncCatch(async (req, res, next) => {
 ////////////////////////////////////////////////////
 // REMOVE ONE CATEGORY
 const remove = asyncCatch(async (req, res, next) => {
+  console.log('req.params', req.params);
   const category = await Category.findOneAndDelete({ slug: req.params.slug });
   if (!category)
     return next(

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createCategoryAction } from '../../../store/actions/categoryAction';
 
-export default function CategoryForm({ history }) {
+export default function CategoryForm(props) {
   const [name, setName] = useState('');
 
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ export default function CategoryForm({ history }) {
 
   const _onSubmit = (e) => {
     e.preventDefault();
-    dispatch(createCategoryAction(data, history));
+    dispatch(createCategoryAction(data));
   };
 
   return (
@@ -29,7 +29,7 @@ export default function CategoryForm({ history }) {
         </label>
       </div>
 
-      <input type="submit" value="add" className="btn btn-auth" />
+      <input type="submit" value="save" className="btn btn-auth" />
     </form>
   );
 }
