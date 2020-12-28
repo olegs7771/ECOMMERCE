@@ -56,6 +56,7 @@ export default function Category(props) {
                     i={i}
                     _deleteCategory={_deleteCategory}
                     sprite={sprite}
+                    key={i}
                   />
                 ))}
               </ul>
