@@ -231,8 +231,8 @@ const protect = asyncCatch(async (req, res, next) => {
     console.log('token1', token);
     // IF COOKIE COMES WITH jwt only
   } else if (req.headers.cookie && req.headers.cookie.startsWith('jwt')) {
-    console.log('token', token);
     token = req.headers.cookie.substring(4);
+    console.log('token', token);
   }
   // console.log('token', token);
   if (!token)

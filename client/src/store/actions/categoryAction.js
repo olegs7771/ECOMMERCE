@@ -24,3 +24,21 @@ export const getCategoriesList = () => async (dispatch) => {
     console.log('error to get categories list', err);
   }
 };
+
+// CREATE NEW CATEGORY
+export const createCategoryAction = (data, history) => async (dispatch) => {
+  console.log('create category action data', data);
+  try {
+    const res = await axios.post('/api/v1/category', data);
+    console.log('res.data', res.data);
+    //FETCH CATEGORY LIST TO UPDATE REDUX STATE
+
+    const list = await axios.get('/api/v1/category');
+    dispatch({
+      type: GET_CATEGORIES_LIST,
+      payload: list.data.data,
+    });
+  } catch (err) {
+    console.log('error in creating category', err);
+  }
+};

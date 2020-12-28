@@ -6,12 +6,12 @@ export const NavigationAdmin = (props) => {
     <div className="admin__navigation">
       <ul className="admin__navigation-list">
         <li className="admin__navigation-item">
-          <a href="!#" className="admin__navigation-link">
+          <a href="!#!" className="admin__navigation-link">
             Product
           </a>
         </li>
         <li className="admin__navigation-item">
-          <a href="!#" className="admin__navigation-link">
+          <a href="!#!" className="admin__navigation-link">
             Products
           </a>
         </li>
@@ -21,7 +21,7 @@ export const NavigationAdmin = (props) => {
           </a>
         </li>
         <li className="admin__navigation-item">
-          <a href="!#" className="admin__navigation-link">
+          <a href="!#!" className="admin__navigation-link">
             Sub Category
           </a>
         </li>
@@ -31,7 +31,7 @@ export const NavigationAdmin = (props) => {
           </a>
         </li>
         <li className="admin__navigation-item">
-          <a href="!#" className="admin__navigation-link">
+          <a href="!#!" className="admin__navigation-link">
             Password
           </a>
         </li>
