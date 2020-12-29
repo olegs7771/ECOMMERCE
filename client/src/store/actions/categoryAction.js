@@ -51,6 +51,17 @@ export const createCategoryAction = (data) => async (dispatch) => {
   }
 };
 
+// UPDATE CATEGORY NAME
+export const updateCategoryAction = (data) => async (dispatch) => {
+  console.log('update action data', data);
+  try {
+    const res = await axios.put(`/api/v1/category/${data.slug}`, data);
+    console.log('res.data', res.data);
+  } catch (err) {
+    console.log('error to update category'.err);
+  }
+};
+
 // DELETE CATEGORY
 
 export const deleteCategoryAction = (data) => async (dispatch) => {
