@@ -67,4 +67,12 @@
     font-size: 1.6rem;
     text-transform: uppercase;
   }
+  &__error {
+    color: $color-red;
+    font-size: 1.4rem;
+  }
+  &__message {
+    color: $color-valid;
+    font-size: 1.4rem;
+  }
 }
