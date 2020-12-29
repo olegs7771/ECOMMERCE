@@ -32,6 +32,10 @@
     list-style: none;
   }
   &__item {
+    &-block {
+      height: 4.6rem;
+    }
+
     border-bottom: 0.1px solid $color-grey-dark;
     padding: 1rem 0;
     text-align: left;
@@ -48,9 +52,18 @@
       width: 2rem;
       margin-left: 1rem;
       cursor: pointer;
+
+      &--spinner {
+        height: 2rem;
+        width: 2rem;
+        animation: rotate-spinner 1s infinite;
+      }
     }
   }
 
   &__input {
+    border: 0.2px solid $color-grey-dark;
+    font-size: 1.6rem;
+    text-transform: uppercase;
   }
 }

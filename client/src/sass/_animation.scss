@@ -19,3 +19,13 @@
     transform: translate(-1rem, 7.7rem);
   }
 }
+
+//ROTATING SPINNER
+@keyframes rotate-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

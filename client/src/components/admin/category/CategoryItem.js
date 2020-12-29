@@ -7,6 +7,7 @@ import { updateCategoryAction } from '../../../store/actions/categoryAction';
 export default function CategoryItem({ c, _deleteCategory, sprite }) {
   const [isEdit, setIsEdit] = useState(false);
   const [name, setName] = useState('');
+
   const _edit = () => {
     setIsEdit(!isEdit);
     setName(c.slug);
@@ -34,6 +35,12 @@ export default function CategoryItem({ c, _deleteCategory, sprite }) {
             onChange={(e) => setName(e.target.value)}
             required
           />
+          <svg
+            className="category__link-icon--spinner"
+            onClick={_updateCategory}
+          >
+            <use href={sprite + '#icon-spinner'} />
+          </svg>
           <div className="category__link-icon-box">
             <svg className="category__link-icon" onClick={_updateCategory}>
               <use href={sprite + '#icon-checkmark'} />
