@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { GET_CATEGORIES_LIST, LOADING } from './types';
+import {
+  GET_CATEGORIES_LIST,
+  LOADING,
+  LOADING_ITEM_CATEGORY,
+  GET_API_ERROR,
+} from './types';
 
 export const getCategoriesList = () => async (dispatch) => {
   dispatch({
@@ -54,11 +59,45 @@ export const createCategoryAction = (data) => async (dispatch) => {
 // UPDATE CATEGORY NAME
 export const updateCategoryAction = (data) => async (dispatch) => {
   console.log('update action data', data);
+  dispatch({
+    type: LOADING_ITEM_CATEGORY,
+    payload: true,
+  });
   try {
-    const res = await axios.put(`/api/v1/category/${data.slug}`, data);
-    console.log('res.data', res.data);
+    await axios.put(`/api/v1/category/${data.slug}`, data);
+
+    //FETCH CATEGORY LIST TO UPDATE REDUX STATE
+    const list = await axios.get('/api/v1/category');
+
+    dispatch({
+      type: GET_CATEGORIES_LIST,
+      payload: list.data.data,
+    });
+
+    dispatch({
+      type: LOADING_ITEM_CATEGORY,
+      payload: false,
+    });
   } catch (err) {
-    console.log('error to update category'.err);
+    dispatch({
+      type: LOADING_ITEM_CATEGORY,
+      payload: false,
+    });
+    console.log('error to update category', err.response.data);
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data.message,
+    });
+
+    setTimeout(async () => {
+      //FETCH CATEGORY LIST TO UPDATE REDUX STATE
+      const list = await axios.get('/api/v1/category');
+
+      dispatch({
+        type: GET_CATEGORIES_LIST,
+        payload: list.data.data,
+      });
+    }, 4000);
   }
 };
 

@@ -1,7 +1,8 @@
-import { LOADING } from '../actions/types';
+import { LOADING, LOADING_ITEM_CATEGORY } from '../actions/types';
 
 const initialState = {
   loading: false,
+  loadingItemCategory: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: action.payload,
+      };
+    case LOADING_ITEM_CATEGORY:
+      return {
+        ...state,
+        loadingItemCategory: action.payload,
       };
 
     default:

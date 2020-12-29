@@ -1,10 +1,15 @@
 // CHILD COMPONENT OF CATEGORY
 
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateCategoryAction } from '../../../store/actions/categoryAction';
 
 export default function CategoryItem({ c, _deleteCategory, sprite }) {
+  //  REDUX
+  const dispatch = useDispatch();
+  const loadingItem = useSelector((state) => state.loading.loadingItemCategory);
+  const error = useSelector((state) => state.error.error);
+
   const [isEdit, setIsEdit] = useState(false);
   const [name, setName] = useState('');
 
@@ -13,7 +18,6 @@ export default function CategoryItem({ c, _deleteCategory, sprite }) {
     setName(c.slug);
   };
 
-  const dispatch = useDispatch();
   const _updateCategory = () => {
     const data = {
       slug: c.slug,
@@ -35,12 +39,15 @@ export default function CategoryItem({ c, _deleteCategory, sprite }) {
             onChange={(e) => setName(e.target.value)}
             required
           />
-          <svg
-            className="category__link-icon--spinner"
-            onClick={_updateCategory}
-          >
-            <use href={sprite + '#icon-spinner'} />
-          </svg>
+          {error ? <div>{error}</div> : null}
+          {loadingItem ? (
+            <svg
+              className="category__link-icon--spinner"
+              onClick={_updateCategory}
+            >
+              <use href={sprite + '#icon-spinner'} />
+            </svg>
+          ) : null}
           <div className="category__link-icon-box">
             <svg className="category__link-icon" onClick={_updateCategory}>
               <use href={sprite + '#icon-checkmark'} />

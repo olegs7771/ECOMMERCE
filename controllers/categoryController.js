@@ -35,12 +35,14 @@ const update = asyncCatch(async (req, res, next) => {
   console.log('req.body', req.body);
   //1) CHECK IF BODY HAS NAME
   if (!req.body.name)
-    return next(new AppErrorHandler(`Please provide a category name`));
+    return next(new AppErrorHandler(`Please provide a category name`, 400));
 
   // 2) CHECK IF CATEGORY EXISTS
   const category = await Category.findOne({ slug: req.params.slug });
   if (!category)
-    return next(new AppErrorHandler(`Category ${req.params.slug} not exists`));
+    return next(
+      new AppErrorHandler(`Category ${req.params.slug} not exists`, 404)
+    );
   //  UPDATE CATEGORY
   category.name = req.body.name;
   category.slug = slugify(req.body.name);
