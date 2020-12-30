@@ -21,7 +21,7 @@ export default function CategoryForm(props) {
           <input
             type="name"
             name="name"
-            className="form-input  category__form-input"
+            className="form-input  category__input"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required

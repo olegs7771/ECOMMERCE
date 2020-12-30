@@ -1,20 +1,19 @@
 // FILTERS LIST OF CATEGORIES
 
-import React, { useState } from 'react';
+import React from 'react';
 
-export default function CategoryFilter() {
-  const [name, setName] = useState('');
-
+export default function CategoryFilter({ _setFilterSearch, keyword }) {
   return (
     <div className="form-group">
       <label>
-        <div className="form-label--name">Search category</div>
+        <div className="form-label--name">Filter categories</div>
         <input
           type="text"
           name="name"
-          className="form-input"
-          value={name}
-          onChange={(e) => setName(e.target.value.toLocaleLowerCase())}
+          className="form-input category__input"
+          placeholder="filter.."
+          value={keyword}
+          onChange={_setFilterSearch}
           required
         />
       </label>

@@ -28,8 +28,8 @@ export default function Category(props) {
 
   //SET STATE CATEGORIES IN COMPONENT
   useEffect(() => {
-    setCategories(categoryList);
-  }, [categoryList]);
+    setCategories(categoryList.filter(searched(keyword)));
+  }, [categoryList, keyword]);
 
   const _deleteCategory = (e) => {
     dispatch(deleteCategoryAction({ slug: e }));
@@ -53,19 +53,7 @@ export default function Category(props) {
           <div className="category__container">
             <div className="category__cta-block">
               {/* FILTER FORM  */}
-              <div className="form-group">
-                <label>
-                  <div className="form-label--name">Search category</div>
-                  <input
-                    type="text"
-                    name="name"
-                    className="form-input"
-                    value={keyword}
-                    onChange={_setFilterSearch}
-                    required
-                  />
-                </label>
-              </div>
+              <Filter _setFilterSearch={_setFilterSearch} keyword={keyword} />
 
               {/* CATEGORY CREATE FORM  */}
               <Form history />
@@ -76,15 +64,21 @@ export default function Category(props) {
                 <Spinner loading={props.loading} />
               ) : (
                 <ul className="category__list">
-                  {categories.filter(searched(keyword)).map((c, i) => (
-                    <CategoryItem
-                      c={c}
-                      i={i}
-                      _deleteCategory={_deleteCategory}
-                      sprite={sprite}
-                      key={i}
-                    />
-                  ))}
+                  {categories.length === 0 ? (
+                    <div className="heading-3">No Categories found</div>
+                  ) : (
+                    <div>
+                      {categories.map((c, i) => (
+                        <CategoryItem
+                          c={c}
+                          i={i}
+                          _deleteCategory={_deleteCategory}
+                          sprite={sprite}
+                          key={i}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </ul>
               )}
             </div>

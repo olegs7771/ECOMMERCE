@@ -34,7 +34,6 @@ export default function CategoryItem({ c, _deleteCategory, sprite }) {
     };
     dispatch(updateCategoryAction(data));
   };
-
   // SET ERRORS IN STATE
   useEffect(() => {
     setErrorState(error);
