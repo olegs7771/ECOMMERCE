@@ -54,7 +54,7 @@ export default function CategoryItem({ c, _deleteCategory, sprite }) {
         // EDIT CATEGORY ITEM
         <li className="category__item">
           <input
-            type="name"
+            type="text"
             name="name"
             className="category__input"
             value={name}

@@ -3,29 +3,27 @@
   border: 1px solid black;
   text-align: center;
   max-width: 120rem;
-  margin: 2rem auto;
+  margin: 0 auto;
   background-color: $color-grey;
   &__container {
     display: flex;
   }
-  &__btn-group {
+
+  &__cta-block {
+    border: 1px solid green;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    padding: 2rem 1rem;
+    width: 30%;
   }
 
   &__list-box {
     padding: 2rem 4rem;
     display: flex;
-    width: 100%;
     border: 1px solid black;
     flex-direction: column;
     justify-content: center;
-  }
-  &__form-box {
-    padding: 2rem 4rem;
-    display: inline-block;
-    width: 100%;
-    border: 1px solid black;
+    width: 70%;
   }
 
   &__list {
@@ -74,5 +72,9 @@
   &__message {
     color: $color-valid;
     font-size: 1.4rem;
+  }
+
+  &__form {
+    padding: 0;
   }
 }

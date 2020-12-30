@@ -6,6 +6,11 @@ export const NavigationAdmin = (props) => {
     <div className="admin__navigation">
       <ul className="admin__navigation-list">
         <li className="admin__navigation-item">
+          <a href="/admin" className="admin__navigation-link">
+            Dashboard
+          </a>
+        </li>
+        <li className="admin__navigation-item">
           <a href="!#!" className="admin__navigation-link">
             Product
           </a>

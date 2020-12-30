@@ -14,14 +14,14 @@ export default function CategoryForm(props) {
   };
 
   return (
-    <form onSubmit={_onSubmit} className="form">
+    <form onSubmit={_onSubmit} className="form  category__form">
       <div className="form-group">
         <label>
-          <div className="form-label--name">email</div>
+          <div className="form-label--name">Add Category (name)</div>
           <input
             type="name"
             name="name"
-            className="form-input"
+            className="form-input  category__form-input"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
