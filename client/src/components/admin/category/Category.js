@@ -44,7 +44,7 @@ export default function Category(props) {
 
   return (
     <div>
-      <NavigationAdmin />
+      <NavigationAdmin category={true} />
       <div className="category ">
         <h1 className="heading-1 mb-md">Category</h1>
 

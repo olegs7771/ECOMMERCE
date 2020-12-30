@@ -1,5 +1,6 @@
 .category {
   height: 100vh;
+  padding: 4rem;
 
   text-align: center;
   max-width: 120rem;
@@ -7,7 +8,6 @@
   background-color: $color-grey;
   &__container {
     display: flex;
-    padding: 0 2rem;
   }
 
   &__cta-block {

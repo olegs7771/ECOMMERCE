@@ -1,20 +1,29 @@
 .admin {
   &__navigation {
-    padding: 2rem;
+    height: 6.5rem;
     background-color: $color-blue-light;
 
     &-list {
+      height: 100%;
       list-style: none;
       display: flex;
       justify-content: space-evenly;
     }
     &-item {
+      display: flex;
+      align-items: center;
+      width: 15rem;
+      justify-content: center;
+      cursor: pointer;
+      &--active {
+        background-color: $color-yellow;
+      }
     }
     &-link {
       text-decoration: none;
       font-size: 1.6rem;
       text-transform: uppercase;
-      color: $color-grey;
+      color: $color-grey-dark;
       &:hover {
         color: #f4e4c5;
       }

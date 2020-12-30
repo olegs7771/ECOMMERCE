@@ -1,5 +1,4 @@
 const asyncCatch = require('../utils/asyncCatch');
-const User = require('../models/User');
 const Category = require('../models/Category');
 const AppErrorHandler = require('../utils/AppError');
 const slugify = require('slugify');
