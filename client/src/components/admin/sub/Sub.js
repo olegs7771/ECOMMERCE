@@ -1,55 +1,56 @@
 // style _category.scss
-import NavigationAdmin from '../navigation/NavigationAdmin';
-import React, { useState, useEffect } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getCategoriesList,
-  deleteCategoryAction,
-} from '../../../store/actions/categoryAction';
+import { getSubListAction } from '../../../store/actions/subAction';
 import { Spinner } from '../../../utils/LoadingComponent';
+import Form from './SubForm';
+import Filter from './SubFilter';
+import SubItem from './SubItem';
 import sprite from '../../../img/sprite.svg';
-import Form from './CategoryForm';
-import CategoryItem from './CategoryItem';
-import Filter from './CategoryFilter';
 
-///////////////////////////////////////////////////////////////////////////
-
-export default function Category(props) {
+export default function Sub(props) {
   const dispatch = useDispatch();
-  const categoryList = useSelector((state) => state.category.categories);
   const auth = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.loading.loading);
-  const [categories, setCategories] = useState([]);
+  const subs = useSelector((state) => state.sub.subs);
+
+  const [subList, setSublist] = useState([]);
   const [keyword, setKeyword] = useState('');
 
-  //DISPATCH GET LIST OF CATEGORIES
-
+  //LOAD COMPONENT AND FETCH SUB CATEGORIES
   useEffect(() => {
-    dispatch(getCategoriesList());
-  }, [dispatch]);
+    const data = {
+      categoryId: props.match.params.categoryId,
+    };
+    dispatch(getSubListAction(data));
+  }, [dispatch, props.match.params.categoryId]);
 
   //SET STATE CATEGORIES IN COMPONENT
   useEffect(() => {
-    setCategories(categoryList.filter(searched(keyword)));
-  }, [categoryList, keyword]);
+    setSublist(subs.filter(searched(keyword)));
+  }, [subs, keyword]);
 
   const _deleteCategory = (e) => {
-    dispatch(deleteCategoryAction({ slug: e }));
+    // dispatch(deleteCategoryAction({ slug: e }));
   };
 
+  // FILTER SUBS-CATEGORIES
   const _setFilterSearch = (e) => {
     setKeyword(e.target.value.toLocaleLowerCase());
-    dispatch(getCategoriesList());
+    const data = {
+      categoryId: props.match.params.categoryId,
+    };
+    dispatch(getSubListAction(data));
   };
 
   const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
-
   return (
     <div>
-      <NavigationAdmin category={true} />
-      <div className="category ">
-        <h1 className="heading-2 mb-md">Category</h1>
-
+      <div className="category">
+        <h1 className="heading-3 mb-md">
+          Sub Categories for [{props.match.params.category}]
+        </h1>
         {/* CHECK ADMIN  */}
         {auth.isAuthenticated && auth.user.role === 'admin' ? (
           <div className="category__container">
@@ -60,18 +61,18 @@ export default function Category(props) {
               {/* CATEGORY CREATE FORM  */}
               <Form history />
             </div>
-            {/* CATEGORY LIST  */}
+            {/*SUB-CATEGORY LIST  */}
             <div className="category__list-box">
               {loading ? (
                 <Spinner loading={props.loading} />
               ) : (
                 <ul className="category__list">
-                  {categories.length === 0 ? (
-                    <div className="heading-3">No Categories found</div>
+                  {subList.length === 0 ? (
+                    <div className="heading-3">No sub-categories found</div>
                   ) : (
                     <div>
-                      {categories.map((c, i) => (
-                        <CategoryItem
+                      {subList.map((c, i) => (
+                        <SubItem
                           c={c}
                           i={i}
                           _deleteCategory={_deleteCategory}

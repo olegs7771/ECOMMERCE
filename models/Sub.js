@@ -1,23 +1,25 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const { ObjectId } = require.Schema;
+const { ObjectId } = mongoose.Schema;
+// const Category = require('./Category');
+
 const subSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
+      unique: true,
       minlength: [3, 'Name too short'],
       maxlength: [32, 'Name to long'],
     },
-    parent: {
+    categoryId: {
       type: ObjectId,
       ref: 'Category',
-      required: true,
+      required: [true, 'Sub Category must have an Category id'],
     },
 
     slug: {
       type: String,
-      unique: true,
       lowercase: true,
       index: true,
     },

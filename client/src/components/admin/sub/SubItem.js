@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCategoryAction } from '../../../store/actions/categoryAction';
 
-export default function CategoryItem({ c, _deleteCategory, sprite }) {
+export default function SubItem({ c, _deleteCategory, sprite }) {
   //  REDUX
   const dispatch = useDispatch();
   const loadingItem = useSelector((state) => state.loading.loadingItemCategory);
@@ -89,7 +89,7 @@ export default function CategoryItem({ c, _deleteCategory, sprite }) {
       ) : (
         //////////////////////////////////////////////////////
         <li className="category__item">
-          <a href={`/admin/${c._id}/${c.slug}/sub`} className="category__link">
+          <a href={`/admin/${c._id}/sub`} className="category__link">
             {c.name}
           </a>
           <div className="category__link-icon-box">

@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 export const NavigationAdmin = (props) => {
-  const [active, setActive] = useState(false);
-
   return (
     <div className="admin__navigation">
       <ul className="admin__navigation-list">
@@ -51,7 +49,7 @@ export const NavigationAdmin = (props) => {
             Category
           </a>
         </li>
-        <li
+        {/* <li
           className={
             props.sub
               ? 'admin__navigation-item admin__navigation-item--active'
@@ -61,7 +59,7 @@ export const NavigationAdmin = (props) => {
           <a href="!#!" className="admin__navigation-link">
             Sub Category
           </a>
-        </li>
+        </li> */}
         <li
           className={
             props.coupon

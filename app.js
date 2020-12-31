@@ -14,6 +14,8 @@ app.enable('trust proxy'); //Heroku works through proxies
 
 const users = require('./routes/users');
 const category = require('./routes/category');
+const sub = require('./routes/sub');
+
 //FOR UPLOADING FILES
 app.use(fileUpload());
 //USING PUG TEMPLATE ENGINE
@@ -46,6 +48,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use('/api/v1/users', users);
 app.use('/api/v1/category', category);
+app.use('/api/v1/sub', sub);
 
 //Errors for missing routes
 
