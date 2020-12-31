@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { createCategoryAction } from '../../../store/actions/categoryAction';
+import { createSubAction } from '../../../store/actions/subAction';
 
-export default function CategoryForm(props) {
+export default function CategoryForm({ categoryId }) {
   const [name, setName] = useState('');
 
   const dispatch = useDispatch();
-  const data = { name };
+  const data = { name, categoryId, slug: name };
 
   const _onSubmit = (e) => {
     e.preventDefault();
-    // dispatch(createCategoryAction(data));
+    dispatch(createSubAction(data));
   };
 
   return (
@@ -23,7 +23,7 @@ export default function CategoryForm(props) {
             name="name"
             className="form-input  category__input"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value.toLowerCase())}
             required
           />
         </label>

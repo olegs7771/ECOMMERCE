@@ -22,6 +22,7 @@ const subSchema = new mongoose.Schema(
       type: String,
       lowercase: true,
       index: true,
+      unique: true,
     },
   },
   { timestamps: true }

@@ -59,7 +59,7 @@ export default function Sub(props) {
               <Filter _setFilterSearch={_setFilterSearch} keyword={keyword} />
 
               {/* CATEGORY CREATE FORM  */}
-              <Form history />
+              <Form categoryId={props.match.params.categoryId} />
             </div>
             {/*SUB-CATEGORY LIST  */}
             <div className="category__list-box">

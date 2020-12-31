@@ -58,7 +58,7 @@ export default function Category(props) {
               <Filter _setFilterSearch={_setFilterSearch} keyword={keyword} />
 
               {/* CATEGORY CREATE FORM  */}
-              <Form history />
+              <Form />
             </div>
             {/* CATEGORY LIST  */}
             <div className="category__list-box">
