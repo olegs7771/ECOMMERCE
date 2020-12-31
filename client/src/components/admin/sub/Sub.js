@@ -48,9 +48,15 @@ export default function Sub(props) {
   return (
     <div>
       <div className="category">
-        <h1 className="heading-3 mb-md">
-          Sub Categories for [{props.match.params.category}]
-        </h1>
+        <div className="category__header">
+          <a href="" className="btn-link">
+            Back to dashboard
+          </a>
+
+          <h1 className="heading-3 mb-md">
+            Sub Categories for [{props.match.params.category}]
+          </h1>
+        </div>
         {/* CHECK ADMIN  */}
         {auth.isAuthenticated && auth.user.role === 'admin' ? (
           <div className="category__container">

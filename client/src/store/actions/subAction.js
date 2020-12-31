@@ -33,25 +33,25 @@ export const getSubListAction = (data) => async (dispatch) => {
 // CREATE NEW CATEGORY
 export const createSubAction = (data) => async (dispatch) => {
   console.log('create category action data', data);
-  // dispatch({
-  //   type: LOADING,
-  //   payload: true,
-  // });
-  // try {
-  //   const res = await axios.post('/api/v1/category', data);
-  //   console.log('res.data', res.data);
-  //   //FETCH CATEGORY LIST TO UPDATE REDUX STATE
-  //   const list = await axios.get('/api/v1/category');
-  //   dispatch({
-  //     type: LOADING,
-  //     payload: false,
-  //   });
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+  try {
+    const res = await axios.post('/api/v1/sub', data);
+    console.log('res.data', res.data);
+    //FETCH CATEGORY LIST TO UPDATE REDUX STATE
+    const list = await axios.get(`/api/v1/sub/${data.categoryId}`);
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
 
-  //   dispatch({
-  //     type: GET_SUB_LIST,
-  //     payload: list.data.data,
-  //   });
-  // } catch (err) {
-  //   console.log('error in creating category', err);
-  // }
+    dispatch({
+      type: GET_SUB_LIST,
+      payload: list.data.data,
+    });
+  } catch (err) {
+    console.log('error in creating category', err);
+  }
 };
