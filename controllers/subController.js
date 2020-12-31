@@ -23,5 +23,27 @@ const list = asyncCatch(async (req, res, next) => {
   });
   res.status(200).json({ status: 'success', qnt: subs.length, data: subs });
 });
+////////////////////////////////////////////////////////
+// UPDATE SUB NAME
+const update = asyncCatch(async (req, res, next) => {
+  console.log('req.params', req.params);
+  console.log('req.body', req.body);
+  //1) CHECK IF BODY HAS NAME
+  if (!req.body.name)
+    return next(new AppErrorHandler(`Please provide a category name`, 400));
 
-module.exports = { create, list };
+  // 2) CHECK IF CATEGORY EXISTS
+  const category = await Category.findOne({ slug: req.params.slug });
+  if (!category)
+    return next(
+      new AppErrorHandler(`Category ${req.params.slug} not exists`, 404)
+    );
+  //  UPDATE CATEGORY
+  category.name = req.body.name;
+  category.slug = slugify(req.body.name);
+  await category.save();
+  const message = `Category ${req.params.slug} updated.`;
+  res.status(200).json({ status: 'success', data: category, message });
+});
+
+module.exports = { create, list, update };
