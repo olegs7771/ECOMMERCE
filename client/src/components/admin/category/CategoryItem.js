@@ -100,7 +100,7 @@ export default function CategoryItem({ c, _deleteCategory, sprite }) {
             </svg>
             <svg
               className="category__link-icon"
-              onClick={_deleteCategory.bind(this, c.slug)}
+              onClick={_deleteCategory.bind(this, [c.slug, c._id])}
             >
               <use href={sprite + '#icon-bin'} />
             </svg>

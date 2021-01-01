@@ -106,20 +106,27 @@ export const updateCategoryAction = (data) => async (dispatch) => {
 // DELETE CATEGORY=> DELETE ALL SUB-CATEGORIES OF THIS CATEGORY
 
 export const deleteCategoryAction = (data) => async (dispatch) => {
-  console.log('data', data);
+  console.log('data deleteCategoryAction', data);
   dispatch({
     type: LOADING,
     payload: true,
   });
   try {
-    const res = await axios.delete(`/api/v1/category/${data.slug}`);
-    //DELETE ALL SUB-CATEGORIES
-
+    // 1) DELETE CATEGORY
+    await axios.delete(`/api/v1/category/${data.slug}`);
+    // 2) DELETE ALL SUB-CATEGORIES
+    const res = await axios.delete(
+      `/api/v1/sub/${data.categoryId}/${data.slug}`
+    );
     dispatch({
       type: LOADING,
       payload: false,
     });
-    console.log('res.data', res.data);
+    console.log('res.data delete subs ', res.data);
+    dispatch({
+      type: GET_API_MESSAGE,
+      payload: res.data.message,
+    });
     //FETCH CATEGORY LIST TO UPDATE REDUX STATE
     dispatch({
       type: LOADING,
@@ -139,6 +146,6 @@ export const deleteCategoryAction = (data) => async (dispatch) => {
       type: LOADING,
       payload: false,
     });
-    console.log('error to delete category');
+    console.log('error to delete category', err.response.data);
   }
 };

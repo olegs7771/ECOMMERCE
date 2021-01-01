@@ -87,7 +87,7 @@ export default function Sub(props) {
                         <SubItem
                           c={c}
                           i={i}
-                          _deleteCategory={_deleteSub}
+                          _deleteSub={_deleteSub}
                           sprite={sprite}
                           key={i}
                         />

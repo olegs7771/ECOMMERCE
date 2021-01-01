@@ -1,5 +1,6 @@
 const asyncCatch = require('../utils/asyncCatch');
 const Sub = require('../models/Sub');
+const Category = require('../models/Category');
 const AppErrorHandler = require('../utils/AppError');
 const slugify = require('slugify');
 
@@ -57,9 +58,15 @@ const remove = asyncCatch(async (req, res, next) => {
 // REMOVE ALL SUB-CATEGORIES OF CATEGORY
 const removeAll = asyncCatch(async (req, res, next) => {
   console.log('req.params removeAll', req.params);
-  //1) Find all sub-catregory of current category
-  const sub = await Sub.find({ categoryId: req.params.categoryId });
-  console.log('sub found', sub);
+
+  // 1) Find all sub-catregory of current category
+  await Sub.deleteMany({ categoryId: req.params.categoryId });
+  res
+    .status(200)
+    .json({
+      status: 'success',
+      message: `Category ${req.params.slug} deleted `,
+    });
 });
 
 module.exports = { create, list, update, remove, removeAll };

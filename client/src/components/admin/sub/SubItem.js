@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { updateSubAction } from '../../../store/actions/subAction';
 
-export default function SubItem({ c, _deleteCategory, sprite }) {
+export default function SubItem({ c, _deleteSub, sprite }) {
   //  REDUX
   const dispatch = useDispatch();
   const loadingItem = useSelector((state) => state.loading.loadingItemCategory);
@@ -102,7 +102,7 @@ export default function SubItem({ c, _deleteCategory, sprite }) {
             </svg>
             <svg
               className="category__link-icon"
-              onClick={_deleteCategory.bind(this, c.slug)}
+              onClick={_deleteSub.bind(this, c.slug)}
             >
               <use href={sprite + '#icon-bin'} />
             </svg>

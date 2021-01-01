@@ -34,7 +34,7 @@ export default function Category(props) {
   }, [categoryList, keyword]);
 
   const _deleteCategory = (e) => {
-    dispatch(deleteCategoryAction({ slug: e }));
+    dispatch(deleteCategoryAction({ slug: e[0], categoryId: e[1] }));
   };
 
   const _setFilterSearch = (e) => {
