@@ -30,9 +30,7 @@ const read = asyncCatch(async (req, res, next) => {
 ////////////////////////////////////////////////////////
 // UPDATE CATEGORY NAME
 const update = asyncCatch(async (req, res, next) => {
-  console.log('req.params', req.params);
-  console.log('req.body', req.body);
-  //1) CHECK IF BODY HAS NAME
+  //1) CHECK IF BODY HAS NAME (req.params.slug)(req.body.name)
   if (!req.body.name)
     return next(new AppErrorHandler(`Please provide a category name`, 400));
 

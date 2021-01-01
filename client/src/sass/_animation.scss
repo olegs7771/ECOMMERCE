@@ -32,3 +32,12 @@
     opacity: 1;
   }
 }
+//btn-link arrow pulsating
+@keyframes arrow-pulsate-left {
+  0% {
+    transform: translateX(-1rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

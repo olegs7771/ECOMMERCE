@@ -18,7 +18,7 @@ export const getSubListAction = (data) => async (dispatch) => {
 
   try {
     const res = await axios.get(`/api/v1/sub/${data.categoryId}`);
-    console.log('res.data', res.data);
+    console.log('res.data getSubListAction', res.data);
     dispatch({
       type: LOADING,
       payload: false,
@@ -46,7 +46,7 @@ export const createSubAction = (data) => async (dispatch) => {
   try {
     const res = await axios.post('/api/v1/sub', data);
     console.log('res.data', res.data);
-    //FETCH CATEGORY LIST TO UPDATE REDUX STATE
+    //FETCH SUB LIST TO UPDATE REDUX STATE
     const list = await axios.get(`/api/v1/sub/${data.categoryId}`);
     dispatch({
       type: LOADING,
@@ -63,13 +63,13 @@ export const createSubAction = (data) => async (dispatch) => {
 };
 // / UPDATE CATEGORY NAME
 export const updateSubAction = (data) => async (dispatch) => {
-  console.log('update action data', data);
+  console.log('update sub action data', data);
   dispatch({
     type: LOADING_ITEM_CATEGORY,
     payload: true,
   });
   try {
-    const update = await axios.put(`/api/v1/category/${data.slug}`, data);
+    const update = await axios.put(`/api/v1/sub/${data.slug}`, data);
     console.log('update.data', update.data);
     dispatch({
       type: LOADING_ITEM_CATEGORY,
@@ -82,7 +82,7 @@ export const updateSubAction = (data) => async (dispatch) => {
     });
 
     //FETCH CATEGORY LIST TO UPDATE REDUX STATE
-    const res = await axios.get('/api/v1/category');
+    const res = await axios.get(`/api/v1/sub/${data.categoryId}`);
 
     dispatch({
       type: GET_SUB_LIST,
@@ -104,5 +104,44 @@ export const updateSubAction = (data) => async (dispatch) => {
       type: GET_API_ERROR,
       payload: err.response.data.message,
     });
+  }
+};
+
+// DELETE SUB-CATEGORY
+
+export const deleteSubAction = (data) => async (dispatch) => {
+  console.log(' deleteSubAction data ', data);
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+  try {
+    const res = await axios.delete(`/api/v1/sub/${data.slug}`);
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    console.log('res.data delete sub', res.data);
+    //FETCH CATEGORY LIST TO UPDATE REDUX STATE
+    dispatch({
+      type: LOADING,
+      payload: true,
+    });
+    //FETCH SUB LIST TO UPDATE REDUX STATE
+    const list = await axios.get(`/api/v1/sub/${data.categoryId}`);
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    dispatch({
+      type: GET_SUB_LIST,
+      payload: list.data.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    console.log('error to delete category');
   }
 };

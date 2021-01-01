@@ -103,7 +103,7 @@ export const updateCategoryAction = (data) => async (dispatch) => {
   }
 };
 
-// DELETE CATEGORY
+// DELETE CATEGORY=> DELETE ALL SUB-CATEGORIES OF THIS CATEGORY
 
 export const deleteCategoryAction = (data) => async (dispatch) => {
   console.log('data', data);
@@ -113,6 +113,8 @@ export const deleteCategoryAction = (data) => async (dispatch) => {
   });
   try {
     const res = await axios.delete(`/api/v1/category/${data.slug}`);
+    //DELETE ALL SUB-CATEGORIES
+
     dispatch({
       type: LOADING,
       payload: false,

@@ -45,6 +45,39 @@
     border: none;
   }
 }
+.btn-link {
+  text-decoration: none;
+  border-bottom: 2px solid $color-valid;
+  padding-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  width: 16rem;
+  transition: 0.2s;
+  &__block {
+    height: 4.2rem;
+  }
+
+  &__text {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: $color-valid;
+  }
+  &__icon {
+    width: 2rem;
+    height: 2rem;
+    fill: $color-valid;
+  }
+  &:hover {
+    padding-bottom: 1rem;
+    transform: scale(1.01);
+    // animation: arrow-pulsate-left 0.2s infinite;
+  }
+  &:hover &__icon {
+    animation: arrow-pulsate-left 1s cubic-bezier(0.6, -0.28, 0.74, 0.05)
+      infinite;
+  }
+}
 
 .form {
   padding: 4rem;

@@ -2,12 +2,16 @@
 
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSubListAction } from '../../../store/actions/subAction';
+import {
+  getSubListAction,
+  deleteSubAction,
+} from '../../../store/actions/subAction';
 import { Spinner } from '../../../utils/LoadingComponent';
 import Form from './SubForm';
 import Filter from './SubFilter';
 import SubItem from './SubItem';
 import sprite from '../../../img/sprite.svg';
+import LinkBtn from '../../../utils/LinkBtn';
 
 export default function Sub(props) {
   const dispatch = useDispatch();
@@ -31,8 +35,12 @@ export default function Sub(props) {
     setSublist(subs.filter(searched(keyword)));
   }, [subs, keyword]);
 
-  const _deleteCategory = (e) => {
-    // dispatch(deleteCategoryAction({ slug: e }));
+  const _deleteSub = (e) => {
+    const data = {
+      slug: e,
+      categoryId: props.match.params.categoryId,
+    };
+    dispatch(deleteSubAction(data));
   };
 
   // FILTER SUBS-CATEGORIES
@@ -49,9 +57,7 @@ export default function Sub(props) {
     <div>
       <div className="category">
         <div className="category__header">
-          <a href="" className="btn-link">
-            Back to dashboard
-          </a>
+          <LinkBtn btnText="back to categories" />
 
           <h1 className="heading-3 mb-md">
             Sub Categories for [{props.match.params.category}]
@@ -81,7 +87,7 @@ export default function Sub(props) {
                         <SubItem
                           c={c}
                           i={i}
-                          _deleteCategory={_deleteCategory}
+                          _deleteCategory={_deleteSub}
                           sprite={sprite}
                           key={i}
                         />

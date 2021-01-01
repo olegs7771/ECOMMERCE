@@ -33,17 +33,33 @@ const update = asyncCatch(async (req, res, next) => {
     return next(new AppErrorHandler(`Please provide a category name`, 400));
 
   // 2) CHECK IF CATEGORY EXISTS
-  const category = await Category.findOne({ slug: req.params.slug });
-  if (!category)
-    return next(
-      new AppErrorHandler(`Category ${req.params.slug} not exists`, 404)
-    );
-  //  UPDATE CATEGORY
-  category.name = req.body.name;
-  category.slug = slugify(req.body.name);
-  await category.save();
-  const message = `Category ${req.params.slug} updated.`;
-  res.status(200).json({ status: 'success', data: category, message });
+  const sub = await Sub.findOne({ slug: req.params.slug });
+  if (!sub)
+    return next(new AppErrorHandler(`sub ${req.params.slug} not exists`, 404));
+  //  UPDATE sub
+  sub.name = req.body.name;
+  sub.slug = slugify(req.body.name);
+  await sub.save();
+  const message = `Sub-category ${req.params.slug} updated.`;
+  res.status(200).json({ status: 'success', data: sub, message });
 });
 
-module.exports = { create, list, update };
+////////////////////////////////////////////////////
+// REMOVE ONE CATEGORY
+const remove = asyncCatch(async (req, res, next) => {
+  console.log('req.params', req.params); //req.params.slug
+  const sub = await Sub.findOneAndDelete({ slug: req.params.slug });
+  if (!sub)
+    return next(new AppErrorHandler(`No sub ${req.params.slug} found `, 404));
+  res.status(200).json({ status: 'success', data: sub });
+});
+
+// REMOVE ALL SUB-CATEGORIES OF CATEGORY
+const removeAll = asyncCatch(async (req, res, next) => {
+  console.log('req.params removeAll', req.params);
+  //1) Find all sub-catregory of current category
+  const sub = await Sub.find({ categoryId: req.params.categoryId });
+  console.log('sub found', sub);
+});
+
+module.exports = { create, list, update, remove, removeAll };

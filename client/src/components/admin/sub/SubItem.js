@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateCategoryAction } from '../../../store/actions/categoryAction';
+
+import { updateSubAction } from '../../../store/actions/subAction';
 
 export default function SubItem({ c, _deleteCategory, sprite }) {
   //  REDUX
@@ -31,8 +32,9 @@ export default function SubItem({ c, _deleteCategory, sprite }) {
     const data = {
       slug: c.slug,
       name,
+      categoryId: c.categoryId,
     };
-    dispatch(updateCategoryAction(data));
+    dispatch(updateSubAction(data));
   };
   // SET ERRORS IN STATE
   useEffect(() => {
@@ -40,11 +42,13 @@ export default function SubItem({ c, _deleteCategory, sprite }) {
   }, [error]);
   // SET MESSAGE IN STATE
   useEffect(() => {
-    setMessageState(message);
-    setTimeout(() => {
-      setIsEdit(false); //AFTER UPDATE DONE BACK TO LIST MODE in 3s
-      setMessageState(null); // CLEAR MESSAGE
-    }, 5000);
+    if (message) {
+      setMessageState(message);
+      setTimeout(() => {
+        setIsEdit(false); //AFTER UPDATE DONE BACK TO LIST MODE in 3s
+        setMessageState(null); // CLEAR MESSAGE
+      }, 5000);
+    }
   }, [message]);
 
   return (
