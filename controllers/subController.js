@@ -28,7 +28,7 @@ const list = asyncCatch(async (req, res, next) => {
 // FIND by categiryId all CATEGORIES PUBLIC
 const allSubs = asyncCatch(async (req, res, next) => {
   const subs = await Sub.find();
-  console.log('subs', subs);
+
   res.status(200).json({ status: 'success', qnt: subs.length, data: subs });
 });
 
