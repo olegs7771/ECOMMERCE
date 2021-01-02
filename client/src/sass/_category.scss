@@ -22,7 +22,6 @@
   &__list-box {
     display: flex;
     margin-left: 3rem;
-
     flex-direction: column;
     justify-content: center;
     width: 70%;
@@ -32,16 +31,26 @@
     list-style: none;
   }
   &__item {
-    &-block {
-      height: 4.6rem;
-    }
-
     border-bottom: 0.1px solid $color-grey-dark;
     padding: 1rem 0;
     text-align: left;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    &-qnt {
+      font-size: 1.4rem;
+      margin-right: 5rem;
+      &--text {
+        margin-right: 1rem;
+        color: $color-blue;
+        font-weight: 700;
+      }
+    }
+
+    &-block {
+      height: 4.6rem;
+    }
   }
   &__link {
     font-size: 1.6rem;
@@ -53,11 +62,20 @@
       margin-left: 1rem;
       cursor: pointer;
       fill: $color-blue;
+
+      // SMALL SPINNER ICON SPRITE
       &--spinner {
         height: 2rem;
         width: 2rem;
         animation: rotate-spinner 1s infinite;
       }
+      &-box {
+        display: flex;
+      }
+    }
+    &--qnt {
+      text-decoration: none;
+      color: $color-blue;
     }
   }
 

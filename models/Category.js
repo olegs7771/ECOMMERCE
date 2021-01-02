@@ -18,11 +18,20 @@ const categorySchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
 //CREATE SLUG ON EVERY SAVE or CREATE but on insertMany()❗
 categorySchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
+});
+
+// CHECK FOR DUBLICATE CATEGORY NAME
+categorySchema.post('save', function (error, doc, next) {
+  // console.log('doc', doc);
+  if (error.name === 'MongoError' && error.code === 11000) {
+    next(new Error(`[${doc.name}] category name already exists!`));
+  } else {
+    next(error);
+  }
 });
 
 // categorySchema.pre(/^find/, function (next) {

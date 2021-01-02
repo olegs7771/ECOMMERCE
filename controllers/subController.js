@@ -12,8 +12,8 @@ const create = asyncCatch(async (req, res, next) => {
   res.status(200).json({ status: 'success', data: sub });
 });
 
-////////////////////////////////////////////////////
-// FIND ALL CATEGORIES PUBLIC
+/////////////////////////////////////////////////////////////////
+// FIND by categiryId all CATEGORIES PUBLIC
 const list = asyncCatch(async (req, res, next) => {
   console.log('req.params', req.params);
   console.log('sub list');
@@ -24,7 +24,15 @@ const list = asyncCatch(async (req, res, next) => {
   });
   res.status(200).json({ status: 'success', qnt: subs.length, data: subs });
 });
-////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+// FIND by categiryId all CATEGORIES PUBLIC
+const allSubs = asyncCatch(async (req, res, next) => {
+  const subs = await Sub.find();
+  console.log('subs', subs);
+  res.status(200).json({ status: 'success', qnt: subs.length, data: subs });
+});
+
+//////////////////////////////////////////////////////////////////
 // UPDATE SUB NAME
 const update = asyncCatch(async (req, res, next) => {
   console.log('req.params', req.params);
@@ -45,7 +53,7 @@ const update = asyncCatch(async (req, res, next) => {
   res.status(200).json({ status: 'success', data: sub, message });
 });
 
-////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 // REMOVE ONE CATEGORY
 const remove = asyncCatch(async (req, res, next) => {
   console.log('req.params', req.params); //req.params.slug
@@ -54,19 +62,17 @@ const remove = asyncCatch(async (req, res, next) => {
     return next(new AppErrorHandler(`No sub ${req.params.slug} found `, 404));
   res.status(200).json({ status: 'success', data: sub });
 });
-
+///////////////////////////////////////////////////////////////////
 // REMOVE ALL SUB-CATEGORIES OF CATEGORY
 const removeAll = asyncCatch(async (req, res, next) => {
   console.log('req.params removeAll', req.params);
 
   // 1) Find all sub-catregory of current category
   await Sub.deleteMany({ categoryId: req.params.categoryId });
-  res
-    .status(200)
-    .json({
-      status: 'success',
-      message: `Category ${req.params.slug} deleted `,
-    });
+  res.status(200).json({
+    status: 'success',
+    message: `Category [${req.params.slug}] deleted `,
+  });
 });
 
-module.exports = { create, list, update, remove, removeAll };
+module.exports = { create, list, allSubs, update, remove, removeAll };

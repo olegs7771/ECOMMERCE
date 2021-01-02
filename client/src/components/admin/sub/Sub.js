@@ -6,6 +6,10 @@ import {
   getSubListAction,
   deleteSubAction,
 } from '../../../store/actions/subAction';
+import {
+  clearErrorReduxState,
+  clearMessageReduxState,
+} from '../../../store/actions/categoryAction';
 import { Spinner } from '../../../utils/LoadingComponent';
 import Form from './SubForm';
 import Filter from './SubFilter';
@@ -13,14 +17,21 @@ import SubItem from './SubItem';
 import sprite from '../../../img/sprite.svg';
 import LinkBtn from '../../../utils/LinkBtn';
 
+import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
 export default function Sub(props) {
   const dispatch = useDispatch();
+
+  // SELECTORS
   const auth = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.loading.loading);
   const subs = useSelector((state) => state.sub.subs);
-
+  const message = useSelector((state) => state.message.message);
+  const error = useSelector((state) => state.error.error);
+  //  STATE
   const [subList, setSublist] = useState([]);
   const [keyword, setKeyword] = useState('');
+  const [messageState, setMessageState] = useState(null);
+  const [errorState, setErrorState] = useState(null);
 
   //LOAD COMPONENT AND FETCH SUB CATEGORIES
   useEffect(() => {
@@ -30,10 +41,30 @@ export default function Sub(props) {
     dispatch(getSubListAction(data));
   }, [dispatch, props.match.params.categoryId]);
 
-  //SET STATE CATEGORIES IN COMPONENT
+  //SET STATE SUBS IN COMPONENT
   useEffect(() => {
     setSublist(subs.filter(searched(keyword)));
   }, [subs, keyword]);
+  //SET STATE MESSAGE IN COMPONENT
+  useEffect(() => {
+    setMessageState(message);
+  }, [message]);
+  //SET STATE ERROR IN COMPONENT
+  useEffect(() => {
+    setErrorState(error);
+  }, [error]);
+  //CLEAR ERROR IN REDUX STATE
+  const _clearReduxErrorState = (e) => {
+    e.preventDefault();
+    setErrorState(null);
+    dispatch(clearErrorReduxState());
+  };
+  //CLEAR MESSAGE IN REDUX STATE
+  const _clearReduxMessageState = (e) => {
+    e.preventDefault();
+    setMessageState(null);
+    dispatch(clearMessageReduxState());
+  };
 
   const _deleteSub = (e) => {
     const data = {
@@ -83,15 +114,24 @@ export default function Sub(props) {
                     <div className="heading-3">No sub-categories found</div>
                   ) : (
                     <div>
-                      {subList.map((c, i) => (
-                        <SubItem
-                          c={c}
-                          i={i}
-                          _deleteSub={_deleteSub}
-                          sprite={sprite}
-                          key={i}
+                      {errorState ? (
+                        <ErrorMessageWithBtn
+                          errorState={errorState}
+                          _clearReduxErrorState={_clearReduxErrorState}
                         />
-                      ))}
+                      ) : (
+                        <div>
+                          {subs.map((c, i) => (
+                            <SubItem
+                              c={c}
+                              i={i}
+                              _deleteSub={_deleteSub}
+                              sprite={sprite}
+                              key={i}
+                            />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
                 </ul>

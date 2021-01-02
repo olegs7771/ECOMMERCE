@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateSubAction } from '../../../store/actions/subAction';
+import { clearMessageReduxState } from '../../../store/actions/categoryAction';
 
 export default function SubItem({ c, _deleteSub, sprite }) {
   //  REDUX
@@ -44,9 +45,12 @@ export default function SubItem({ c, _deleteSub, sprite }) {
   useEffect(() => {
     if (message) {
       setMessageState(message);
+
+      // CLEAN
       setTimeout(() => {
         setIsEdit(false); //AFTER UPDATE DONE BACK TO LIST MODE in 3s
         setMessageState(null); // CLEAR MESSAGE
+        dispatch(clearMessageReduxState()); //CLEAR MESSAGE IN REDUX STATE
       }, 5000);
     }
   }, [message]);

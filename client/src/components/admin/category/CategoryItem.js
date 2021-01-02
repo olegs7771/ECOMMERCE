@@ -2,11 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateCategoryAction } from '../../../store/actions/categoryAction';
+import {
+  updateCategoryAction,
+  clearMessageReduxState,
+} from '../../../store/actions/categoryAction';
 
-export default function CategoryItem({ c, _deleteCategory, sprite }) {
+export default function CategoryItem({ c, _deleteCategory, sprite, subs }) {
   //  REDUX
   const dispatch = useDispatch();
+
   const loadingItem = useSelector((state) => state.loading.loadingItemCategory);
   const message = useSelector((state) => state.message.message);
   const error = useSelector((state) => state.error.error);
@@ -15,6 +19,20 @@ export default function CategoryItem({ c, _deleteCategory, sprite }) {
   const [errorState, setErrorState] = useState(null);
   const [messageState, setMessageState] = useState(null);
   const [name, setName] = useState('');
+  const [subState, setSubState] = useState([]);
+
+  // FILTER ALL SUB-CATEGORIES BY ID
+  const subQuantity = (id) => {
+    let filtered = [];
+    subs.map((elem) => {
+      if (elem.categoryId === id) {
+        filtered.push(elem);
+      }
+    });
+    return filtered;
+  };
+
+  // console.log('subQuantity', subQuantity('5ff013c7d558de32841f6f82'));
 
   const _editToggle = () => {
     setIsEdit(!isEdit);
@@ -34,17 +52,27 @@ export default function CategoryItem({ c, _deleteCategory, sprite }) {
     };
     dispatch(updateCategoryAction(data));
   };
+
+  // SET SUBS QUANTITY IN STATE
+  useEffect(() => {
+    setSubState(subQuantity(c._id));
+  }, [subs]);
+
   // SET ERRORS IN STATE
   useEffect(() => {
     setErrorState(error);
   }, [error]);
-  // SET MESSAGE IN STATE
+
+  // SET MESSAGE
   useEffect(() => {
     if (message) {
       setMessageState(message);
+
+      // CLEAN
       setTimeout(() => {
         setIsEdit(false); //AFTER UPDATE DONE BACK TO LIST MODE in 3s
-        setMessageState(null); // CLEAR MESSAGE
+        setMessageState(null); // CLEAR MESSAGE IN STATE
+        dispatch(clearMessageReduxState()); //CLEAR MESSAGE IN REDUX STATE
       }, 5000);
     }
   }, [message]);
@@ -94,7 +122,20 @@ export default function CategoryItem({ c, _deleteCategory, sprite }) {
           <a href={`/admin/${c._id}/${c.slug}/sub`} className="category__link">
             {c.name}
           </a>
+
           <div className="category__link-icon-box">
+            <a
+              href={`/admin/${c._id}/${c.slug}/sub`}
+              className="category__link--qnt"
+            >
+              <div className="category__item-qnt">
+                <span className="category__item-qnt--text">
+                  [{subState.length}]
+                </span>
+                items
+              </div>
+            </a>
+
             <svg className="category__link-icon" onClick={_editToggle}>
               <use href={sprite + '#icon-pencil'} />
             </svg>

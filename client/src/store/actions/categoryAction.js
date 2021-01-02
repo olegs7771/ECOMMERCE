@@ -4,7 +4,9 @@ import {
   LOADING,
   LOADING_ITEM_CATEGORY,
   GET_API_ERROR,
+  CLEAR_API_ERROR,
   GET_API_MESSAGE,
+  CLEAR_API_MESSAGE,
 } from './types';
 
 export const getCategoriesList = () => async (dispatch) => {
@@ -53,7 +55,16 @@ export const createCategoryAction = (data) => async (dispatch) => {
       payload: list.data.data,
     });
   } catch (err) {
-    console.log('error in creating category', err);
+    console.log('error in creating category', err.response.data);
+
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data.message,
+    });
   }
 };
 
@@ -112,26 +123,17 @@ export const deleteCategoryAction = (data) => async (dispatch) => {
     payload: true,
   });
   try {
-    // 1) DELETE CATEGORY
-    await axios.delete(`/api/v1/category/${data.slug}`);
-    // 2) DELETE ALL SUB-CATEGORIES
     const res = await axios.delete(
       `/api/v1/sub/${data.categoryId}/${data.slug}`
     );
-    dispatch({
-      type: LOADING,
-      payload: false,
-    });
     console.log('res.data delete subs ', res.data);
     dispatch({
       type: GET_API_MESSAGE,
       payload: res.data.message,
     });
-    //FETCH CATEGORY LIST TO UPDATE REDUX STATE
-    dispatch({
-      type: LOADING,
-      payload: true,
-    });
+    // 1) DELETE CATEGORY
+    await axios.delete(`/api/v1/category/${data.slug}`);
+
     const list = await axios.get('/api/v1/category');
     dispatch({
       type: GET_CATEGORIES_LIST,
@@ -148,4 +150,19 @@ export const deleteCategoryAction = (data) => async (dispatch) => {
     });
     console.log('error to delete category', err.response.data);
   }
+};
+
+// CLEAR API ERROR IN REDUX STATE
+
+export const clearErrorReduxState = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_API_ERROR,
+  });
+};
+
+// CLEAR API MESSAGE IN REDUX STATE
+export const clearMessageReduxState = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_API_MESSAGE,
+  });
 };

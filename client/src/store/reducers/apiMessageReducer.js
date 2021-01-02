@@ -1,4 +1,4 @@
-import { GET_API_MESSAGE } from '../actions/types';
+import { GET_API_MESSAGE, CLEAR_API_MESSAGE } from '../actions/types';
 
 const initialState = {
   message: null,
@@ -10,6 +10,11 @@ const apiMessageReducer = (state = initialState, action) => {
       return {
         ...state,
         message: action.payload,
+      };
+    case CLEAR_API_MESSAGE:
+      return {
+        ...state,
+        message: null,
       };
 
     default:

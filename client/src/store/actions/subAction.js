@@ -4,10 +4,12 @@ import {
   LOADING,
   GET_API_MESSAGE,
   GET_API_ERROR,
+  CLEAR_API_ERROR,
+  GET_SUB_ALL,
 } from './types';
 import axios from 'axios';
 
-//GET SUB LIST
+//GET SUB LIST categoryId
 
 export const getSubListAction = (data) => async (dispatch) => {
   console.log('getSubListAction', data);
@@ -36,6 +38,21 @@ export const getSubListAction = (data) => async (dispatch) => {
   }
 };
 
+// GET ALL EXISTING SUB-CATEGORIES
+
+export const getAllSubAction = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/v1/sub');
+    console.log('res.data', res.data);
+    dispatch({
+      type: GET_SUB_ALL,
+      payload: res.data.data,
+    });
+  } catch (err) {
+    console.log('error getAllSubAction ');
+  }
+};
+
 // CREATE NEW CATEGORY
 export const createSubAction = (data) => async (dispatch) => {
   console.log('create category action data', data);
@@ -58,7 +75,16 @@ export const createSubAction = (data) => async (dispatch) => {
       payload: list.data.data,
     });
   } catch (err) {
-    console.log('error in creating category', err);
+    console.log('error in creating category', err.response.data);
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data.message,
+    });
   }
 };
 // / UPDATE CATEGORY NAME
