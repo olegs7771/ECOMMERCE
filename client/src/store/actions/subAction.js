@@ -4,7 +4,7 @@ import {
   LOADING,
   GET_API_MESSAGE,
   GET_API_ERROR,
-  CLEAR_API_ERROR,
+  // CLEAR_API_ERROR,
   GET_SUB_ALL,
 } from './types';
 import axios from 'axios';
@@ -12,7 +12,6 @@ import axios from 'axios';
 //GET SUB LIST categoryId
 
 export const getSubListAction = (data) => async (dispatch) => {
-  console.log('getSubListAction', data);
   dispatch({
     type: LOADING,
     payload: true,
@@ -43,7 +42,7 @@ export const getSubListAction = (data) => async (dispatch) => {
 export const getAllSubAction = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/v1/sub');
-    console.log('res.data', res.data);
+
     dispatch({
       type: GET_SUB_ALL,
       payload: res.data.data,

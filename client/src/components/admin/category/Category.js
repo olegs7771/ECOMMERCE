@@ -6,7 +6,6 @@ import {
   getCategoriesList,
   deleteCategoryAction,
   clearErrorReduxState,
-  clearMessageReduxState,
 } from '../../../store/actions/categoryAction';
 import { getAllSubAction } from '../../../store/actions/subAction';
 import { Spinner } from '../../../utils/LoadingComponent';
@@ -26,12 +25,11 @@ export default function Category(props) {
   const subList = useSelector((state) => state.sub.subs);
   const auth = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.loading.loading);
-  const message = useSelector((state) => state.message.message);
   const error = useSelector((state) => state.error.error);
   // STATE
   const [categories, setCategories] = useState([]);
   const [keyword, setKeyword] = useState('');
-  const [messageState, setMessageState] = useState(null);
+  // const [messageState, setMessageState] = useState(null);
   const [errorState, setErrorState] = useState(null);
 
   //LOAD COMPONENT AND FETCH  CATEGORIES
@@ -46,10 +44,6 @@ export default function Category(props) {
     return () => {};
   }, [categoryList, keyword]);
 
-  //SET STATE MESSAGE IN COMPONENT
-  useEffect(() => {
-    setMessageState(message);
-  }, [message]);
   //SET STATE ERROR IN COMPONENT
   useEffect(() => {
     setErrorState(error);
@@ -60,12 +54,6 @@ export default function Category(props) {
     e.preventDefault();
     setErrorState(null);
     dispatch(clearErrorReduxState());
-  };
-  //CLEAR MESSAGE IN REDUX STATE
-  const _clearReduxMessageState = (e) => {
-    e.preventDefault();
-    setMessageState(null);
-    dispatch(clearMessageReduxState());
   };
 
   const _deleteCategory = (e) => {
@@ -120,7 +108,7 @@ export default function Category(props) {
                               _deleteCategory={_deleteCategory}
                               sprite={sprite}
                               key={i}
-                              subs={subList}
+                              subs={subList} //all existing sub-categories array
                             />
                           ))}
                         </div>

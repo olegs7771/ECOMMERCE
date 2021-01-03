@@ -53,7 +53,12 @@ export default function SubItem({ c, _deleteSub, sprite }) {
         dispatch(clearMessageReduxState()); //CLEAR MESSAGE IN REDUX STATE
       }, 5000);
     }
-  }, [message]);
+  }, [message, dispatch]);
+
+  const _onClickSubItem = (e) => {
+    // e.preventDefault();
+    console.log('_onClickSubItem e', e);
+  };
 
   return (
     <div className="category__item-block">
@@ -97,7 +102,11 @@ export default function SubItem({ c, _deleteSub, sprite }) {
       ) : (
         //////////////////////////////////////////////////////
         <li className="category__item">
-          <a href={`/admin/${c._id}/sub`} className="category__link">
+          <a
+            href={`#!`}
+            className="category__link"
+            onClick={_onClickSubItem.bind(this, c._id)} //Fetch all products for this sub-item
+          >
             {c.name}
           </a>
           <div className="category__link-icon-box">

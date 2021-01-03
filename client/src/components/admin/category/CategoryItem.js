@@ -21,18 +21,21 @@ export default function CategoryItem({ c, _deleteCategory, sprite, subs }) {
   const [name, setName] = useState('');
   const [subState, setSubState] = useState([]);
 
-  // FILTER ALL SUB-CATEGORIES BY ID
+  // FILTER ALL SUB-CATEGORIES BY ID RETURN ARRAY
   const subQuantity = (id) => {
-    let filtered = [];
-    subs.map((elem) => {
+    let filteredArray = [];
+    subs.forEach((elem) => {
       if (elem.categoryId === id) {
-        filtered.push(elem);
+        filteredArray.push(elem);
       }
     });
-    return filtered;
+    return filteredArray;
   };
-
-  // console.log('subQuantity', subQuantity('5ff013c7d558de32841f6f82'));
+  // SET SUBS QUANTITY IN STATE ARRAY
+  useEffect(() => {
+    setSubState(subQuantity(c._id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subs]);
 
   const _editToggle = () => {
     setIsEdit(!isEdit);
@@ -53,11 +56,6 @@ export default function CategoryItem({ c, _deleteCategory, sprite, subs }) {
     dispatch(updateCategoryAction(data));
   };
 
-  // SET SUBS QUANTITY IN STATE
-  useEffect(() => {
-    setSubState(subQuantity(c._id));
-  }, [subs]);
-
   // SET ERRORS IN STATE
   useEffect(() => {
     setErrorState(error);
@@ -75,7 +73,7 @@ export default function CategoryItem({ c, _deleteCategory, sprite, subs }) {
         dispatch(clearMessageReduxState()); //CLEAR MESSAGE IN REDUX STATE
       }, 5000);
     }
-  }, [message]);
+  }, [message, dispatch]);
 
   return (
     <div className="category__item-block">
@@ -128,6 +126,7 @@ export default function CategoryItem({ c, _deleteCategory, sprite, subs }) {
               href={`/admin/${c._id}/${c.slug}/sub`}
               className="category__link--qnt"
             >
+              {/* QUANTITY  */}
               <div className="category__item-qnt">
                 <span className="category__item-qnt--text">
                   [{subState.length}]

@@ -208,7 +208,7 @@ const login = asyncCatch(async (req, res, next) => {
 //PROTECTION OF ROUTES
 
 const protect = asyncCatch(async (req, res, next) => {
-  console.log('req.headers protect', req.headers);
+  // console.log('req.headers protect', req.headers);
   console.log('protect');
   // 1) Check if token exists
   let token;
@@ -228,16 +228,17 @@ const protect = asyncCatch(async (req, res, next) => {
   // IF COOKIE COMES WITH G_AUTHUSER_H
   if (req.headers.cookie && req.headers.cookie.startsWith('G_AUTHUSER_H')) {
     token = req.headers.cookie.split(';')[1].substring(5);
-    console.log('token1', token);
+    // console.log('token1', token);
     // IF COOKIE COMES WITH jwt only
   } else if (req.headers.cookie && req.headers.cookie.startsWith('jwt')) {
     token = req.headers.cookie.substring(4);
-    console.log('token', token);
+    // console.log('token', token);
     // IF COMES WITH SameSite=Strict;
   } else if (
-    (req.headers.cookie, req.headers.cookie.split(';')[1].startsWith(' jwt'))
+    req.headers.cookie &&
+    req.headers.cookie.split(';')[1].startsWith(' jwt')
   ) {
-    console.log('SameSite=Strict');
+    // console.log('SameSite=Strict');
     token = req.headers.cookie.split(';')[1].substring(5);
   }
   // console.log('token', token);

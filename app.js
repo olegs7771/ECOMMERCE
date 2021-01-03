@@ -15,6 +15,7 @@ app.enable('trust proxy'); //Heroku works through proxies
 const users = require('./routes/users');
 const category = require('./routes/category');
 const sub = require('./routes/sub');
+const product = require('./routes/product');
 
 //FOR UPLOADING FILES
 app.use(fileUpload());
@@ -49,6 +50,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use('/api/v1/users', users);
 app.use('/api/v1/category', category);
 app.use('/api/v1/sub', sub);
+app.use('/api/v1/product', product);
 
 //Errors for missing routes
 

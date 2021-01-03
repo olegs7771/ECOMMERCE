@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema;
+const slugify = require('slugify');
 
 const productSchema = new mongoose.Schema(
   {
@@ -66,6 +67,13 @@ const productSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+//CREATE PRODUCT SLUG
+productSchema.pre('save', function (next) {
+  console.log('product save this', this);
+  this.slug = slugify(this.title, { lowercase: true });
+  next();
+});
 
 const Product = mongoose.model('Product', productSchema);
 module.exports = Product;
