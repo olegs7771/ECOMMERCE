@@ -5,6 +5,7 @@ import apiMessageReducer from './apiMessageReducer';
 import apiErrorReducer from './apiErrorReducer';
 import categoryReducer from './categoryReducer';
 import subReducer from './subReducer';
+import productReducer from './productReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   error: apiErrorReducer,
   category: categoryReducer,
   sub: subReducer,
+  product: productReducer,
 });

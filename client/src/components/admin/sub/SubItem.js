@@ -55,11 +55,6 @@ export default function SubItem({ c, _deleteSub, sprite }) {
     }
   }, [message, dispatch]);
 
-  // const _onClickSubItem = (e) => {
-  //   // e.preventDefault();
-  //   console.log('_onClickSubItem e', e);
-  // };
-
   return (
     <div className="category__item-block">
       {isEdit ? (
@@ -102,11 +97,7 @@ export default function SubItem({ c, _deleteSub, sprite }) {
       ) : (
         //////////////////////////////////////////////////////
         <li className="category__item">
-          <a
-            href={`/admin/${c._id}/product`}
-            className="category__link"
-            // onClick={_onClickSubItem.bind(this, c._id)} //Fetch all products for this sub-item
-          >
+          <a href={`/admin/${c._id}/product`} className="category__link">
             {c.name}
           </a>
           <div className="category__link-icon-box">
