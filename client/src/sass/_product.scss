@@ -1,4 +1,11 @@
 .product {
+  height: 100vh;
+  padding: 4rem;
+
+  text-align: center;
+  max-width: 120rem;
+  margin: 0 auto;
+
   &__form {
     background-color: $color-yellow;
     padding: 3rem 1rem;

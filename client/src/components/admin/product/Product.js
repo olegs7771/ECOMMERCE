@@ -32,23 +32,17 @@ export default function Product(props) {
   const [keyword, setKeyword] = useState('');
   // const [messageState, setMessageState] = useState(null);
   const [errorState, setErrorState] = useState(null);
-  const [name, setName] = useState('');
+  const [showForm, setShowForm] = useState(false);
 
-  // FORM ADD CATEGORY
-  const _onSubmit = (e) => {
-    e.preventDefault();
-    const data = { name };
-    // dispatch(createCategoryAction(data));
-  };
-  const _setName = (e) => {
-    setName(e.target.value);
+  const toggleShowForm = () => {
+    setShowForm(!showForm);
   };
 
   //LOAD COMPONENT AND FETCH  CATEGORIES
   useEffect(() => {
     const data = { subId: props.match.params.subId };
     dispatch(getProductsListAction(data));
-  }, [dispatch]);
+  }, [dispatch, props.match.params.subId]);
 
   //SET STATE PRODUCTS IN COMPONENT
   useEffect(() => {
@@ -79,58 +73,64 @@ export default function Product(props) {
 
   return (
     <div>
-      <div className="category ">
+      <div className="product ">
         <h1 className="heading-2 mb-md">
           Products for [{props.match.params.slug}]
         </h1>
 
         {/* CHECK ADMIN  */}
         {auth.isAuthenticated && auth.user.role === 'admin' ? (
-          <div className="category__container">
-            <div className="category__cta-block">
-              {/* FILTER FORM  */}
-              <Filter _setFilterSearch={_setFilterSearch} keyword={keyword} />
+          <div className="product__container">
+            <div className="product__cta-block">
+              {showForm?():()}
 
-              {/* PRODUCT CREATE FORM  */}
+
               <Form
-                _onSubmit={_onSubmit}
-                name={name}
-                _setName={_setName}
-                title="add category (name)"
+              // _onSubmit={_onSubmit}
+              // name={name}
+              // _setName={_setName}
+              // title="add product (name)"
               />
             </div>
-            {/* CATEGORY LIST  */}
-            <div className="category__list-box">
+            {/* product LIST  */}
+            <div className="product__list-box">
               {loading ? (
                 <Spinner loading={props.loading} />
               ) : (
-                <ul className="category__list">
-                  {products.length === 0 ? (
-                    <div className="heading-3">No Products found</div>
-                  ) : (
-                    <div>
-                      {/* SHOW MESSAGE ON DELETE  */}
-                      {errorState ? (
-                        <ErrorMessageWithBtn
-                          errorState={errorState}
-                          _clearReduxErrorState={_clearReduxErrorState}
-                        />
-                      ) : (
-                        <div>
-                          {products.map((p, i) => (
-                            <ProductItem
-                              product={p}
-                              // _deleteCategory={_deleteCategory}
-                              sprite={sprite}
-                              key={i}
-                              // subs={subList} //all existing sub-categories array
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </ul>
+                <div>
+                  {/* FILTER FORM  */}
+                  <Filter
+                    _setFilterSearch={_setFilterSearch}
+                    keyword={keyword}
+                  />
+                  <ul className="product__list">
+                    {products.length === 0 ? (
+                      <div className="heading-3">No Products found</div>
+                    ) : (
+                      <div>
+                        {/* SHOW MESSAGE ON DELETE  */}
+                        {errorState ? (
+                          <ErrorMessageWithBtn
+                            errorState={errorState}
+                            _clearReduxErrorState={_clearReduxErrorState}
+                          />
+                        ) : (
+                          <div>
+                            {products.map((p, i) => (
+                              <ProductItem
+                                product={p}
+                                // _deleteproduct={_deleteproduct}
+                                sprite={sprite}
+                                key={i}
+                                // subs={subList} //all existing sub-categories array
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </ul>
+                </div>
               )}
             </div>
           </div>

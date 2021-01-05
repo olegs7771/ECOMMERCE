@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export default function CategoryForm({ name, _onSubmit, _setName, title }) {
   return (

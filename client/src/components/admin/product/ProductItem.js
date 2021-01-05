@@ -1,11 +1,11 @@
 // CHILD COMPONENT OF CATEGORY
 
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch} from 'react-redux';
 
 export default function ProductItem({ product, _deleteCategory, sprite }) {
   //  REDUX
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [productState, setProductState] = useState([]);
 
