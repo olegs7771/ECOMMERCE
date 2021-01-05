@@ -1,7 +1,6 @@
 .product {
   height: 100vh;
   padding: 4rem;
-
   text-align: center;
   max-width: 120rem;
   margin: 0 auto;
@@ -9,5 +8,22 @@
   &__form {
     background-color: $color-yellow;
     padding: 3rem 1rem;
+  }
+
+  &__cta {
+    &-control {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    &-btn {
+      display: flex;
+      align-items: center;
+      width: 20rem;
+    }
+    &-icon {
+      fill: #fff;
+      margin-right: 1rem;
+    }
   }
 }

@@ -34,7 +34,7 @@ export default function Product(props) {
   const [errorState, setErrorState] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
-  const toggleShowForm = () => {
+  const _toggleShowForm = () => {
     setShowForm(!showForm);
   };
 
@@ -81,17 +81,22 @@ export default function Product(props) {
         {/* CHECK ADMIN  */}
         {auth.isAuthenticated && auth.user.role === 'admin' ? (
           <div className="product__container">
-            <div className="product__cta-block">
-              {showForm?():()}
-
-
-              <Form
-              // _onSubmit={_onSubmit}
-              // name={name}
-              // _setName={_setName}
-              // title="add product (name)"
-              />
+            <div className="product__cta-control mb-md">
+              <button
+                className="btn product__cta-btn"
+                onClick={_toggleShowForm} //SHOW ADD PRODUCT FORM 📅
+              >
+                <svg className="category__link-icon product__cta-icon">
+                  <use href={sprite + '#icon-plus'} />
+                </svg>
+                Add Product
+              </button>
             </div>
+
+            <div className="product__cta-block">
+              {showForm ? <Form /> : null}
+            </div>
+
             {/* product LIST  */}
             <div className="product__list-box">
               {loading ? (

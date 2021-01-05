@@ -84,19 +84,67 @@ export default function CategoryForm() {
           />
         </label>
       </div>
-      <div className="form-group">
-        <label>
-          <div className="form-label--name">Shipping</div>
+      <div className="form-label--name">Shipping</div>
+      <div className="form-group form-group__radio">
+        <label className=" form-group__radio-label">
           <input
-            type="number"
-            name="quantity"
-            className="form-input  category__input"
-            value={values.quantity}
+            type="radio"
+            value="Yes"
+            name="shipping"
+            checked={values.shipping === 'Yes'}
             onChange={_onChange}
-            required
           />
+          <span className="form-label--name">Yes</span>
+        </label>
+        <label className=" form-group__radio-label">
+          <input
+            type="radio"
+            value="No"
+            name="shipping"
+            checked={values.shipping === 'No'}
+            onChange={_onChange}
+          />
+
+          <span className="form-label--name">No</span>
         </label>
       </div>
+      <div className="form-group">
+        <label>
+          <div className="form-label--name">Pick your Color</div>
+          <select
+            name="color"
+            value={values.color}
+            onChange={_onChange}
+            className="form-input  category__input"
+          >
+            <option>Select Color</option>
+            {initialState.colors.map((color) => (
+              <option value={color} key={color}>
+                {color}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <div className="form-group">
+        <label>
+          <div className="form-label--name">Pick your Brand</div>
+          <select
+            name="brand"
+            value={values.brand}
+            onChange={_onChange}
+            className="form-input  category__input"
+          >
+            <option>Select Brand</option>
+            {initialState.brands.map((brand) => (
+              <option value={brand} key={brand}>
+                {brand}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
       <input type="submit" value="save" className="btn btn-auth" />
     </form>
   );
