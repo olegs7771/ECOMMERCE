@@ -5,14 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getSubListAction,
   deleteSubAction,
+  createSubAction,
 } from '../../../store/actions/subAction';
+
 import {
   clearErrorReduxState,
   clearMessageReduxState,
 } from '../../../store/actions/categoryAction';
 import { Spinner } from '../../../utils/LoadingComponent';
-import Form from './SubForm';
-import Filter from './SubFilter';
+import Form from '../../../utils/AddForm';
+import Filter from '../../../utils/FilterForm';
 import SubItem from './SubItem';
 import sprite from '../../../img/sprite.svg';
 import LinkBtn from '../../../utils/LinkBtn';
@@ -32,6 +34,21 @@ export default function Sub(props) {
   const [keyword, setKeyword] = useState('');
   const [messageState, setMessageState] = useState(null);
   const [errorState, setErrorState] = useState(null);
+  const [name, setName] = useState('');
+
+  // FORM ADD CATEGORY
+  const _onSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      name,
+      categoryId: props.match.params.categoryId,
+      slug: name,
+    };
+    dispatch(createSubAction(data));
+  };
+  const _setName = (e) => {
+    setName(e.target.value);
+  };
 
   //LOAD COMPONENT AND FETCH SUB CATEGORIES
   useEffect(() => {
@@ -102,7 +119,12 @@ export default function Sub(props) {
               <Filter _setFilterSearch={_setFilterSearch} keyword={keyword} />
 
               {/* CATEGORY CREATE FORM  */}
-              <Form categoryId={props.match.params.categoryId} />
+              <Form
+                _onSubmit={_onSubmit}
+                name={name}
+                _setName={_setName}
+                title="add sub-category (name)"
+              />
             </div>
             {/*SUB-CATEGORY LIST  */}
             <div className="category__list-box">
@@ -121,7 +143,7 @@ export default function Sub(props) {
                         />
                       ) : (
                         <div>
-                          {subs.map((c, i) => (
+                          {subList.map((c, i) => (
                             <SubItem
                               c={c}
                               i={i}

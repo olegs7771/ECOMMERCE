@@ -6,13 +6,14 @@ import {
   getCategoriesList,
   deleteCategoryAction,
   clearErrorReduxState,
+  createCategoryAction,
 } from '../../../store/actions/categoryAction';
 import { getAllSubAction } from '../../../store/actions/subAction';
 import { Spinner } from '../../../utils/LoadingComponent';
 import sprite from '../../../img/sprite.svg';
-import Form from './CategoryForm';
+import Form from '../../../utils/AddForm';
 import CategoryItem from './CategoryItem';
-import Filter from './CategoryFilter';
+import Filter from '../../../utils/FilterForm';
 
 import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
 
@@ -21,16 +22,26 @@ import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
 export default function Category(props) {
   const dispatch = useDispatch();
   // SELECTORS
-  const categoryList = useSelector((state) => state.category.categories);
-  const subList = useSelector((state) => state.sub.subs);
+  const categoryList = useSelector((state) => state.category.categories); //get list Redux
+  const subList = useSelector((state) => state.sub.subs); //get list Redux
   const auth = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.loading.loading);
   const error = useSelector((state) => state.error.error);
   // STATE
   const [categories, setCategories] = useState([]);
   const [keyword, setKeyword] = useState('');
-  // const [messageState, setMessageState] = useState(null);
   const [errorState, setErrorState] = useState(null);
+  const [name, setName] = useState('');
+
+  // FORM ADD CATEGORY
+  const _onSubmit = (e) => {
+    e.preventDefault();
+    const data = { name };
+    dispatch(createCategoryAction(data));
+  };
+  const _setName = (e) => {
+    setName(e.target.value);
+  };
 
   //LOAD COMPONENT AND FETCH  CATEGORIES
   useEffect(() => {
@@ -78,10 +89,19 @@ export default function Category(props) {
           <div className="category__container">
             <div className="category__cta-block">
               {/* FILTER FORM  */}
-              <Filter _setFilterSearch={_setFilterSearch} keyword={keyword} />
+              <Filter
+                _setFilterSearch={_setFilterSearch}
+                keyword={keyword}
+                _setName={_setName}
+              />
 
               {/* CATEGORY CREATE FORM  */}
-              <Form />
+              <Form
+                _onSubmit={_onSubmit}
+                name={name}
+                _setName={_setName}
+                title="add category (name)"
+              />
             </div>
             {/* CATEGORY LIST  */}
             <div className="category__list-box">

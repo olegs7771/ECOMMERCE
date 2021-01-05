@@ -1,5 +1,3 @@
-// FILTERS LIST OF CATEGORIES
-
 import React from 'react';
 
 export default function CategoryFilter({ _setFilterSearch, keyword }) {

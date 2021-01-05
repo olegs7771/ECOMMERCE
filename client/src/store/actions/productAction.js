@@ -26,3 +26,5 @@ export const getProductsListAction = (data) => async (dispatch) => {
     console.log('error to get categories list', err);
   }
 };
+
+// CREATE PRODUCT

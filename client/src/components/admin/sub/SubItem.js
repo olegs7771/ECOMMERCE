@@ -97,7 +97,10 @@ export default function SubItem({ c, _deleteSub, sprite }) {
       ) : (
         //////////////////////////////////////////////////////
         <li className="category__item">
-          <a href={`/admin/${c._id}/product`} className="category__link">
+          <a
+            href={`/admin/${c._id}/${c.slug}/product`}
+            className="category__link"
+          >
             {c.name}
           </a>
           <div className="category__link-icon-box">

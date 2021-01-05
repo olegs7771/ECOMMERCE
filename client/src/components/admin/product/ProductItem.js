@@ -7,11 +7,11 @@ import {
   clearMessageReduxState,
 } from '../../../store/actions/categoryAction';
 
-export default function ProductItem({ c, _deleteCategory, sprite, subs }) {
+export default function ProductItem({ product, _deleteCategory, sprite }) {
   //  REDUX
   const dispatch = useDispatch();
 
-  const loadingItem = useSelector((state) => state.loading.loadingItemCategory);
+  // const loadingItem = useSelector((state) => state.loading.loadingItemCategory);
   const message = useSelector((state) => state.message.message);
   const error = useSelector((state) => state.error.error);
 
@@ -19,7 +19,12 @@ export default function ProductItem({ c, _deleteCategory, sprite, subs }) {
   const [errorState, setErrorState] = useState(null);
   const [messageState, setMessageState] = useState(null);
   const [name, setName] = useState('');
-  const [subState, setSubState] = useState([]);
+  const [productState, setProductState] = useState([]);
+
+  // SET PRODUCT TO STATE
+  useEffect(() => {
+    setProductState(product);
+  }, [product]);
 
   // FILTER ALL SUB-CATEGORIES BY ID RETURN ARRAY
   // const subQuantity = (id) => {
@@ -76,78 +81,39 @@ export default function ProductItem({ c, _deleteCategory, sprite, subs }) {
   // }, [message, dispatch]);
 
   return (
-    <div>Item</div>
-    // <div className="category__item-block">
-    //   {isEdit ? (
-    //     // EDIT CATEGORY ITEM
-    //     <li className="category__item">
-    //       <input
-    //         type="text"
-    //         name="name"
-    //         className="category__input"
-    //         value={name}
-    //         onChange={_onChange}
-    //         required
-    //       />
-    //       {/* ERROR  */}
-    //       {errorState ? (
-    //         <div className="category__error">{errorState}</div>
-    //       ) : null}
-    //       {/* message  */}
-    //       {messageState ? (
-    //         <div className="category__message">{messageState}</div>
-    //       ) : null}
-    //       {/* LOADING ITEM  null if message or error appears*/}
-    //       {loadingItem ? (
-    //         <svg
-    //           className="category__link-icon--spinner"
-    //           onClick={_updateCategory}
-    //         >
-    //           <use href={sprite + '#icon-spinner'} />
-    //         </svg>
-    //       ) : null}
-    //       <div className="category__link-icon-box">
-    //         <svg className="category__link-icon" onClick={_updateCategory}>
-    //           <use href={sprite + '#icon-checkmark'} />
-    //         </svg>
-    //         <svg className="category__link-icon" onClick={_editToggle}>
-    //           <use href={sprite + '#icon-cross'} />
-    //         </svg>
-    //       </div>
-    //     </li>
-    //   ) : (
-    //     //////////////////////////////////////////////////////
-    //     <li className="category__item">
-    //       <a href={`/admin/${c._id}/${c.slug}/sub`} className="category__link">
-    //         {c.name}
-    //       </a>
+    <div className="category__item-block">
+      <li className="category__item">
+        {/* <a href={`/admin/${c._id}/${c.slug}/sub`} className="category__link"> */}
+        <a href="!#" className="category__link">
+          {productState.title}
+        </a>
 
-    //       <div className="category__link-icon-box">
-    //         <a
-    //           href={`/admin/${c._id}/${c.slug}/sub`}
-    //           className="category__link--qnt"
-    //         >
-    //           {/* QUANTITY  */}
-    //           <div className="category__item-qnt">
-    //             <span className="category__item-qnt--text">
-    //               [{subState.length}]
-    //             </span>
-    //             items
-    //           </div>
-    //         </a>
+        <div className="category__link-icon-box">
+          <a
+            // href={`/admin/${c._id}/${c.slug}/sub`}
+            href="!#"
+            className="category__link--qnt"
+          >
+            {/* QUANTITY  */}
+            <div className="category__item-qnt">
+              <span className="category__item-qnt--text">
+                {/* [{subState.length}] */}5
+              </span>
+              items
+            </div>
+          </a>
 
-    //         <svg className="category__link-icon" onClick={_editToggle}>
-    //           <use href={sprite + '#icon-pencil'} />
-    //         </svg>
-    //         <svg
-    //           className="category__link-icon"
-    //           onClick={_deleteCategory.bind(this, [c.slug, c._id])}
-    //         >
-    //           <use href={sprite + '#icon-bin'} />
-    //         </svg>
-    //       </div>
-    //     </li>
-    //   )}
-    // </div>
+          <svg className="category__link-icon">
+            <use href={sprite + '#icon-pencil'} />
+          </svg>
+          <svg
+            className="category__link-icon"
+            // onClick={_deleteCategory.bind(this, [c.slug, c._id])}
+          >
+            <use href={sprite + '#icon-bin'} />
+          </svg>
+        </div>
+      </li>
+    </div>
   );
 }

@@ -2,20 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getCategoriesList,
-  deleteCategoryAction,
-  clearErrorReduxState,
-} from '../../../store/actions/categoryAction';
-import { getAllSubAction } from '../../../store/actions/subAction';
+import { clearErrorReduxState } from '../../../store/actions/categoryAction';
+
 import { getProductsListAction } from '../../../store/actions/productAction';
 
 import { Spinner } from '../../../utils/LoadingComponent';
 import sprite from '../../../img/sprite.svg';
-import Form from '../category/CategoryForm';
+import Form from '../../../utils/AddForm';
 
 import ProductItem from './ProductItem';
-import Filter from '../category/CategoryFilter';
+import Filter from '../../../utils/FilterForm';
 
 import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
 
@@ -36,6 +32,17 @@ export default function Product(props) {
   const [keyword, setKeyword] = useState('');
   // const [messageState, setMessageState] = useState(null);
   const [errorState, setErrorState] = useState(null);
+  const [name, setName] = useState('');
+
+  // FORM ADD CATEGORY
+  const _onSubmit = (e) => {
+    e.preventDefault();
+    const data = { name };
+    // dispatch(createCategoryAction(data));
+  };
+  const _setName = (e) => {
+    setName(e.target.value);
+  };
 
   //LOAD COMPONENT AND FETCH  CATEGORIES
   useEffect(() => {
@@ -45,8 +52,8 @@ export default function Product(props) {
 
   //SET STATE PRODUCTS IN COMPONENT
   useEffect(() => {
-    // setProducts(productList.filter(searched(keyword)));
-    setProducts(productList);
+    setProducts(productList.filter(searched(keyword)));
+    // setProducts(productList);
     return () => {};
   }, [productList, keyword]);
 
@@ -62,22 +69,22 @@ export default function Product(props) {
     dispatch(clearErrorReduxState());
   };
 
-  const _deleteCategory = (e) => {
-    dispatch(deleteCategoryAction({ slug: e[0], categoryId: e[1] }));
-  };
+  // const _deleteCategory = (e) => {
+  //   dispatch(deleteCategoryAction({ slug: e[0], categoryId: e[1] }));
+  // };
 
   const _setFilterSearch = (e) => {
     setKeyword(e.target.value.toLocaleLowerCase());
-    const data = { subId: props.match.params.subId };
-    dispatch(getProductsListAction(data));
   };
 
-  // const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
+  const searched = (keyword) => (c) => c.title.toLowerCase().includes(keyword);
 
   return (
     <div>
       <div className="category ">
-        <h1 className="heading-2 mb-md">Products</h1>
+        <h1 className="heading-2 mb-md">
+          Products for [{props.match.params.slug}]
+        </h1>
 
         {/* CHECK ADMIN  */}
         {auth.isAuthenticated && auth.user.role === 'admin' ? (
@@ -87,7 +94,12 @@ export default function Product(props) {
               <Filter _setFilterSearch={_setFilterSearch} keyword={keyword} />
 
               {/* CATEGORY CREATE FORM  */}
-              <Form />
+              <Form
+                _onSubmit={_onSubmit}
+                name={name}
+                _setName={_setName}
+                title="add category (name)"
+              />
             </div>
             {/* CATEGORY LIST  */}
             <div className="category__list-box">
@@ -109,7 +121,7 @@ export default function Product(props) {
                         <div>
                           {products.map((c, i) => (
                             <ProductItem
-                              // c={c}
+                              product={c}
                               // i={i}
                               // _deleteCategory={_deleteCategory}
                               // sprite={sprite}
