@@ -4,6 +4,7 @@ import { GET_PRODUCT_LIST, LOADING } from './types';
 //GET PRODUCTS BY subId
 
 export const getProductsListAction = (data) => async (dispatch) => {
+  console.log('getProductsListAction data', data);
   dispatch({
     type: LOADING,
     payload: true,

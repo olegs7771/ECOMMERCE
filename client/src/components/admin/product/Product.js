@@ -8,7 +8,7 @@ import { getProductsListAction } from '../../../store/actions/productAction';
 
 import { Spinner } from '../../../utils/LoadingComponent';
 import sprite from '../../../img/sprite.svg';
-import Form from '../../../utils/AddForm';
+import Form from './ProductForm';
 
 import ProductItem from './ProductItem';
 import Filter from '../../../utils/FilterForm';
@@ -20,9 +20,9 @@ import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
 export default function Product(props) {
   const dispatch = useDispatch();
   // SELECTORS
-  // const categoryList = useSelector((state) => state.category.categories);
+
   const productList = useSelector((state) => state.product.products);
-  const subList = useSelector((state) => state.sub.subs);
+
   const auth = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.loading.loading);
   const error = useSelector((state) => state.error.error);
@@ -53,8 +53,6 @@ export default function Product(props) {
   //SET STATE PRODUCTS IN COMPONENT
   useEffect(() => {
     setProducts(productList.filter(searched(keyword)));
-    // setProducts(productList);
-    return () => {};
   }, [productList, keyword]);
 
   //SET STATE ERROR IN COMPONENT
@@ -93,7 +91,7 @@ export default function Product(props) {
               {/* FILTER FORM  */}
               <Filter _setFilterSearch={_setFilterSearch} keyword={keyword} />
 
-              {/* CATEGORY CREATE FORM  */}
+              {/* PRODUCT CREATE FORM  */}
               <Form
                 _onSubmit={_onSubmit}
                 name={name}
@@ -108,7 +106,7 @@ export default function Product(props) {
               ) : (
                 <ul className="category__list">
                   {products.length === 0 ? (
-                    <div className="heading-3">No Categories found</div>
+                    <div className="heading-3">No Products found</div>
                   ) : (
                     <div>
                       {/* SHOW MESSAGE ON DELETE  */}
@@ -119,12 +117,11 @@ export default function Product(props) {
                         />
                       ) : (
                         <div>
-                          {products.map((c, i) => (
+                          {products.map((p, i) => (
                             <ProductItem
-                              product={c}
-                              // i={i}
+                              product={p}
                               // _deleteCategory={_deleteCategory}
-                              // sprite={sprite}
+                              sprite={sprite}
                               key={i}
                               // subs={subList} //all existing sub-categories array
                             />

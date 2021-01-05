@@ -41,7 +41,7 @@ const App = () => {
             path="/admin/:categoryId/:category/sub"
             component={Sub}
           />
-          <Route exact path="/admin/:subId/:slug/product" component={Product} />
+          <Route exact path="/admin/:subId/:slug" component={Product} />
         </Switch>
       </Router>
     </Provider>
