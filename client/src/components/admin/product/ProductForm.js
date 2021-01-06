@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 
 export default function CategoryForm({ open }) {
-  const _setValue = (e) => {};
-
   const initialState = {
     title: '',
     description: '',
-    price: '$100.00',
+    price: '',
     categories: [],
     category: '',
     subs: [],
@@ -20,15 +18,22 @@ export default function CategoryForm({ open }) {
   };
 
   const [values, setValue] = useState(initialState);
-  const [showForm, setShowForm] = useState(false);
-
-  // const { title } = values;
 
   const _onChange = (e) => {
     setValue({ ...values, [e.target.name]: e.target.value });
   };
   const _onSubmit = (e) => {
     e.preventDefault();
+    const data = {
+      title: values.title,
+      description: values.description,
+      price: values.price,
+      quantity: values.quantity,
+      shipping: values.shipping,
+      color: values.color,
+      brand: values.brand,
+    };
+    console.log('data', data);
   };
 
   return (
@@ -134,6 +139,7 @@ export default function CategoryForm({ open }) {
                 className="form-input  category__input"
                 value={values.price}
                 onChange={_onChange}
+                placeholder="$100.00"
                 required
               />
             </label>
