@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateSubAction } from '../../../store/actions/subAction';
 import { clearMessageReduxState } from '../../../store/actions/categoryAction';
 
-export default function SubItem({ c, _deleteSub, sprite }) {
+export default function SubItem({ sub, _deleteSub, sprite, categoryId }) {
   //  REDUX
   const dispatch = useDispatch();
   const loadingItem = useSelector((state) => state.loading.loadingItemCategory);
@@ -20,7 +20,7 @@ export default function SubItem({ c, _deleteSub, sprite }) {
 
   const _editToggle = () => {
     setIsEdit(!isEdit);
-    setName(c.slug);
+    setName(sub.slug);
     setErrorState(null); //clear errors
   };
 
@@ -31,9 +31,9 @@ export default function SubItem({ c, _deleteSub, sprite }) {
 
   const _updateCategory = () => {
     const data = {
-      slug: c.slug,
+      slug: sub.slug,
       name,
-      categoryId: c.categoryId,
+      categoryId: sub.categoryId,
     };
     dispatch(updateSubAction(data));
   };
@@ -97,8 +97,11 @@ export default function SubItem({ c, _deleteSub, sprite }) {
       ) : (
         //////////////////////////////////////////////////////
         <li className="category__item">
-          <a href={`/admin/${c._id}/${c.slug}`} className="category__link">
-            {c.name}
+          <a
+            href={`/admin/${sub._id}/${categoryId}/${sub.slug}`}
+            className="category__link"
+          >
+            {sub.name}
           </a>
           <div className="category__link-icon-box">
             <svg className="category__link-icon" onClick={_editToggle}>
@@ -106,7 +109,7 @@ export default function SubItem({ c, _deleteSub, sprite }) {
             </svg>
             <svg
               className="category__link-icon"
-              onClick={_deleteSub.bind(this, c.slug)}
+              onClick={_deleteSub.bind(this, sub.slug)}
             >
               <use href={sprite + '#icon-bin'} />
             </svg>

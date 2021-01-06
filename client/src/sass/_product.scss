@@ -8,15 +8,15 @@
   &__form {
     background-color: $color-yellow;
     border-radius: 3px;
-    padding: 3rem 1rem;
-    height: 50.5rem;
+    padding: 1rem 1rem;
+    height: 40.5rem;
     transition: 1s;
     margin-bottom: 2rem;
 
     &-container {
       display: flex;
       justify-content: space-evenly;
-      margin: 2rem 0;
+      margin: 2rem 0 0 0;
     }
 
     &-l-block,
@@ -24,7 +24,7 @@
     &-r-block {
       // border: 1px solid black;
       width: 100%;
-      padding: 2rem;
+      padding: 0 2rem;
     }
     &--close {
       height: 0;

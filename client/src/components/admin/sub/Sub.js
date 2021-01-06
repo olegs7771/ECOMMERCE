@@ -131,13 +131,13 @@ export default function Sub(props) {
                         />
                       ) : (
                         <div>
-                          {subList.map((c, i) => (
+                          {subList.map((sub, i) => (
                             <SubItem
-                              c={c}
-                              i={i}
+                              sub={sub}
                               _deleteSub={_deleteSub}
                               sprite={sprite}
                               key={i}
+                              categoryId={props.match.params.categoryId}
                             />
                           ))}
                         </div>

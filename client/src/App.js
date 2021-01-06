@@ -41,7 +41,11 @@ const App = () => {
             path="/admin/:categoryId/:category/sub"
             component={Sub}
           />
-          <Route exact path="/admin/:subId/:slug" component={Product} />
+          <Route
+            exact
+            path="/admin/:subId/:categoryId/:slug"
+            component={Product}
+          />
         </Switch>
       </Router>
     </Provider>

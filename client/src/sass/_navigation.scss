@@ -1,9 +1,8 @@
 .nav {
-  padding: 2rem 4rem;
+  padding: 2rem;
   background-color: $color-blue;
   color: $color-grey;
-  // position: relative;
-  z-index: 1000;
+  height: 11rem;
 
   &__list {
     display: flex;
@@ -11,7 +10,7 @@
     list-style: none;
     align-items: center;
     height: 7rem;
-    padding: 0 5rem;
+    padding: 0 1rem;
   }
 
   &__user,
@@ -32,7 +31,11 @@
   }
 
   &__item {
-    margin-right: 2rem;
+    margin-right: 5rem;
+    cursor: pointer;
+    &:hover {
+      color: lightblue;
+    }
   }
 
   &__img-box {
@@ -67,34 +70,20 @@
 }
 
 // DROP-MENU
-#drop-menu {
-  margin-right: 3rem;
-  position: relative;
-  display: flex;
-  align-items: center;
-  transition: 0.2s;
-  cursor: pointer;
-
-  &:hover .drop-menu {
-    animation: drop-menu 0.5s;
-    display: block;
-  }
-}
-
 .drop-menu {
-  transform: translate(-1rem, 7.7rem);
-  display: none;
-  position: absolute;
+  transform: translateX(10rem);
+  transition: 0.2s;
+
+  height: 0;
   border-radius: 3px;
-
-  // border: 1px solid black;
-
-  width: 11rem;
+  width: 15rem;
+  background-color: #fff;
+  overflow: hidden;
   &__list {
     list-style: none;
   }
   &__item {
-    padding: 1rem 0;
+    padding: 2rem 0;
     text-align: center;
     background-color: #1b5d75;
 
@@ -102,7 +91,7 @@
       margin-bottom: 0.2rem;
     }
     &:hover {
-      background-color: $color-blue-light;
+      background-color: $color-grey-dark;
     }
   }
   &__link:link,
@@ -110,6 +99,12 @@
     text-decoration: none;
     font-size: 1.4rem;
     color: $color-grey;
+  }
+  position: relative;
+  z-index: 10;
+
+  &--open {
+    height: 19rem;
   }
 }
 

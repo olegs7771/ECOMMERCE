@@ -25,12 +25,14 @@ export default function Product(props) {
 
   const auth = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.loading.loading);
+
   const error = useSelector((state) => state.error.error);
+  const message = useSelector((state) => state.message.message);
   // STATE
   // const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [keyword, setKeyword] = useState('');
-  // const [messageState, setMessageState] = useState(null);
+  const [messageState, setMessageState] = useState(null);
   const [errorState, setErrorState] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
@@ -53,6 +55,10 @@ export default function Product(props) {
   useEffect(() => {
     setErrorState(error);
   }, [error]);
+  //SET STATE MESSAGE IN COMPONENT
+  useEffect(() => {
+    setMessageState(message);
+  }, [message]);
 
   //CLEAR ERROR IN REDUX STATE
   const _clearReduxErrorState = (e) => {
@@ -70,6 +76,11 @@ export default function Product(props) {
   };
 
   const searched = (keyword) => (c) => c.title.toLowerCase().includes(keyword);
+
+  // CLOSE FORM -->PRESS OK IN CHILD
+  const _closeForm = () => {
+    setShowForm(!showForm);
+  };
 
   return (
     <div>
@@ -106,13 +117,18 @@ export default function Product(props) {
             </div>
 
             <div className="product__cta-block">
-              <Form open={showForm} />
+              <Form
+                open={showForm}
+                subId={props.match.params.subId}
+                categoryId={props.match.params.categoryId}
+                close={_closeForm}
+              />
             </div>
 
             {/* product LIST  */}
             <div className="product__list-box">
               {loading ? (
-                <Spinner loading={props.loading} />
+                <Spinner loading={loading} />
               ) : (
                 <div>
                   {/* FILTER FORM  */}

@@ -17,7 +17,9 @@ const create = asyncCatch(async (req, res, next) => {
 const list = asyncCatch(async (req, res, next) => {
   console.log('product list by subId');
   console.log('req.params', req.params);
-  const products = await Product.find({ sub: req.params.subId });
+  const products = await Product.find({ sub: req.params.subId }).sort({
+    createdAt: -1,
+  });
 
   res
     .status(200)
