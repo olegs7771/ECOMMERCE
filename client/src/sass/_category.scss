@@ -84,6 +84,10 @@
     border: 0.2px solid $color-grey-dark;
     font-size: 1.8rem;
     // text-transform: uppercase;
+    &--textarea {
+      resize: none;
+      border: 0.5px solid black;
+    }
   }
   &__error {
     color: $color-red;

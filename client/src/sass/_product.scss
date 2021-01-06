@@ -7,7 +7,30 @@
 
   &__form {
     background-color: $color-yellow;
+    border-radius: 3px;
     padding: 3rem 1rem;
+    height: 50.5rem;
+    transition: 1s;
+    margin-bottom: 2rem;
+
+    &-container {
+      display: flex;
+      justify-content: space-evenly;
+      margin: 2rem 0;
+    }
+
+    &-l-block,
+    &-c-block,
+    &-r-block {
+      // border: 1px solid black;
+      width: 100%;
+      padding: 2rem;
+    }
+    &--close {
+      height: 0;
+      padding: 0 1rem;
+      margin-bottom: 0;
+    }
   }
 
   &__cta {
@@ -25,5 +48,10 @@
       fill: #fff;
       margin-right: 1rem;
     }
+  }
+  &__list-box {
+    position: relative;
+    background-color: #fff;
+    min-height: 50vh;
   }
 }
