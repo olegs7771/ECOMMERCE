@@ -82,19 +82,31 @@ export default function Product(props) {
         {auth.isAuthenticated && auth.user.role === 'admin' ? (
           <div className="product__container">
             <div className="product__cta-control mb-md">
-              <button
-                className="btn product__cta-btn"
-                onClick={_toggleShowForm} //SHOW ADD PRODUCT FORM 📅
-              >
-                <svg className="category__link-icon product__cta-icon">
-                  <use href={sprite + '#icon-plus'} />
-                </svg>
-                Add Product
-              </button>
+              {showForm ? (
+                <button
+                  className="btn product__cta-btn"
+                  onClick={_toggleShowForm} //SHOW ADD PRODUCT FORM 📅
+                >
+                  <svg className="category__link-icon product__cta-icon">
+                    <use href={sprite + '#icon-minus'} />
+                  </svg>
+                  Close form
+                </button>
+              ) : (
+                <button
+                  className="btn product__cta-btn"
+                  onClick={_toggleShowForm} //SHOW ADD PRODUCT FORM 📅
+                >
+                  <svg className="category__link-icon product__cta-icon">
+                    <use href={sprite + '#icon-plus'} />
+                  </svg>
+                  Add Product
+                </button>
+              )}
             </div>
 
             <div className="product__cta-block">
-              {showForm ? <Form /> : null}
+              <Form open={showForm} />
             </div>
 
             {/* product LIST  */}
