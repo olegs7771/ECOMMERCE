@@ -1,15 +1,12 @@
 import React from 'react';
 
-const DropMenu = ({ auth, open }) => {
+const DropMenu = ({ open }) => {
   return (
     <div className={open ? 'drop-menu drop-menu--open' : 'drop-menu'}>
       <ul className="drop-menu__list">
         <li className="drop-menu__item">
-          <a
-            href={auth.user.role === 'admin' ? '/admin' : '/dashboard'}
-            className="drop-menu__link"
-          >
-            Dashboard
+          <a href="!#" className="drop-menu__link">
+            Item
           </a>
         </li>
         <li className="drop-menu__item">

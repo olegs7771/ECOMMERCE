@@ -128,7 +128,7 @@ export default function Category(props) {
                               _deleteCategory={_deleteCategory}
                               sprite={sprite}
                               key={i}
-                              subs={subList} //all existing sub-categories array
+                              subs={subList} //all existing sub-categories to show quantity
                             />
                           ))}
                         </div>

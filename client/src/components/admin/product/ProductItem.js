@@ -16,7 +16,7 @@ export default function ProductItem({ product, _deleteCategory, sprite }) {
 
   return (
     <div className="category__item-block">
-      <li className="category__item">
+      <li className="category__item ">
         {/* <a href={`/admin/${c._id}/${c.slug}/sub`} className="category__link"> */}
         <a href="!#" className="category__link">
           {productState.title}

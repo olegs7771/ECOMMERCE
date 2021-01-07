@@ -19,7 +19,8 @@ export const GET_CATEGORIES_LIST = 'GET_CATEGORIES_LIST';
 
 //SUB CATEGORY
 export const GET_SUB_LIST = 'GET_SUB_LIST'; //by categoryId
-export const GET_SUB_ALL = 'GET_SUB_ALL'; //get all existing
+export const GET_SUB_ALL = 'GET_SUB_ALL'; //get all existing for quantity
 
 //PRODUCT
 export const GET_PRODUCT_LIST = 'GET_PRODUCT_LIST';
+export const GET_PRODUCT_ALL = 'GET_PRODUCT_ALL'; //get all existing for quantity

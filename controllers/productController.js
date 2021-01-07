@@ -20,6 +20,16 @@ const list = asyncCatch(async (req, res, next) => {
   const products = await Product.find({ sub: req.params.subId }).sort({
     createdAt: -1,
   });
+  res
+    .status(200)
+    .json({ qnt: products.length, status: 'success', data: products });
+});
+
+// SHOW PRODUCTS by SUB-CATEGORY ID
+const getAll = asyncCatch(async (req, res, next) => {
+  console.log('product list by subId');
+  console.log('req.params', req.params);
+  const products = await Product.find();
 
   res
     .status(200)
@@ -34,4 +44,4 @@ const getOne = asyncCatch(async (req, res, next) => {
   res.status(200).json({ status: 'success', data: product });
 });
 
-module.exports = { create, list, getOne };
+module.exports = { create, list, getOne, getAll };

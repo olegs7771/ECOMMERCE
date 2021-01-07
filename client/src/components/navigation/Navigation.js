@@ -20,18 +20,32 @@ const Navigation = (props) => {
         {auth.isAuthenticated ? (
           <div className="nav__user">
             <li className="nav__item">
-              <a href="/" className="nav__link">
+              <a
+                href={auth.user.role === 'admin' ? '/admin' : '/dashboard'}
+                className="nav__link"
+              >
                 <svg className="nav__link-icon">
                   <use href={sprite + '#icon-home'} />
                 </svg>
                 home
               </a>
             </li>
-            <div>
-              <div className="nav__item " onClick={_showDrop}>
+
+            {/* DROP MENU  */}
+            <div className="nav__item-group">
+              <li className="nav__item--menu " onClick={_showDrop}>
                 <span className="nav__link"> Menu</span>
-              </div>
+              </li>
+              <svg className="nav__link-icon--arrowdown">
+                {showDropMenu ? (
+                  <use href={sprite + '#icon-arrow-down2'} />
+                ) : (
+                  <use href={sprite + '#icon-arrow-down2'} />
+                )}
+              </svg>
             </div>
+            {/* /////////////////////////////////// */}
+
             <li className="nav__item">
               <a href="/profile" className="nav__link">
                 User

@@ -53,5 +53,27 @@
     position: relative;
     background-color: #fff;
     min-height: 50vh;
+    border-top: 1px solid black;
+    padding: 2rem 0;
+  }
+  &__list-option {
+    // border: 1px solid black;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__list-btn {
+    padding: 0.3rem 2rem;
+    text-transform: uppercase;
+    border-radius: 3px;
+    border: none;
+    &:hover {
+      background-color: $color-grey-light-2;
+      color: $color-grey-dark;
+    }
+
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
   }
 }

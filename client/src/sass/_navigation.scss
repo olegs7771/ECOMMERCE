@@ -36,6 +36,17 @@
     &:hover {
       color: lightblue;
     }
+
+    &-group {
+      display: flex;
+      align-items: center;
+      margin-right: 3rem;
+    }
+    &--menu {
+      &:hover {
+        color: lightblue;
+      }
+    }
   }
 
   &__img-box {
@@ -67,6 +78,12 @@
   width: 2.5rem;
   margin-right: 1rem;
   fill: currentColor;
+  &--arrowdown {
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-left: 0.5rem;
+    fill: currentColor;
+  }
 }
 
 // DROP-MENU

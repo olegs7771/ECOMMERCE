@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearErrorReduxState } from '../../../store/actions/categoryAction';
 
 import { getProductsListAction } from '../../../store/actions/productAction';
+// import {getProductsListAction} from '../../../store/actions/productAction'
 
 import { Spinner } from '../../../utils/LoadingComponent';
 import sprite from '../../../img/sprite.svg';
@@ -115,7 +116,6 @@ export default function Product(props) {
                 </button>
               )}
             </div>
-
             <div className="product__cta-block">
               <Form
                 open={showForm}
@@ -124,9 +124,13 @@ export default function Product(props) {
                 close={_closeForm}
               />
             </div>
-
             {/* product LIST  */}
+
             <div className="product__list-box">
+              <div className="product__list-option">
+                <button className="product__list-btn">List</button>
+                <button className="product__list-btn">Tiles</button>
+              </div>
               {loading ? (
                 <Spinner loading={loading} />
               ) : (
@@ -150,6 +154,7 @@ export default function Product(props) {
                         ) : (
                           <div>
                             {products.map((p, i) => (
+                              // SHOW LIST
                               <ProductItem
                                 product={p}
                                 // _deleteproduct={_deleteproduct}
