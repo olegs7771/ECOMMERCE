@@ -8,7 +8,7 @@ export default function CategoryFilter({ _setFilterSearch, keyword }) {
         <input
           type="text"
           name="name"
-          className="form-input category__input"
+          className="form-input "
           placeholder="filter.."
           value={keyword}
           onChange={_setFilterSearch}

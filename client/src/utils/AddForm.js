@@ -9,7 +9,7 @@ export default function CategoryForm({ name, _onSubmit, _setName, title }) {
           <input
             type="name"
             name="name"
-            className="form-input  category__input"
+            className="form-input  "
             value={name}
             onChange={_setName}
             required

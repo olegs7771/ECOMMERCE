@@ -29,12 +29,12 @@ export default function Product(props) {
   const loading = useSelector((state) => state.loading.loading);
 
   const error = useSelector((state) => state.error.error);
-  const message = useSelector((state) => state.message.message);
+  // const message = useSelector((state) => state.message.message);
   // STATE
   // const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [keyword, setKeyword] = useState('');
-  const [messageState, setMessageState] = useState(null);
+  // const [messageState, setMessageState] = useState(null);
   const [errorState, setErrorState] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showTiles, setShowTiles] = useState(false);
@@ -59,9 +59,9 @@ export default function Product(props) {
     setErrorState(error);
   }, [error]);
   //SET STATE MESSAGE IN COMPONENT
-  useEffect(() => {
-    setMessageState(message);
-  }, [message]);
+  // useEffect(() => {
+  //   setMessageState(message);
+  // }, [message]);
 
   //CLEAR ERROR IN REDUX STATE
   const _clearReduxErrorState = (e) => {

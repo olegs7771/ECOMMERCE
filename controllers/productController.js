@@ -44,4 +44,19 @@ const getOne = asyncCatch(async (req, res, next) => {
   res.status(200).json({ status: 'success', data: product });
 });
 
-module.exports = { create, list, getOne, getAll };
+// DELETE PRODUCT
+const removeOne = asyncCatch(async (req, res, next) => {
+  console.log('req.params', req.params);
+  const product = await Product.findOneAndDelete(
+    { id: req.params.id, slug: req.params.slug },
+    { select: 'title' }
+  );
+  if (!product)
+    return next(new AppErrorHandler(`Product ${req.params.slug} not found.`));
+  console.log('product', product);
+  res
+    .status(200)
+    .json({ status: 'success', message: `Product ${product.title} removed` });
+});
+
+module.exports = { create, list, getOne, getAll, removeOne };

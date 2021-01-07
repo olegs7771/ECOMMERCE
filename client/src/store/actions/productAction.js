@@ -4,6 +4,7 @@ import {
   GET_PRODUCT_ALL,
   LOADING,
   LOADING_FORM_PRODUCT,
+  LOADING_ITEM_CATEGORY,
   GET_API_ERROR,
   GET_API_MESSAGE,
 } from './types';
@@ -92,5 +93,30 @@ export const createProductAction = (data) => async (dispatch) => {
       type: GET_API_ERROR,
       payload: err.response.data.message,
     });
+  }
+};
+
+// DELETE PRODUCT
+// data:{productId,slug,subId}
+
+export const deleteOneProduct = (data) => async (dispatch) => {
+  console.log('deleteOneProduct data', data);
+  dispatch({
+    type: LOADING_ITEM_CATEGORY,
+    payload: true,
+  });
+  try {
+    const res = await axios.delete(`/api/v1/product/${data.id}/${data.slug}`);
+    // RELOAD PRODUCTS BY subId
+    await axios.get(`/api/v1/product/${data.sub}`);
+
+    dispatch({
+      type: LOADING_ITEM_CATEGORY,
+      payload: false,
+    });
+
+    console.log('res.data deleteOneProduct ', res.data);
+  } catch (err) {
+    console.log('error to delete', err.response.data);
   }
 };
