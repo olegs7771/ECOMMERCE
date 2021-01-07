@@ -11,7 +11,8 @@ import { Spinner } from '../../../utils/LoadingComponent';
 import sprite from '../../../img/sprite.svg';
 import Form from './ProductForm';
 
-import ProductItem from './ProductItem';
+import ProductListItem from './ProductListItem';
+import ProductTileItem from './ProductTileItem';
 import Filter from '../../../utils/FilterForm';
 
 import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
@@ -36,6 +37,7 @@ export default function Product(props) {
   const [messageState, setMessageState] = useState(null);
   const [errorState, setErrorState] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [showTiles, setShowTiles] = useState(false);
 
   const _toggleShowForm = () => {
     setShowForm(!showForm);
@@ -83,6 +85,14 @@ export default function Product(props) {
     setShowForm(!showForm);
   };
 
+  // SHOW TILES PRODUCT LIST
+  const _showTiles = () => {
+    setShowTiles(true);
+  };
+  const _showList = () => {
+    setShowTiles(false);
+  };
+
   return (
     <div>
       <div className="product ">
@@ -128,8 +138,12 @@ export default function Product(props) {
 
             <div className="product__list-box">
               <div className="product__list-option">
-                <button className="product__list-btn">List</button>
-                <button className="product__list-btn">Tiles</button>
+                <button className="product__list-btn" onClick={_showList}>
+                  List
+                </button>
+                <button className="product__list-btn" onClick={_showTiles}>
+                  Tiles
+                </button>
               </div>
               {loading ? (
                 <Spinner loading={loading} />
@@ -153,16 +167,28 @@ export default function Product(props) {
                           />
                         ) : (
                           <div>
-                            {products.map((p, i) => (
-                              // SHOW LIST
-                              <ProductItem
-                                product={p}
-                                // _deleteproduct={_deleteproduct}
-                                sprite={sprite}
-                                key={i}
-                                // subs={subList} //all existing sub-categories array
-                              />
-                            ))}
+                            {showTiles ? (
+                              <div>
+                                <div className="product__tiles-container">
+                                  {products.map((p, i) => (
+                                    <ProductTileItem key={i} p={p} />
+                                  ))}
+                                </div>
+                              </div>
+                            ) : (
+                              <div>
+                                {products.map((p, i) => (
+                                  // SHOW LIST
+                                  <ProductListItem
+                                    product={p}
+                                    // _deleteproduct={_deleteproduct}
+                                    sprite={sprite}
+                                    key={i}
+                                    // subs={subList} //all existing sub-categories array
+                                  />
+                                ))}
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>

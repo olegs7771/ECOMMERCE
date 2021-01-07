@@ -8,6 +8,8 @@ import {
   createSubAction,
 } from '../../../store/actions/subAction';
 
+import { getProductsAllAction } from '../../../store/actions/productAction';
+
 import { clearErrorReduxState } from '../../../store/actions/categoryAction';
 import { Spinner } from '../../../utils/LoadingComponent';
 import Form from '../../../utils/AddForm';
@@ -24,6 +26,7 @@ export default function Sub(props) {
   const auth = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.loading.loading);
   const subs = useSelector((state) => state.sub.subs);
+  const products = useSelector((state) => state.product.products);
 
   const error = useSelector((state) => state.error.error);
   //  STATE
@@ -53,6 +56,7 @@ export default function Sub(props) {
       categoryId: props.match.params.categoryId,
     };
     dispatch(getSubListAction(data));
+    dispatch(getProductsAllAction());
   }, [dispatch, props.match.params.categoryId]);
 
   //SET STATE SUBS IN COMPONENT
@@ -138,6 +142,7 @@ export default function Sub(props) {
                               sprite={sprite}
                               key={i}
                               categoryId={props.match.params.categoryId}
+                              products={products} //all existing products to show quantity
                             />
                           ))}
                         </div>

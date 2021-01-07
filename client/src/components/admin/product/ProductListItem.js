@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 // import { useDispatch} from 'react-redux';
 
-export default function ProductItem({ product, _deleteCategory, sprite }) {
+export default function ProductListItem({ product, _deleteCategory, sprite }) {
   //  REDUX
   // const dispatch = useDispatch();
 
@@ -28,9 +28,8 @@ export default function ProductItem({ product, _deleteCategory, sprite }) {
             href="!#"
             className="category__link--qnt"
           >
-            {/* QUANTITY  */}
             <div className="category__item-qnt">
-              <span className="category__item-qnt--text">5 items</span>
+              <span className="category__item-qnt--text"> items</span>
             </div>
           </a>
         </div>

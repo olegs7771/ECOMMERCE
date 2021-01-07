@@ -38,7 +38,7 @@ const Navigation = (props) => {
               </li>
               <svg className="nav__link-icon--arrowdown">
                 {showDropMenu ? (
-                  <use href={sprite + '#icon-arrow-down2'} />
+                  <use href={sprite + '#icon-arrow-up2'} />
                 ) : (
                   <use href={sprite + '#icon-arrow-down2'} />
                 )}
@@ -71,7 +71,7 @@ const Navigation = (props) => {
             {/* SHOW ONLY IF ROLE ADMIN  */}
             {auth.user.role === 'admin' ? (
               <li className="nav__item">
-                <a href="/dashboard-admin" className="nav__link">
+                <a href="/admin" className="nav__link">
                   <svg className="nav__link-icon">
                     <use href={sprite + '#icon-user-tie'} />
                   </svg>

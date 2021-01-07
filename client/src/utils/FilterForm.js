@@ -13,7 +13,7 @@ export default function CategoryFilter({ _setFilterSearch, keyword }) {
           value={keyword}
           onChange={_setFilterSearch}
           required
-          autocomplete="off"
+          autoComplete="off"
         />
       </label>
     </div>

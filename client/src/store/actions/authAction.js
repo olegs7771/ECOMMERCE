@@ -211,7 +211,7 @@ export const loginUserAction = (data, history) => async (dispatch) => {
     console.log('err:', err.response.data);
     dispatch({
       type: GET_API_ERROR,
-      payload: err.response.data,
+      payload: err.response.data.message,
     });
   }
 };

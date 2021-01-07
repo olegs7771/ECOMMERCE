@@ -6,7 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateSubAction } from '../../../store/actions/subAction';
 import { clearMessageReduxState } from '../../../store/actions/categoryAction';
 
-export default function SubItem({ sub, _deleteSub, sprite, categoryId }) {
+export default function SubItem({
+  sub,
+  _deleteSub,
+  sprite,
+  categoryId,
+  products,
+}) {
   //  REDUX
   const dispatch = useDispatch();
   const loadingItem = useSelector((state) => state.loading.loadingItemCategory);
@@ -17,6 +23,23 @@ export default function SubItem({ sub, _deleteSub, sprite, categoryId }) {
   const [errorState, setErrorState] = useState(null);
   const [messageState, setMessageState] = useState(null);
   const [name, setName] = useState('');
+  const [productState, setProductState] = useState([]);
+
+  // FILTER ALL PRODUCTS BY ID RETURN ARRAY
+  const productQuantity = (id) => {
+    let filteredArray = [];
+    products.forEach((elem) => {
+      if (elem.sub === id) {
+        filteredArray.push(elem);
+      }
+    });
+    return filteredArray;
+  };
+  // SET PRODUCTS QUANTITY IN STATE ARRAY
+  useEffect(() => {
+    setProductState(productQuantity(sub._id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [products]);
 
   const _editToggle = () => {
     setIsEdit(!isEdit);
@@ -103,7 +126,20 @@ export default function SubItem({ sub, _deleteSub, sprite, categoryId }) {
           >
             {sub.name}
           </a>
+
           <div className="category__link-icon-box">
+            <a
+              href={`/admin/${sub._id}/${categoryId}/${sub.slug}`}
+              className="category__link--qnt"
+            >
+              {/* QUANTITY  */}
+              <div className="category__item-qnt">
+                <span className="category__item-qnt--text">
+                  [{productState.length}]
+                </span>
+                products
+              </div>
+            </a>
             <svg className="category__link-icon" onClick={_editToggle}>
               <use href={sprite + '#icon-pencil'} />
             </svg>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   GET_PRODUCT_LIST,
+  GET_PRODUCT_ALL,
   LOADING,
   LOADING_FORM_PRODUCT,
   GET_API_ERROR,
@@ -31,6 +32,26 @@ export const getProductsListAction = (data) => async (dispatch) => {
       payload: false,
     });
     console.log('error to get categories list', err);
+  }
+};
+
+//GET ALL EXISTING PRODUCTS TO SHOW IN SUBS ITEM QUATITY
+export const getProductsAllAction = () => async (dispatch) => {
+  console.log('getProductsAllActiondata');
+
+  try {
+    const res = await axios.get(`/api/v1/product/`);
+
+    dispatch({
+      type: GET_PRODUCT_ALL,
+      payload: res.data.data,
+    });
+  } catch (err) {
+    console.log('error to get categories list', err);
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data.message,
+    });
   }
 };
 
