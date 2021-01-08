@@ -171,7 +171,11 @@ export default function Product(props) {
                               <div>
                                 <div className="product__tiles-container">
                                   {products.map((p, i) => (
-                                    <ProductTileItem key={i} p={p} />
+                                    <ProductTileItem
+                                      key={i}
+                                      p={p}
+                                      sprite={sprite}
+                                    />
                                   ))}
                                 </div>
                               </div>
@@ -181,10 +185,8 @@ export default function Product(props) {
                                   // SHOW LIST
                                   <ProductListItem
                                     product={p}
-                                    // _deleteproduct={_deleteproduct}
                                     sprite={sprite}
                                     key={i}
-                                    // subs={subList} //all existing sub-categories array
                                   />
                                 ))}
                               </div>

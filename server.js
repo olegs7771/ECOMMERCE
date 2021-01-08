@@ -26,3 +26,4 @@ app.listen(PORT, () => {
 const date = new Date(
   Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000
 );
+console.log(new Date('2021-01-06T20:26:01.335Z').toDateString());

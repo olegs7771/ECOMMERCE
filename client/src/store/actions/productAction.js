@@ -102,16 +102,21 @@ export const createProductAction = (data) => async (dispatch) => {
 export const deleteOneProduct = (data) => async (dispatch) => {
   console.log('deleteOneProduct data', data);
   dispatch({
-    type: LOADING_ITEM_CATEGORY,
+    type: LOADING,
     payload: true,
   });
   try {
     const res = await axios.delete(`/api/v1/product/${data.id}/${data.slug}`);
     // RELOAD PRODUCTS BY subId
-    await axios.get(`/api/v1/product/${data.sub}`);
+
+    const list = await axios.get(`/api/v1/product/${data.sub}`);
+    dispatch({
+      type: GET_PRODUCT_LIST,
+      payload: list.data.data,
+    });
 
     dispatch({
-      type: LOADING_ITEM_CATEGORY,
+      type: LOADING,
       payload: false,
     });
 
