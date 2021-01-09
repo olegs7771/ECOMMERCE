@@ -4,7 +4,7 @@ import {
   GET_PRODUCT_ALL,
   LOADING,
   LOADING_FORM_PRODUCT,
-  LOADING_ITEM_CATEGORY,
+  // LOADING_ITEM_CATEGORY,
   GET_API_ERROR,
   GET_API_MESSAGE,
 } from './types';
@@ -34,6 +34,12 @@ export const getProductsListAction = (data) => async (dispatch) => {
     });
     console.log('error to get categories list', err);
   }
+};
+
+// GET ONE PRODUCT BY productId && slug
+
+export const getOneProduct = (data) => (dispatch) => {
+  console.log('getOneProduct data', data);
 };
 
 //GET ALL EXISTING PRODUCTS TO SHOW IN SUBS ITEM QUATITY

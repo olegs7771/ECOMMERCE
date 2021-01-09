@@ -36,11 +36,16 @@ const getAll = asyncCatch(async (req, res, next) => {
     .json({ qnt: products.length, status: 'success', data: products });
 });
 
-//SHOW ONE PRODUCT BY SlUG
+//SHOW ONE PRODUCT BY productId && slug
 
 const getOne = asyncCatch(async (req, res, next) => {
   console.log('req.params getOne', req.params);
-  const product = await Product.findOne({ slug: req.params.slug });
+  const product = await Product.findOne({
+    _id: req.params.productId,
+    slug: req.params.slug,
+  }).select('-__v');
+  if (!product)
+    return next(new AppErrorHandler(`Product ${req.params.slug} not found`));
   res.status(200).json({ status: 'success', data: product });
 });
 
