@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import {
-  deleteOneProduct,
-  getOneProduct,
-} from '../../../store/actions/productAction';
+import { deleteOneProduct } from '../../../store/actions/productAction';
 import { useDispatch, useSelector } from 'react-redux';
-export default function ProductTileItem({ i, p, sprite }) {
+export default function ProductTileItem({ i, p, sprite, history }) {
   //  REDUX
   const dispatch = useDispatch();
   const [focus, setFocus] = useState(false);
@@ -21,7 +18,8 @@ export default function ProductTileItem({ i, p, sprite }) {
 
   //EDIT PRODUCT
   const _getProduct = (e) => {
-    console.log('e', e);
+    console.log('product');
+    history.push(`/product/${e[0]}/${e[1]}`);
   };
 
   return (
@@ -101,7 +99,7 @@ export default function ProductTileItem({ i, p, sprite }) {
       >
         <svg
           className="category__link-icon"
-          onClick={_getProduct.bind(this, [p.slug, p._id])}
+          onClick={_getProduct.bind(this, [p._id, p.slug])}
         >
           <use href={sprite + '#icon-pencil'} />
         </svg>

@@ -1,7 +1,12 @@
-import { GET_PRODUCT_LIST, GET_PRODUCT_ALL } from '../actions/types';
+import {
+  GET_PRODUCT_LIST,
+  GET_PRODUCT_ALL,
+  GET_PRODUCT_OBJECT,
+} from '../actions/types';
 
 const initialState = {
   products: [],
+  product: null,
 };
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -14,6 +19,11 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload,
+      };
+    case GET_PRODUCT_OBJECT:
+      return {
+        ...state,
+        product: action.payload,
       };
 
     default:

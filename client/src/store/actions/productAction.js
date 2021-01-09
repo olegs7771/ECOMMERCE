@@ -4,7 +4,7 @@ import {
   GET_PRODUCT_ALL,
   LOADING,
   LOADING_FORM_PRODUCT,
-  // LOADING_ITEM_CATEGORY,
+  GET_PRODUCT_OBJECT,
   GET_API_ERROR,
   GET_API_MESSAGE,
 } from './types';
@@ -38,8 +38,33 @@ export const getProductsListAction = (data) => async (dispatch) => {
 
 // GET ONE PRODUCT BY productId && slug
 
-export const getOneProduct = (data) => (dispatch) => {
+export const getOneProduct = (data) => async (dispatch) => {
   console.log('getOneProduct data', data);
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+  try {
+    const res = await axios.get(
+      `/api/v1/product/${data.productId}/${data.slug}`
+    );
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    console.log('res.data getOneProduct', res.data);
+    dispatch({
+      type: GET_PRODUCT_OBJECT,
+      payload: res.data.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+
+    console.log('error in getOneProduct', err.response.data);
+  }
 };
 
 //GET ALL EXISTING PRODUCTS TO SHOW IN SUBS ITEM QUATITY

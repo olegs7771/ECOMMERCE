@@ -175,6 +175,7 @@ export default function Product(props) {
                                       key={i}
                                       p={p}
                                       sprite={sprite}
+                                      history={props.history}
                                     />
                                   ))}
                                 </div>
@@ -187,6 +188,7 @@ export default function Product(props) {
                                     product={p}
                                     sprite={sprite}
                                     key={i}
+                                    history={props.history}
                                   />
                                 ))}
                               </div>

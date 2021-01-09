@@ -23,4 +23,5 @@ export const GET_SUB_ALL = 'GET_SUB_ALL'; //get all existing for quantity
 
 //PRODUCT
 export const GET_PRODUCT_LIST = 'GET_PRODUCT_LIST';
+export const GET_PRODUCT_OBJECT = 'GET_PRODUCT_OBJECT';
 export const GET_PRODUCT_ALL = 'GET_PRODUCT_ALL'; //get all existing for quantity

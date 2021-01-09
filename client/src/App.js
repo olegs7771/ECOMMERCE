@@ -17,6 +17,8 @@ import DashboardAdmin from './components/admin/DashboardAdmin';
 import Category from './components/admin/category/Category';
 import Sub from './components/admin/sub/Sub';
 import Product from './components/admin/product/Product';
+import ProductCard from './components/admin/product/ProductCard';
+
 const store = reload(); //ON EVERY RELOAD RESET AUTH USER REDUX STATE
 
 // REDIREXTS AUTH
@@ -45,6 +47,11 @@ const App = () => {
             exact
             path="/admin/:subId/:categoryId/:slug"
             component={Product}
+          />
+          <Route
+            exact
+            path="/product/:productId/:slug/"
+            component={ProductCard}
           />
         </Switch>
       </Router>

@@ -1,0 +1,16 @@
+.card {
+  &__container {
+    display: flex;
+    background-color: $color-grey;
+    min-height: 100vh;
+
+    &__gallery {
+      border: 1px solid black;
+      width: 60%;
+    }
+    &__detail {
+      border: 1px solid black;
+      width: 40%;
+    }
+  }
+}
