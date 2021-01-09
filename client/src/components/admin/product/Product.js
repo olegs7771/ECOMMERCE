@@ -16,6 +16,7 @@ import ProductTileItem from './ProductTileItem';
 import Filter from '../../../utils/FilterForm';
 
 import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
+import BreadCrumbs from '../../navigation/BreadCrumbs';
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -95,6 +96,14 @@ export default function Product(props) {
 
   return (
     <div>
+      <BreadCrumbs
+        link1="/home"
+        href1="/"
+        link2="/category"
+        href2="/admin/category"
+        link3="/sub-category"
+        href3={`/admin/sub/${props.match.params.categoryId}/${props.match.params.category}`}
+      />
       <div className="product ">
         <h1 className="heading-2 mb-md">
           Products for [{props.match.params.slug}]

@@ -40,12 +40,12 @@ const App = () => {
           <Route exact path="/admin/category" component={Category} />
           <Route
             exact
-            path="/admin/:categoryId/:category/sub"
+            path="/admin/sub/:categoryId/:category"
             component={Sub}
           />
           <Route
             exact
-            path="/admin/:subId/:categoryId/:slug"
+            path="/admin/:subId/:category/:categoryId/:slug"
             component={Product}
           />
           <Route

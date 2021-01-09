@@ -7,6 +7,7 @@ import {
   deleteSubAction,
   createSubAction,
 } from '../../../store/actions/subAction';
+import BreadCrumbs from '../../navigation/BreadCrumbs';
 
 import { getProductsAllAction } from '../../../store/actions/productAction';
 
@@ -95,6 +96,12 @@ export default function Sub(props) {
   const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
   return (
     <div>
+      <BreadCrumbs
+        link1="/home"
+        href1="/"
+        link2="/category"
+        href2="/admin/category"
+      />
       <div className="category">
         <div className="category__header">
           <LinkBtn btnText="back to categories" />
@@ -137,6 +144,7 @@ export default function Sub(props) {
                         <div>
                           {subList.map((sub, i) => (
                             <SubItem
+                              category={props.match.params.category}
                               sub={sub}
                               _deleteSub={_deleteSub}
                               sprite={sprite}

@@ -1,5 +1,6 @@
 // style _category.scss
 import NavigationAdmin from '../navigation/NavigationAdmin';
+import BreadCrumbs from '../../navigation/BreadCrumbs';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -81,6 +82,7 @@ export default function Category(props) {
   return (
     <div>
       <NavigationAdmin category={true} />
+      <BreadCrumbs link1="/home" href1="/" />
       <div className="category ">
         <h1 className="heading-2 mb-md">Category</h1>
 

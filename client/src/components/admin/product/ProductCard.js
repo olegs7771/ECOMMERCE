@@ -28,7 +28,7 @@ export default function ProductCard(props) {
     <div className="card">
       {auth.isAuthenticated && auth.user.role === 'admin' ? (
         <div className="card-wrapper">
-          {loading ? (
+          {loading || !product ? (
             <Spinner />
           ) : (
             //////////////////////////////////////////////////////////////
@@ -52,6 +52,15 @@ export default function ProductCard(props) {
                     </div>
                     <div className="card__container__detail-body--quantity">
                       Quantity:{product.quantity}
+                    </div>
+                    <div className="card__container__detail-body--shipping">
+                      Shipping:{product.shipping}
+                    </div>
+                    <div className="card__container__detail-body--color">
+                      Color:{product.color}
+                    </div>
+                    <div className="card__container__detail-body--createdAt">
+                      Created:{new Date(product.createdAt).toDateString()}
                     </div>
                   </div>
                 </div>

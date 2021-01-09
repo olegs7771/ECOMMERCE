@@ -12,6 +12,7 @@ export default function SubItem({
   sprite,
   categoryId,
   products,
+  category,
 }) {
   //  REDUX
   const dispatch = useDispatch();
@@ -121,7 +122,7 @@ export default function SubItem({
         //////////////////////////////////////////////////////
         <li className="category__item">
           <a
-            href={`/admin/${sub._id}/${categoryId}/${sub.slug}`}
+            href={`/admin/${sub._id}/${categoryId}/${category}/${sub.slug}`}
             className="category__link"
           >
             {sub.name}
@@ -129,7 +130,7 @@ export default function SubItem({
 
           <div className="category__link-icon-box">
             <a
-              href={`/admin/${sub._id}/${categoryId}/${sub.slug}`}
+              href={`/admin/${sub._id}/${category}/${categoryId}/${sub.slug}`}
               className="category__link--qnt"
             >
               {/* QUANTITY  */}

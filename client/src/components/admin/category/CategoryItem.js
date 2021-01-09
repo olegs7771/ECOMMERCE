@@ -117,13 +117,13 @@ export default function CategoryItem({ c, _deleteCategory, sprite, subs }) {
       ) : (
         //////////////////////////////////////////////////////
         <li className="category__item">
-          <a href={`/admin/${c._id}/${c.slug}/sub`} className="category__link">
+          <a href={`/admin/sub/${c._id}/${c.slug}`} className="category__link">
             {c.name}
           </a>
 
           <div className="category__link-icon-box">
             <a
-              href={`/admin/${c._id}/${c.slug}/sub`}
+              href={`/admin/sub/${c._id}/${c.slug}`}
               className="category__link--qnt"
             >
               {/* QUANTITY  */}
