@@ -13,7 +13,7 @@ const create = asyncCatch(async (req, res, next) => {
 });
 
 /////////////////////////////////////////////////////////////////
-// FIND by categiryId all CATEGORIES PUBLIC
+// FIND by categiryId all SUB-CATEGORIES PUBLIC
 const list = asyncCatch(async (req, res, next) => {
   console.log('req.params', req.params);
   console.log('sub list');
@@ -54,7 +54,7 @@ const update = asyncCatch(async (req, res, next) => {
 });
 
 /////////////////////////////////////////////////////////////////
-// REMOVE ONE CATEGORY
+// REMOVE ONE SUB-CATEGORY
 const remove = asyncCatch(async (req, res, next) => {
   console.log('req.params', req.params); //req.params.slug
   const sub = await Sub.findOneAndDelete({ slug: req.params.slug });

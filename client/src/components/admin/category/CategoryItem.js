@@ -120,6 +120,19 @@ export default function CategoryItem({ c, _deleteCategory, sprite, subs }) {
           <a href={`/admin/sub/${c._id}/${c.slug}`} className="category__link">
             {c.name}
           </a>
+          {/* MESSAGE  */}
+          {messageState ? (
+            <div className="category__message">{messageState}</div>
+          ) : null}
+          {/* LOADING ITEM  null if message or error appears*/}
+          {loadingItem ? (
+            <svg
+              className="category__link-icon--spinner"
+              onClick={_updateCategory}
+            >
+              <use href={sprite + '#icon-spinner'} />
+            </svg>
+          ) : null}
 
           <div className="category__link-icon-box">
             <a

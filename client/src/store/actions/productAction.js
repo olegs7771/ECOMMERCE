@@ -12,7 +12,7 @@ import {
 //GET PRODUCTS BY subId
 
 export const getProductsListAction = (data) => async (dispatch) => {
-  console.log('getProductsListAction data', data);
+  // console.log('getProductsListAction data', data);
   dispatch({
     type: LOADING,
     payload: true,
@@ -69,8 +69,6 @@ export const getOneProduct = (data) => async (dispatch) => {
 
 //GET ALL EXISTING PRODUCTS TO SHOW IN SUBS ITEM QUATITY
 export const getProductsAllAction = () => async (dispatch) => {
-  console.log('getProductsAllActiondata');
-
   try {
     const res = await axios.get(`/api/v1/product/`);
 

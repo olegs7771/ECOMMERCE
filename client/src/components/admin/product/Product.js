@@ -97,10 +97,13 @@ export default function Product(props) {
   return (
     <div>
       <BreadCrumbs
+        // FROM CATEGORY
         link1="/home"
         href1="/"
+        // FROM SUB-CATEGORY
         link2="/category"
         href2="/admin/category"
+        // FROM PRODUCT
         link3="/sub-category"
         href3={`/admin/sub/${props.match.params.categoryId}/${props.match.params.category}`}
       />
@@ -185,6 +188,9 @@ export default function Product(props) {
                                       p={p}
                                       sprite={sprite}
                                       history={props.history}
+                                      category={props.match.params.category}
+                                      categoryId={props.match.params.categoryId}
+                                      subId={props.match.params.subId}
                                     />
                                   ))}
                                 </div>
@@ -198,6 +204,9 @@ export default function Product(props) {
                                     sprite={sprite}
                                     key={i}
                                     history={props.history}
+                                    category={props.match.params.category}
+                                    categoryId={props.match.params.categoryId}
+                                    subId={props.match.params.subId}
                                   />
                                 ))}
                               </div>

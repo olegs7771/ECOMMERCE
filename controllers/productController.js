@@ -13,10 +13,10 @@ const create = asyncCatch(async (req, res, next) => {
   res.status(200).json({ status: 'success', message, data: product });
 });
 
-// SHOW PRODUCTS by SUB-CATEGORY ID
+// SHOW LIST PRODUCTS by SUB-CATEGORY ID
 const list = asyncCatch(async (req, res, next) => {
   console.log('product list by subId');
-  console.log('req.params', req.params);
+  console.log('req.params list', req.params);
   const products = await Product.find({ sub: req.params.subId }).sort({
     createdAt: -1,
   });
@@ -28,7 +28,7 @@ const list = asyncCatch(async (req, res, next) => {
 // SHOW PRODUCTS by SUB-CATEGORY ID
 const getAll = asyncCatch(async (req, res, next) => {
   console.log('product list by subId');
-  console.log('req.params', req.params);
+  console.log('req.params getAll', req.params);
   const products = await Product.find();
 
   res
@@ -51,7 +51,7 @@ const getOne = asyncCatch(async (req, res, next) => {
 
 // DELETE PRODUCT
 const removeOne = asyncCatch(async (req, res, next) => {
-  console.log('req.params', req.params);
+  console.log('req.params removeOne', req.params);
   const product = await Product.findOneAndDelete(
     { id: req.params.id, slug: req.params.slug },
     { select: 'title' }
@@ -64,4 +64,35 @@ const removeOne = asyncCatch(async (req, res, next) => {
     .json({ status: 'success', message: `Product ${product.title} removed` });
 });
 
-module.exports = { create, list, getOne, getAll, removeOne };
+// REMOVE ALL PRODUCTS BY categoryId when deleting category
+const removeAllByCategoryId = asyncCatch(async (req, res, next) => {
+  console.log('req.params removeAllByCategoryId', req.params);
+  const products = await Product.deleteMany({
+    category: req.params.categoryId,
+  });
+
+  console.log('products in removeAllBycategoryId', products);
+  res.status(200).json({
+    status: 'success',
+    message: 'All product for this category were deleted',
+  });
+});
+// REMOVE ALL PRODUCTS BY subId When deleting sub-category
+const removeAllBySubId = asyncCatch(async (req, res, next) => {
+  const products = await Product.deleteMany({ sub: req.params.subId });
+  console.log('products in removeAllBySubId', products);
+  res.status(200).json({
+    status: 'success',
+    message: 'All product for this sub-category were deleted',
+  });
+});
+
+module.exports = {
+  create,
+  list,
+  getOne,
+  getAll,
+  removeOne,
+  removeAllByCategoryId,
+  removeAllBySubId,
+};
