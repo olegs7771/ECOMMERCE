@@ -26,9 +26,13 @@ categorySchema.pre('save', function (next) {
 
 // CHECK FOR DUBLICATE CATEGORY NAME
 categorySchema.post('save', function (error, doc, next) {
-  // console.log('doc', doc);
+  console.log('error.name', error.name);
+  console.log('error.message', error.message);
+
   if (error.name === 'MongoError' && error.code === 11000) {
     next(new Error(`[${doc.name}] category name already exists!`));
+  } else if (error.name === 'ValidationError') {
+    next(new Error('Name too short. Please use meaningfull name'));
   } else {
     next(error);
   }

@@ -109,32 +109,27 @@ export default function Category(props) {
             <div className="category__list-box">
               {loading ? (
                 <Spinner loading={props.loading} />
+              ) : errorState ? (
+                <ErrorMessageWithBtn
+                  errorState={errorState}
+                  _clearReduxErrorState={_clearReduxErrorState}
+                />
               ) : (
                 <ul className="category__list">
                   {categories.length === 0 ? (
                     <div className="heading-3">No Categories found</div>
                   ) : (
                     <div>
-                      {/* SHOW MESSAGE ON DELETE  */}
-                      {errorState ? (
-                        <ErrorMessageWithBtn
-                          errorState={errorState}
-                          _clearReduxErrorState={_clearReduxErrorState}
+                      {categories.map((c, i) => (
+                        <CategoryItem
+                          c={c}
+                          i={i}
+                          _deleteCategory={_deleteCategory}
+                          sprite={sprite}
+                          key={i}
+                          subs={subList} //all existing sub-categories to show quantity
                         />
-                      ) : (
-                        <div>
-                          {categories.map((c, i) => (
-                            <CategoryItem
-                              c={c}
-                              i={i}
-                              _deleteCategory={_deleteCategory}
-                              sprite={sprite}
-                              key={i}
-                              subs={subList} //all existing sub-categories to show quantity
-                            />
-                          ))}
-                        </div>
-                      )}
+                      ))}
                     </div>
                   )}
                 </ul>
