@@ -9,7 +9,7 @@ import {
 } from './types';
 import axios from 'axios';
 
-//GET SUB LIST categoryId
+//GET SUB LIST by category slug
 
 export const getSubListAction = (data) => async (dispatch) => {
   dispatch({
@@ -19,7 +19,7 @@ export const getSubListAction = (data) => async (dispatch) => {
 
   try {
     const res = await axios.get(`/api/v1/sub/${data.categoryId}`);
-    console.log('res.data getSubListAction', res.data);
+    // console.log('res.data getSubListAction', res.data);
     dispatch({
       type: LOADING,
       payload: false,
@@ -133,6 +133,7 @@ export const updateSubAction = (data) => async (dispatch) => {
 };
 
 // DELETE SUB-CATEGORY
+// data:{sub-slug,categoryId,subId}
 
 export const deleteSubAction = (data) => async (dispatch) => {
   console.log(' deleteSubAction data ', data);
@@ -141,27 +142,33 @@ export const deleteSubAction = (data) => async (dispatch) => {
     payload: true,
   });
   try {
-    const res = await axios.delete(`/api/v1/sub/${data.slug}`);
+    // 1) DELETE PRODUCTS
+    await axios.delete(`/api/v1/product/sub/${data.subId}`);
+    // 2) DELETE SUB-CATEGORY
+    await axios.delete(`/api/v1/sub/${data.slug}`);
+
     dispatch({
       type: LOADING,
       payload: false,
     });
-    console.log('res.data delete sub', res.data);
-    //FETCH CATEGORY LIST TO UPDATE REDUX STATE
-    dispatch({
-      type: LOADING,
-      payload: true,
-    });
-    //FETCH SUB LIST TO UPDATE REDUX STATE
-    const list = await axios.get(`/api/v1/sub/${data.categoryId}`);
-    dispatch({
-      type: LOADING,
-      payload: false,
-    });
-    dispatch({
-      type: GET_SUB_LIST,
-      payload: list.data.data,
-    });
+
+    setTimeout(async () => {
+      //FETCH CATEGORY LIST TO UPDATE REDUX STATE
+      dispatch({
+        type: LOADING,
+        payload: true,
+      });
+      //FETCH SUB LIST TO UPDATE REDUX STATE
+      const list = await axios.get(`/api/v1/sub/${data.categoryId}`);
+      dispatch({
+        type: LOADING,
+        payload: false,
+      });
+      dispatch({
+        type: GET_SUB_LIST,
+        payload: list.data.data,
+      });
+    }, 4000);
   } catch (err) {
     dispatch({
       type: LOADING,

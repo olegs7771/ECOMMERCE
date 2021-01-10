@@ -7,6 +7,8 @@ export default function BreadCrumbs({
   href2,
   link3,
   href3,
+  link4,
+  href4,
 }) {
   return (
     <div className="breadcrumbs">
@@ -19,6 +21,9 @@ export default function BreadCrumbs({
       </a>
       <a href={href3} className="breadcrumbs__link">
         {link3}
+      </a>
+      <a href={href4} className="breadcrumbs__link">
+        {link4}
       </a>
     </div>
   );

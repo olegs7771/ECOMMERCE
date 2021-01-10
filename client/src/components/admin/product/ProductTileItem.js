@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import { deleteOneProduct } from '../../../store/actions/productAction';
-import { useDispatch, useSelector } from 'react-redux';
-export default function ProductTileItem({ i, p, sprite, history }) {
+import { useDispatch } from 'react-redux';
+export default function ProductTileItem({
+  i,
+  p,
+  sprite,
+  category,
+  categoryId,
+  subId,
+  history,
+}) {
   //  REDUX
   const dispatch = useDispatch();
   const [focus, setFocus] = useState(false);
@@ -18,8 +26,8 @@ export default function ProductTileItem({ i, p, sprite, history }) {
 
   //EDIT PRODUCT
   const _getProduct = (e) => {
-    console.log('product');
-    history.push(`/product/${e[0]}/${e[1]}`);
+    console.log('product', e);
+    history.push(`/product/${e[0]}/${e[1]}/${categoryId}/${category}/${subId}`);
   };
 
   return (

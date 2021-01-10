@@ -38,11 +38,7 @@ const App = () => {
           {/* ADMIN  */}
           <Route exact path="/admin" component={DashboardAdmin} />
           <Route exact path="/admin/category" component={Category} />
-          <Route
-            exact
-            path="/admin/sub/:categoryId/:category"
-            component={Sub}
-          />
+          <Route exact path="/admin/sub/:categoryId/:slug" component={Sub} />
           <Route
             exact
             path="/admin/:subId/:category/:categoryId/:slug"
@@ -50,7 +46,7 @@ const App = () => {
           />
           <Route
             exact
-            path="/product/:productId/:slug/"
+            path="/product/:productId/:slug/:categoryId/:category/:subId"
             component={ProductCard}
           />
         </Switch>

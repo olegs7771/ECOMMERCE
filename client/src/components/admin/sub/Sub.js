@@ -78,7 +78,8 @@ export default function Sub(props) {
 
   const _deleteSub = (e) => {
     const data = {
-      slug: e,
+      slug: e[0],
+      subId: e[1],
       categoryId: props.match.params.categoryId,
     };
     dispatch(deleteSubAction(data));
@@ -107,7 +108,7 @@ export default function Sub(props) {
           <LinkBtn btnText="back to categories" />
 
           <h1 className="heading-3 mb-md">
-            Sub Categories for [{props.match.params.category}]
+            Sub Categories for [{props.match.params.slug}]
           </h1>
         </div>
         {/* CHECK ADMIN  */}
@@ -144,7 +145,7 @@ export default function Sub(props) {
                         <div>
                           {subList.map((sub, i) => (
                             <SubItem
-                              category={props.match.params.category}
+                              category={props.match.params.slug}
                               sub={sub}
                               _deleteSub={_deleteSub}
                               sprite={sprite}

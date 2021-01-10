@@ -122,11 +122,25 @@ export default function SubItem({
         //////////////////////////////////////////////////////
         <li className="category__item">
           <a
-            href={`/admin/${sub._id}/${categoryId}/${category}/${sub.slug}`}
+            href={`/admin/${sub._id}/${category}/${categoryId}/${sub.slug}`}
             className="category__link"
           >
             {sub.name}
           </a>
+          {/* message  */}
+          {messageState ? (
+            <div className="category__message">{messageState}</div>
+          ) : null}
+
+          {/* LOADING  */}
+          {loadingItem ? (
+            <svg
+              className="category__link-icon--spinner"
+              onClick={_updateCategory}
+            >
+              <use href={sprite + '#icon-spinner'} />
+            </svg>
+          ) : null}
 
           <div className="category__link-icon-box">
             <a
@@ -146,7 +160,7 @@ export default function SubItem({
             </svg>
             <svg
               className="category__link-icon"
-              onClick={_deleteSub.bind(this, sub.slug)}
+              onClick={_deleteSub.bind(this, [sub.slug, sub._id])}
             >
               <use href={sprite + '#icon-bin'} />
             </svg>

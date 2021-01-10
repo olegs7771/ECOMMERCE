@@ -114,38 +114,39 @@ export const updateCategoryAction = (data) => async (dispatch) => {
   }
 };
 
-// DELETE CATEGORY=> DELETE ALL SUB-CATEGORIES OF THIS CATEGORY
-
+// DELETE CATEGORY=> DELETE ALL SUB-CATEGORIES OF THIS CATEGORY=>DELETE ALL PRODUCTS
+// data:{categoryId,categorySlug}
 export const deleteCategoryAction = (data) => async (dispatch) => {
   console.log('data deleteCategoryAction', data);
+
   dispatch({
     type: LOADING,
     payload: true,
   });
   try {
-    const res = await axios.delete(
-      `/api/v1/sub/${data.categoryId}/${data.slug}`
-    );
-    console.log('res.data delete subs ', res.data);
-    dispatch({
-      type: GET_API_MESSAGE,
-      payload: res.data.message,
-    });
-    // 1) DELETE CATEGORY
+    //1)DELETE products
+    await axios.delete(`/api/v1/product/category/${data.categoryId}`);
+
+    // 2) DELETE sub-category
+    await axios.delete(`/api/v1/sub/${data.categoryId}/${data.slug}`);
+    // 3) DELETE category
     await axios.delete(`/api/v1/category/${data.slug}`);
 
-    const list = await axios.get('/api/v1/category');
-    dispatch({
-      type: GET_CATEGORIES_LIST,
-      payload: list.data.data,
-    });
-    dispatch({
-      type: LOADING,
-      payload: false,
-    });
+    // RELOAD ALL CATEGORIES
+    setTimeout(async () => {
+      const list = await axios.get('/api/v1/category');
+      dispatch({
+        type: GET_CATEGORIES_LIST,
+        payload: list.data.data,
+      });
+      dispatch({
+        type: LOADING,
+        payload: false,
+      });
+    }, 3000);
   } catch (err) {
     dispatch({
-      type: LOADING,
+      type: LOADING_ITEM_CATEGORY,
       payload: false,
     });
     console.log('error to delete category', err.response.data);

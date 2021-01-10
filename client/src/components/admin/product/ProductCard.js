@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  deleteOneProduct,
+  // deleteOneProduct,
   getOneProduct,
 } from '../../../store/actions/productAction';
 import { Spinner } from '../../../utils/LoadingComponent';
+import BreadCrumbs from '../../navigation/BreadCrumbs';
 
 export default function ProductCard(props) {
   //  REDUX
   const auth = useSelector((state) => state.auth);
   const product = useSelector((state) => state.product.product);
   const loading = useSelector((state) => state.loading.loading);
-  const error = useSelector((state) => state.error.error);
+  // const error = useSelector((state) => state.error.error);
   const dispatch = useDispatch();
 
   //  ON LOAD FETCH PRODUCT DETAILS
@@ -26,6 +27,22 @@ export default function ProductCard(props) {
 
   return (
     <div className="card">
+      <BreadCrumbs
+        // FROM CATEGORY
+        link1="/home"
+        href1="/"
+        // FROM SUB-CATEGORY
+        link2="/category"
+        href2="/admin/category"
+        // FROM PRODUCT
+        link3="/sub-category"
+        href3={`/admin/sub/${props.match.params.categoryId}/${props.match.params.category}`}
+        // FROM PRODUCT CARD
+        link4="/products"
+        href4={`/admin/${props.match.params.subId}/${props.match.params.category}/${props.match.params.categoryId}/${props.match.params.slug}`}
+        // path="/admin/:subId/:category/:categoryId/:slug"
+      />
+
       {auth.isAuthenticated && auth.user.role === 'admin' ? (
         <div className="card-wrapper">
           {loading || !product ? (
