@@ -82,7 +82,7 @@ export default function Category(props) {
   return (
     <div>
       <NavigationAdmin category={true} />
-      <BreadCrumbs link1="/home" href1="/" />
+      <BreadCrumbs link1="home" href1="/" current="  &rsaquo;  categories" />
       <div className="category ">
         <h1 className="heading-2 mb-md">Category</h1>
 

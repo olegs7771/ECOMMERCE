@@ -1,5 +1,5 @@
 // style _category.scss
-
+import { unslugify } from 'unslugify';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -69,6 +69,7 @@ export default function Sub(props) {
   useEffect(() => {
     setErrorState(error);
   }, [error]);
+
   //CLEAR ERROR IN REDUX STATE
   const _clearReduxErrorState = (e) => {
     e.preventDefault();
@@ -98,10 +99,11 @@ export default function Sub(props) {
   return (
     <div>
       <BreadCrumbs
-        link1="/home"
+        link1="home"
         href1="/"
-        link2="/category"
+        link2=" &rsaquo;  category"
         href2="/admin/category"
+        current={`${unslugify(props.match.params.slug)}`}
       />
       <div className="category">
         <div className="category__header">
@@ -130,6 +132,11 @@ export default function Sub(props) {
             <div className="category__list-box">
               {loading ? (
                 <Spinner loading={props.loading} />
+              ) : errorState ? (
+                <ErrorMessageWithBtn
+                  errorState={errorState}
+                  _clearReduxErrorState={_clearReduxErrorState}
+                />
               ) : (
                 <ul className="category__list">
                   {subList.length === 0 ? (

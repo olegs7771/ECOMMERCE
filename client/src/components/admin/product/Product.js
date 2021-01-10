@@ -1,5 +1,5 @@
 // style _category.scss
-
+import { unslugify } from 'unslugify';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrorReduxState } from '../../../store/actions/categoryAction';
@@ -98,14 +98,15 @@ export default function Product(props) {
     <div>
       <BreadCrumbs
         // FROM CATEGORY
-        link1="/home"
+        link1="home"
         href1="/"
         // FROM SUB-CATEGORY
-        link2="/category"
+        link2="category"
         href2="/admin/category"
         // FROM PRODUCT
-        link3="/sub-category"
+        link3="sub-category"
         href3={`/admin/sub/${props.match.params.categoryId}/${props.match.params.category}`}
+        current={`${unslugify(props.match.params.slug)}`}
       />
       <div className="product ">
         <h1 className="heading-2 mb-md">

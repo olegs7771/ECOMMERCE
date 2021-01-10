@@ -10,7 +10,7 @@ const subSchema = new mongoose.Schema(
       required: true,
       unique: true,
       minlength: [3, 'Name too short'],
-      maxlength: [32, 'Name to long'],
+      maxlength: [42, 'Name to long'],
     },
     categoryId: {
       type: ObjectId,
@@ -30,9 +30,19 @@ const subSchema = new mongoose.Schema(
 
 // CHECK FOR SUB-CATEGORY CATEGORY NAME
 subSchema.post('save', function (error, doc, next) {
-  // console.log('doc', doc);
+  console.log('err.message', error.message);
   if (error.name === 'MongoError' && error.code === 11000) {
     next(new Error(`[${doc.name}] sub-category name already exists!`));
+  } else if (
+    error.name === 'ValidationError' &&
+    error.message.includes('short')
+  ) {
+    next(new Error('Name too short. Please use meaningfull name'));
+  } else if (
+    error.name === 'ValidationError' &&
+    error.message.includes('long')
+  ) {
+    next(new Error('Name too long. Please use meaningfull name'));
   } else {
     next(error);
   }
