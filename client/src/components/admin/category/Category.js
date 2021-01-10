@@ -78,11 +78,11 @@ export default function Category(props) {
   };
 
   const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
-
+  // &nbsp; &rsaquo;
   return (
     <div>
       <NavigationAdmin category={true} />
-      <BreadCrumbs link1="home" href1="/" current="  &rsaquo;  categories" />
+      <BreadCrumbs link1=" home &nbsp;  " href1="/" current=" categories" />
       <div className="category ">
         <h1 className="heading-2 mb-md">Category</h1>
 

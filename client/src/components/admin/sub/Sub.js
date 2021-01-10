@@ -96,12 +96,14 @@ export default function Sub(props) {
   };
 
   const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
+
+  // &nbsp; &rsaquo;
   return (
     <div>
       <BreadCrumbs
-        link1="home"
+        link1="home &nbsp;"
         href1="/"
-        link2=" &rsaquo;  category"
+        link2=" &rsaquo;&nbsp;&nbsp;  category   "
         href2="/admin/category"
         current={`${unslugify(props.match.params.slug)}`}
       />

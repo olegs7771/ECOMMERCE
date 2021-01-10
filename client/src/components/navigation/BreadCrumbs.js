@@ -15,17 +15,17 @@ export default function BreadCrumbs({
     <div className="breadcrumbs">
       <a href={href1} className="breadcrumbs__link">
         {link1}
-      </a>{' '}
+      </a>
       <a href={href2} className="breadcrumbs__link">
         {link2}
-      </a>{' '}
+      </a>
       <a href={href3} className="breadcrumbs__link">
-        {link3}
-      </a>{' '}
+        {link3}&nbsp;&nbsp;
+      </a>
       <a href={href4} className="breadcrumbs__link">
         {link4}
-      </a>{' '}
-      <span className="breadcrumbs__link"> {current}</span>
+      </a>
+      <span className="breadcrumbs__link">&rsaquo;&nbsp;&nbsp; {current}</span>
     </div>
   );
 }

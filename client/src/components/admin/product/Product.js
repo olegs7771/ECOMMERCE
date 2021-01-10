@@ -98,14 +98,15 @@ export default function Product(props) {
     <div>
       <BreadCrumbs
         // FROM CATEGORY
-        link1="home"
+        link1="home &nbsp;"
         href1="/"
         // FROM SUB-CATEGORY
-        link2="category"
-        href2="/admin/category"
+        link2=" &rsaquo;&nbsp;&nbsp;  category &nbsp; &rsaquo;&nbsp;&nbsp;"
+        href2=" /admin/category"
         // FROM PRODUCT
-        link3="sub-category"
+        link3={`${props.match.params.category}`}
         href3={`/admin/sub/${props.match.params.categoryId}/${props.match.params.category}`}
+        const
         current={`${unslugify(props.match.params.slug)}`}
       />
       <div className="product ">

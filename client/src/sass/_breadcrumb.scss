@@ -1,9 +1,10 @@
 .breadcrumbs {
-  border: 1px solid black;
-  padding: 2rem 5rem;
+  border-bottom: 0.3px solid $color-grey-light-2;
+  padding: 3rem 5rem;
   &__link {
     text-decoration: none;
     font-size: 1.2rem;
     text-transform: uppercase;
+    font-weight: 700;
   }
 }
