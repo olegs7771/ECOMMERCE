@@ -8,6 +8,9 @@ export default function LeftDrawer({ open }) {
   const drawerRedux = useSelector((state) => state.drawer.drawer_left);
 
   return (
-    <aside className={drawer ? 'drawer drawer--open' : 'drawer '}>Drawer</aside>
+    <aside className={drawerRedux ? 'drawer drawer--open' : 'drawer '}>
+      <div className="drawer__contaier"></div>
+      Drawer
+    </aside>
   );
 }

@@ -171,3 +171,23 @@ input[type='radio' i] {
 .mb-xlg {
   margin-bottom: 8rem;
 }
+
+// OVERLAY WHILE DRAWER OUT
+.overlay {
+  display: block;
+  position: fixed;
+  z-index: 7779;
+  top: 0;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  background-color: black;
+  transition: all 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+
+  &--visible {
+    opacity: 0.25;
+    pointer-events: all;
+  }
+}

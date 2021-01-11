@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { withRouter } from 'react-router-dom';
@@ -8,8 +8,24 @@ import LeftDrawer from '../drawer/LeftDrawer';
 import { drawerLeft } from '../../store/actions/drawerAction';
 
 const Navigation = ({ history }) => {
+  // REDUX
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
+  const drawerRedux = useSelector((state) => state.drawer.drawer_left);
+  // STATE
+  const [drawer, setDrawer] = useState(false);
+
+  // SET DRAWER REDUX IN STATE
+  useEffect(() => {
+    setDrawer(drawerRedux);
+  }, [drawerRedux]);
+
+  const _drawerToggle = () => {
+    setDrawer(!drawer);
+  };
+  useEffect(() => {
+    dispatch(drawerLeft(drawer));
+  }, [dispatch, drawer]);
 
   return (
     <div>
@@ -17,10 +33,7 @@ const Navigation = ({ history }) => {
       <nav className="nav">
         <ul className="nav__list">
           <li className="nav__item">
-            <div
-              className="nav__link-icon-box"
-              onClick={() => dispatch(drawerLeft(true))}
-            >
+            <div className="nav__link-icon-box" onClick={_drawerToggle}>
               <svg className="nav__link-icon">
                 <use href={sprite + '#icon-menu'} />
               </svg>

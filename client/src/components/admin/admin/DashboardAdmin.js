@@ -5,12 +5,16 @@ import { drawerLeft } from '../../../store/actions/drawerAction';
 
 export default function DashboardAdmin() {
   const auth = useSelector((state) => state.auth);
+  const drawerRedux = useSelector((state) => state.drawer.drawer_left);
   const dispatch = useDispatch();
 
   return (
     <div className="admin" onClick={() => dispatch(drawerLeft(false))}>
       {auth.isAuthenticated && auth.user.role === 'admin' ? (
         <div className="admin__container">
+          <div
+            className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
+          ></div>
           <div className="admin__statistic">
             {/* REGISTER USERS  */}
             <div className="admin__statistic-block admin__statistic-block--green">
