@@ -1,31 +1,79 @@
 .admin {
-  &__navigation {
-    height: 6.5rem;
-    background-color: $color-blue-light;
+  height: 100vh;
+  padding: 4rem;
+  text-align: center;
+  max-width: 120rem;
+  margin: 0 auto;
 
-    &-list {
-      height: 100%;
-      list-style: none;
+  &__container {
+    // border: 1px solid black;
+  }
+  &__statistic {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(35rem, 1fr));
+    justify-items: center;
+    grid-column-gap: 2rem;
+
+    &-block {
+      color: #fff;
+      width: 35rem;
+      height: 20rem;
+      background-color: lightblue;
       display: flex;
-      justify-content: space-evenly;
-    }
-    &-item {
-      display: flex;
-      align-items: center;
-      width: 15rem;
-      justify-content: center;
-      cursor: pointer;
-      &--active {
-        background-color: $color-yellow;
+      padding: 4rem 3rem;
+      border-radius: 3px;
+      box-shadow: $box-shadow-small;
+      //Block Colors;
+      &--green {
+        background-color: $color-green;
       }
-    }
-    &-link {
-      text-decoration: none;
-      font-size: 1.6rem;
-      text-transform: uppercase;
-      color: $color-grey-dark;
-      &:hover {
-        color: #f4e4c5;
+      &--orange {
+        background-color: $color-orange;
+      }
+      &--blue {
+        background-color: $color-blue-2;
+      }
+
+      &-detail {
+        // border: 1px solid black;
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        &--number {
+          font-size: 4rem;
+
+          margin-top: -2rem;
+        }
+        &--text {
+          font-size: 2rem;
+        }
+      }
+      &-icon {
+        width: 40%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        &-box {
+          padding: 1rem 1.3rem;
+          border-radius: 50%;
+          background-color: #fff;
+        }
+
+        &--register {
+          height: 5rem;
+          width: 5rem;
+          &--green {
+            fill: $color-green;
+          }
+          &--orange {
+            fill: $color-orange;
+          }
+          &--blue {
+            fill: $color-blue-2;
+          }
+        }
       }
     }
   }

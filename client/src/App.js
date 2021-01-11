@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { reload } from './utils/reloadUserAuth';
 // ROUTES
 import Navigation from './components/navigation/Navigation';
+
 import Home from './components/home/Home';
 import Register from './components/auth/Register';
 import Confirmation from './components/auth/Confirmation';
@@ -13,7 +14,7 @@ import Login from './components/auth/Login';
 import Profile from './components/user_profile/Profile';
 import Dashboard from './components/dashboard/Dashboard';
 //ADMIN
-import DashboardAdmin from './components/admin/DashboardAdmin';
+import DashboardAdmin from './components/admin/admin/DashboardAdmin';
 import Category from './components/admin/category/Category';
 import Sub from './components/admin/sub/Sub';
 import Product from './components/admin/product/Product';
@@ -21,13 +22,14 @@ import ProductCard from './components/admin/product/ProductCard';
 
 const store = reload(); //ON EVERY RELOAD RESET AUTH USER REDUX STATE
 
-// REDIREXTS AUTH
+// Drawer
 
 const App = () => {
   return (
     <Provider store={store}>
       <Router>
         <Navigation />
+
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/register" component={Register} />

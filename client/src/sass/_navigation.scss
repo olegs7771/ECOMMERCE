@@ -1,8 +1,9 @@
 .nav {
   padding: 2rem;
-  background-color: $color-blue;
-  color: $color-grey;
+  color: $color-black;
   height: 11rem;
+  border-bottom: 0.5px solid #eee;
+  position: relative;
 
   &__list {
     display: flex;
@@ -33,9 +34,6 @@
   &__item {
     margin-right: 5rem;
     cursor: pointer;
-    &:hover {
-      color: lightblue;
-    }
 
     &-group {
       display: flex;
@@ -44,9 +42,6 @@
     }
     &--menu {
       cursor: pointer;
-      &:hover {
-        color: lightblue;
-      }
     }
   }
 
@@ -61,29 +56,28 @@
 
   &__link:link,
   &__link:visited {
-    margin-right: 3rem;
     font-size: 1.4rem;
     text-decoration: none;
     text-transform: uppercase;
     transition: 0.2s;
-    color: $color-grey;
+    color: $color-black;
     display: flex;
-
-    &:hover {
-      color: lightblue;
-    }
   }
 }
 .nav__link-icon {
   height: 2.5rem;
   width: 2.5rem;
-  margin-right: 1rem;
   fill: currentColor;
-  &--arrowdown {
-    height: 1.5rem;
-    width: 1.5rem;
-    margin-left: 0.5rem;
-    fill: currentColor;
+
+  &-box {
+    // border: 1px solid black;
+    padding: 1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    &:hover {
+      background-color: #eee;
+    }
   }
 }
 
@@ -116,7 +110,7 @@
   &__link:visited {
     text-decoration: none;
     font-size: 1.4rem;
-    color: $color-grey;
+    color: $color-black;
   }
   position: relative;
   z-index: 10;
