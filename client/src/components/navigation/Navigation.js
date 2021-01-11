@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { withRouter } from 'react-router-dom';
 import sprite from '../../img/sprite.svg';
 import GoogleLogout from '../auth/GoogleoAUthLogout';
 import LeftDrawer from '../drawer/LeftDrawer';
+import { drawerLeft } from '../../store/actions/drawerAction';
 
-const Navigation = (props) => {
+const Navigation = ({ history }) => {
+  const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-
-  const [open, setOpen] = useState(false); //open side drawer
-
-  const _openDrawer = () => {
-    setOpen(!open);
-  };
 
   return (
     <div>
-      <LeftDrawer open={open} drawer={open} />
+      <LeftDrawer />
       <nav className="nav">
         <ul className="nav__list">
           <li className="nav__item">
-            <div className="nav__link-icon-box" onClick={_openDrawer}>
+            <div
+              className="nav__link-icon-box"
+              onClick={() => dispatch(drawerLeft(true))}
+            >
               <svg className="nav__link-icon">
                 <use href={sprite + '#icon-menu'} />
               </svg>
@@ -60,7 +59,7 @@ const Navigation = (props) => {
               </li>
 
               <li className="nav__item">
-                <GoogleLogout history={props.history} />
+                <GoogleLogout history={history} />
               </li>
             </div>
           ) : (

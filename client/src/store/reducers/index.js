@@ -6,6 +6,7 @@ import apiErrorReducer from './apiErrorReducer';
 import categoryReducer from './categoryReducer';
 import subReducer from './subReducer';
 import productReducer from './productReducer';
+import drawerReducer from './drawerReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   category: categoryReducer,
   sub: subReducer,
   product: productReducer,
+  drawer: drawerReducer,
 });

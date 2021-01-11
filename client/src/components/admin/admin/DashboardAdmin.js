@@ -1,11 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import sprite from '../../../img/sprite.svg';
+import { drawerLeft } from '../../../store/actions/drawerAction';
 
-export const DashboardAdmin = (props) => {
+export default function DashboardAdmin() {
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   return (
-    <div className="admin">
-      {props.auth.isAuthenticated && props.auth.user.role === 'admin' ? (
+    <div className="admin" onClick={() => dispatch(drawerLeft(false))}>
+      {auth.isAuthenticated && auth.user.role === 'admin' ? (
         <div className="admin__container">
           <div className="admin__statistic">
             {/* REGISTER USERS  */}
@@ -66,10 +70,4 @@ export const DashboardAdmin = (props) => {
       )}
     </div>
   );
-};
-
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, {})(DashboardAdmin);
+}
