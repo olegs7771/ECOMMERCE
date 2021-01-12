@@ -10,6 +10,7 @@ import {
   createCategoryAction,
 } from '../../../store/actions/categoryAction';
 import { getAllSubAction } from '../../../store/actions/subAction';
+import { drawerToggle } from '../../../store/actions/drawerAction';
 import { Spinner } from '../../../utils/LoadingComponent';
 import sprite from '../../../img/sprite.svg';
 import Form from '../../../utils/AddForm';
@@ -28,6 +29,7 @@ export default function Category(props) {
   const auth = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.loading.loading);
   const error = useSelector((state) => state.error.error);
+  const drawerRedux = useSelector((state) => state.drawer.drawer);
   // STATE
   const [categories, setCategories] = useState([]);
   const [keyword, setKeyword] = useState('');
@@ -81,66 +83,74 @@ export default function Category(props) {
   // &nbsp; &rsaquo;
   return (
     <div>
-      <BreadCrumbs link1=" home &nbsp;  " href1="/" current=" categories" />
-      <div className="category ">
-        <h1 className="heading-2 mb-md">Category</h1>
+      <div
+        className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
+        onClick={() => dispatch(drawerToggle(false))}
+      ></div>
+      <div>
+        <BreadCrumbs link1=" home &nbsp;  " href1="/" current=" categories" />
+        <div className="category ">
+          <h1 className="heading-2 mb-md">Category</h1>
 
-        {/* CHECK ADMIN  */}
-        {auth.isAuthenticated && auth.user.role === 'admin' ? (
-          <div className="category__container">
-            <div className="category__cta-block">
-              {/* FILTER FORM  */}
-              <Filter
-                _setFilterSearch={_setFilterSearch}
-                keyword={keyword}
-                _setName={_setName}
-              />
-
-              {/* CATEGORY CREATE FORM  */}
-              <Form
-                _onSubmit={_onSubmit}
-                name={name}
-                _setName={_setName}
-                title="add category (name)"
-              />
-            </div>
-            {/* CATEGORY LIST  */}
-            <div className="category__list-box">
-              {loading ? (
-                <Spinner loading={props.loading} />
-              ) : errorState ? (
-                <ErrorMessageWithBtn
-                  errorState={errorState}
-                  _clearReduxErrorState={_clearReduxErrorState}
+          {/* CHECK ADMIN  */}
+          {auth.isAuthenticated && auth.user.role === 'admin' ? (
+            <div className="category__container">
+              <div className="category__cta-block">
+                {/* FILTER FORM  */}
+                <Filter
+                  _setFilterSearch={_setFilterSearch}
+                  keyword={keyword}
+                  _setName={_setName}
                 />
-              ) : (
-                <ul className="category__list">
-                  {categories.length === 0 ? (
-                    <div className="heading-3">No Categories found</div>
-                  ) : (
-                    <div>
-                      {categories.map((c, i) => (
-                        <CategoryItem
-                          c={c}
-                          i={i}
-                          _deleteCategory={_deleteCategory}
-                          sprite={sprite}
-                          key={i}
-                          subs={subList} //all existing sub-categories to show quantity
-                        />
-                      ))}
-                    </div>
-                  )}
-                </ul>
-              )}
+
+                {/* CATEGORY CREATE FORM  */}
+                <Form
+                  _onSubmit={_onSubmit}
+                  name={name}
+                  _setName={_setName}
+                  title="add category (name)"
+                />
+              </div>
+              {/* CATEGORY LIST  */}
+              <div className="category__list-box">
+                {loading ? (
+                  <Spinner loading={props.loading} />
+                ) : errorState ? (
+                  <ErrorMessageWithBtn
+                    errorState={errorState}
+                    _clearReduxErrorState={_clearReduxErrorState}
+                  />
+                ) : (
+                  <ul className="category__list">
+                    {categories.length === 0 ? (
+                      <div className="heading-3">No Categories found</div>
+                    ) : (
+                      <div>
+                        {categories.map((c, i) => (
+                          <CategoryItem
+                            c={c}
+                            i={i}
+                            _deleteCategory={_deleteCategory}
+                            sprite={sprite}
+                            key={i}
+                            subs={subList} //all existing sub-categories to show quantity
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </ul>
+                )}
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="admin__container">
-            <div className="admin__heading">Access Denied ! Only for admin</div>
-            <button className="btn">Login</button>
-          </div>
-        )}
+          ) : (
+            <div className="admin__container">
+              <div className="admin__heading">
+                Access Denied ! Only for admin
+              </div>
+              <button className="btn">Login</button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

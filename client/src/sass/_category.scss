@@ -57,11 +57,7 @@
     text-decoration: none;
     text-transform: uppercase;
     &-icon {
-      height: 2rem;
-      width: 2rem;
       margin-left: 1rem;
-      cursor: pointer;
-      fill: $color-blue;
 
       // SMALL SPINNER ICON SPRITE
       &--spinner {

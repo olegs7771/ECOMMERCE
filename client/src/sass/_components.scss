@@ -191,3 +191,9 @@ input[type='radio' i] {
     pointer-events: all;
   }
 }
+.icon {
+  height: 2rem;
+  width: 2rem;
+  cursor: pointer;
+  fill: $color-blue;
+}

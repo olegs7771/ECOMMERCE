@@ -1,15 +1,15 @@
-import { DRAWER_LEFT } from '../actions/types';
+import { DRAWER_OPEN } from '../actions/types';
 
 const initialState = {
-  drawer_left: false,
+  drawer: false,
 };
 
 const drawerReducer = (state = initialState, action) => {
   switch (action.type) {
-    case DRAWER_LEFT:
+    case DRAWER_OPEN:
       return {
         ...state,
-        drawer_left: action.payload,
+        drawer: action.payload,
       };
     default:
       return state;

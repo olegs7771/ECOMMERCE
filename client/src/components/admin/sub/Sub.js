@@ -7,6 +7,7 @@ import {
   deleteSubAction,
   createSubAction,
 } from '../../../store/actions/subAction';
+import { drawerToggle } from '../../../store/actions/drawerAction';
 import BreadCrumbs from '../../navigation/BreadCrumbs';
 
 import { getProductsAllAction } from '../../../store/actions/productAction';
@@ -28,6 +29,7 @@ export default function Sub(props) {
   const loading = useSelector((state) => state.loading.loading);
   const subs = useSelector((state) => state.sub.subs);
   const products = useSelector((state) => state.product.products);
+  const drawerRedux = useSelector((state) => state.drawer.drawer);
 
   const error = useSelector((state) => state.error.error);
   //  STATE
@@ -100,83 +102,91 @@ export default function Sub(props) {
   // &nbsp; &rsaquo;
   return (
     <div>
-      <BreadCrumbs
-        link1="home &nbsp;"
-        href1="/"
-        link2=" &rsaquo;&nbsp;&nbsp;  category   "
-        href2="/admin/category"
-        current={`${unslugify(props.match.params.slug)}`}
-      />
-      <div className="category">
-        <div className="category__header">
-          <LinkBtn btnText="back to categories" />
+      <div
+        className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
+        onClick={() => dispatch(drawerToggle(false))}
+      ></div>
+      <div>
+        <BreadCrumbs
+          link1="home &nbsp;"
+          href1="/"
+          link2=" &rsaquo;&nbsp;&nbsp;  category   "
+          href2="/admin/category"
+          current={`${unslugify(props.match.params.slug)}`}
+        />
+        <div className="category">
+          <div className="category__header">
+            <LinkBtn btnText="back to categories" />
 
-          <h1 className="heading-3 mb-md">
-            Sub Categories for [{props.match.params.slug}]
-          </h1>
-        </div>
-        {/* CHECK ADMIN  */}
-        {auth.isAuthenticated && auth.user.role === 'admin' ? (
-          <div className="category__container">
-            <div className="category__cta-block">
-              {/* FILTER FORM  */}
-              <Filter _setFilterSearch={_setFilterSearch} keyword={keyword} />
+            <h1 className="heading-3 mb-md">
+              Sub Categories for [{props.match.params.slug}]
+            </h1>
+          </div>
+          {/* CHECK ADMIN  */}
+          {auth.isAuthenticated && auth.user.role === 'admin' ? (
+            <div className="category__container">
+              <div className="category__cta-block">
+                {/* FILTER FORM  */}
+                <Filter _setFilterSearch={_setFilterSearch} keyword={keyword} />
 
-              {/* CATEGORY CREATE FORM  */}
-              <Form
-                _onSubmit={_onSubmit}
-                name={name}
-                _setName={_setName}
-                title="add sub-category (name)"
-              />
-            </div>
-            {/*SUB-CATEGORY LIST  */}
-            <div className="category__list-box">
-              {loading ? (
-                <Spinner loading={props.loading} />
-              ) : errorState ? (
-                <ErrorMessageWithBtn
-                  errorState={errorState}
-                  _clearReduxErrorState={_clearReduxErrorState}
+                {/* CATEGORY CREATE FORM  */}
+                <Form
+                  _onSubmit={_onSubmit}
+                  name={name}
+                  _setName={_setName}
+                  title="add sub-category (name)"
                 />
-              ) : (
-                <ul className="category__list">
-                  {subList.length === 0 ? (
-                    <div className="heading-3">No sub-categories found</div>
-                  ) : (
-                    <div>
-                      {errorState ? (
-                        <ErrorMessageWithBtn
-                          errorState={errorState}
-                          _clearReduxErrorState={_clearReduxErrorState}
-                        />
-                      ) : (
-                        <div>
-                          {subList.map((sub, i) => (
-                            <SubItem
-                              category={props.match.params.slug}
-                              sub={sub}
-                              _deleteSub={_deleteSub}
-                              sprite={sprite}
-                              key={i}
-                              categoryId={props.match.params.categoryId}
-                              products={products} //all existing products to show quantity
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </ul>
-              )}
+              </div>
+              {/*SUB-CATEGORY LIST  */}
+              <div className="category__list-box">
+                {loading ? (
+                  <Spinner loading={props.loading} />
+                ) : errorState ? (
+                  <ErrorMessageWithBtn
+                    errorState={errorState}
+                    _clearReduxErrorState={_clearReduxErrorState}
+                  />
+                ) : (
+                  <ul className="category__list">
+                    {subList.length === 0 ? (
+                      <div className="heading-3">No sub-categories found</div>
+                    ) : (
+                      <div>
+                        {errorState ? (
+                          <ErrorMessageWithBtn
+                            errorState={errorState}
+                            _clearReduxErrorState={_clearReduxErrorState}
+                          />
+                        ) : (
+                          <div>
+                            {subList.map((sub, i) => (
+                              <SubItem
+                                category={props.match.params.slug}
+                                sub={sub}
+                                _deleteSub={_deleteSub}
+                                sprite={sprite}
+                                key={i}
+                                categoryId={props.match.params.categoryId}
+                                products={products} //all existing products to show quantity
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </ul>
+                )}
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="admin__container">
-            <div className="admin__heading">Access Denied ! Only for admin</div>
-            <button className="btn">Login</button>
-          </div>
-        )}
+          ) : (
+            <div className="admin__container">
+              <div className="admin__heading">
+                Access Denied ! Only for admin
+              </div>
+              <button className="btn">Login</button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

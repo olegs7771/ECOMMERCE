@@ -1,8 +1,8 @@
-import { DRAWER_LEFT } from './types';
+import { DRAWER_OPEN } from './types';
 
-export const drawerLeft = (state) => (dispatch) => {
+export const drawerToggle = (state) => (dispatch) => {
   dispatch({
-    type: DRAWER_LEFT,
+    type: DRAWER_OPEN,
     payload: state,
   });
 };

@@ -103,17 +103,17 @@ export default function SubItem({
           {/* LOADING ITEM  null if message or error appears*/}
           {loadingItem ? (
             <svg
-              className="category__link-icon--spinner"
+              className="category__link-icon--spinner icon"
               onClick={_updateCategory}
             >
               <use href={sprite + '#icon-spinner'} />
             </svg>
           ) : null}
           <div className="category__link-icon-box">
-            <svg className="category__link-icon" onClick={_updateCategory}>
+            <svg className="category__link-icon icon" onClick={_updateCategory}>
               <use href={sprite + '#icon-checkmark'} />
             </svg>
-            <svg className="category__link-icon" onClick={_editToggle}>
+            <svg className="category__link-icon icon" onClick={_editToggle}>
               <use href={sprite + '#icon-cross'} />
             </svg>
           </div>
@@ -135,7 +135,7 @@ export default function SubItem({
           {/* LOADING  */}
           {loadingItem ? (
             <svg
-              className="category__link-icon--spinner"
+              className="category__link-icon--spinner icon"
               onClick={_updateCategory}
             >
               <use href={sprite + '#icon-spinner'} />
@@ -155,11 +155,11 @@ export default function SubItem({
                 products
               </div>
             </a>
-            <svg className="category__link-icon" onClick={_editToggle}>
+            <svg className="category__link-icon icon" onClick={_editToggle}>
               <use href={sprite + '#icon-pencil'} />
             </svg>
             <svg
-              className="category__link-icon"
+              className="category__link-icon icon"
               onClick={_deleteSub.bind(this, [sub.slug, sub._id])}
             >
               <use href={sprite + '#icon-bin'} />

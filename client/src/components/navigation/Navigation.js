@@ -4,14 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import sprite from '../../img/sprite.svg';
 import GoogleLogout from '../auth/GoogleoAUthLogout';
-import LeftDrawer from '../drawer/LeftDrawer';
-import { drawerLeft } from '../../store/actions/drawerAction';
+import Drawer from '../drawer/Drawer';
+import { drawerToggle } from '../../store/actions/drawerAction';
 
 const Navigation = ({ history }) => {
   // REDUX
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const drawerRedux = useSelector((state) => state.drawer.drawer_left);
+  const drawerRedux = useSelector((state) => state.drawer.drawer);
   // STATE
   const [drawer, setDrawer] = useState(false);
 
@@ -24,12 +24,12 @@ const Navigation = ({ history }) => {
     setDrawer(!drawer);
   };
   useEffect(() => {
-    dispatch(drawerLeft(drawer));
+    dispatch(drawerToggle(drawer));
   }, [dispatch, drawer]);
 
   return (
     <div>
-      <LeftDrawer />
+      <Drawer />
       <nav className="nav">
         <ul className="nav__list">
           <li className="nav__item">

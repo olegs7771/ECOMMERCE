@@ -24,7 +24,7 @@ categorySchema.pre('save', function (next) {
   next();
 });
 
-// CHECK FOR DUBLICATE CATEGORY NAME
+// CHECK FOR DUBLICATE CATEGORY NAME AND VALID LENGTH
 categorySchema.post('save', function (error, doc, next) {
   console.log('error.name', error.name);
   console.log('error.message', error.message);

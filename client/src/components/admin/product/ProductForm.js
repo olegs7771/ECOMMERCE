@@ -89,7 +89,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
                   <input
                     type="text"
                     name="title"
-                    className="form-input  category__input"
+                    className="form-input  "
                     value={values.name}
                     onChange={_onChange}
                     required
@@ -118,7 +118,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
                   <input
                     type="number"
                     name="quantity"
-                    className="form-input  category__input"
+                    className="form-input  "
                     value={values.quantity}
                     onChange={_onChange}
                     required
@@ -133,7 +133,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
                     name="color"
                     value={values.color}
                     onChange={_onChange}
-                    className="form-input  category__input"
+                    className="form-input  "
                     required
                   >
                     <option>Select Color</option>
@@ -152,7 +152,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
                     name="brand"
                     value={values.brand}
                     onChange={_onChange}
-                    className="form-input  category__input"
+                    className="form-input  "
                     required
                   >
                     <option>Select Brand</option>
@@ -173,7 +173,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
                   <input
                     type="text"
                     name="price"
-                    className="form-input  category__input"
+                    className="form-input  "
                     value={values.price}
                     onChange={_onChange}
                     placeholder="$100.00"

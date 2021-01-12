@@ -106,10 +106,10 @@ export default function CategoryItem({ c, _deleteCategory, sprite, subs }) {
             </svg>
           ) : null}
           <div className="category__link-icon-box">
-            <svg className="category__link-icon" onClick={_updateCategory}>
+            <svg className="category__link-icon icon" onClick={_updateCategory}>
               <use href={sprite + '#icon-checkmark'} />
             </svg>
-            <svg className="category__link-icon" onClick={_editToggle}>
+            <svg className="category__link-icon icon" onClick={_editToggle}>
               <use href={sprite + '#icon-cross'} />
             </svg>
           </div>
@@ -148,11 +148,11 @@ export default function CategoryItem({ c, _deleteCategory, sprite, subs }) {
               </div>
             </a>
 
-            <svg className="category__link-icon" onClick={_editToggle}>
+            <svg className="category__link-icon icon" onClick={_editToggle}>
               <use href={sprite + '#icon-pencil'} />
             </svg>
             <svg
-              className="category__link-icon"
+              className="category__link-icon icon"
               onClick={_deleteCategory.bind(this, [c.slug, c._id])}
             >
               <use href={sprite + '#icon-bin'} />

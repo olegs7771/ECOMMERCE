@@ -1,15 +1,15 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import sprite from '../../../img/sprite.svg';
-import { drawerLeft } from '../../../store/actions/drawerAction';
+import { drawerToggle } from '../../../store/actions/drawerAction';
 
 export default function DashboardAdmin() {
   const auth = useSelector((state) => state.auth);
-  const drawerRedux = useSelector((state) => state.drawer.drawer_left);
+  const drawerRedux = useSelector((state) => state.drawer.drawer);
   const dispatch = useDispatch();
 
   return (
-    <div className="admin" onClick={() => dispatch(drawerLeft(false))}>
+    <div className="admin" onClick={() => dispatch(drawerToggle(false))}>
       {auth.isAuthenticated && auth.user.role === 'admin' ? (
         <div className="admin__container">
           <div
