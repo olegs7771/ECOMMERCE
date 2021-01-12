@@ -81,28 +81,7 @@ productSchema.pre('save', function (next) {
   next();
 });
 
-productSchema.pre('save', function (next) {
-  console.log('pre new product this', this);
-});
-
 // CUSTOM ERROR HANDLING
-productSchema.post('save', function (error, doc, next) {
-  let errors = {};
-  if (error.errors.title) {
-    errors.title = error.errors.title.message;
-  }
-  if (error.errors.description) {
-    errors.description = error.errors.description.message;
-  }
-
-  // console.log('error.errors.title.message', error.errors.title.message);
-  // console.log(
-  //   'error.errors.description.message',
-  //   error.errors.description.message
-  // );
-  console.log('errors', errors);
-  next(errors);
-});
 
 const Product = mongoose.model('Product', productSchema);
 module.exports = Product;
