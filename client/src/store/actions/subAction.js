@@ -34,6 +34,10 @@ export const getSubListAction = (data) => async (dispatch) => {
       type: LOADING,
       payload: false,
     });
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data.error,
+    });
   }
 };
 

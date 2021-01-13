@@ -1,6 +1,6 @@
 // style _category.scss
 
-import BreadCrumbs from '../../navigation/BreadCrumbs';
+// import BreadCrumbs from '../../navigation/BreadCrumbs';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -17,7 +17,7 @@ import Form from '../../../utils/AddForm';
 import CategoryItem from './CategoryItem';
 import Filter from '../../../utils/FilterForm';
 
-import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
+// import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -115,11 +115,12 @@ export default function Category(props) {
               <div className="category__list-box">
                 {loading ? (
                   <Spinner loading={props.loading} />
-                ) : Object.keys(error).length > 0 ? (
-                  <ErrorMessageWithBtn
-                    errorState={error}
-                    _clearReduxErrorState={_clearReduxErrorState}
-                  />
+                ) : false ? (
+                  // <ErrorMessageWithBtn
+                  //   errorState={error}
+                  //   _clearReduxErrorState={_clearReduxErrorState}
+                  // />
+                  <div>test</div>
                 ) : (
                   <ul className="category__list">
                     {categories.length === 0 ? (

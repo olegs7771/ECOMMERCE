@@ -48,5 +48,14 @@ subSchema.post('save', function (error, doc, next) {
   }
 });
 
+subSchema.post('find', function (err, doc, next) {
+  console.log('error in sub model find', err.name);
+  let errors = {};
+  if (err.name === 'CastError') {
+    errors.sub = 'Wrong search parameters';
+  }
+  next(errors);
+});
+
 const Sub = mongoose.model('Sub', subSchema);
 module.exports = Sub;

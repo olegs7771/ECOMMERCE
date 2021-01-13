@@ -38,9 +38,9 @@ categorySchema.post('save', function (error, doc, next) {
   }
 });
 
-// categorySchema.pre(/^find/, function (next) {
-//   console.log('this in find query', this);
-// });
+categorySchema.post(/^find/, function (err, doc, next) {
+  console.log('error in model find', err);
+});
 
 const Category = mongoose.model('Category', categorySchema);
 module.exports = Category;

@@ -31,12 +31,12 @@ export default function Sub(props) {
   const products = useSelector((state) => state.product.products);
   const drawerRedux = useSelector((state) => state.drawer.drawer);
 
-  const error = useSelector((state) => state.error.error);
+  const errorRedux = useSelector((state) => state.error.error);
   //  STATE
   const [subList, setSublist] = useState([]);
   const [keyword, setKeyword] = useState('');
 
-  const [errorState, setErrorState] = useState(null);
+  const [error, setError] = useState({});
   const [name, setName] = useState('');
 
   // FORM ADD CATEGORY
@@ -69,13 +69,13 @@ export default function Sub(props) {
 
   //SET STATE ERROR IN COMPONENT
   useEffect(() => {
-    setErrorState(error);
-  }, [error]);
+    setError(errorRedux);
+  }, [errorRedux]);
 
   //CLEAR ERROR IN REDUX STATE
   const _clearReduxErrorState = (e) => {
     e.preventDefault();
-    setErrorState(null);
+    setError({});
     dispatch(clearErrorReduxState());
   };
 
@@ -98,7 +98,7 @@ export default function Sub(props) {
   };
 
   const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
-
+  console.log('error', error.sub);
   // &nbsp; &rsaquo;
   return (
     <div>
@@ -141,9 +141,9 @@ export default function Sub(props) {
               <div className="category__list-box">
                 {loading ? (
                   <Spinner loading={props.loading} />
-                ) : Object.keys(errorState).length > 0 ? (
+                ) : error.sub ? (
                   <ErrorMessageWithBtn
-                    errorState={errorState}
+                    errorState={error.sub}
                     _clearReduxErrorState={_clearReduxErrorState}
                   />
                 ) : (
@@ -152,11 +152,12 @@ export default function Sub(props) {
                       <div className="heading-3">No sub-categories found</div>
                     ) : (
                       <div>
-                        {errorState ? (
-                          <ErrorMessageWithBtn
-                            errorState={errorState}
-                            _clearReduxErrorState={_clearReduxErrorState}
-                          />
+                        {false ? (
+                          // <ErrorMessageWithBtn
+                          //   errorState={errorState}
+                          //   _clearReduxErrorState={_clearReduxErrorState}
+                          // />
+                          <div>error</div>
                         ) : (
                           <div>
                             {subList.map((sub, i) => (

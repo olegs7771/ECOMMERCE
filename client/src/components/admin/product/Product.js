@@ -178,11 +178,12 @@ export default function Product(props) {
                       ) : (
                         <div>
                           {/* SHOW MESSAGE ON DELETE  */}
-                          {errorState ? (
-                            <ErrorMessageWithBtn
-                              errorState={errorState}
-                              _clearReduxErrorState={_clearReduxErrorState}
-                            />
+                          {false ? (
+                            // <ErrorMessageWithBtn
+                            //   errorState={errorState}
+                            //   _clearReduxErrorState={_clearReduxErrorState}
+                            // />
+                            <div>error</div>
                           ) : (
                             <div>
                               {showTiles ? (
