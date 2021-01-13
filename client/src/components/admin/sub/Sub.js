@@ -141,7 +141,7 @@ export default function Sub(props) {
               <div className="category__list-box">
                 {loading ? (
                   <Spinner loading={props.loading} />
-                ) : errorState ? (
+                ) : Object.keys(errorState).length > 0 ? (
                   <ErrorMessageWithBtn
                     errorState={errorState}
                     _clearReduxErrorState={_clearReduxErrorState}

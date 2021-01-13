@@ -28,12 +28,12 @@ export default function Category(props) {
   const subList = useSelector((state) => state.sub.subs); //get list Redux
   const auth = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.loading.loading);
-  const error = useSelector((state) => state.error.error);
+  const errorRedux = useSelector((state) => state.error.error);
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   // STATE
   const [categories, setCategories] = useState([]);
   const [keyword, setKeyword] = useState('');
-  const [errorState, setErrorState] = useState(null);
+  const [error, setError] = useState(null);
   const [name, setName] = useState('');
 
   // FORM ADD CATEGORY
@@ -60,13 +60,13 @@ export default function Category(props) {
 
   //SET STATE ERROR IN COMPONENT
   useEffect(() => {
-    setErrorState(error);
-  }, [error]);
+    setError(errorRedux);
+  }, [errorRedux]);
 
   //CLEAR ERROR IN REDUX STATE
   const _clearReduxErrorState = (e) => {
     e.preventDefault();
-    setErrorState(null);
+    setError(null);
     dispatch(clearErrorReduxState());
   };
 
@@ -88,7 +88,7 @@ export default function Category(props) {
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
       <div>
-        <BreadCrumbs link1=" home &nbsp;  " href1="/" current=" categories" />
+        {/* <BreadCrumbs link1=" home &nbsp;  " href1="/" current=" categories" /> */}
         <div className="category ">
           <h1 className="heading-2 mb-md">Category</h1>
 
@@ -115,9 +115,9 @@ export default function Category(props) {
               <div className="category__list-box">
                 {loading ? (
                   <Spinner loading={props.loading} />
-                ) : errorState ? (
+                ) : Object.keys(error).length > 0 ? (
                   <ErrorMessageWithBtn
-                    errorState={errorState}
+                    errorState={error}
                     _clearReduxErrorState={_clearReduxErrorState}
                   />
                 ) : (
