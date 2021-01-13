@@ -118,10 +118,17 @@ export const createProductAction = (data) => async (dispatch) => {
       payload: false,
     });
     console.log('error createProductAction', err.response.data);
-    dispatch({
-      type: GET_API_ERROR,
-      payload: err.response.data.message,
-    });
+    if (err.response.data.message) {
+      dispatch({
+        type: GET_API_ERROR,
+        payload: err.response.data.message,
+      });
+    } else {
+      // dispatch({
+      //   type: GET_API_ERROR,
+      //   payload: err.response.data.error,
+      // });
+    }
   }
 };
 

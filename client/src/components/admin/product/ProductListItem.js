@@ -30,7 +30,7 @@ export default function ProductListItem({ product, sprite }) {
 
       <div className="category__link-icon-box">
         <svg
-          className="category__link-icon"
+          className="category__link-icon icon"
           onClick={_deleteProduct.bind(this, [
             product.slug,
             product._id,

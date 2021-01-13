@@ -10,6 +10,7 @@ const sendErrorDev = (err, res) => {
   });
 };
 const sendErrorProd = (err, res) => {
+  console.log('err in prod', err);
   //only oprational errors leaked to client!
   if (err.isOperational) {
     res.status(err.statusCode).json({

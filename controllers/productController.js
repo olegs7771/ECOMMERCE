@@ -7,7 +7,7 @@ const slugify = require('slugify');
 
 //CREATE PRODUCT
 const create = asyncCatch(async (req, res, next) => {
-  console.log('req.body product cretae', req.body);
+  console.log('req.body product create', req.body);
   const product = await Product.create(req.body);
   const message = `Product ${product.title} was added.`;
   res.status(200).json({ status: 'success', message, data: product });

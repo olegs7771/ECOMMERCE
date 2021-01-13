@@ -11,6 +11,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
     (state) => state.loading.loadingFormProduct
   );
   const message = useSelector((state) => state.message.message);
+  const error = useSelector((state) => state.error.error);
 
   const initialState = {
     title: '',
@@ -33,6 +34,12 @@ export default function ProductForm({ open, categoryId, subId, close }) {
   const _onChange = (e) => {
     setValue({ ...values, [e.target.name]: e.target.value });
   };
+
+  // TEST FIELDS onMouseLeave event
+  const _checkField = (e) => {
+    console.log('e mouse leave', e.target.value);
+  };
+
   const _onSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -92,6 +99,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
                     className="form-input  "
                     value={values.name}
                     onChange={_onChange}
+                    onMouseLeave={_checkField}
                     required
                   />
                 </label>

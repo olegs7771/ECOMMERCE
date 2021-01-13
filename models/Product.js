@@ -12,12 +12,12 @@ const productSchema = new mongoose.Schema(
       minLength: [2, 'Min length 2 chars'],
       text: true,
     },
-    // slug: {
-    //   type: String,
-    //   unique: [true, 'Slug must be unique'],
-    //   lowercase: true,
-    //   index: true,
-    // },
+    slug: {
+      type: String,
+      unique: [true, 'Slug must be unique'],
+      lowercase: true,
+      index: true,
+    },
     description: {
       type: String,
       required: [true, 'Please provide description'],
@@ -82,6 +82,18 @@ productSchema.pre('save', function (next) {
 });
 
 // CUSTOM ERROR HANDLING
+
+productSchema.post('save', function (err, doc, next) {
+  let errors = {};
+  errors.title = err.errors.title ? err.errors.title.message : '';
+  errors.description = err.errors.description
+    ? err.errors.description.message
+    : '';
+  errors.price = err.errors.price ? err.errors.price.message : '';
+
+  console.log('errors', errors);
+  next(errors);
+});
 
 const Product = mongoose.model('Product', productSchema);
 module.exports = Product;

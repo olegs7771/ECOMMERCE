@@ -41,11 +41,11 @@ export default function ProductTileItem({
     >
       <div className="product__tiles-container-tile-top">
         {focus ? (
-          <svg className="category__link-icon" onClick={_focus}>
+          <svg className="category__link-icon icon" onClick={_focus}>
             <use href={sprite + '#icon-shrink2'} />
           </svg>
         ) : (
-          <svg className="category__link-icon" onClick={_focus}>
+          <svg className="category__link-icon icon" onClick={_focus}>
             <use href={sprite + '#icon-enlarge2'} />
           </svg>
         )}
@@ -106,13 +106,13 @@ export default function ProductTileItem({
         }
       >
         <svg
-          className="category__link-icon"
+          className="category__link-icon icon"
           onClick={_getProduct.bind(this, [p._id, p.slug])}
         >
           <use href={sprite + '#icon-pencil'} />
         </svg>
         <svg
-          className="category__link-icon"
+          className="category__link-icon icon"
           onClick={_deleteProduct.bind(this, [p.slug, p._id, p.sub])}
         >
           <use href={sprite + '#icon-bin'} />
