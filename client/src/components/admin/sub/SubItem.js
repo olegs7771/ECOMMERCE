@@ -128,19 +128,19 @@ export default function SubItem({
             {sub.name}
           </a>
           {/* message  */}
-          {messageState ? (
+          {/* {messageState ? (
             <div className="category__message">{messageState}</div>
-          ) : null}
+          ) : null} */}
 
           {/* LOADING  */}
-          {loadingItem ? (
+          {/* {loadingItem ? (
             <svg
               className="category__link-icon--spinner icon"
               onClick={_updateCategory}
             >
               <use href={sprite + '#icon-spinner'} />
             </svg>
-          ) : null}
+          ) : null} */}
 
           <div className="category__link-icon-box">
             <a

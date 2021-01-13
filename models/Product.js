@@ -21,6 +21,7 @@ const productSchema = new mongoose.Schema(
     description: {
       type: String,
       required: [true, 'Please provide description'],
+      minLength: [20, 'Please provide min 20 chars'],
       maxLength: [2000, 'Max length 2000 chars'],
       text: true,
     },
@@ -44,7 +45,16 @@ const productSchema = new mongoose.Schema(
       type: ObjectId,
       ref: 'Sub',
     },
-    quantity: Number,
+    quantity: {
+      type: String,
+      required: [true, 'Please provide quntity'],
+      validate: {
+        validator: function (value) {
+          return /^[0-9]*$/.test(value);
+        },
+        message: 'Quantity accept only numbers',
+      },
+    },
     sold: {
       type: Number,
       default: 0,
@@ -90,6 +100,7 @@ productSchema.post('save', function (err, doc, next) {
     ? err.errors.description.message
     : '';
   errors.price = err.errors.price ? err.errors.price.message : '';
+  errors.quantity = err.errors.quantity ? err.errors.quantity.message : '';
 
   console.log('errors', errors);
   next(errors);

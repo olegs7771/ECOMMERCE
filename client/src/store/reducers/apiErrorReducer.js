@@ -1,7 +1,7 @@
 import { GET_API_ERROR, CLEAR_API_ERROR } from '../actions/types';
 
 const initialState = {
-  error: null,
+  error: {},
 };
 
 const apiErrorReducer = (state = initialState, action) => {
@@ -14,7 +14,7 @@ const apiErrorReducer = (state = initialState, action) => {
     case CLEAR_API_ERROR:
       return {
         ...state,
-        error: null,
+        error: {},
       };
 
     default:

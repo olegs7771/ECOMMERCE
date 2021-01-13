@@ -123,12 +123,11 @@ export const createProductAction = (data) => async (dispatch) => {
         type: GET_API_ERROR,
         payload: err.response.data.message,
       });
-    } else {
-      // dispatch({
-      //   type: GET_API_ERROR,
-      //   payload: err.response.data.error,
-      // });
     }
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data.error,
+    });
   }
 };
 
