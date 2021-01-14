@@ -89,7 +89,11 @@ const removeAllBySubId = asyncCatch(async (req, res, next) => {
 
 // UPDATE PRODUCT
 const update = asyncCatch(async (req, res, next) => {
-  console.log('update product');
+  const update = {};
+  const product = await Product.findOneAndUpdate(
+    { id: req.params.productId },
+    {}
+  );
 });
 
 module.exports = {
