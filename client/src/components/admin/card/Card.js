@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { unslugify } from 'unslugify';
+import sprite from '../../../img/sprite.svg';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -9,7 +10,6 @@ import {
 import { drawerToggle } from '../../../store/actions/drawerAction';
 import { Spinner } from '../../../utils/LoadingComponent';
 import BreadCrumbs from '../../navigation/BreadCrumbs';
-import TextInputForm from '../../../utils/TextInputForm';
 
 export default function Card(props) {
   //  REDUX
@@ -58,6 +58,11 @@ export default function Card(props) {
     dispatch(getOneProduct(data));
   }, [dispatch, props.match.params.productId, props.match.params.slug]);
 
+  // GET PRODUCT TO STATE
+  useEffect(() => {
+    setValue(product);
+  }, [product]);
+
   return (
     <div>
       <div
@@ -83,7 +88,7 @@ export default function Card(props) {
 
         {auth.isAuthenticated && auth.user.role === 'admin' ? (
           <div className="card-wrapper">
-            {loading || !product ? (
+            {loading || !product || !values ? (
               <Spinner />
             ) : (
               //////////////////////////////////////////////////////////////
@@ -96,17 +101,32 @@ export default function Card(props) {
                 <div className="card__container__detail">
                   {/* HEADER  */}
                   <div className="card__container__detail-header heading-3 mb-sm">
-                    <div className="card__container__detail-header--title  ">
-                      <input
-                        type="text"
-                        name="name"
-                        className="category__input"
-                        value={values.title}
-                        onChange={_onChange}
-                        required
-                      />
-                      {product.title}
+                    {/* TITLE  */}
+                    <div className="card__container__detail-header--title ">
+                      {edit ? (
+                        <div className="card__container__detail-header--title-edit">
+                          <input
+                            type="text"
+                            name="title"
+                            className="form-input card__input"
+                            value={values.title}
+                            onChange={_onChange}
+                            required
+                          />
+                          <svg
+                            className=" icon card__icon"
+                            // onClick={_editToggle}
+                          >
+                            <use href={sprite + '#icon-pencil'} />
+                          </svg>
+                        </div>
+                      ) : (
+                        <div className="card__container__detail-header--title-text">
+                          {product.title}
+                        </div>
+                      )}
                     </div>
+                    {/* PRICE  */}
                     <div className="card__container__detail-header--price">
                       ${product.price}
                     </div>
@@ -165,7 +185,26 @@ export default function Card(props) {
                   </div>
 
                   <div className="card__container-cta">
-                    <button className="btn">Edit Details</button>
+                    {edit ? (
+                      <div>
+                        <button
+                          className="btn card__container-cta-btn--accept"
+                          onClick={() => setEdit(!edit)}
+                        >
+                          Accept
+                        </button>
+                        <button
+                          className="btn card__container-cta-btn--cancel"
+                          onClick={() => setEdit(!edit)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <button className="btn" onClick={() => setEdit(!edit)}>
+                        Edit Details
+                      </button>
+                    )}
                     <button className="btn">Edit Gallery</button>
                     <button className="btn">Delete</button>
                   </div>

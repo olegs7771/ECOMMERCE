@@ -39,7 +39,7 @@ export const getProductsListAction = (data) => async (dispatch) => {
 // GET ONE PRODUCT BY productId && slug
 
 export const getOneProduct = (data) => async (dispatch) => {
-  console.log('getOneProduct data', data);
+  // console.log('getOneProduct data', data);
   dispatch({
     type: LOADING,
     payload: true,
@@ -52,7 +52,7 @@ export const getOneProduct = (data) => async (dispatch) => {
       type: LOADING,
       payload: false,
     });
-    console.log('res.data getOneProduct', res.data);
+    // console.log('res.data getOneProduct', res.data);
     dispatch({
       type: GET_PRODUCT_OBJECT,
       payload: res.data.data,

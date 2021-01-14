@@ -7,6 +7,7 @@ const {
   create,
   list,
   getOne,
+  update,
   getAll,
   removeOne,
   removeAllByCategoryId,
@@ -19,6 +20,6 @@ router.route('/').post(create).get(getAll); // create one product
 router.route('/:subId').get(list); // get products by subId
 router.route('/category/:categoryId/').delete(removeAllByCategoryId); //delete product by categoryId
 router.route('/sub/:subId/').delete(removeAllBySubId); //delete product by subId
-router.route('/:productId/:slug').get(getOne).delete(removeOne); //get one product by productId && slug//delete product by id && slug
+router.route('/:productId/:slug').get(getOne).delete(removeOne).put(update); //get one product by productId && slug//delete product by id && slug
 
 module.exports = router;

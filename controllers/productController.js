@@ -87,11 +87,17 @@ const removeAllBySubId = asyncCatch(async (req, res, next) => {
   });
 });
 
+// UPDATE PRODUCT
+const update = asyncCatch(async (req, res, next) => {
+  console.log('update product');
+});
+
 module.exports = {
   create,
   list,
   getOne,
   getAll,
+  update,
   removeOne,
   removeAllByCategoryId,
   removeAllBySubId,
