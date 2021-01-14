@@ -4,7 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteOneProduct } from '../../../store/actions/productAction';
 
-export default function ProductListItem({ product, sprite }) {
+export default function ProductListItem({
+  product,
+  sprite,
+  categoryId,
+  category,
+  subId,
+}) {
   //  REDUX
   const dispatch = useDispatch();
 
@@ -24,7 +30,11 @@ export default function ProductListItem({ product, sprite }) {
   return (
     <li className="category__item product__item">
       {/* <a href={`/admin/${c._id}/${c.slug}/sub`} className="category__link"> */}
-      <a href="!#" className="category__link">
+      {/* p._id, p.slug  */}
+      <a
+        href={`/product/${product._id}/${product.slug}/${categoryId}/${category}/${subId}`}
+        className="category__link"
+      >
         {productState.title}
       </a>
 
