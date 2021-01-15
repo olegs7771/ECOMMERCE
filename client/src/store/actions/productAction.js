@@ -160,3 +160,44 @@ export const deleteOneProduct = (data) => async (dispatch) => {
     console.log('error to delete', err.response.data);
   }
 };
+
+// UPDATE PRODUCT
+export const updateProductAction = (data) => async (dispatch) => {
+  console.log('updateProductAction data', data);
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+
+  try {
+    const res = await axios.put(`/api/v1/product/${data._id}/${data.slug}`);
+    console.log('res.data updateProductAction ', res.data);
+    // RELOAD PRODUCTS BY subId
+
+    const list = await axios.get(`/api/v1/product/${data.sub}`);
+    dispatch({
+      type: GET_PRODUCT_LIST,
+      payload: list.data.data,
+    });
+
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+  } catch (err) {
+    console.log('error in update product', err.response.data);
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    dispatch({
+      type: GET_API_ERROR,
+      payload: err.response.data.message,
+    });
+  }
+};

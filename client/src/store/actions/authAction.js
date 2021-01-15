@@ -2,7 +2,8 @@ import axios from 'axios';
 import {
   SET_CURRENT_USER,
   CLEAR_OUT_USER,
-  GET_API_ERROR,
+  // GET_API_ERRORS,
+  GET_API_ERROR_MESSAGE,
   GET_API_MESSAGE,
   LOADING,
 } from './types';
@@ -54,7 +55,7 @@ export const signOauth2Action = (data, history) => async (dispatch) => {
     }
   } catch (err) {
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: err.response.data.message,
     });
     dispatch({
@@ -104,7 +105,7 @@ export const loginOauth2Action = (data, history) => async (dispatch) => {
   } catch (err) {
     console.log('err:', err.response.data);
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: err.response.data,
     });
   }
@@ -136,7 +137,7 @@ export const signupUserAction = (data, history) => async (dispatch) => {
       payload: false,
     });
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: err.response.data.message,
     });
   }
@@ -169,7 +170,7 @@ export const confirmUser = (data) => async (dispatch) => {
       payload: false,
     });
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: err.response.data,
     });
     console.log('error confirm ', err.response.data);
@@ -210,7 +211,7 @@ export const loginUserAction = (data, history) => async (dispatch) => {
   } catch (err) {
     console.log('err:', err.response.data);
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: err.response.data.message,
     });
   }

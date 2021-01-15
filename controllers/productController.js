@@ -89,11 +89,32 @@ const removeAllBySubId = asyncCatch(async (req, res, next) => {
 
 // UPDATE PRODUCT
 const update = asyncCatch(async (req, res, next) => {
-  const update = {};
-  const product = await Product.findOneAndUpdate(
-    { id: req.params.productId },
-    {}
+  console.log('update product req.params', req.params);
+  console.log('update product req.body', req.body);
+  if (Object.keys(req.body).length === 0)
+    return next(new AppErrorHandler('Can not update this product', 400));
+  console.log('update');
+  const update = {
+    title: req.body.title,
+    price: req.body.price,
+    brand: req.body.brand,
+    description: req.body.description,
+    color: req.body.color,
+    shipping: req.body.shipping,
+    quantity: req.body.quantity,
+  };
+  const upProduct = await Product.findOneAndUpdate(
+    { _id: req.params.productId, slug: req.params.slug },
+    update,
+    { new: true }
   );
+
+  if (!upProduct)
+    return next(
+      new AppErrorHandler(`Can not find ${req.body.title} in our data base`)
+    );
+  // console.log('product', product);
+  res.status(200).json({ status: 'success', data: upProduct });
 });
 
 module.exports = {

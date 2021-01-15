@@ -3,7 +3,8 @@ import {
   LOADING_ITEM_CATEGORY,
   LOADING,
   GET_API_MESSAGE,
-  GET_API_ERROR,
+  GET_API_ERRORS,
+  GET_API_ERROR_MESSAGE,
   // CLEAR_API_ERROR,
   GET_SUB_ALL,
 } from './types';
@@ -35,7 +36,7 @@ export const getSubListAction = (data) => async (dispatch) => {
       payload: false,
     });
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: err.response.data.error,
     });
   }
@@ -85,7 +86,7 @@ export const createSubAction = (data) => async (dispatch) => {
     });
 
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: err.response.data.message,
     });
   }
@@ -120,7 +121,7 @@ export const updateSubAction = (data) => async (dispatch) => {
 
     // CLEAR ERRORS
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: null,
     });
   } catch (err) {
@@ -130,7 +131,7 @@ export const updateSubAction = (data) => async (dispatch) => {
     });
     console.log('error to update category', err.response.data);
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: err.response.data.message,
     });
   }

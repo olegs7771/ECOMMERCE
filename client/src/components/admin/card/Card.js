@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   // deleteOneProduct,
   getOneProduct,
+  updateProductAction,
 } from '../../../store/actions/productAction';
 import { drawerToggle } from '../../../store/actions/drawerAction';
 import { Spinner } from '../../../utils/LoadingComponent';
@@ -62,6 +63,12 @@ export default function Card(props) {
   useEffect(() => {
     setValue(product);
   }, [product]);
+
+  // UPDATE PRODUCT
+  const _update = () => {
+    console.log('values', values);
+    dispatch(updateProductAction(values));
+  };
 
   return (
     <div>
@@ -189,7 +196,7 @@ export default function Card(props) {
                       <div>
                         <button
                           className="btn card__container-cta-btn--accept"
-                          onClick={() => setEdit(!edit)}
+                          onClick={_update}
                         >
                           Accept
                         </button>

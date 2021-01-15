@@ -84,11 +84,9 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-//CREATE PRODUCT SLUG
-productSchema.pre('save', function (next) {
-  console.log('product save this', this);
-  this.slug = slugify(this.title, { lowercase: true });
-  next();
+// CHECK FOR INCOMING DOCUMENT ON UPDATE if ANY FIELD IS NULL
+productSchema.pre(/findOneAndUpdate/, function (req, res, next) {
+  console.log('pre update doc incomin', req);
 });
 
 // CUSTOM ERROR HANDLING

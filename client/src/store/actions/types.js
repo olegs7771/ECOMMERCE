@@ -10,7 +10,9 @@ export const DRAWER_OPEN = 'DRAWER_OPEN';
 export const GET_API_MESSAGE = 'GET_API_MESSAGE';
 export const CLEAR_API_MESSAGE = 'CLEAR_API_MESSAGE';
 // API ERRORS
-export const GET_API_ERROR = 'GET_API_ERROR';
+export const GET_API_ERRORS = 'GET_API_ERRORS';
+export const GET_API_ERROR_MESSAGE = 'GET_API_ERROR_MESSAGE';
+
 export const CLEAR_API_ERROR = 'CLEAR_API_ERROR';
 
 // Auth

@@ -3,7 +3,7 @@ import {
   GET_CATEGORIES_LIST,
   LOADING,
   LOADING_ITEM_CATEGORY,
-  GET_API_ERROR,
+  GET_API_ERROR_MESSAGE,
   CLEAR_API_ERROR,
   GET_API_MESSAGE,
   CLEAR_API_MESSAGE,
@@ -62,7 +62,7 @@ export const createCategoryAction = (data) => async (dispatch) => {
       payload: false,
     });
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: err.response.data.message,
     });
   }
@@ -98,7 +98,7 @@ export const updateCategoryAction = (data) => async (dispatch) => {
 
     // CLEAR ERRORS
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: null,
     });
   } catch (err) {
@@ -108,7 +108,7 @@ export const updateCategoryAction = (data) => async (dispatch) => {
     });
     console.log('error to update category', err.response.data);
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: err.response.data.message,
     });
   }
