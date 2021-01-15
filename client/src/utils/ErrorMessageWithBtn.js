@@ -6,7 +6,7 @@ export default function ErrorMessageWithBtn({
 }) {
   return (
     <div className="error">
-      <div className="error--text mb-md">{errorState}</div>
+      <div className="error--text mb-sm">{errorState}</div>
       <button className="btn" onClick={_clearReduxErrorState}>
         ok
       </button>

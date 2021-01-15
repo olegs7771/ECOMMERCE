@@ -14,7 +14,7 @@ const apiErrorReducer = (state = initialState, action) => {
     case GET_API_ERRORS:
       return {
         ...state,
-        error: action.payload,
+        errors: action.payload,
       };
     case GET_API_ERROR_MESSAGE:
       return {

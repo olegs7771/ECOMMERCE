@@ -76,7 +76,7 @@ const signOauth2 = asyncCatch(async (req, res, next) => {
     //PASSWORD WE TAKE USER GOOGLE ID
 
     const newUser = await User.create({
-      name: payload.name,
+      uname: payload.name,
       email: payload.email,
       password: payload.sub,
       passwordConfirm: payload.sub,
@@ -120,7 +120,7 @@ const signup = asyncCatch(async (req, res, next) => {
   console.log('req.body', req.body);
 
   const newUser = await User.create({
-    name: req.body.name,
+    user: req.body.name,
     email: req.body.email,
     password: req.body.password1,
     passwordConfirm: req.body.password2,
@@ -142,6 +142,7 @@ const signup = asyncCatch(async (req, res, next) => {
 
   console.log('url', url);
   // //SEND EMAIL WITH CONFIRMATION LINK
+  console.log('newUser', newUser);
   await new Email(newUser, url).sendWelcome();
 
   const message = `User ${req.body.name} was created. 

@@ -2,7 +2,7 @@ import axios from 'axios';
 import {
   SET_CURRENT_USER,
   CLEAR_OUT_USER,
-  // GET_API_ERRORS,
+  GET_API_ERRORS,
   GET_API_ERROR_MESSAGE,
   GET_API_MESSAGE,
   LOADING,
@@ -137,8 +137,8 @@ export const signupUserAction = (data, history) => async (dispatch) => {
       payload: false,
     });
     dispatch({
-      type: GET_API_ERROR_MESSAGE,
-      payload: err.response.data.message,
+      type: GET_API_ERRORS,
+      payload: err.response.data.error,
     });
   }
 };
@@ -179,10 +179,19 @@ export const confirmUser = (data) => async (dispatch) => {
 
 // LOGIN USER
 export const loginUserAction = (data, history) => async (dispatch) => {
-  console.log('data in action', data);
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+
   try {
     const res = await axios.post('/api/v1/users/login', data);
-    console.log('res.data', res.data);
+
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+
     if (res.data.token) {
       const { token } = res.data;
 
@@ -209,7 +218,11 @@ export const loginUserAction = (data, history) => async (dispatch) => {
       }
     }
   } catch (err) {
-    console.log('err:', err.response.data);
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+
     dispatch({
       type: GET_API_ERROR_MESSAGE,
       payload: err.response.data.message,

@@ -1,14 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { signupUserAction } from '../../store/actions/authAction';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import sprite from '../../img/sprite.svg';
 import GoogleoAUthLogin from './GoogleoAUthLogin';
+import ErrorMessageWithBtn from '../../utils/ErrorMessageWithBtn';
+import { clearErrorReduxState } from '../../store/actions/categoryAction';
+import TextInputForm from '../../utils/TextInputForm';
 
-const Register = (props) => {
+export default function Register(props) {
+  // REDUX
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const errorsRedux = useSelector((state) => state.error.errors);
+  const errorRedux = useSelector((state) => state.error.errorMessage);
+  const loading = useSelector((state) => state.loading.loading);
+
+  const initialState = {
+    user: '',
+    email: '',
+    password1: '',
+    password2: '',
+  };
+
+  const [values, setValue] = useState(initialState);
+
+  const _onChange = (e) => {
+    setValue({ ...values, [e.target.name]: e.target.value });
+    setErrors({});
+  };
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
+  const [errors, setErrors] = useState(null); //errors object
+  const [error, setError] = useState(null); //error message single
+
+  const onChange = (e) => {};
 
   const _submitForm = (e) => {
     e.preventDefault();
@@ -19,7 +47,22 @@ const Register = (props) => {
       password2,
     };
 
-    props.signupUserAction(data, props.history);
+    dispatch(signupUserAction(data, props.history));
+  };
+
+  // GET ERROR TO STATE
+  useEffect(() => {
+    setErrors(errorRedux);
+  }, [errorRedux]);
+
+  // GET ERRORS TO STATE
+  useEffect(() => {
+    setErrors(errorsRedux);
+  }, [errorsRedux]);
+
+  // CLEAR ERROR IN REDUX
+  const _clearErrorRedux = () => {
+    dispatch(clearErrorReduxState());
   };
 
   return (
@@ -41,7 +84,17 @@ const Register = (props) => {
         <div className="register__container">
           <h2 className="register__heading">Register</h2>
           <form onSubmit={_submitForm} className="form">
-            <div className="form-group">
+            <TextInputForm
+              error={errors.user}
+              value={name}
+              _onChange={_onChange}
+              // _checkField={_checkField}
+              label="nmae"
+              type="text"
+              name="name"
+              placeholder="John Brown.."
+            />
+            {/* <div className="form-group">
               <label>
                 <div className="form-label--name">name</div>
                 <input
@@ -53,7 +106,7 @@ const Register = (props) => {
                   required
                 />
               </label>
-            </div>
+            </div> */}
             <div className="form-group">
               <label>
                 <div className="form-label--name">email</div>
@@ -62,7 +115,7 @@ const Register = (props) => {
                   name="email"
                   className="form-input"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={_onChange}
                   required
                 />
               </label>
@@ -75,7 +128,7 @@ const Register = (props) => {
                   name="password1"
                   className="form-input"
                   value={password1}
-                  onChange={(e) => setPassword1(e.target.value)}
+                  onChange={_onChange}
                   required
                 />
               </label>
@@ -88,7 +141,7 @@ const Register = (props) => {
                   name="password2"
                   className="form-input"
                   value={password2}
-                  onChange={(e) => setPassword2(e.target.value)}
+                  onChange={_onChange}
                   required
                 />
               </label>
@@ -107,21 +160,14 @@ const Register = (props) => {
           />
 
           {/* HANDLE ERROR FROM API  */}
-          {props.error ? (
-            <div className="error">
-              <span className="error--text">{props.error}</span>
-            </div>
+          {error ? (
+            <ErrorMessageWithBtn
+              _clearReduxErrorState={_clearErrorRedux}
+              errorState={error}
+            />
           ) : null}
         </div>
       )}
     </div>
   );
-};
-
-const mapStateToProps = (state) => ({
-  error: state.error.error,
-  message: state.message.message,
-  loading: state.loading.loading,
-});
-
-export default connect(mapStateToProps, { signupUserAction })(Register);
+}

@@ -4,17 +4,24 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-  name: {
+  user: {
     type: String,
     require: [true, 'The user must have a name'],
+    minLength: [3, 'Min length 3 chars'],
   },
   email: {
     type: String,
     required: [true, 'The user must have an email'],
     unique: true,
     lowercase: true,
-    validate: [validator.isEmail, 'Email invalid format'],
+    // validate: [validator.isEmail, 'Email invalid format'],
+    validate: {
+      validator: function (value) {
+        return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+      },
+    },
   },
+
   avatar: {
     type: String,
     default: 'default-avatar.png',
@@ -28,7 +35,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Please choose a password'],
-    minlength: 8,
+    minlength: [8, 'Min length 8 chars '],
     select: true,
   },
   passwordConfirm: {
@@ -119,6 +126,23 @@ userSchema.methods.changedPassword = function (tokenTimeStampItp) {
   //by default user not changed his password
   return false;
 };
+
+// MODIFY ERRORS
+
+userSchema.post('save', function (err, doc, next) {
+  console.log('doc', doc);
+  let errors = {};
+  console.log('err.errors', err);
+
+  errors.user = err.errors.user ? err.errors.user.message : '';
+  errors.email = err.errors.email ? err.errors.email.message : '';
+  errors.password = err.errors.password ? err.errors.password.message : '';
+  errors.confirm = err.errors.passwordConfirm
+    ? err.errors.passwordConfirm.message
+    : '';
+  console.log('errors', errors);
+  next(errors);
+});
 
 const User = mongoose.model('User', userSchema);
 

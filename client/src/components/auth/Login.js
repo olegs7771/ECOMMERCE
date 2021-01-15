@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { loginUserAction } from '../../store/actions/authAction';
 import GoogleoAUthLogin from './GoogleoAUthLogin';
+import ErrorMessageWithBtn from '../../utils/ErrorMessageWithBtn';
+import { clearErrorReduxState } from '../../store/actions/categoryAction';
+export default function Login(props) {
+  // REDUX
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const errorRedux = useSelector((state) => state.error.errorMessage);
+  const loading = useSelector((state) => state.loading.loading);
 
-const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
   const _submitLogin = (e) => {
     e.preventDefault();
@@ -13,7 +21,17 @@ const Login = (props) => {
       email,
       password,
     };
-    props.loginUserAction(data, props.history);
+    dispatch(loginUserAction(data, props.history));
+  };
+
+  // GET ERROR TO STATE
+  useEffect(() => {
+    setError(errorRedux);
+  }, [errorRedux]);
+
+  // CLEAR ERROR IN REDUX
+  const _clearErrorRedux = () => {
+    dispatch(clearErrorReduxState());
   };
 
   return (
@@ -48,7 +66,11 @@ const Login = (props) => {
             </label>
           </div>
 
-          <input type="submit" value="submit" className="btn btn-auth" />
+          <input
+            type="submit"
+            value={loading ? 'wait..' : 'submit'}
+            className="btn btn-auth"
+          />
         </form>
         <GoogleoAUthLogin
           text="Login with Google"
@@ -56,19 +78,13 @@ const Login = (props) => {
           login={true}
         />
         {/* HANDLE ERROR FROM API  */}
-        {props.error ? (
-          <div className="error">
-            <span className="error--text">{props.error.message}</span>
-          </div>
+        {error ? (
+          <ErrorMessageWithBtn
+            _clearReduxErrorState={_clearErrorRedux}
+            errorState={error}
+          />
         ) : null}
       </div>
     </div>
   );
-};
-
-const setStateToProps = (state) => ({
-  auth: state.auth,
-  error: state.error.error,
-});
-
-export default connect(setStateToProps, { loginUserAction })(Login);
+}
