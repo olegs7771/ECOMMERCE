@@ -5,7 +5,8 @@ import {
   LOADING,
   LOADING_FORM_PRODUCT,
   GET_PRODUCT_OBJECT,
-  GET_API_ERROR,
+  GET_API_ERRORS,
+  GET_API_ERROR_MESSAGE,
   GET_API_MESSAGE,
 } from './types';
 
@@ -79,7 +80,7 @@ export const getProductsAllAction = () => async (dispatch) => {
   } catch (err) {
     console.log('error to get categories list', err);
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: err.response.data.message,
     });
   }
@@ -120,12 +121,12 @@ export const createProductAction = (data) => async (dispatch) => {
     console.log('error createProductAction', err.response.data);
     if (err.response.data.message) {
       dispatch({
-        type: GET_API_ERROR,
+        type: GET_API_ERROR_MESSAGE,
         payload: err.response.data.message,
       });
     }
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERRORS,
       payload: err.response.data.error,
     });
   }
@@ -196,7 +197,7 @@ export const updateProductAction = (data) => async (dispatch) => {
       payload: false,
     });
     dispatch({
-      type: GET_API_ERROR,
+      type: GET_API_ERROR_MESSAGE,
       payload: err.response.data.message,
     });
   }

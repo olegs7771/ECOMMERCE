@@ -17,7 +17,7 @@ import Form from '../../../utils/AddForm';
 import CategoryItem from './CategoryItem';
 import Filter from '../../../utils/FilterForm';
 
-// import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
+import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -28,7 +28,7 @@ export default function Category(props) {
   const subList = useSelector((state) => state.sub.subs); //get list Redux
   const auth = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.loading.loading);
-  const errorRedux = useSelector((state) => state.error.error);
+  const errorRedux = useSelector((state) => state.error.errorMessage);
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   // STATE
   const [categories, setCategories] = useState([]);
@@ -115,12 +115,11 @@ export default function Category(props) {
               <div className="category__list-box">
                 {loading ? (
                   <Spinner loading={props.loading} />
-                ) : false ? (
-                  // <ErrorMessageWithBtn
-                  //   errorState={error}
-                  //   _clearReduxErrorState={_clearReduxErrorState}
-                  // />
-                  <div>test</div>
+                ) : error ? (
+                  <ErrorMessageWithBtn
+                    errorState={error}
+                    _clearReduxErrorState={_clearReduxErrorState}
+                  />
                 ) : (
                   <ul className="category__list">
                     {categories.length === 0 ? (

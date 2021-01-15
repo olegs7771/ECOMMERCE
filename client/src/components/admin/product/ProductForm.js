@@ -10,7 +10,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
   const loadingFormProduct = useSelector(
     (state) => state.loading.loadingFormProduct
   );
-  const errorRedux = useSelector((state) => state.error.error);
+  const errorRedux = useSelector((state) => state.error.errors);
   const message = useSelector((state) => state.message.message);
 
   const initialState = {

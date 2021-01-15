@@ -28,14 +28,14 @@ export default function Product(props) {
   const auth = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.loading.loading);
 
-  const error = useSelector((state) => state.error.error);
+  const errorRedux = useSelector((state) => state.error.errorMessage);
   // const message = useSelector((state) => state.message.message);
   // STATE
   // const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [keyword, setKeyword] = useState('');
   // const [messageState, setMessageState] = useState(null);
-  const [errorState, setErrorState] = useState(null);
+  const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showTiles, setShowTiles] = useState(false);
 
@@ -56,8 +56,8 @@ export default function Product(props) {
 
   //SET STATE ERROR IN COMPONENT
   useEffect(() => {
-    setErrorState(error);
-  }, [error]);
+    setError(errorRedux);
+  }, [errorRedux]);
   //SET STATE MESSAGE IN COMPONENT
   // useEffect(() => {
   //   setMessageState(message);
@@ -66,7 +66,7 @@ export default function Product(props) {
   //CLEAR ERROR IN REDUX STATE
   const _clearReduxErrorState = (e) => {
     e.preventDefault();
-    setErrorState(null);
+    setError(null);
     dispatch(clearErrorReduxState());
   };
 
@@ -178,12 +178,11 @@ export default function Product(props) {
                       ) : (
                         <div>
                           {/* SHOW MESSAGE ON DELETE  */}
-                          {false ? (
-                            // <ErrorMessageWithBtn
-                            //   errorState={errorState}
-                            //   _clearReduxErrorState={_clearReduxErrorState}
-                            // />
-                            <div>error</div>
+                          {error ? (
+                            <ErrorMessageWithBtn
+                              errorState={error}
+                              _clearReduxErrorState={_clearReduxErrorState}
+                            />
                           ) : (
                             <div>
                               {showTiles ? (

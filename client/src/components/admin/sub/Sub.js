@@ -31,7 +31,7 @@ export default function Sub(props) {
   const products = useSelector((state) => state.product.products);
   const drawerRedux = useSelector((state) => state.drawer.drawer);
 
-  const errorRedux = useSelector((state) => state.error.error);
+  const errorRedux = useSelector((state) => state.error.errorMessage);
   //  STATE
   const [subList, setSublist] = useState([]);
   const [keyword, setKeyword] = useState('');
@@ -98,7 +98,7 @@ export default function Sub(props) {
   };
 
   const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
-  console.log('error', error.sub);
+  // console.log('error', error.sub);
   // &nbsp; &rsaquo;
   return (
     <div>
@@ -141,7 +141,7 @@ export default function Sub(props) {
               <div className="category__list-box">
                 {loading ? (
                   <Spinner loading={props.loading} />
-                ) : error.sub ? (
+                ) : error ? (
                   <ErrorMessageWithBtn
                     errorState={error.sub}
                     _clearReduxErrorState={_clearReduxErrorState}
