@@ -10,6 +10,28 @@ import {
 import jwt_decoded from 'jwt-decode';
 import setAuthToken from '../../utils/setAuthToken';
 
+//CHECK IF EMAIL EXISTS ON MOUSE LEAVE
+export const checkEmailExists = (data) => async (dispatch) => {
+  console.log('checkEmailExists data', data);
+
+  try {
+    const res = await axios.post('/api/v1/users', data);
+    console.log('res.data checkEmailExists', res.data);
+    // CLEAR ERRORS
+    dispatch({
+      type: GET_API_ERRORS,
+      payload: {},
+    });
+  } catch (err) {
+    console.log('error checkEmailExists ', err.response.data);
+
+    dispatch({
+      type: GET_API_ERRORS,
+      payload: { email: err.response.data.message },
+    });
+  }
+};
+
 // SIGN NEW USER WITH OAUTH2 GOOGLE
 export const signOauth2Action = (data, history) => async (dispatch) => {
   //data={tokenId: response.tokenId}

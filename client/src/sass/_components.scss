@@ -84,6 +84,7 @@
 
   &-group {
     margin-bottom: 1rem;
+    height: 9.2rem;
     &__radio {
       border: 1px solid $color-grey-dark;
       border-radius: 3px;
@@ -110,22 +111,22 @@
     border: 1px solid #ccc;
     border-radius: 0.4rem;
     outline: none;
-    border-bottom: 3px solid transparent;
-    &:focus {
-      border-bottom: 3px solid $color-valid;
-    }
-    &:focus:invalid {
-      border-bottom: 3px solid $color-red;
-    }
+    // border-bottom: 3px solid transparent;
+    // &:focus {
+    //   border-bottom: 3px solid $color-valid;
+    // }
+    // &:focus:invalid {
+    //   border-bottom: 3px solid $color-red;
+    // }
 
     &__error {
       margin-top: -0.5rem;
-      background-color: #fff;
+      // background-color: #fff;
       border-radius: 3px;
 
       &--text {
         color: $color-red;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
       }
     }
     &--invalid {

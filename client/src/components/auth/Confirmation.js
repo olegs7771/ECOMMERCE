@@ -1,24 +1,51 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { confirmUser } from '../../store/actions/authAction';
-
-const Confirmation = (props) => {
+import ErrorMessageWithBtn from '../../utils/ErrorMessageWithBtn';
+import { clearErrorReduxState } from '../../store/actions/categoryAction';
+export default function Confirmation(props) {
   //  RECEIVING PARAMS
 
-  useEffect((props) => {
-    const id = props.match.params.id;
-    const token = props.match.params.token;
-    const data = { id, token };
-    const confirm = () => {
-      return props.confirmUser(data);
-    };
-    confirm();
-  }, []);
+  // REDUX
+  const dispatch = useDispatch();
+
+  const errorRedux = useSelector((state) => state.error.errorMessage);
+  const messageRedux = useSelector((state) => state.message.message);
+  const loading = useSelector((state) => state.loading.loading);
+  // STATE
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
+
+  // SEND TO API TO COMPLETE REGISTRATION
+
+  useEffect(() => {
+    dispatch(
+      confirmUser({
+        id: props.match.params.id,
+        token: props.match.params.token,
+      })
+    );
+  }, [dispatch, props.match.params.id, props.match.params.token]);
+
+  // GET ERROR MESSAGE TO STATE
+  useEffect(() => {
+    setError(errorRedux);
+  }, [errorRedux]);
+
+  // GET  MESSAGE TO STATE
+  useEffect(() => {
+    setMessage(messageRedux);
+  }, [messageRedux]);
+
+  const _clearError = () => {
+    dispatch(clearErrorReduxState());
+    props.history.push('/');
+  };
 
   return (
     <div className="confirmation">
       <div className="confirmation__heading-container">
-        {props.loading ? (
+        {loading ? (
           <div className="confirmation__heading confirmation__heading--loading">
             <p className="confirmation__heading-text">Processing.. </p>
             <div className="confirmation__heading--animation-line"></div>
@@ -31,27 +58,23 @@ const Confirmation = (props) => {
         )}
       </div>
       {/* HANDLE MESSAGE FROM API  */}
-      {props.message ? (
+      {message ? (
         <div className="confirmation__message">
           <div className="message">
-            <p className="message--text">{props.message}</p>
+            <p className="message--text">{message}</p>
           </div>
+          <button className="btn" onClick={() => props.history.push('/')}>
+            ok
+          </button>
         </div>
       ) : null}
       {/* HANDLE ERROR FROM API  */}
-      {props.error ? (
-        <div className="error">
-          <span className="error--text">{props.error.message}</span>
-        </div>
+      {error ? (
+        <ErrorMessageWithBtn
+          errorState={error.message}
+          _clearReduxErrorState={_clearError}
+        />
       ) : null}
     </div>
   );
-};
-
-const mapStateToProps = (state) => ({
-  loading: state.loading.loading,
-  message: state.message.message,
-  error: state.error.error,
-});
-
-export default connect(mapStateToProps, { confirmUser })(Confirmation);
+}

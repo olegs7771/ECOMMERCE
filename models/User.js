@@ -1,25 +1,26 @@
 const crypto = require('crypto');
 const mongoose = require('mongoose');
-const validator = require('validator');
+
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   user: {
     type: String,
-    require: [true, 'The user must have a name'],
+    required: [true, 'User name required'],
     minLength: [3, 'Min length 3 chars'],
   },
   email: {
     type: String,
-    required: [true, 'The user must have an email'],
     unique: true,
     lowercase: true,
-    // validate: [validator.isEmail, 'Email invalid format'],
+
     validate: {
       validator: function (value) {
         return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
       },
+      message: (props) => `${props.value} wrong format`,
     },
+    required: [true, 'The user must have an email'],
   },
 
   avatar: {
@@ -127,21 +128,39 @@ userSchema.methods.changedPassword = function (tokenTimeStampItp) {
   return false;
 };
 
-// MODIFY ERRORS
+// MODIFY ERRORS VALIDATION
 
 userSchema.post('save', function (err, doc, next) {
-  console.log('doc', doc);
-  let errors = {};
-  console.log('err.errors', err);
+  if (err.errors) {
+    console.log('doc', doc);
+    let errors = {};
+    console.log('err.errors', err.errors);
 
-  errors.user = err.errors.user ? err.errors.user.message : '';
-  errors.email = err.errors.email ? err.errors.email.message : '';
-  errors.password = err.errors.password ? err.errors.password.message : '';
-  errors.confirm = err.errors.passwordConfirm
-    ? err.errors.passwordConfirm.message
-    : '';
-  console.log('errors', errors);
-  next(errors);
+    errors.user = err.errors.user ? err.errors.user.message : '';
+    errors.email = err.errors.email ? err.errors.email.message : '';
+    errors.password = err.errors.password ? err.errors.password.message : '';
+    errors.confirm = err.errors.passwordConfirm
+      ? err.errors.passwordConfirm.message
+      : '';
+    console.log('errors', errors);
+    next(errors);
+  } else {
+    next();
+  }
+});
+
+// MODIFY MONGO ERRORS on dublicate email  MongoError 110000
+userSchema.post('save', function (err, doc, next) {
+  console.log('err in model');
+  let errors = {};
+  console.log('err,name', err.name);
+  console.log('err,code', err.code);
+  if (err.name === 'MongoError' && err.code === 11000) {
+    errors.email = `Email ${doc.email} already exists`;
+    next(errors);
+  } else {
+    next(err);
+  }
 });
 
 const User = mongoose.model('User', userSchema);

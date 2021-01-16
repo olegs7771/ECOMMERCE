@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const {
+  checkUserEmailExists,
   signup,
   signOauth2,
   loginOauth2,
@@ -16,6 +17,7 @@ const {
   deleteUser,
 } = require('../controllers/userController');
 
+router.route('/').post(checkUserEmailExists);
 router.route('/signup').post(signup);
 router.route('/signupOauth2').post(signOauth2);
 router.route('/loginOauth2').post(loginOauth2);

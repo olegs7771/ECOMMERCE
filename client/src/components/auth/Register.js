@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { signupUserAction } from '../../store/actions/authAction';
+import {
+  signupUserAction,
+  checkEmailExists,
+} from '../../store/actions/authAction';
 import { useSelector, useDispatch } from 'react-redux';
 // import sprite from '../../img/sprite.svg';
 import GoogleoAUthLogin from './GoogleoAUthLogin';
-import ErrorMessageWithBtn from '../../utils/ErrorMessageWithBtn';
+
 import { clearErrorReduxState } from '../../store/actions/categoryAction';
 import TextInputForm from '../../utils/TextInputForm';
 
@@ -12,7 +15,8 @@ export default function Register(props) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const errorsRedux = useSelector((state) => state.error.errors);
-  const errorRedux = useSelector((state) => state.error.errorMessage);
+  const messageRedux = useSelector((state) => state.message.message);
+
   const loading = useSelector((state) => state.loading.loading);
 
   const initialState = {
@@ -23,42 +27,42 @@ export default function Register(props) {
   };
 
   const [values, setValue] = useState(initialState);
+  const [message, setMessage] = useState(null);
+  const [errors, setErrors] = useState({}); //errors object
 
   const _onChange = (e) => {
+    //CHECK IF EMAIL EXISTS ONFLY
+
+    if (e.target.name === 'email') {
+      if (e.target.value.length > 8) {
+        const data = {
+          email: e.target.value,
+        };
+        dispatch(checkEmailExists(data));
+      }
+    }
+
     setValue({ ...values, [e.target.name]: e.target.value });
-    setErrors({});
+    if (!errors.email) {
+      _clearErrorRedux();
+    }
   };
-
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password1, setPassword1] = useState('');
-  const [password2, setPassword2] = useState('');
-  const [errors, setErrors] = useState(null); //errors object
-  const [error, setError] = useState(null); //error message single
-
-  const onChange = (e) => {};
 
   const _submitForm = (e) => {
     e.preventDefault();
-    const data = {
-      name,
-      email,
-      password1,
-      password2,
-    };
 
-    dispatch(signupUserAction(data, props.history));
+    dispatch(signupUserAction(values, props.history));
   };
-
-  // GET ERROR TO STATE
-  useEffect(() => {
-    setErrors(errorRedux);
-  }, [errorRedux]);
 
   // GET ERRORS TO STATE
   useEffect(() => {
     setErrors(errorsRedux);
   }, [errorsRedux]);
+
+  // GET MESSAGE TO STATE
+  useEffect(() => {
+    setMessage(messageRedux);
+  }, [messageRedux]);
 
   // CLEAR ERROR IN REDUX
   const _clearErrorRedux = () => {
@@ -68,10 +72,10 @@ export default function Register(props) {
   return (
     <div className="register">
       {/* API MESSAGE ON SUCCESS SIGN UP  */}
-      {props.message ? (
+      {message ? (
         <div className="register__message">
           <div className=" message">
-            <span className="message--text">{props.message}</span>
+            <span className="message--text">{message}</span>
           </div>
           <button
             className="btn register__btn"
@@ -82,70 +86,43 @@ export default function Register(props) {
         </div>
       ) : (
         <div className="register__container">
-          <h2 className="register__heading">Register</h2>
+          <h2 className="register__heading ">Register</h2>
           <form onSubmit={_submitForm} className="form">
             <TextInputForm
               error={errors.user}
-              value={name}
+              value={values.user}
               _onChange={_onChange}
-              // _checkField={_checkField}
-              label="nmae"
+              label="name"
               type="text"
-              name="name"
+              name="user"
               placeholder="John Brown.."
             />
-            {/* <div className="form-group">
-              <label>
-                <div className="form-label--name">name</div>
-                <input
-                  type="text"
-                  name="name"
-                  className="form-input"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </label>
-            </div> */}
-            <div className="form-group">
-              <label>
-                <div className="form-label--name">email</div>
-                <input
-                  type="email"
-                  name="email"
-                  className="form-input"
-                  value={email}
-                  onChange={_onChange}
-                  required
-                />
-              </label>
-            </div>
-            <div className="form-group">
-              <label>
-                <div className="form-label--name">password</div>
-                <input
-                  type="password"
-                  name="password1"
-                  className="form-input"
-                  value={password1}
-                  onChange={_onChange}
-                  required
-                />
-              </label>
-            </div>
-            <div className="form-group">
-              <label>
-                <div className="form-label--name">confirm</div>
-                <input
-                  type="password"
-                  name="password2"
-                  className="form-input"
-                  value={password2}
-                  onChange={_onChange}
-                  required
-                />
-              </label>
-            </div>
+            <TextInputForm
+              error={errors.email}
+              value={values.email}
+              _onChange={_onChange}
+              label="name"
+              type="email"
+              name="email"
+              placeholder="example@mail.com"
+            />
+            <TextInputForm
+              error={errors.password}
+              value={values.password1}
+              _onChange={_onChange}
+              label="password"
+              type="password"
+              name="password1"
+            />
+            <TextInputForm
+              error={errors.confirm}
+              value={values.password2}
+              _onChange={_onChange}
+              label="password"
+              type="password"
+              name="password2"
+            />
+
             <input
               type="submit"
               value={props.loading ? 'Proccessing..' : 'submit'}
@@ -158,14 +135,6 @@ export default function Register(props) {
             text="Sign up with Google"
             signup={true}
           />
-
-          {/* HANDLE ERROR FROM API  */}
-          {error ? (
-            <ErrorMessageWithBtn
-              _clearReduxErrorState={_clearErrorRedux}
-              errorState={error}
-            />
-          ) : null}
         </div>
       )}
     </div>

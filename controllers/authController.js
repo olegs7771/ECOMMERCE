@@ -17,7 +17,7 @@ const createSendToken = (user, statusCode, message, req, res) => {
   // CREATE PAYLOAD FOR TOKEN
   const payload = {
     id: user._id,
-    name: user.name,
+    name: user.user,
     email: user.email,
     role: user.role,
     avatar: user.avatar,
@@ -43,7 +43,19 @@ const createSendToken = (user, statusCode, message, req, res) => {
     .json({ status: 'success', message, token, data: user });
 };
 
-//CONTROLLERS
+//CONTROLLERS 🏁
+
+// CHECK IF EMAIL  EXISTS FOR MOUSE LEAVE
+const checkUserEmailExists = asyncCatch(async (req, res, next) => {
+  console.log('req.body in check', req.body);
+  const user = await User.findOne({ email: req.body.email });
+  if (user)
+    return next(new AppErrorHandler(`Email ${user.email} already in use`));
+  res.status(200).json({ status: 'success' });
+});
+
+/////////////////////////////////////////////////////
+// SINGN WITH GOOGLE
 
 const signOauth2 = asyncCatch(async (req, res, next) => {
   // CHECK FOR INCOMING BODY req.body.tokeId
@@ -61,7 +73,7 @@ const signOauth2 = asyncCatch(async (req, res, next) => {
     if (!user.active) {
       user.active = true;
       user.save({ validateBeforeSave: false });
-      return createSendToken(user, 200, `Welcome back ${user.name}`, req, res);
+      return createSendToken(user, 200, `Welcome back ${user.user}`, req, res);
     }
     // // IF USER ALREDY IN DB ===> ERROR TO CLIENT
     if (user.active)
@@ -120,7 +132,7 @@ const signup = asyncCatch(async (req, res, next) => {
   console.log('req.body', req.body);
 
   const newUser = await User.create({
-    user: req.body.name,
+    user: req.body.user,
     email: req.body.email,
     password: req.body.password1,
     passwordConfirm: req.body.password2,
@@ -145,7 +157,7 @@ const signup = asyncCatch(async (req, res, next) => {
   console.log('newUser', newUser);
   await new Email(newUser, url).sendWelcome();
 
-  const message = `User ${req.body.name} was created. 
+  const message = `User ${req.body.user} was created. 
   Pleace check your email ${req.body.email} `;
   res.status(200).json({ status: 'success', message });
 });
@@ -300,6 +312,7 @@ const clearCookies = asyncCatch(async (req, res, next) => {
 });
 
 module.exports = {
+  checkUserEmailExists,
   signup,
   signOauth2,
   loginOauth2,

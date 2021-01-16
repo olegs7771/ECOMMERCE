@@ -2,14 +2,16 @@
   background-color: $color-grey;
   padding: 4rem 0;
   height: 100vh;
-  color: $color-grey;
+  color: $color-black;
   &__container {
     width: 50%;
     margin: 0 auto;
     text-align: center;
     padding: 2rem 0;
-    background-color: $color-blue-light;
+    background-color: #fff;
     border-radius: 3px;
+    border: 1px solid #eee;
+    box-shadow: $box-shadow-small;
   }
 
   &__heading {
