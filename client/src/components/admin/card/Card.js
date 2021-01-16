@@ -39,10 +39,16 @@ export default function Card(props) {
       colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
       brands: ['Apple', 'Samsung', 'Silver', 'Microsoft', 'Lenovo', 'ASUS'],
     };
+    // if (product.updatedAt > product.createdAt) {
+    //   setShowUpdateDate(true);
+    // }
   }
+
+  // STATE
   const [values, setValue] = useState(initialState);
   const [edit, setEdit] = useState(false);
   const [errors, setErrors] = useState({});
+  // SHOW UPDATE DATE
 
   const _onChange = (e) => {
     setValue({ ...values, [e.target.name]: e.target.value });
@@ -136,7 +142,7 @@ export default function Card(props) {
                         <div className="card__container__detail-header--price-edit">
                           <input
                             type="text"
-                            name="title"
+                            name="price"
                             className=" card__input"
                             value={values.price}
                             onChange={_onChange}
@@ -160,7 +166,25 @@ export default function Card(props) {
                         Brand
                       </span>
                       <span className="card__container__detail-body--item-text">
-                        {product.brand}
+                        {edit ? (
+                          <div className="card__container__detail-body--item-text-edit-form">
+                            <input
+                              type="text"
+                              name="brand"
+                              className=" card__input"
+                              value={values.brand}
+                              onChange={_onChange}
+                              required
+                            />
+                            <svg className=" icon card__icon">
+                              <use href={sprite + '#icon-pencil'} />
+                            </svg>
+                          </div>
+                        ) : (
+                          <div className="card__container__detail-body--item-text-edit-text">
+                            {product.brand}
+                          </div>
+                        )}
                       </span>
                     </div>
                     <div className="card__container__detail-body--item">
@@ -168,7 +192,24 @@ export default function Card(props) {
                         Description
                       </span>
                       <span className="card__container__detail-body--item-text">
-                        {product.description}
+                        {edit ? (
+                          <div className="card__container__detail-body--item-text-edit">
+                            <textarea
+                              type="text"
+                              name="description"
+                              className=" "
+                              value={values.description}
+                              onChange={_onChange}
+                              rows="10"
+                              cols="40"
+                              required
+                            />
+                          </div>
+                        ) : (
+                          <div className="card__container__detail-body--item-text-edit-text">
+                            {product.description}
+                          </div>
+                        )}
                       </span>
                     </div>
                     <div className="card__container__detail-body--item">
@@ -176,7 +217,25 @@ export default function Card(props) {
                         Quantity
                       </span>
                       <span className="card__container__detail-body--item-text">
-                        {product.quantity}
+                        {edit ? (
+                          <div className="card__container__detail-body--item-text-edit-form">
+                            <input
+                              type="text"
+                              name="quantity"
+                              className=" card__input"
+                              value={values.quantity}
+                              onChange={_onChange}
+                              required
+                            />
+                            <svg className=" icon card__icon">
+                              <use href={sprite + '#icon-pencil'} />
+                            </svg>
+                          </div>
+                        ) : (
+                          <div className="card__container__detail-body--item-text-edit-text">
+                            {product.quantity}
+                          </div>
+                        )}
                       </span>
                     </div>
 
@@ -185,7 +244,37 @@ export default function Card(props) {
                         Shipping
                       </span>
                       <span className="card__container__detail-body--item-text">
-                        {product.shipping}
+                        {edit ? (
+                          <div className="card__container__detail-body--item-text-edit-form">
+                            <label className=" form-group__radio-label">
+                              <input
+                                type="radio"
+                                value="Yes"
+                                name="shipping"
+                                checked={values.shipping === 'Yes'}
+                                onChange={_onChange}
+                                required
+                              />
+                              <span className="form-label--name">Yes</span>
+                            </label>
+                            <label className=" form-group__radio-label">
+                              <input
+                                type="radio"
+                                value="No"
+                                name="shipping"
+                                checked={values.shipping === 'No'}
+                                onChange={_onChange}
+                                required
+                              />
+
+                              <span className="form-label--name">No</span>
+                            </label>
+                          </div>
+                        ) : (
+                          <div className="card__container__detail-body--item-text-edit-text">
+                            {product.shipping}
+                          </div>
+                        )}
                       </span>
                     </div>
                     <div className="card__container__detail-body--item">
@@ -193,7 +282,29 @@ export default function Card(props) {
                         Color
                       </span>
                       <span className="card__container__detail-body--item-text">
-                        {product.color}
+                        {edit ? (
+                          <div className="card__container__detail-header--title-edit">
+                            <select
+                              name="color"
+                              value={values.color}
+                              onChange={_onChange}
+                              className="form-input  "
+                              required
+                            >
+                              <option>Select Color</option>
+                              {initialState.colors.map((color) => (
+                                <option value={color} key={color}>
+                                  {color}
+                                </option>
+                              ))}
+                            </select>
+                            <svg className="  card__icon icon">
+                              <use href={sprite + '#icon-pencil'} />
+                            </svg>
+                          </div>
+                        ) : (
+                          <div>{product.color}</div>
+                        )}
                       </span>
                     </div>
                     <div className="card__container__detail-body--item">
@@ -204,6 +315,16 @@ export default function Card(props) {
                         {new Date(product.createdAt).toDateString()}
                       </span>
                     </div>
+                    {product.updatedAt > product.createdAt ? (
+                      <div className="card__container__detail-body--item">
+                        <span className="card__container__detail-body--item-title">
+                          Updated
+                        </span>
+                        <span className="card__container__detail-body--item-text">
+                          {new Date(product.updatedAt).toDateString()}
+                        </span>
+                      </div>
+                    ) : null}
                   </div>
 
                   <div className="card__container-cta">
