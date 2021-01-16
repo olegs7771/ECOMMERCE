@@ -28,18 +28,29 @@
         display: flex;
         flex-direction: column;
 
+        // TITLE
         &--title {
-          display: inline-block;
           height: 5.9rem;
 
           &-text {
             height: 6rem;
             padding: 1.2rem 2rem;
             border: 1px solid transparent;
+            transform: translateX(-1rem);
           }
           &-edit {
             display: flex;
             align-items: center;
+          }
+        }
+
+        // PRICE
+        &--price {
+          &-edit {
+          }
+          &-text {
+            height: 3.4rem;
+            transform: translateX(-1rem);
           }
         }
       }

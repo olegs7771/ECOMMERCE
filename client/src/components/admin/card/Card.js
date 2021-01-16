@@ -129,8 +129,8 @@ export default function Card(props) {
                         </div>
                       )}
                     </div>
-                    {/* PRICE  */}
 
+                    {/* PRICE  */}
                     <div className="card__container__detail-header--price">
                       {edit ? (
                         <div className="card__container__detail-header--price-edit">
