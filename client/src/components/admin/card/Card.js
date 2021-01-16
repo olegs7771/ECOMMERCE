@@ -25,15 +25,14 @@ export default function Card(props) {
   if (product) {
     initialState = {
       title: product.title,
-      // description,
-      // brand,
-      // price,
-      // color,
-      // category,
-      // shipping,
-      // quantity,
-      // sub,
-      // createdAt,
+      price: product.price,
+      brand: product.brand,
+      description: product.description,
+      quantity: product.quantity,
+      shipping: product.shipping,
+      color: product.color,
+      createdAt: product.createdAt,
+      updatedAt: product.updatedAt,
       subs: [],
       categories: [],
       images: [],
@@ -120,10 +119,7 @@ export default function Card(props) {
                             onChange={_onChange}
                             required
                           />
-                          <svg
-                            className=" icon card__icon"
-                            // onClick={_editToggle}
-                          >
+                          <svg className=" icon card__icon">
                             <use href={sprite + '#icon-pencil'} />
                           </svg>
                         </div>
@@ -137,24 +133,21 @@ export default function Card(props) {
 
                     <div className="card__container__detail-header--price">
                       {edit ? (
-                        <div className="card__container__detail-header--title-edit">
+                        <div className="card__container__detail-header--price-edit">
                           <input
                             type="text"
                             name="title"
-                            className="form-input card__input"
+                            className=" card__input"
                             value={values.price}
                             onChange={_onChange}
                             required
                           />
-                          <svg
-                            className=" icon card__icon"
-                            // onClick={_editToggle}
-                          >
+                          <svg className=" icon card__icon">
                             <use href={sprite + '#icon-pencil'} />
                           </svg>
                         </div>
                       ) : (
-                        <div className="card__container__detail-header--title-text">
+                        <div className="card__container__detail-header--price-text">
                           ${product.price}
                         </div>
                       )}
