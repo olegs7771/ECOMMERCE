@@ -7,7 +7,7 @@ import { clearErrorReduxState } from '../../store/actions/categoryAction';
 export default function Login(props) {
   // REDUX
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+
   const errorRedux = useSelector((state) => state.error.errorMessage);
   const loading = useSelector((state) => state.loading.loading);
 

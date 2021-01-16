@@ -171,7 +171,10 @@ export const updateProductAction = (data) => async (dispatch) => {
   });
 
   try {
-    const res = await axios.put(`/api/v1/product/${data._id}/${data.slug}`);
+    const res = await axios.put(
+      `/api/v1/product/${data._id}/${data.slug}`,
+      data
+    );
     console.log('res.data updateProductAction ', res.data);
     // RELOAD PRODUCTS BY subId
 

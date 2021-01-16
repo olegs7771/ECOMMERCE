@@ -13,7 +13,7 @@ import TextInputForm from '../../utils/TextInputForm';
 export default function Register(props) {
   // REDUX
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+
   const errorsRedux = useSelector((state) => state.error.errors);
   const messageRedux = useSelector((state) => state.message.message);
 
@@ -125,7 +125,7 @@ export default function Register(props) {
 
             <input
               type="submit"
-              value={props.loading ? 'Proccessing..' : 'submit'}
+              value={loading ? 'Proccessing..' : 'submit'}
               className="btn"
             />
           </form>

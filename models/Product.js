@@ -84,11 +84,6 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// CHECK FOR INCOMING DOCUMENT ON UPDATE if ANY FIELD IS NULL
-productSchema.pre(/findOneAndUpdate/, function (req, res, next) {
-  console.log('pre update doc incomin', req);
-});
-
 // CUSTOM ERROR HANDLING
 
 productSchema.post('save', function (err, doc, next) {

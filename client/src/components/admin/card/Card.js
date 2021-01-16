@@ -134,8 +134,30 @@ export default function Card(props) {
                       )}
                     </div>
                     {/* PRICE  */}
+
                     <div className="card__container__detail-header--price">
-                      ${product.price}
+                      {edit ? (
+                        <div className="card__container__detail-header--title-edit">
+                          <input
+                            type="text"
+                            name="title"
+                            className="form-input card__input"
+                            value={values.price}
+                            onChange={_onChange}
+                            required
+                          />
+                          <svg
+                            className=" icon card__icon"
+                            // onClick={_editToggle}
+                          >
+                            <use href={sprite + '#icon-pencil'} />
+                          </svg>
+                        </div>
+                      ) : (
+                        <div className="card__container__detail-header--title-text">
+                          ${product.price}
+                        </div>
+                      )}
                     </div>
                   </div>
                   {/* BODY  */}
