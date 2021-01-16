@@ -107,6 +107,11 @@
     font-family: $font-primary;
     margin: 0;
     border: 1px solid $color-grey-dark;
+
+    &--invalid {
+      border: 1px solid $color-red;
+      color: $color-red;
+    }
   }
   &__icon {
     transform: translateX(-4rem);

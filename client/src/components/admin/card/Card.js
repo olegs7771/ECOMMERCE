@@ -39,9 +39,6 @@ export default function Card(props) {
       colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
       brands: ['Apple', 'Samsung', 'Silver', 'Microsoft', 'Lenovo', 'ASUS'],
     };
-    // if (product.updatedAt > product.createdAt) {
-    //   setShowUpdateDate(true);
-    // }
   }
 
   // STATE
@@ -71,8 +68,15 @@ export default function Card(props) {
 
   // UPDATE PRODUCT
   const _update = () => {
-    console.log('values', values);
-    dispatch(updateProductAction(values));
+    let errors = {};
+    // CHECK FOR EMPTY FEILDS
+    if (values.title.length === 0) {
+      errors.title = 'Product Name';
+    }
+    setErrors(errors);
+    if (Object.keys(errors).length === 0) {
+      dispatch(updateProductAction(values));
+    }
   };
 
   return (
@@ -120,8 +124,12 @@ export default function Card(props) {
                           <input
                             type="text"
                             name="title"
-                            className="form-input card__input"
-                            value={values.title}
+                            className={
+                              errors.title
+                                ? 'form-input card__input card__input--invalid'
+                                : 'form-input card__input '
+                            }
+                            value={errors.title ? errors.title : values.title}
                             onChange={_onChange}
                             required
                           />

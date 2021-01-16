@@ -94,6 +94,7 @@ const update = asyncCatch(async (req, res, next) => {
   if (Object.keys(req.body).length === 0)
     return next(new AppErrorHandler('Can not update this product', 400));
   console.log('update');
+
   const update = {
     title: req.body.title,
     price: req.body.price,
