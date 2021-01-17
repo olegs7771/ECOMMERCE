@@ -11,6 +11,7 @@ import {
 import { drawerToggle } from '../../../store/actions/drawerAction';
 import { Spinner } from '../../../utils/LoadingComponent';
 import BreadCrumbs from '../../navigation/BreadCrumbs';
+import CardImageForm from './CardImageForm';
 
 export default function Card(props) {
   //  REDUX
@@ -73,10 +74,39 @@ export default function Card(props) {
     if (values.title.length === 0) {
       errors.title = 'Product Name';
     }
+    if (values.price.length === 0) {
+      errors.price = '00.00';
+    }
+    if (!/^\d+(,\d{3})*(\.\d{1,2})?$/.test(values.price)) {
+      errors.price = 'only numbers';
+    }
+
+    if (values.brand === 'Select Brand') {
+      errors.brand = 'Select Brand';
+    }
+    if (values.description.length === 0) {
+      errors.description = 'Please leave some description about product';
+    }
+    if (values.quantity.length === 0) {
+      errors.quantity = '0';
+    }
+    if (!/^[0-9]*$/.test(values.quantity)) {
+      errors.quantity = 'only numbers';
+    }
+
+    if (values.color === 'Select Color') {
+      errors.color = 'Select Color';
+    }
     setErrors(errors);
     if (Object.keys(errors).length === 0) {
       dispatch(updateProductAction(values));
     }
+  };
+
+  // CANCEL EDIT AND CLEAR ERRORS
+  const _cancelEdit = () => {
+    setErrors({});
+    setEdit(!edit);
   };
 
   return (
@@ -151,8 +181,12 @@ export default function Card(props) {
                           <input
                             type="text"
                             name="price"
-                            className=" card__input"
-                            value={values.price}
+                            className={
+                              errors.price
+                                ? 'card__input card__input--invalid'
+                                : 'card__input'
+                            }
+                            value={errors.price ? errors.price : values.price}
                             onChange={_onChange}
                             required
                           />
@@ -175,16 +209,26 @@ export default function Card(props) {
                       </span>
                       <span className="card__container__detail-body--item-text">
                         {edit ? (
-                          <div className="card__container__detail-body--item-text-edit-form">
-                            <input
-                              type="text"
+                          <div className="card__container__detail-header--title-edit">
+                            <select
                               name="brand"
-                              className=" card__input"
                               value={values.brand}
                               onChange={_onChange}
+                              className={
+                                errors.brand
+                                  ? 'form-input card__input--invalid'
+                                  : 'form-input'
+                              }
                               required
-                            />
-                            <svg className=" icon card__icon">
+                            >
+                              <option>Select Brand</option>
+                              {initialState.brands.map((brand) => (
+                                <option value={brand} key={brand}>
+                                  {brand}
+                                </option>
+                              ))}
+                            </select>
+                            <svg className="  card__icon icon">
                               <use href={sprite + '#icon-pencil'} />
                             </svg>
                           </div>
@@ -205,8 +249,16 @@ export default function Card(props) {
                             <textarea
                               type="text"
                               name="description"
-                              className=" "
-                              value={values.description}
+                              className={
+                                errors.description
+                                  ? 'form-input card__input--invalid'
+                                  : 'form-input'
+                              }
+                              value={
+                                errors.description
+                                  ? errors.description
+                                  : values.description
+                              }
                               onChange={_onChange}
                               rows="10"
                               cols="40"
@@ -230,8 +282,16 @@ export default function Card(props) {
                             <input
                               type="text"
                               name="quantity"
-                              className=" card__input"
-                              value={values.quantity}
+                              className={
+                                errors.quantity
+                                  ? ' card__input card__input--invalid'
+                                  : ' card__input '
+                              }
+                              value={
+                                errors.quantity
+                                  ? errors.quantity
+                                  : values.quantity
+                              }
                               onChange={_onChange}
                               required
                             />
@@ -296,7 +356,11 @@ export default function Card(props) {
                               name="color"
                               value={values.color}
                               onChange={_onChange}
-                              className="form-input  "
+                              className={
+                                errors.color
+                                  ? 'form-input card__input--invalid'
+                                  : 'form-input'
+                              }
                               required
                             >
                               <option>Select Color</option>
@@ -334,7 +398,8 @@ export default function Card(props) {
                       </div>
                     ) : null}
                   </div>
-
+                  {/* IMAGE ADD FORM  */}
+                  <CardImageForm product={product} />
                   <div className="card__container-cta">
                     {edit ? (
                       <div>
@@ -346,7 +411,7 @@ export default function Card(props) {
                         </button>
                         <button
                           className="btn card__container-cta-btn--cancel"
-                          onClick={() => setEdit(!edit)}
+                          onClick={_cancelEdit}
                         >
                           Cancel
                         </button>
@@ -356,7 +421,7 @@ export default function Card(props) {
                         Edit Details
                       </button>
                     )}
-                    <button className="btn">Edit Gallery</button>
+                    <button className="btn">Add Images</button>
                     <button className="btn">Delete</button>
                   </div>
                 </div>

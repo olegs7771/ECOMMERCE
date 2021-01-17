@@ -27,3 +27,6 @@ app.listen(PORT, () => {
 //   Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000
 // );
 // console.log(new Date('2021-01-06T20:26:01.335Z').toDateString());
+
+// const price = '1a';
+// console.log(/^\d+(,\d{3})*(\.\d{1,2})?$/.test(price));

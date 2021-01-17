@@ -116,4 +116,21 @@
   &__icon {
     transform: translateX(-4rem);
   }
+
+  // ADD IMAGE FORM
+
+  &__form {
+    border: 1px solid black;
+    // height: 40rem;
+    padding: 0 5rem;
+
+    &-container {
+      &-preview {
+        border: 1px solid black;
+      }
+      &-form {
+        border: 1px solid black;
+      }
+    }
+  }
 }

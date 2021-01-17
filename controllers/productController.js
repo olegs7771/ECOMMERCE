@@ -4,6 +4,7 @@ const Category = require('../models/Category');
 const Product = require('../models/Product');
 const AppErrorHandler = require('../utils/AppError');
 const slugify = require('slugify');
+const { cloudinary } = require('../utils/claudinary');
 
 //CREATE PRODUCT
 const create = asyncCatch(async (req, res, next) => {
@@ -118,6 +119,15 @@ const update = asyncCatch(async (req, res, next) => {
   res.status(200).json({ status: 'success', data: upProduct });
 });
 
+// UPLOAD IMAGE TO CLOUDINARY
+
+const uploadImage = asyncCatch(async (req, res, next) => {
+  console.log('req.body', req.body);
+  console.log('req.files', req.files);
+
+  const uploadedResponse = await cloudinary.uploader.upload();
+});
+
 module.exports = {
   create,
   list,
@@ -127,4 +137,5 @@ module.exports = {
   removeOne,
   removeAllByCategoryId,
   removeAllBySubId,
+  uploadImage,
 };

@@ -205,3 +205,12 @@ export const updateProductAction = (data) => async (dispatch) => {
     });
   }
 };
+
+export const uploadImageAction = (data) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/v1/product/image`, data);
+    console.log('res.data uploadImageAction ', res.data);
+  } catch (error) {
+    console.log('error uploadImageAction', error.response.data);
+  }
+};
