@@ -84,6 +84,14 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// POPULATE IMAGES
+productSchema.methods.addImage = async function (imagePath) {
+  console.log('imagePath in model', imagePath);
+  console.log('this in model', this);
+  await this.images.push(imagePath);
+  return this.images;
+};
+
 // CUSTOM ERROR HANDLING
 
 productSchema.post('save', function (err, doc, next) {

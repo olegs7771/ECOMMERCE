@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { unslugify } from 'unslugify';
 import sprite from '../../../img/sprite.svg';
+import { Image } from 'cloudinary-react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -141,7 +142,17 @@ export default function Card(props) {
               // CARD
               <div className="card__container">
                 {/* GALLERY LEFT  */}
-                <div className="card__container__gallery">IMAGE GAllery</div>
+                <div className="card__container__gallery">
+                  {product.images.map((image, index) => (
+                    <Image
+                      key={index}
+                      cloudName="dyl4kpmie"
+                      publicId={image}
+                      width="100"
+                      crop="scale"
+                    />
+                  ))}
+                </div>
 
                 {/* DETAILS RIGHT  */}
                 <div className="card__container__detail">
@@ -399,7 +410,7 @@ export default function Card(props) {
                     ) : null}
                   </div>
                   {/* IMAGE ADD FORM  */}
-                  <CardImageForm product={product} />
+                  <CardImageForm product={product} history={props.history} />
                   <div className="card__container-cta">
                     {edit ? (
                       <div>

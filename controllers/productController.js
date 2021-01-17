@@ -98,6 +98,7 @@ const update = asyncCatch(async (req, res, next) => {
 
   const update = {
     title: req.body.title,
+    slug: slugify(req.body.title),
     price: req.body.price,
     brand: req.body.brand,
     description: req.body.description,
@@ -122,10 +123,19 @@ const update = asyncCatch(async (req, res, next) => {
 // UPLOAD IMAGE TO CLOUDINARY
 
 const uploadImage = asyncCatch(async (req, res, next) => {
-  console.log('req.body', req.body);
-  console.log('req.files', req.files);
+  // console.log('req.body', req.body);
+  // console.log('req.files', req.files);
 
-  const uploadedResponse = await cloudinary.uploader.upload();
+  const uploadedResponse = await cloudinary.uploader.upload(req.body.file, {
+    upload_preset: 'dev_setups',
+    folder: `products/${req.body.slug}`,
+  });
+  console.log('uploadedResponse', uploadedResponse);
+  const product = await Product.findById(req.body.productId);
+
+  await product.addImage(uploadedResponse.public_id);
+  await product.save({ validateBeforeSave: false });
+  res.status(200).json({ message: 'Image uploaded successfuly.' });
 });
 
 module.exports = {

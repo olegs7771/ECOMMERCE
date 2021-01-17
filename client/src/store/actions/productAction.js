@@ -188,11 +188,6 @@ export const updateProductAction = (data) => async (dispatch) => {
       type: LOADING,
       payload: false,
     });
-
-    dispatch({
-      type: LOADING,
-      payload: false,
-    });
   } catch (err) {
     console.log('error in update product', err.response.data);
     dispatch({
@@ -206,11 +201,36 @@ export const updateProductAction = (data) => async (dispatch) => {
   }
 };
 
-export const uploadImageAction = (data) => async (dispatch) => {
+export const uploadImageAction = (data, history) => async (dispatch) => {
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+
   try {
     const res = await axios.post(`/api/v1/product/image`, data);
-    console.log('res.data uploadImageAction ', res.data);
+    //RELOAD PRODUCT
+
+    console.log('res.data uploadImageAction', res.data);
+
+    const list = await axios.get(`/api/v1/product/${data.sub}`);
+    dispatch({
+      type: GET_PRODUCT_LIST,
+      payload: list.data.data,
+    });
+    // history.push(`/product/${e[0]}/${e[1]}/${categoryId}/${category}/${subId}`);
+    // path="/product/:productId/:slug/:categoryId/:category/:subId"
+    // history.push(`/product/${data.product._id}/${data.slug}/${data.product.category}/`)
+
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
   } catch (error) {
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
     console.log('error uploadImageAction', error.response.data);
   }
 };

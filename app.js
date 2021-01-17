@@ -24,7 +24,7 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 //Body parser with limitted body
-app.use(express.json());
+app.use(express.json({ limit: '50Mb' }));
 //Body Parsing
 app.use(express.urlencoded({ extended: true }));
 //Cookie Parsing
