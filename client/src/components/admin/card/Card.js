@@ -47,7 +47,7 @@ export default function Card(props) {
   // STATE
   const [values, setValue] = useState(initialState);
   const [edit, setEdit] = useState(false);
-  const [editImage, setEditImage] = useState(false);
+
   const [errors, setErrors] = useState({});
   // SHOW UPDATE DATE
 
@@ -125,9 +125,9 @@ export default function Card(props) {
     setEdit(!edit);
   };
 
-  // EDIT IMAGES
-  const _editImages = () => {
-    setEditImage(!editImage);
+  // DELETE IMAGE
+  const _deleteImg = (e) => {
+    console.log('e', e);
   };
 
   return (
@@ -163,21 +163,43 @@ export default function Card(props) {
               <div className="card__container">
                 {/* GALLERY LEFT  */}
                 <div className="card__container__gallery">
-                  {product.images.map((image, index) => (
-                    <Image
-                      key={index}
-                      cloudName="dyl4kpmie"
-                      publicId={image}
-                      width="100"
-                      crop="scale"
-                    />
-                  ))}
+                  <div className="heading-3 mb-sm">Edit Images</div>
+                  <div className="card__container__gallery-list">
+                    {product.images.map((image, index) => (
+                      <div
+                        className="card__container__gallery-container"
+                        key={index}
+                      >
+                        <Image
+                          cloudName="dyl4kpmie"
+                          publicId={image}
+                          width="150"
+                          crop="scale"
+                          className="card__container__gallery--image"
+                        />
+                        <div className="nav__link-icon-box">
+                          <svg
+                            className="category__link-icon icon card__container__gallery--icon"
+                            onClick={_deleteImg.bind(this, image)}
+                          >
+                            <use href={sprite + '#icon-cross'} />
+                          </svg>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {/* IMAGE ADD FORM  */}
+                  <CardImageForm
+                    product={product}
+                    history={props.history}
+                    category={props.match.params.category}
+                  />
                 </div>
 
                 {/* DETAILS RIGHT  */}
                 <div className="card__container__detail">
                   {/* HEADER  */}
-                  <div className="card__container__detail-header heading-3 mb-sm">
+                  <div className="card__container__detail-header heading-3 ">
                     {/* TITLE  */}
                     <div className="card__container__detail-header--title ">
                       {edit ? (
@@ -459,13 +481,7 @@ export default function Card(props) {
                       </div>
                     ) : null}
                   </div>
-                  {/* IMAGE ADD FORM  */}
-                  <CardImageForm
-                    product={product}
-                    history={props.history}
-                    category={props.match.params.category}
-                    open={editImage}
-                  />
+
                   <div className="card__container-cta">
                     {edit ? (
                       <div>
@@ -487,9 +503,7 @@ export default function Card(props) {
                         Edit Details
                       </button>
                     )}
-                    <button className="btn" onClick={_editImages}>
-                      Add Images
-                    </button>
+
                     <button className="btn">Delete</button>
                   </div>
                 </div>

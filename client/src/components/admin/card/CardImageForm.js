@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { uploadImageAction } from '../../../store/actions/productAction';
@@ -10,6 +10,12 @@ export default function CardImageForm({ product, history, category, open }) {
   const [selectedFile, setSelectFile] = useState(null);
   const [selectedFilePreview, setSelectFilePreview] = useState(null);
   const [preview, setPreview] = useState(false);
+  const [openState, setOpenState] = useState(false);
+
+  // SET OPEN TO STATE
+  useEffect(() => {
+    setOpenState(open);
+  }, [open]);
 
   const _onChange = (e) => {
     console.log('changed', e.target.files[0]);
@@ -36,7 +42,7 @@ export default function CardImageForm({ product, history, category, open }) {
   const _upload = (e) => {
     e.preventDefault();
 
-    if (!selectedFile) return;
+    if (!selectedFile || !preview) return;
     uploadImage(selectedFilePreview);
   };
 
@@ -54,28 +60,45 @@ export default function CardImageForm({ product, history, category, open }) {
   };
 
   return (
-    <div className={open ? 'card__form--visible' : 'card__form '}>
+    <div className={openState ? 'card__form--visible' : 'card__form '}>
       {preview && (
-        <div className="profile__avatar-container--preview ">
+        <div className="profile__avatar-container--preview card__form-preview  ">
           <img
             src={selectedFilePreview}
             alt="preview"
             className="profile__avatar-container--preview-img"
+            width="100%"
           />
         </div>
       )}
 
       <div className=" profile__avatar-container">
-        <form onSubmit={_upload} className="form">
+        <form onSubmit={_upload} className="form ">
           <input
             type="file"
             name="image"
             className="mb-sm"
             onChange={_onChange}
           />
-          <button className="btn" type="submit">
-            Submit
-          </button>
+
+          {preview ? (
+            <div className="card__form-btn-group">
+              <button className="btn" type="submit">
+                Submit
+              </button>
+              <button
+                className="btn"
+                type="button"
+                onClick={() => setPreview(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button className="btn" type="submit">
+              Submit
+            </button>
+          )}
         </form>
       </div>
     </div>
