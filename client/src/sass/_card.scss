@@ -82,14 +82,21 @@
             display: inline-block;
             padding: 1rem 2rem;
             text-align: left;
+            &--edit {
+              padding: 0.5rem 2rem;
+            }
           }
         }
       }
     }
     &-cta {
-      // border: 1px solid black;
+      border: 1px solid black;
       display: flex;
       justify-content: space-evenly;
+      height: 40rem;
+      align-items: flex-start;
+      background-color: #fff;
+      position: relative;
 
       &-btn--accept {
         background-color: $color-green;
@@ -107,22 +114,28 @@
     font-family: $font-primary;
     margin: 0;
     border: 1px solid $color-grey-dark;
+    padding: 0.2rem 2rem;
 
     &--invalid {
       border: 1px solid $color-red;
       color: $color-red;
+    }
+    // small font size feilds
+    &-fss {
+      font-size: 1.6rem;
+      text-transform: lowercase;
     }
   }
   &__icon {
     transform: translateX(-4rem);
   }
 
-  // ADD IMAGE FORM
+  // ADD IMAGE FORM <CardImageForm/>
 
   &__form {
-    border: 1px solid black;
-    // height: 40rem;
+    height: 0;
     padding: 0 5rem;
+    transition: 0.2s;
 
     &-container {
       &-preview {
@@ -131,6 +144,10 @@
       &-form {
         border: 1px solid black;
       }
+    }
+    &--visible {
+      height: 60rem;
+      transition: 0.2s;
     }
   }
 }

@@ -184,6 +184,12 @@ export const updateProductAction = (data) => async (dispatch) => {
       payload: list.data.data,
     });
 
+    //GET MESSAGE TO REDUX for reload Card.js
+    dispatch({
+      type: GET_API_MESSAGE,
+      payload: res.data.status,
+    });
+
     dispatch({
       type: LOADING,
       payload: false,
@@ -209,18 +215,19 @@ export const uploadImageAction = (data, history) => async (dispatch) => {
 
   try {
     const res = await axios.post(`/api/v1/product/image`, data);
-    //RELOAD PRODUCT
-
     console.log('res.data uploadImageAction', res.data);
 
+    //RELOAD PRODUCT
     const list = await axios.get(`/api/v1/product/${data.sub}`);
     dispatch({
       type: GET_PRODUCT_LIST,
       payload: list.data.data,
     });
-    // history.push(`/product/${e[0]}/${e[1]}/${categoryId}/${category}/${subId}`);
-    // path="/product/:productId/:slug/:categoryId/:category/:subId"
-    // history.push(`/product/${data.product._id}/${data.slug}/${data.product.category}/`)
+    //GET MESSAGE TO REDUX
+    dispatch({
+      type: GET_API_MESSAGE,
+      payload: res.data.status,
+    });
 
     dispatch({
       type: LOADING,

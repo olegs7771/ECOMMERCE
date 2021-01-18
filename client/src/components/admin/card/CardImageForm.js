@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { uploadImageAction } from '../../../store/actions/productAction';
 
-export default function CardImageForm({ product, history }) {
+export default function CardImageForm({ product, history, category, open }) {
   const dispatch = useDispatch();
   // REDUX
 
@@ -43,6 +43,7 @@ export default function CardImageForm({ product, history }) {
   const uploadImage = (base64EncodedImage) => {
     const data = {
       product,
+      category,
       file: base64EncodedImage,
       productId: product._id,
       slug: product.slug,
@@ -53,8 +54,8 @@ export default function CardImageForm({ product, history }) {
   };
 
   return (
-    <div className="card__form ">
-      {selectedFilePreview && (
+    <div className={open ? 'card__form--visible' : 'card__form '}>
+      {preview && (
         <div className="profile__avatar-container--preview ">
           <img
             src={selectedFilePreview}

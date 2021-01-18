@@ -135,7 +135,9 @@ const uploadImage = asyncCatch(async (req, res, next) => {
 
   await product.addImage(uploadedResponse.public_id);
   await product.save({ validateBeforeSave: false });
-  res.status(200).json({ message: 'Image uploaded successfuly.' });
+  res
+    .status(200)
+    .json({ status: 'success', message: 'Image uploaded successfully' });
 });
 
 module.exports = {

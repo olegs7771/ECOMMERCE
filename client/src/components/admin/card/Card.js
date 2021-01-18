@@ -21,6 +21,7 @@ export default function Card(props) {
   const product = useSelector((state) => state.product.product);
   const loading = useSelector((state) => state.loading.loading);
   const drawerRedux = useSelector((state) => state.drawer.drawer);
+  const messageRedux = useSelector((state) => state.message.message);
   // const error = useSelector((state) => state.error.error);
 
   let initialState = {};
@@ -39,13 +40,14 @@ export default function Card(props) {
       categories: [],
       images: [],
       colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
-      brands: ['Apple', 'Samsung', 'Silver', 'Microsoft', 'Lenovo', 'ASUS'],
+      brands: ['Apple', 'Samsung', 'IBM', 'Microsoft', 'Lenovo', 'ASUS'],
     };
   }
 
   // STATE
   const [values, setValue] = useState(initialState);
   const [edit, setEdit] = useState(false);
+  const [editImage, setEditImage] = useState(false);
   const [errors, setErrors] = useState({});
   // SHOW UPDATE DATE
 
@@ -54,14 +56,26 @@ export default function Card(props) {
     setErrors({});
   };
 
+  // IF messageRedux got message run this effect
+  useEffect(() => {
+    console.log('messageRedux', messageRedux);
+    fetchProduct();
+  }, [messageRedux]);
+
   //  ON LOAD FETCH PRODUCT DETAILS
   useEffect(() => {
+    console.log('fetching product');
+    fetchProduct();
+  }, []);
+
+  const fetchProduct = () => {
+    console.log('fetching product');
     const data = {
       productId: props.match.params.productId,
       slug: props.match.params.slug,
     };
     dispatch(getOneProduct(data));
-  }, [dispatch, props.match.params.productId, props.match.params.slug]);
+  };
 
   // GET PRODUCT TO STATE
   useEffect(() => {
@@ -102,12 +116,18 @@ export default function Card(props) {
     if (Object.keys(errors).length === 0) {
       dispatch(updateProductAction(values));
     }
+    setEdit(!edit);
   };
 
   // CANCEL EDIT AND CLEAR ERRORS
   const _cancelEdit = () => {
     setErrors({});
     setEdit(!edit);
+  };
+
+  // EDIT IMAGES
+  const _editImages = () => {
+    setEditImage(!editImage);
   };
 
   return (
@@ -218,7 +238,13 @@ export default function Card(props) {
                       <span className="card__container__detail-body--item-title">
                         Brand
                       </span>
-                      <span className="card__container__detail-body--item-text">
+                      <span
+                        className={
+                          edit
+                            ? ' card__container__detail-body--item-text--edit'
+                            : 'card__container__detail-body--item-text'
+                        }
+                      >
                         {edit ? (
                           <div className="card__container__detail-header--title-edit">
                             <select
@@ -227,8 +253,8 @@ export default function Card(props) {
                               onChange={_onChange}
                               className={
                                 errors.brand
-                                  ? 'form-input card__input--invalid'
-                                  : 'form-input'
+                                  ? 'form-input card__input card__input-fss card__input--invalid'
+                                  : 'form-input card__input card__input-fss'
                               }
                               required
                             >
@@ -254,7 +280,13 @@ export default function Card(props) {
                       <span className="card__container__detail-body--item-title">
                         Description
                       </span>
-                      <span className="card__container__detail-body--item-text">
+                      <span
+                        className={
+                          edit
+                            ? ' card__container__detail-body--item-text--edit'
+                            : 'card__container__detail-body--item-text'
+                        }
+                      >
                         {edit ? (
                           <div className="card__container__detail-body--item-text-edit">
                             <textarea
@@ -271,7 +303,7 @@ export default function Card(props) {
                                   : values.description
                               }
                               onChange={_onChange}
-                              rows="10"
+                              rows="7"
                               cols="40"
                               required
                             />
@@ -287,7 +319,13 @@ export default function Card(props) {
                       <span className="card__container__detail-body--item-title">
                         Quantity
                       </span>
-                      <span className="card__container__detail-body--item-text">
+                      <span
+                        className={
+                          edit
+                            ? ' card__container__detail-body--item-text--edit'
+                            : 'card__container__detail-body--item-text'
+                        }
+                      >
                         {edit ? (
                           <div className="card__container__detail-body--item-text-edit-form">
                             <input
@@ -322,7 +360,13 @@ export default function Card(props) {
                       <span className="card__container__detail-body--item-title">
                         Shipping
                       </span>
-                      <span className="card__container__detail-body--item-text">
+                      <span
+                        className={
+                          edit
+                            ? ' card__container__detail-body--item-text--edit'
+                            : 'card__container__detail-body--item-text'
+                        }
+                      >
                         {edit ? (
                           <div className="card__container__detail-body--item-text-edit-form">
                             <label className=" form-group__radio-label">
@@ -360,7 +404,13 @@ export default function Card(props) {
                       <span className="card__container__detail-body--item-title">
                         Color
                       </span>
-                      <span className="card__container__detail-body--item-text">
+                      <span
+                        className={
+                          edit
+                            ? ' card__container__detail-body--item-text--edit'
+                            : 'card__container__detail-body--item-text'
+                        }
+                      >
                         {edit ? (
                           <div className="card__container__detail-header--title-edit">
                             <select
@@ -410,7 +460,12 @@ export default function Card(props) {
                     ) : null}
                   </div>
                   {/* IMAGE ADD FORM  */}
-                  <CardImageForm product={product} history={props.history} />
+                  <CardImageForm
+                    product={product}
+                    history={props.history}
+                    category={props.match.params.category}
+                    open={editImage}
+                  />
                   <div className="card__container-cta">
                     {edit ? (
                       <div>
@@ -432,7 +487,9 @@ export default function Card(props) {
                         Edit Details
                       </button>
                     )}
-                    <button className="btn">Add Images</button>
+                    <button className="btn" onClick={_editImages}>
+                      Add Images
+                    </button>
                     <button className="btn">Delete</button>
                   </div>
                 </div>
