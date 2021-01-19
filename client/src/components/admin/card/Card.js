@@ -136,13 +136,37 @@ export default function Card(props) {
   };
 
   // GATHERING CHECKED IMAGES FOR DELETE
+  // let array = [];
+  // const checkedImgArray = (data) => {
+  //   console.log('imagesToDelete', imagesToDelete);
+  //   imagesToDelete.forEach(image=>{
+  //     if(image===data){
+  //      array.filter(value=>{
+  //        return value===image
+  //      })
+  //     }
+  //   })
 
-  const _checkedImgArray = (data) => {
-    console.log('data in gathering images', data);
-    let imagesToDelete = [];
-    imagesToDelete.push(data);
+  //   if (data) {
+  //     array.push(data);
+  //   }
 
-    console.log('imagesToDelete', imagesToDelete);
+  //   return array;
+  // };
+
+  // const filtered = (image)=>()
+
+  const _populateState = (data, state) => {
+    if (state) {
+      setImagesToDelete((imagesToDelete) => imagesToDelete.concat(data));
+    } else {
+      // const index = imagesToDelete.findIndex((elem) => elem === data);
+
+      setImagesToDelete((imagesToDelete) =>
+        imagesToDelete.filter((e) => e !== data)
+      );
+    }
+    //
   };
 
   return (
@@ -187,7 +211,7 @@ export default function Card(props) {
                         sprite={sprite}
                         _deleteImg={_deleteImg}
                         deleteMode={deleteMode}
-                        checkedImg={_checkedImgArray}
+                        checkedImg={_populateState}
                       />
                     ))}
                   </div>

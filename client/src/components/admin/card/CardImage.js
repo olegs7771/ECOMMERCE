@@ -11,7 +11,7 @@ export default function CardImage({
   const _checkImage = (e) => {
     setChecked(!checked);
     console.log('e', e);
-    checkedImg(e);
+    checkedImg(e, !checked);
   };
 
   return (
