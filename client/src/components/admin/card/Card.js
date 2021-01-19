@@ -135,33 +135,12 @@ export default function Card(props) {
     setDeleteMode(!deleteMode);
   };
 
-  // GATHERING CHECKED IMAGES FOR DELETE
-  // let array = [];
-  // const checkedImgArray = (data) => {
-  //   console.log('imagesToDelete', imagesToDelete);
-  //   imagesToDelete.forEach(image=>{
-  //     if(image===data){
-  //      array.filter(value=>{
-  //        return value===image
-  //      })
-  //     }
-  //   })
-
-  //   if (data) {
-  //     array.push(data);
-  //   }
-
-  //   return array;
-  // };
-
-  // const filtered = (image)=>()
-
+  // POPULATE STATE WITH CHCKED  IMAGES TO DELETE
   const _populateState = (data, state) => {
     if (state) {
       setImagesToDelete((imagesToDelete) => imagesToDelete.concat(data));
     } else {
-      // const index = imagesToDelete.findIndex((elem) => elem === data);
-
+      // REMOVE SELECTED IMAGES FROM STATE
       setImagesToDelete((imagesToDelete) =>
         imagesToDelete.filter((e) => e !== data)
       );
