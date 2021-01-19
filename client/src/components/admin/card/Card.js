@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { unslugify } from 'unslugify';
 import sprite from '../../../img/sprite.svg';
-import { Image } from 'cloudinary-react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -13,6 +12,7 @@ import { drawerToggle } from '../../../store/actions/drawerAction';
 import { Spinner } from '../../../utils/LoadingComponent';
 import BreadCrumbs from '../../navigation/BreadCrumbs';
 import CardImageForm from './CardImageForm';
+import CardImage from './CardImage';
 
 export default function Card(props) {
   //  REDUX
@@ -47,6 +47,7 @@ export default function Card(props) {
   // STATE
   const [values, setValue] = useState(initialState);
   const [edit, setEdit] = useState(false);
+  const [deleteMode, setDeleteMode] = useState(false);
 
   const [errors, setErrors] = useState({});
   // SHOW UPDATE DATE
@@ -130,6 +131,11 @@ export default function Card(props) {
     console.log('e', e);
   };
 
+  // DELETE MODE STATE
+  const _deleteImagesMode = () => {
+    setDeleteMode(!deleteMode);
+  };
+
   return (
     <div>
       <div
@@ -166,26 +172,35 @@ export default function Card(props) {
                   <div className="heading-3 mb-sm">Edit Images</div>
                   <div className="card__container__gallery-list">
                     {product.images.map((image, index) => (
-                      <div
-                        className="card__container__gallery-container"
+                      // <div
+                      //   className="card__container__gallery-container"
+                      //   key={index}
+                      // >
+                      //   <Image
+                      //     cloudName="dyl4kpmie"
+                      //     publicId={image}
+                      //     width="150"
+                      //     crop="scale"
+                      //     className="card__container__gallery--image"
+                      //   />
+                      //   {deleteMode && (
+                      //     <div className="nav__link-icon-box">
+                      //       <svg
+                      //         className="category__link-icon icon card__container__gallery--icon"
+                      //         onClick={_deleteImg.bind(this, image)}
+                      //       >
+                      //         <use href={sprite + '#icon-cross'} />
+                      //       </svg>
+                      //     </div>
+                      //   )}
+                      // </div>
+                      <CardImage
                         key={index}
-                      >
-                        <Image
-                          cloudName="dyl4kpmie"
-                          publicId={image}
-                          width="150"
-                          crop="scale"
-                          className="card__container__gallery--image"
-                        />
-                        <div className="nav__link-icon-box">
-                          <svg
-                            className="category__link-icon icon card__container__gallery--icon"
-                            onClick={_deleteImg.bind(this, image)}
-                          >
-                            <use href={sprite + '#icon-cross'} />
-                          </svg>
-                        </div>
-                      </div>
+                        image={image}
+                        sprite={sprite}
+                        _deleteImg={_deleteImg}
+                        deleteMode={deleteMode}
+                      />
                     ))}
                   </div>
                   {/* IMAGE ADD FORM  */}
@@ -193,6 +208,7 @@ export default function Card(props) {
                     product={product}
                     history={props.history}
                     category={props.match.params.category}
+                    del={_deleteImagesMode}
                   />
                 </div>
 
