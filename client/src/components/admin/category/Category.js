@@ -55,7 +55,6 @@ export default function Category(props) {
   //SET STATE CATEGORIES IN COMPONENT
   useEffect(() => {
     setCategories(categoryList.filter(searched(keyword)));
-    return () => {};
   }, [categoryList, keyword]);
 
   //SET STATE ERROR IN COMPONENT

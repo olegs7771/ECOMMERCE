@@ -48,29 +48,28 @@ export default function Card(props) {
   const [values, setValue] = useState(initialState);
   const [edit, setEdit] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
-
   const [errors, setErrors] = useState({});
-  // SHOW UPDATE DATE
+  const [imagesToDelete, setImagesToDelete] = useState([]);
 
   const _onChange = (e) => {
     setValue({ ...values, [e.target.name]: e.target.value });
     setErrors({});
   };
 
-  // IF messageRedux got message run this effect
+  // IF messageRedux got message run this effect loading fresh image
   useEffect(() => {
-    console.log('messageRedux', messageRedux);
     fetchProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messageRedux]);
 
   //  ON LOAD FETCH PRODUCT DETAILS
   useEffect(() => {
-    console.log('fetching product');
     fetchProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchProduct = () => {
-    console.log('fetching product');
+    // console.log('fetching product');
     const data = {
       productId: props.match.params.productId,
       slug: props.match.params.slug,
@@ -131,9 +130,19 @@ export default function Card(props) {
     console.log('e', e);
   };
 
-  // DELETE MODE STATE
+  // DELETE MODE STATE TOGGLE
   const _deleteImagesMode = () => {
     setDeleteMode(!deleteMode);
+  };
+
+  // GATHERING CHECKED IMAGES FOR DELETE
+
+  const _checkedImgArray = (data) => {
+    console.log('data in gathering images', data);
+    let imagesToDelete = [];
+    imagesToDelete.push(data);
+
+    console.log('imagesToDelete', imagesToDelete);
   };
 
   return (
@@ -172,34 +181,13 @@ export default function Card(props) {
                   <div className="heading-3 mb-sm">Edit Images</div>
                   <div className="card__container__gallery-list">
                     {product.images.map((image, index) => (
-                      // <div
-                      //   className="card__container__gallery-container"
-                      //   key={index}
-                      // >
-                      //   <Image
-                      //     cloudName="dyl4kpmie"
-                      //     publicId={image}
-                      //     width="150"
-                      //     crop="scale"
-                      //     className="card__container__gallery--image"
-                      //   />
-                      //   {deleteMode && (
-                      //     <div className="nav__link-icon-box">
-                      //       <svg
-                      //         className="category__link-icon icon card__container__gallery--icon"
-                      //         onClick={_deleteImg.bind(this, image)}
-                      //       >
-                      //         <use href={sprite + '#icon-cross'} />
-                      //       </svg>
-                      //     </div>
-                      //   )}
-                      // </div>
                       <CardImage
                         key={index}
                         image={image}
                         sprite={sprite}
                         _deleteImg={_deleteImg}
                         deleteMode={deleteMode}
+                        checkedImg={_checkedImgArray}
                       />
                     ))}
                   </div>
