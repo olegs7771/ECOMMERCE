@@ -21,30 +21,14 @@
     outline: none;
     border: none;
   }
-}
-.btn-delete {
-  padding: 1rem 3rem;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  border: none;
-  background-color: $color-red;
-  border-radius: 3px;
-  color: $color-grey;
-  transition: 0.2s;
-  &:hover {
-    transform: translateY(-0.1rem);
-    box-shadow: $box-shadow-big;
+  &-warning {
+    background-color: $color-orange;
   }
-  &:active {
-    outline: none;
-    transform: translateY(0);
-    box-shadow: $box-shadow-small;
-  }
-  &:focus {
-    outline: none;
-    border: none;
+  &-delete {
+    background-color: $color-red;
   }
 }
+
 .btn-link {
   text-decoration: none;
   border-bottom: 2px solid $color-valid;

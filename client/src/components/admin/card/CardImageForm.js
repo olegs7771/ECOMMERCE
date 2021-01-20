@@ -10,6 +10,7 @@ export default function CardImageForm({ product, history, category, del }) {
   const [selectedFile, setSelectFile] = useState(null);
   const [selectedFilePreview, setSelectFilePreview] = useState(null);
   const [preview, setPreview] = useState(false);
+  const [deleteState, setDeleteState] = useState(false);
 
   const _onChange = (e) => {
     console.log('changed', e.target.files[0]);
@@ -53,6 +54,13 @@ export default function CardImageForm({ product, history, category, del }) {
     dispatch(uploadImageAction(data, history));
   };
 
+  // SET DELETE MODE HERE AND IN PARENT
+
+  const _setDeleteMode = () => {
+    del();
+    setDeleteState(!deleteState);
+  };
+
   return (
     <div className="card__form ">
       {preview && (
@@ -92,9 +100,26 @@ export default function CardImageForm({ product, history, category, del }) {
             <button className="btn" type="submit">
               Submit
             </button>
-            <button className="btn" type="button" onClick={() => del()}>
-              Delete
-            </button>
+
+            {/* SET STATE TO DELETE IN PARENT  */}
+            {deleteState ? (
+              <div className="">
+                <button className="btn" type="button" onClick={_setDeleteMode}>
+                  Cancel
+                </button>
+                <button
+                  className="btn btn-warning"
+                  type="button"
+                  onClick={_setDeleteMode}
+                >
+                  Cofirm
+                </button>
+              </div>
+            ) : (
+              <button className="btn" type="button" onClick={_setDeleteMode}>
+                Delete
+              </button>
+            )}
           </div>
         )}
       </form>

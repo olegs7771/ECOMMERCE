@@ -175,6 +175,9 @@
     transition: 0.2s;
     position: relative;
     border: 1px solid #eee;
+    &-btn-group {
+      display: flex;
+    }
 
     &-container {
       display: flex;
