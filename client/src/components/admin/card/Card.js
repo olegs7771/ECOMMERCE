@@ -7,6 +7,7 @@ import {
   // deleteOneProduct,
   getOneProduct,
   updateProductAction,
+  deleteImageAction,
 } from '../../../store/actions/productAction';
 import { drawerToggle } from '../../../store/actions/drawerAction';
 import { Spinner } from '../../../utils/LoadingComponent';
@@ -49,7 +50,8 @@ export default function Card(props) {
   const [edit, setEdit] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [errors, setErrors] = useState({});
-  const [imagesToDelete, setImagesToDelete] = useState([]);
+  const [imagesToDelete, setImagesToDelete] = useState([]); //array of publicId's to delete
+  const [message, setMessage] = useState(null);
 
   const _onChange = (e) => {
     setValue({ ...values, [e.target.name]: e.target.value });
@@ -59,6 +61,7 @@ export default function Card(props) {
   // IF messageRedux got message run this effect loading fresh image
   useEffect(() => {
     fetchProduct();
+    setMessage(messageRedux);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messageRedux]);
 
@@ -148,6 +151,18 @@ export default function Card(props) {
     //
   };
 
+  const _deleteCofirm = () => {
+    if (imagesToDelete.length === 0) {
+      return setMessage('Select Images to delete');
+    }
+    // UPDATE PRODUCT IMAGES ARRAY
+    const data = {
+      publicIds: imagesToDelete,
+      productId: props.match.params.productId,
+    };
+    dispatch(deleteImageAction(data));
+  };
+
   return (
     <div>
       <div
@@ -194,12 +209,24 @@ export default function Card(props) {
                       />
                     ))}
                   </div>
+                  {message && (
+                    <div className="card__message">
+                      <div className="card__message--text">{message}</div>
+                      <button
+                        className="card__message--btn"
+                        onClick={() => setMessage(null)}
+                      >
+                        ok
+                      </button>
+                    </div>
+                  )}
                   {/* IMAGE ADD FORM  */}
                   <CardImageForm
                     product={product}
                     history={props.history}
                     category={props.match.params.category}
-                    del={_deleteImagesMode}
+                    delMode={_deleteImagesMode}
+                    confirmDelete={_deleteCofirm}
                   />
                 </div>
 

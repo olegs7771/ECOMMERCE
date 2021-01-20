@@ -13,11 +13,12 @@ const {
   removeAllByCategoryId,
   removeAllBySubId,
   uploadImage,
+  deleteImage,
 } = require('../controllers/productController');
 
 router.use(protect, restrictTo('admin'));
 
-router.route('/image').post(uploadImage); //upload image
+router.route('/image').post(uploadImage).delete(deleteImage); //upload image
 router.route('/').post(create).get(getAll); // create one product
 router.route('/:subId').get(list); // get products by subId
 router.route('/category/:categoryId/').delete(removeAllByCategoryId); //delete product by categoryId

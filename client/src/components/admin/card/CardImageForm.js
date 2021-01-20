@@ -3,7 +3,13 @@ import { useDispatch } from 'react-redux';
 
 import { uploadImageAction } from '../../../store/actions/productAction';
 
-export default function CardImageForm({ product, history, category, del }) {
+export default function CardImageForm({
+  product,
+  history,
+  category,
+  delMode,
+  confirmDelete,
+}) {
   const dispatch = useDispatch();
   // REDUX
 
@@ -57,7 +63,7 @@ export default function CardImageForm({ product, history, category, del }) {
   // SET DELETE MODE HERE AND IN PARENT
 
   const _setDeleteMode = () => {
-    del();
+    delMode();
     setDeleteState(!deleteState);
   };
 
@@ -110,9 +116,9 @@ export default function CardImageForm({ product, history, category, del }) {
                 <button
                   className="btn btn-warning"
                   type="button"
-                  onClick={_setDeleteMode}
+                  onClick={confirmDelete}
                 >
-                  Cofirm
+                  Delete
                 </button>
               </div>
             ) : (

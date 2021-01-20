@@ -21,6 +21,9 @@
     outline: none;
     border: none;
   }
+  &-grey {
+    background-color: $color-grey-dark;
+  }
   &-warning {
     background-color: $color-orange;
   }

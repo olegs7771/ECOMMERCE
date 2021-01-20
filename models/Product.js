@@ -92,6 +92,15 @@ productSchema.methods.addImage = async function (imagePath) {
   return this.images;
 };
 
+// DELETE IMAGES BY publicId
+
+productSchema.methods.deleteImages = async function (data) {
+  console.log('data', data);
+  console.log('this', this);
+  const newArray = await this.images.filter((elem) => !data.includes(elem));
+  return newArray;
+};
+
 // CUSTOM ERROR HANDLING
 
 productSchema.post('save', function (err, doc, next) {

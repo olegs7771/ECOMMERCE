@@ -241,3 +241,14 @@ export const uploadImageAction = (data, history) => async (dispatch) => {
     console.log('error uploadImageAction', error.response.data);
   }
 };
+
+// DELETE IMAGES FROM PRODUCT
+
+export const deleteImageAction = (data) => async (dispatch) => {
+  console.log('data in deleteImageAction', data);
+  try {
+    const res = await axios.delete('/api/v1/product/image', { data });
+  } catch (error) {
+    console.log('error to delete');
+  }
+};
