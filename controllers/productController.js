@@ -153,7 +153,8 @@ const deleteImage = asyncCatch(async (req, res, next) => {
 
   const product = await Product.findById(req.body.productId);
   console.log('product', product);
-  await product.deleteImages(req.body.publicIds);
+  product.deleteImages(req.body.publicIds);
+  product.images = await product.deleteImages(req.body.publicIds);
   await product.save({ validateBeforeSave: false });
 
   res.status(200).json({ status: 'success', message: 'Deleted successfully' });

@@ -5,6 +5,7 @@ export default function CardImage({
   _deleteImg,
   deleteMode,
   checkedImg,
+  showLargeImage,
 }) {
   const [checked, setChecked] = useState(false);
 
@@ -21,7 +22,8 @@ export default function CardImage({
         publicId={image}
         width="150"
         crop="scale"
-        className="card__container__gallery--image"
+        className="card__container__gallery--image "
+        onClick={showLargeImage.bind(this, image)}
       />
       {deleteMode && (
         <div

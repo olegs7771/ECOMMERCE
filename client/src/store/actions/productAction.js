@@ -238,6 +238,10 @@ export const uploadImageAction = (data, history) => async (dispatch) => {
       type: LOADING,
       payload: false,
     });
+    dispatch({
+      type: GET_API_ERROR_MESSAGE,
+      payload: error.response.data.message,
+    });
     console.log('error uploadImageAction', error.response.data);
   }
 };
@@ -246,9 +250,37 @@ export const uploadImageAction = (data, history) => async (dispatch) => {
 
 export const deleteImageAction = (data) => async (dispatch) => {
   console.log('data in deleteImageAction', data);
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
   try {
     const res = await axios.delete('/api/v1/product/image', { data });
+    //RELOAD PRODUCT
+    const list = await axios.get(`/api/v1/product/${data.subId}`);
+    dispatch({
+      type: GET_PRODUCT_LIST,
+      payload: list.data.data,
+    });
+    //GET MESSAGE TO REDUX
+    dispatch({
+      type: GET_API_MESSAGE,
+      payload: res.data.message,
+    });
+
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
   } catch (error) {
     console.log('error to delete');
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    dispatch({
+      type: GET_API_ERROR_MESSAGE,
+      payload: error.response.data.message,
+    });
   }
 };

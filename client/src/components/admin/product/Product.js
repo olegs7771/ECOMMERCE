@@ -208,7 +208,7 @@ export default function Product(props) {
                                   {products.map((p, i) => (
                                     // SHOW LIST
                                     <ProductListItem
-                                      product={p}
+                                      p={p}
                                       sprite={sprite}
                                       key={i}
                                       history={props.history}
@@ -233,7 +233,12 @@ export default function Product(props) {
               <div className="admin__heading">
                 Access Denied ! Only for admin
               </div>
-              <button className="btn">Login</button>
+              <button
+                className="btn"
+                onClick={() => props.history.push('/login')}
+              >
+                Login
+              </button>
             </div>
           )}
         </div>

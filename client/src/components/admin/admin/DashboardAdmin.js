@@ -11,7 +11,7 @@ export default function DashboardAdmin() {
   return (
     <div className="admin" onClick={() => dispatch(drawerToggle(false))}>
       {auth.isAuthenticated && auth.user.role === 'admin' ? (
-        <div className="admin__container">
+        <div className="admin__container-block">
           <div
             className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
           ></div>

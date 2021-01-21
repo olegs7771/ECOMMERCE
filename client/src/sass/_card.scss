@@ -14,22 +14,32 @@
 
     //////////////////////////////////
     &__gallery {
-      // border: 1px solid black;
       width: 60%;
       padding: 0 3rem 0 0;
 
+      // SHOW LIST OF IMAGES
       &-list {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-
         grid-gap: 1rem;
         justify-items: left;
         padding: 1rem 1rem 7rem 1rem;
+      }
+      &-single {
+        &-icon {
+          position: absolute;
+          width: 1rem;
+          height: 1rem;
+          margin-left: 1rem;
+          // transform: translate(-3rem, 1rem);
+          // fill: #eee;
+        }
       }
 
       &-container {
         display: flex;
         align-items: flex-start;
+        position: relative;
       }
 
       &--image {
@@ -38,7 +48,13 @@
         &:hover {
           filter: brightness(0.9);
         }
+        &-large {
+          width: 100%;
+          position: relative;
+        }
       }
+
+      //icons in checking images for delete
       &-icon {
         margin-left: 0.5rem;
         padding: 0.75rem;

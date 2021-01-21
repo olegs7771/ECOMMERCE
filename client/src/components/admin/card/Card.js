@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { unslugify } from 'unslugify';
 import sprite from '../../../img/sprite.svg';
+import { Image } from 'cloudinary-react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -9,6 +10,7 @@ import {
   updateProductAction,
   deleteImageAction,
 } from '../../../store/actions/productAction';
+import { clearMessageReduxState } from '../../../store/actions/categoryAction';
 import { drawerToggle } from '../../../store/actions/drawerAction';
 import { Spinner } from '../../../utils/LoadingComponent';
 import BreadCrumbs from '../../navigation/BreadCrumbs';
@@ -52,6 +54,8 @@ export default function Card(props) {
   const [errors, setErrors] = useState({});
   const [imagesToDelete, setImagesToDelete] = useState([]); //array of publicId's to delete
   const [message, setMessage] = useState(null);
+  const [showLarge, setShowLarge] = useState(false); //show single large image
+  const [largeImage, setLargeImage] = useState(null);
 
   const _onChange = (e) => {
     setValue({ ...values, [e.target.name]: e.target.value });
@@ -159,8 +163,22 @@ export default function Card(props) {
     const data = {
       publicIds: imagesToDelete,
       productId: props.match.params.productId,
+      subId: props.match.params.subId,
     };
     dispatch(deleteImageAction(data));
+  };
+
+  // SHOW LARGE IMAGE
+  const _showLargeimage = (e) => {
+    console.log('show large e', e);
+    setShowLarge(true);
+    setLargeImage(e);
+  };
+
+  // on pressing ok button in message .clear message in redux and reset state
+  const _reset = () => {
+    dispatch(clearMessageReduxState());
+    setDeleteMode(false);
   };
 
   return (
@@ -197,25 +215,43 @@ export default function Card(props) {
                 {/* GALLERY LEFT  */}
                 <div className="card__container__gallery">
                   <div className="heading-3 mb-sm">Edit Images</div>
-                  <div className="card__container__gallery-list">
-                    {product.images.map((image, index) => (
-                      <CardImage
-                        key={index}
-                        image={image}
-                        sprite={sprite}
-                        _deleteImg={_deleteImg}
-                        deleteMode={deleteMode}
-                        checkedImg={_populateState}
-                      />
-                    ))}
+                  <div>
+                    {showLarge ? (
+                      <div className="card__container__gallery-single">
+                        <Image
+                          cloudName="dyl4kpmie"
+                          publicId={largeImage}
+                          width="500"
+                          crop="scale"
+                          className="card__container__gallery--image-large "
+                        />
+                        <svg
+                          className=" icon card__container__gallery-single-icon"
+                          onClick={() => setShowLarge(false)}
+                        >
+                          <use href={sprite + '#icon-cross'} />
+                        </svg>
+                      </div>
+                    ) : (
+                      <div className="card__container__gallery-list">
+                        {product.images.map((image, index) => (
+                          <CardImage
+                            key={index}
+                            image={image}
+                            sprite={sprite}
+                            _deleteImg={_deleteImg}
+                            deleteMode={deleteMode}
+                            checkedImg={_populateState}
+                            showLargeImage={_showLargeimage}
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
                   {message && (
                     <div className="card__message">
                       <div className="card__message--text">{message}</div>
-                      <button
-                        className="card__message--btn"
-                        onClick={() => setMessage(null)}
-                      >
+                      <button className="card__message--btn" onClick={_reset}>
                         ok
                       </button>
                     </div>

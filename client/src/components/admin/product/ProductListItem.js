@@ -5,11 +5,14 @@ import { useDispatch } from 'react-redux';
 import { deleteOneProduct } from '../../../store/actions/productAction';
 
 export default function ProductListItem({
-  product,
+  p,
+  history,
   sprite,
   categoryId,
   category,
   subId,
+
+  // i,
 }) {
   //  REDUX
   const dispatch = useDispatch();
@@ -18,8 +21,14 @@ export default function ProductListItem({
 
   // SET PRODUCT TO STATE
   useEffect(() => {
-    setProductState(product);
-  }, [product]);
+    setProductState(p);
+  }, [p]);
+
+  //EDIT PRODUCT
+  const _getProduct = (e) => {
+    console.log('product', e);
+    history.push(`/product/${e[0]}/${e[1]}/${categoryId}/${category}/${subId}`);
+  };
 
   // DELETE PRODUCT
   const _deleteProduct = (e) => {
@@ -29,10 +38,8 @@ export default function ProductListItem({
 
   return (
     <li className="category__item product__item">
-      {/* <a href={`/admin/${c._id}/${c.slug}/sub`} className="category__link"> */}
-      {/* p._id, p.slug  */}
       <a
-        href={`/product/${product._id}/${product.slug}/${categoryId}/${category}/${subId}`}
+        href={`/product/${p._id}/${p.slug}/${categoryId}/${category}/${subId}`}
         className="category__link"
       >
         {productState.title}
@@ -41,11 +48,13 @@ export default function ProductListItem({
       <div className="category__link-icon-box">
         <svg
           className="category__link-icon icon"
-          onClick={_deleteProduct.bind(this, [
-            product.slug,
-            product._id,
-            product.sub,
-          ])}
+          onClick={_getProduct.bind(this, [p._id, p.slug])}
+        >
+          <use href={sprite + '#icon-pencil'} />
+        </svg>
+        <svg
+          className="category__link-icon icon"
+          onClick={_deleteProduct.bind(this, [p.slug, p._id, p.sub])}
         >
           <use href={sprite + '#icon-bin'} />
         </svg>

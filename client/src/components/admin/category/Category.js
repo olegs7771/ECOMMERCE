@@ -146,7 +146,12 @@ export default function Category(props) {
               <div className="admin__heading">
                 Access Denied ! Only for admin
               </div>
-              <button className="btn">Login</button>
+              <button
+                className="btn"
+                onClick={() => props.history.push('/login')}
+              >
+                Login
+              </button>
             </div>
           )}
         </div>
