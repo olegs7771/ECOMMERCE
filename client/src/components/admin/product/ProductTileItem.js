@@ -71,30 +71,34 @@ export default function ProductTileItem({
         }
       >
         <p className="product__tiles-container-tile-body--text">
-          color:{p.color}
+          Color : {p.color}
         </p>
         <p className="product__tiles-container-tile-body--text">
-          brand:{p.brand}
+          Brand : {p.brand}
         </p>
         <p className="product__tiles-container-tile-body--text">
-          quantity:{p.quantity}
+          Quantity : {p.quantity}
         </p>
         <p className="product__tiles-container-tile-body--text">
-          shipping:{p.shipping}
+          Shipping{''}:{''}
+          {p.shipping}
         </p>
         <p className="product__tiles-container-tile-body--text">
-          sold:{p.sold}
+          Sold : {p.sold}
         </p>
         <p className="product__tiles-container-tile-body--text">
-          createdAt: {new Date(p.createdAt).toDateString()}
+          Price : {p.price}
+        </p>
+        <p className="product__tiles-container-tile-body--text">
+          Images : {p.images.length}
+        </p>
+        <p className="product__tiles-container-tile-body--text">
+          createdAt{'  '}: {new Date(p.createdAt).toDateString()}
           {/* updatedAt: {p.updatedAt} */}
         </p>
         <p className="product__tiles-container-tile-body--text">
-          updatedAt: {new Date(p.updatedAt).toDateString()}
+          updatedAt : {new Date(p.updatedAt).toDateString()}
           {/* updatedAt: {p.updatedAt} */}
-        </p>
-        <p className="product__tiles-container-tile-body--text">
-          price:{p.price}
         </p>
       </div>
       {/* TILE FOOTER  */}
