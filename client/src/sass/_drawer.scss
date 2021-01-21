@@ -1,6 +1,6 @@
 .drawer {
   background-color: #fff;
-  min-height: 150vh;
+  min-height: 120vh;
   position: absolute;
   z-index: 8000;
   visibility: hidden;
@@ -15,7 +15,7 @@
   }
 
   &__header {
-    border: 1px solid black;
+    border-bottom: 1px solid $color-grey-dark;
     padding: 2rem;
     display: flex;
     justify-content: flex-end;
@@ -23,6 +23,18 @@
   &__container {
     display: flex;
     justify-content: center;
-    border: 1px solid black;
+    padding: 2rem;
+
+    &-list {
+      list-style: none;
+    }
+    &-item {
+      list-style: none;
+    }
+    &-link {
+      text-decoration: none;
+      font-size: 2rem;
+      text-transform: uppercase;
+    }
   }
 }

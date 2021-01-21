@@ -46,6 +46,7 @@ export default function ProductListItem({
       </a>
 
       <div className="category__link-icon-box">
+        <div className="product__item-text  ">Images : {p.images.length}</div>
         <svg
           className="category__link-icon icon"
           onClick={_getProduct.bind(this, [p._id, p.slug])}

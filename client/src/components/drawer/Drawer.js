@@ -15,7 +15,7 @@ export default function Drawer({ open }) {
           onClick={() => dispatch(drawerToggle(false))}
         >
           <div className="nav__link-icon-box">
-            <svg className=" icon">
+            <svg className=" nav__link-icon">
               <use href={sprite + '#icon-cross'} />
             </svg>
           </div>
@@ -23,9 +23,9 @@ export default function Drawer({ open }) {
       </div>
       <div className="drawer__container">
         <nav className="drawer__nav">
-          <ul className="nav__list">
-            <li>
-              <a href="/admin/category" className="nav__link">
+          <ul className="drawer__container">
+            <li className="drawer__container-item">
+              <a href="/admin/category" className="drawer__container-link">
                 Categories
               </a>
             </li>
