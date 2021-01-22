@@ -102,8 +102,9 @@
       &--focus {
         position: absolute;
         width: 101%;
-        min-height: 70rem;
-        background-color: $color-grey;
+        // min-height: 50rem;
+        background-color: $color-blue;
+        padding: 4rem 2rem;
 
         &:hover {
           transform: translateY(0);
@@ -138,6 +139,7 @@
           // border: 1px solid black;
           padding: 4rem;
           height: 90%;
+          background-color: #fff;
         }
       }
       &-footer {

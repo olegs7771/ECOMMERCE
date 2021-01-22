@@ -1,4 +1,6 @@
 .drawer {
+  grid-column: 1;
+  grid-row: 1;
   background-color: #fff;
   min-height: 120vh;
   position: absolute;
@@ -22,6 +24,7 @@
   }
   &__container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     padding: 2rem;
 

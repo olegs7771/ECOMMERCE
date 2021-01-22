@@ -1,4 +1,21 @@
+.header {
+  background-color: #fff;
+
+  &__container {
+    padding: 0 2rem;
+
+    &__inner {
+      display: grid;
+      grid-template-columns: repeat(13, minmax(0, 1fr));
+      grid-column-gap: 3rem;
+    }
+  }
+}
+
 .nav {
+  grid-column: 2/-1;
+  grid-row: 1;
+
   padding: 2rem;
   color: $color-black;
   height: 11rem;
@@ -68,6 +85,7 @@
   height: 2.5rem;
   width: 2.5rem;
   fill: currentColor;
+  margin-right: 1rem;
 
   &-box {
     // border: 1px solid black;
