@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { reload } from './utils/reloadUserAuth';
 // ROUTES
 import Navigation from './components/navigation/Navigation';
-
+import Drawer from './components/drawer/Drawer';
 import Home from './components/home/Home';
 import Register from './components/auth/Register';
 import Confirmation from './components/auth/Confirmation';
@@ -29,7 +29,7 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Navigation />
-
+        <Drawer />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/register" component={Register} />

@@ -11,12 +11,12 @@ const Home = () => {
   const drawerRedux = useSelector((state) => state.drawer.drawer);
 
   return (
-    <div>
+    <div className="home">
       <div
         className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
-      <p>Home</p>
+      <main className="home__container">Home container</main>
     </div>
   );
 };

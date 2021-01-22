@@ -16,7 +16,7 @@ export default function Drawer() {
           onClick={() => dispatch(drawerToggle(false))}
         >
           <div className="nav__link-icon-box">
-            <svg className=" nav__link-icon">
+            <svg className=" icon">
               <use href={sprite + '#icon-cross'} />
             </svg>
           </div>

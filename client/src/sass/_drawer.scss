@@ -6,19 +6,19 @@
   position: absolute;
   z-index: 8000;
   visibility: hidden;
-  transform: translateX(-470px);
+  transform: translate(-47rem, -7rem);
   transition: 0.2s;
   width: 30rem;
   right: auto;
 
   &--open {
     visibility: visible;
-    transform: translateX(0);
+    transform: translate(0, -7rem);
   }
 
   &__header {
-    border-bottom: 1px solid $color-grey-dark;
-    padding: 2rem;
+    border-bottom: 1px solid #eee;
+    padding: 1.45rem 2rem;
     display: flex;
     justify-content: flex-end;
   }

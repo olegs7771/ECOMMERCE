@@ -1,13 +1,28 @@
 .header {
   background-color: #fff;
+  max-width: 120rem;
+  margin: 0 auto;
 
   &__container {
-    padding: 0 2rem;
+    // padding: 0 2rem;
+    border-bottom: 0.5px solid #eee;
 
     &__inner {
       display: grid;
       grid-template-columns: repeat(13, minmax(0, 1fr));
-      grid-column-gap: 3rem;
+      grid-column-gap: 2rem;
+      @media only screen and (max-width: $lg-bp) {
+        grid-template-columns: 1fr;
+      }
+
+      &__aside {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @media only screen and (max-width: $lg-bp) {
+          display: none;
+        }
+      }
     }
   }
 }
@@ -18,16 +33,15 @@
 
   padding: 2rem;
   color: $color-black;
-  height: 11rem;
-  border-bottom: 0.5px solid #eee;
+
   position: relative;
 
   &__list {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     list-style: none;
     align-items: center;
-    height: 7rem;
+
     padding: 0 1rem;
   }
 

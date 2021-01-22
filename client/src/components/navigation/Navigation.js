@@ -31,17 +31,16 @@ const Navigation = ({ history }) => {
     <header className="header">
       <div className="header__container">
         <div className="header__container__inner">
-          <Drawer />
+          {/* ASIDE  */}
+          <div className="header__container__inner__aside">
+            <div className="nav__link-icon-box" onClick={_drawerToggle}>
+              <svg className="icon">
+                <use href={sprite + '#icon-menu'} />
+              </svg>
+            </div>
+          </div>
           <nav className="nav ">
             <ul className="nav__list">
-              <li className="nav__item">
-                <div className="nav__link-icon-box" onClick={_drawerToggle}>
-                  <svg className="nav__link-icon">
-                    <use href={sprite + '#icon-menu'} />
-                  </svg>
-                </div>
-              </li>
-
               {/* TOGGLE AUTH BLOCK  */}
               {auth.isAuthenticated ? (
                 <div className="nav__auth">
