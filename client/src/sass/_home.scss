@@ -1,10 +1,10 @@
 .home {
-  max-width: 120rem;
+  max-width: 180rem;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(13, minmax(0, 1fr));
   grid-column-gap: 2rem;
-  margin-top: 5rem;
+
   @media only screen and (max-width: $lg-bp) {
     grid-template-columns: 1fr;
   }
@@ -12,9 +12,20 @@
   &__container {
     grid-column: 2/-1;
     min-height: 100vh;
-    background-color: lightblue;
+    // background-color: lightblue;
+    padding: 4rem 1rem;
+
     @media only screen and (max-width: $lg-bp) {
       grid-column: 1;
+    }
+
+    &__main {
+      background-color: lightblue;
+      height: 100vh;
+    }
+
+    // SECTIONS
+    &__1 {
     }
   }
 }

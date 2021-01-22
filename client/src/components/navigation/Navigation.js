@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import sprite from '../../img/sprite.svg';
 import GoogleLogout from '../auth/GoogleoAUthLogout';
-import Drawer from '../drawer/Drawer';
+
 import { drawerToggle } from '../../store/actions/drawerAction';
 
 const Navigation = ({ history }) => {

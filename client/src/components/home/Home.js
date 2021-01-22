@@ -16,7 +16,30 @@ const Home = () => {
         className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
-      <main className="home__container">Home container</main>
+
+      <article className="home__container">
+        <h2 className="h2 heading-2 mb-md">Last Added Products</h2>
+        <div className="home__container__main">
+          <section className="home__container__1">
+            <div className="home__container__1-block">
+              <div className="home__container__1-block-l">
+                <img
+                  src=""
+                  alt="product"
+                  className="home__container__1-block-l--img"
+                />
+              </div>
+              <div className="home__container__1-block-r">
+                <img
+                  src=""
+                  alt="product"
+                  className="home__container__1-block-r--img"
+                />
+              </div>
+            </div>
+          </section>
+        </div>
+      </article>
     </div>
   );
 };
