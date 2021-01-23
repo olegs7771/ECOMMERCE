@@ -20,7 +20,7 @@
     }
 
     &__main {
-      background-color: lightblue;
+      // background-color: lightblue;
       height: 100vh;
     }
 
@@ -28,30 +28,34 @@
     &__1 {
       &-block {
         display: flex;
+        margin-bottom: -3rem;
         &-L,
         &-M,
         &-R {
           width: 100%;
           position: relative;
 
-          background-color: #fff;
+          // background-color: #fff;
           &--img {
             width: 100%;
-            margin-bottom: -0.5rem;
+            // margin-bottom: -0.5rem;
           }
         }
         // CAPTION
         &-caption {
+          overflow: hidden;
           position: absolute;
           transform: translateY(-8rem);
           padding: 0 2rem;
           width: 100%;
+          color: $color-grey;
+          font-weight: 700;
           background-image: linear-gradient(
             0deg,
-            rgba($color-grey-dark, 1) 10%,
-            rgba($color-grey-dark, 0.5) 10%,
-            rgba($color-grey-dark, 0.5) 90%,
-            rgba($color-grey-dark, 1) 10%
+            rgba($color-grey-dark, 0.1) 10%,
+            rgba($color-grey-dark, 0.4) 50%,
+            rgba($color-grey-dark, 0.2) 90%,
+            rgba($color-grey-dark, 0.05) 100%
           );
 
           &--title {

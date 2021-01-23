@@ -33,21 +33,20 @@ const Home = () => {
   useEffect(() => {
     getImages();
   }, [productsRedux]);
-
+  console.log('products', products);
   return (
     <div className="home">
       <div
         className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
+      {!products ? (
+        <article className="home__container">
+          <h2 className="h2 heading-2 mb-md">Last Added Products</h2>
+          <div className="home__container__main">
+            {/* SECTION  FLEX */}
 
-      <article className="home__container">
-        <h2 className="h2 heading-2 mb-md">Last Added Products</h2>
-        <div className="home__container__main">
-          {/* SECTION  */}
-          <section className="home__container__1">
-            {/* FLEX */}
-            <div className="home__container__1-block">
+            <section className="home__container__1-block">
               <figure className="home__container__1-block-L">
                 <Image
                   cloudName="dyl4kpmie"
@@ -74,6 +73,15 @@ const Home = () => {
                   crop="scale"
                   className="home__container__1-block-M--img"
                 />
+                {/* CAPTION  */}
+                <div className="home__container__1-block-caption">
+                  <p className="home__container__1-block-caption--title">
+                    {products[1].title}
+                  </p>
+                  <p className="home__container__1-block-caption--desc">
+                    ${products[1].price}
+                  </p>
+                </div>
               </figure>
               <figure className="home__container__1-block-R">
                 <Image
@@ -83,11 +91,22 @@ const Home = () => {
                   crop="scale"
                   className="home__container__1-block-R--img"
                 />
+                {/* CAPTION  */}
+                <div className="home__container__1-block-caption">
+                  <p className="home__container__1-block-caption--title">
+                    {products[2].title}
+                  </p>
+                  <p className="home__container__1-block-caption--desc">
+                    ${products[2].price}
+                  </p>
+                </div>
               </figure>
-            </div>
-          </section>
-        </div>
-      </article>
+            </section>
+          </div>
+        </article>
+      ) : (
+        <div>Loading</div>
+      )}
     </div>
   );
 };
