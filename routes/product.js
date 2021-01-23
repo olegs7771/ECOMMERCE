@@ -14,10 +14,14 @@ const {
   removeAllBySubId,
   uploadImage,
   deleteImage,
+  lastAdded,
 } = require('../controllers/productController');
 
-router.use(protect, restrictTo('admin'));
+// PUBLIC ROUTES
+router.route('/last-added').get(lastAdded); // get last added products for home page
 
+router.use(protect, restrictTo('admin'));
+//PROTECTED ROUTES
 router.route('/image').post(uploadImage).delete(deleteImage); //upload image
 router.route('/').post(create).get(getAll); // create one product
 router.route('/:subId').get(list); // get products by subId

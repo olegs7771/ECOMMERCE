@@ -24,7 +24,7 @@ export default function Drawer() {
       </div>
       {/* ADMIN OR USER  */}
       <div className="drawer__container">
-        {auth ? (
+        {auth.user.role === 'user' ? (
           // RANDOM VISITOR
           <nav className="drawer__nav">
             <ul className="drawer__container">
@@ -34,17 +34,17 @@ export default function Drawer() {
                 </a>
               </li>
               <li className="drawer__container-item">
-                <a href="3" className="drawer__container-link">
+                <a href="#" className="drawer__container-link">
                   Products
                 </a>
               </li>
               <li className="drawer__container-item">
-                <a href="3" className="drawer__container-link">
+                <a href="#" className="drawer__container-link">
                   Contact Us
                 </a>
               </li>
               <li className="drawer__container-item">
-                <a href="3" className="drawer__container-link">
+                <a href="#" className="drawer__container-link">
                   Other
                 </a>
               </li>

@@ -26,6 +26,18 @@
 
     // SECTIONS
     &__1 {
+      &-block {
+        display: flex;
+        &-L,
+        &-R {
+          width: 100%;
+          height: 20rem;
+          background-color: #fff;
+          &--img {
+            width: 100%;
+          }
+        }
+      }
     }
   }
 }

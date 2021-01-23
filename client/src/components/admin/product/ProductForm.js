@@ -24,7 +24,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
     quantity: '',
     images: [],
     colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
-    brands: ['Apple', 'Samsung', 'Silver', 'Microsoft', 'Lenovo', 'ASUS'],
+    brands: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS'],
     color: '',
     brand: '',
   };

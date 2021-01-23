@@ -9,6 +9,7 @@ const { cloudinary } = require('../utils/claudinary');
 //CREATE PRODUCT
 const create = asyncCatch(async (req, res, next) => {
   console.log('req.body product create', req.body);
+
   const product = await Product.create(req.body);
   const message = `Product ${product.title} was added.`;
   res.status(200).json({ status: 'success', message, data: product });
@@ -160,6 +161,19 @@ const deleteImage = asyncCatch(async (req, res, next) => {
   res.status(200).json({ status: 'success', message: 'Deleted successfully' });
 });
 
+//  GET LAST ADDED PRODUCTS
+// PUBLIC
+
+const lastAdded = asyncCatch(async (req, res, next) => {
+  console.log('req.query ', req.query);
+
+  const products = await Product.find().sort({ updatedAt: -1 }).limit(3);
+  if (!products) return next(new AppErrorHandler('No products found', 404));
+  res
+    .status(200)
+    .json({ qnt: products.length, status: 'success', data: products });
+});
+
 module.exports = {
   create,
   list,
@@ -171,4 +185,5 @@ module.exports = {
   removeAllBySubId,
   uploadImage,
   deleteImage,
+  lastAdded,
 };

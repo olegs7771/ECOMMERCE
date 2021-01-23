@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import {
   GET_PRODUCT_LIST,
   GET_PRODUCT_ALL,
@@ -13,7 +14,7 @@ import {
 //GET PRODUCTS BY subId
 
 export const getProductsListAction = (data) => async (dispatch) => {
-  // console.log('getProductsListAction data', data);
+  console.log('getProductsListAction data', data);
   dispatch({
     type: LOADING,
     payload: true,
@@ -40,7 +41,7 @@ export const getProductsListAction = (data) => async (dispatch) => {
 // GET ONE PRODUCT BY productId && slug
 
 export const getOneProduct = (data) => async (dispatch) => {
-  // console.log('getOneProduct data', data);
+  console.log('getOneProduct data', data);
   dispatch({
     type: LOADING,
     payload: true,
@@ -282,5 +283,21 @@ export const deleteImageAction = (data) => async (dispatch) => {
       type: GET_API_ERROR_MESSAGE,
       payload: error.response.data.message,
     });
+  }
+};
+
+// GET LAST 3 PRODUCTS FOR HOME PAGE
+
+export const getLast3ProductAction = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/v1/product/last-added');
+    console.log('res.data getLast3ProductAction ', res.data);
+
+    dispatch({
+      type: GET_PRODUCT_ALL,
+      payload: res.data.data,
+    });
+  } catch (error) {
+    console.log('error getLast3ProductAction', error);
   }
 };

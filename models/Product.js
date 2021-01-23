@@ -30,9 +30,9 @@ const productSchema = new mongoose.Schema(
       required: [true, 'Please provide the price'],
       validate: {
         validator: function (value) {
-          return /^\d+(,\d{3})*(\.\d{1,2})?$/.test(value);
+          return /^(?!0,?\d)([0-9]{2}[0-9]{0,}(\.[0-9]{2}))$/.test(value);
         },
-        message: (props) => `${props.value} is not valid price!`,
+        message: (props) => `${props.value} is not valid price format!`,
       },
       trim: true,
       maxLength: 32,
@@ -46,7 +46,7 @@ const productSchema = new mongoose.Schema(
       ref: 'Sub',
     },
     quantity: {
-      type: String,
+      type: Number,
       required: [true, 'Please provide quntity'],
       validate: {
         validator: function (value) {
@@ -83,6 +83,18 @@ const productSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+productSchema.pre('save', function (next) {
+  console.log('this to price', this);
+  next();
+});
+
+//  CREATE SLUG ON SAVE
+productSchema.pre('save', function (next) {
+  console.log('product creating this', this);
+  this.slug = slugify(this.title, { lower: true });
+  next();
+});
 
 // POPULATE IMAGES
 productSchema.methods.addImage = async function (imagePath) {
