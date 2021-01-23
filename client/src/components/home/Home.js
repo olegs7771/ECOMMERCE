@@ -11,11 +11,28 @@ const Home = () => {
   // REDUX
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   const productsRedux = useSelector((state) => state.product.products);
+  // STATE
+  const [images, setImages] = useState([]);
+  const [products, setProducts] = useState([]);
 
   // GET PRODUST ON LOAD TO SHOW 3 LAST ADDED PRODUCTS
   useEffect(() => {
     dispatch(getLast3ProductAction());
   }, [dispatch]);
+
+  // GET IMAGES AND PRODUCT FROM PRODUCTS TO STATE
+
+  const getImages = () => {
+    productsRedux.forEach((el) => {
+      console.log('el', el.images[0]);
+      setImages((images) => images.concat(el.images[0]));
+      setProducts((products) => products.concat(el));
+    });
+  };
+
+  useEffect(() => {
+    getImages();
+  }, [productsRedux]);
 
   return (
     <div className="home">
@@ -31,20 +48,42 @@ const Home = () => {
           <section className="home__container__1">
             {/* FLEX */}
             <div className="home__container__1-block">
-              <div className="home__container__1-block-L">
-                <img
-                  src=""
-                  alt="product"
+              <figure className="home__container__1-block-L">
+                <Image
+                  cloudName="dyl4kpmie"
+                  publicId={images[0]}
+                  width="600"
+                  crop="scale"
                   className="home__container__1-block-L--img"
                 />
-              </div>
-              <div className="home__container__1-block-R">
-                <img
-                  src=""
-                  alt="product"
+                {/* CAPTION  */}
+                <div className="home__container__1-block-caption">
+                  <p className="home__container__1-block-caption--title">
+                    {products[0].title}
+                  </p>
+                  <p className="home__container__1-block-caption--desc">
+                    ${products[0].price}
+                  </p>
+                </div>
+              </figure>
+              <figure className="home__container__1-block-M">
+                <Image
+                  cloudName="dyl4kpmie"
+                  publicId={images[1]}
+                  width="600"
+                  crop="scale"
+                  className="home__container__1-block-M--img"
+                />
+              </figure>
+              <figure className="home__container__1-block-R">
+                <Image
+                  cloudName="dyl4kpmie"
+                  publicId={images[2]}
+                  width="600"
+                  crop="scale"
                   className="home__container__1-block-R--img"
                 />
-              </div>
+              </figure>
             </div>
           </section>
         </div>

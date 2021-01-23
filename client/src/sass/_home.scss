@@ -29,12 +29,36 @@
       &-block {
         display: flex;
         &-L,
+        &-M,
         &-R {
           width: 100%;
-          height: 20rem;
+          position: relative;
+
           background-color: #fff;
           &--img {
             width: 100%;
+            margin-bottom: -0.5rem;
+          }
+        }
+        // CAPTION
+        &-caption {
+          position: absolute;
+          transform: translateY(-8rem);
+          padding: 0 2rem;
+          width: 100%;
+          background-image: linear-gradient(
+            0deg,
+            rgba($color-grey-dark, 1) 10%,
+            rgba($color-grey-dark, 0.5) 10%,
+            rgba($color-grey-dark, 0.5) 90%,
+            rgba($color-grey-dark, 1) 10%
+          );
+
+          &--title {
+            font-size: 3rem;
+          }
+          &--desc {
+            font-size: 2rem;
           }
         }
       }
