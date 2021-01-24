@@ -14,7 +14,9 @@ const Navigation = ({ history }) => {
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   // STATE
   const [drawer, setDrawer] = useState(false);
-  const [offset, setOffset] = useState(0);
+
+  const [scrollDirection, setScrollDirection] = useState(null);
+  const [prevOffset, setPrevOffset] = useState(0);
   // SET DRAWER REDUX IN STATE
   useEffect(() => {
     setDrawer(drawerRedux);
@@ -26,14 +28,32 @@ const Navigation = ({ history }) => {
   useEffect(() => {
     dispatch(drawerToggle(drawer));
   }, [dispatch, drawer]);
+  ///////////////////////////////////////////////////////////
 
   // SCROLL OFFSET
+  const handleScrollPosition = () => {
+    let scrollY = window.scrollY;
+    console.log('scrollY', scrollY);
+    console.log('prevOffset', prevOffset);
+    if (scrollY === 0) {
+      setScrollDirection(null);
+    }
+    if (scrollY > prevOffset) {
+      setScrollDirection('down');
+    } else if (scrollY < prevOffset) {
+      setScrollDirection('up');
+    }
+    setPrevOffset(scrollY);
+    console.log('scrollDirection', scrollDirection);
+  };
+
   useEffect(() => {
-    window.onscroll = () => {
-      setOffset(window.pageYOffset);
+    window.addEventListener('scroll', handleScrollPosition, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScrollPosition);
     };
   }, []);
-  console.log('window', window);
+
   return (
     <header className="header">
       <div className="header__container">

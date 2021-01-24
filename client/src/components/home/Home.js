@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { drawerToggle } from '../../store/actions/drawerAction';
 import { getLast3ProductAction } from '../../store/actions/productAction';
-import sprite from '../../img/sprite.svg';
-import { Spinner } from '../../utils/LoadingComponent';
+// import sprite from '../../img/sprite.svg';
+// import { Spinner } from '../../utils/LoadingComponent';
 import { Image } from 'cloudinary-react';
 
 const Home = () => {
@@ -11,7 +11,7 @@ const Home = () => {
   // REDUX
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   const productsRedux = useSelector((state) => state.product.products);
-  const loadingRedux = useSelector((state) => state.loading.loading);
+  // const loadingRedux = useSelector((state) => state.loading.loading);
 
   // GET PRODUST ON LOAD TO SHOW 3 LAST ADDED PRODUCTS
   useEffect(() => {
