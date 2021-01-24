@@ -14,7 +14,7 @@ const Navigation = ({ history }) => {
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   // STATE
   const [drawer, setDrawer] = useState(false);
-
+  const [offset, setOffset] = useState(0);
   // SET DRAWER REDUX IN STATE
   useEffect(() => {
     setDrawer(drawerRedux);
@@ -27,6 +27,13 @@ const Navigation = ({ history }) => {
     dispatch(drawerToggle(drawer));
   }, [dispatch, drawer]);
 
+  // SCROLL OFFSET
+  useEffect(() => {
+    window.onscroll = () => {
+      setOffset(window.pageYOffset);
+    };
+  }, []);
+  console.log('window', window);
   return (
     <header className="header">
       <div className="header__container">

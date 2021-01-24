@@ -11,102 +11,58 @@ const Home = () => {
   // REDUX
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   const productsRedux = useSelector((state) => state.product.products);
-  // STATE
-  const [images, setImages] = useState([]);
-  const [products, setProducts] = useState([]);
+  const loadingRedux = useSelector((state) => state.loading.loading);
 
   // GET PRODUST ON LOAD TO SHOW 3 LAST ADDED PRODUCTS
   useEffect(() => {
     dispatch(getLast3ProductAction());
   }, [dispatch]);
 
-  // GET IMAGES AND PRODUCT FROM PRODUCTS TO STATE
-
-  const getImages = () => {
-    productsRedux.forEach((el) => {
-      console.log('el', el.images[0]);
-      setImages((images) => images.concat(el.images[0]));
-      setProducts((products) => products.concat(el));
-    });
-  };
-
-  useEffect(() => {
-    getImages();
-  }, [productsRedux]);
-  console.log('products', products);
   return (
     <div className="home">
       <div
         className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
-      {!products ? (
-        <article className="home__container">
-          <h2 className="h2 heading-2 mb-md">Last Added Products</h2>
-          <div className="home__container__main">
-            {/* SECTION  FLEX */}
 
-            <section className="home__container__1-block">
-              <figure className="home__container__1-block-L">
-                <Image
-                  cloudName="dyl4kpmie"
-                  publicId={images[0]}
-                  width="600"
-                  crop="scale"
-                  className="home__container__1-block-L--img"
-                />
-                {/* CAPTION  */}
-                <div className="home__container__1-block-caption">
-                  <p className="home__container__1-block-caption--title">
-                    {products[0].title}
-                  </p>
-                  <p className="home__container__1-block-caption--desc">
-                    ${products[0].price}
-                  </p>
-                </div>
-              </figure>
-              <figure className="home__container__1-block-M">
-                <Image
-                  cloudName="dyl4kpmie"
-                  publicId={images[1]}
-                  width="600"
-                  crop="scale"
-                  className="home__container__1-block-M--img"
-                />
-                {/* CAPTION  */}
-                <div className="home__container__1-block-caption">
-                  <p className="home__container__1-block-caption--title">
-                    {products[1].title}
-                  </p>
-                  <p className="home__container__1-block-caption--desc">
-                    ${products[1].price}
-                  </p>
-                </div>
-              </figure>
-              <figure className="home__container__1-block-R">
-                <Image
-                  cloudName="dyl4kpmie"
-                  publicId={images[2]}
-                  width="600"
-                  crop="scale"
-                  className="home__container__1-block-R--img"
-                />
-                {/* CAPTION  */}
-                <div className="home__container__1-block-caption">
-                  <p className="home__container__1-block-caption--title">
-                    {products[2].title}
-                  </p>
-                  <p className="home__container__1-block-caption--desc">
-                    ${products[2].price}
-                  </p>
-                </div>
-              </figure>
-            </section>
-          </div>
-        </article>
-      ) : (
-        <div>Loading</div>
-      )}
+      <article className="home__container">
+        <div className="home__container__main">
+          <h1 className="heading-1 mb-md">Welcome</h1>
+          {/* LAST ADDED PRODUCTS  */}
+          {productsRedux.length !== 0 && (
+            <div className="home__container__1">
+              <h2 className="h2 heading-2 mb-sm">Last Added Products</h2>
+              {/* SECTION  GRID */}
+              <section className="home__container__1-block">
+                {productsRedux.map((product, i) => (
+                  <figure className="home__container__1-block-L" key={i}>
+                    <Image
+                      cloudName="dyl4kpmie"
+                      publicId={product.images[0]}
+                      width="800"
+                      crop="scale"
+                      className="home__container__1-block-L--img"
+                    />
+                    {/* CAPTION  */}
+                    <div className="home__container__1-block-caption">
+                      <p className="home__container__1-block-caption--title">
+                        {product.title}
+                      </p>
+                      <p className="home__container__1-block-caption--desc">
+                        ${product.price}
+                      </p>
+                    </div>
+                  </figure>
+                ))}
+              </section>
+            </div>
+          )}
+          {/* LAST ADDED PRODUCTS END  */}
+          {/* ////////////////////////////////////////// */}
+          {/* MAIN PAGE */}
+          <div className="home__container__2">main</div>
+        </div>
+      </article>
     </div>
   );
 };

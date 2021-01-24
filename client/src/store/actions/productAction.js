@@ -289,8 +289,19 @@ export const deleteImageAction = (data) => async (dispatch) => {
 // GET LAST 3 PRODUCTS FOR HOME PAGE
 
 export const getLast3ProductAction = () => async (dispatch) => {
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+
   try {
     const res = await axios.get('/api/v1/product/last-added');
+
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+
     console.log('res.data getLast3ProductAction ', res.data);
 
     dispatch({
@@ -298,6 +309,10 @@ export const getLast3ProductAction = () => async (dispatch) => {
       payload: res.data.data,
     });
   } catch (error) {
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
     console.log('error getLast3ProductAction', error);
   }
 };

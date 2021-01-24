@@ -1,10 +1,13 @@
 .header {
   background-color: #fff;
   max-width: 180rem;
-  margin: 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 
   &__container {
-    // padding: 0 2rem;
+    height: 8rem;
+
     border-bottom: 0.5px solid #eee;
 
     &__inner {

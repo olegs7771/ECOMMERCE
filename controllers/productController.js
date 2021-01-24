@@ -167,7 +167,7 @@ const deleteImage = asyncCatch(async (req, res, next) => {
 const lastAdded = asyncCatch(async (req, res, next) => {
   console.log('req.query ', req.query);
 
-  const products = await Product.find().sort({ updatedAt: -1 }).limit(3);
+  const products = await Product.find().sort({ updatedAt: -1 }).limit(4);
   if (!products) return next(new AppErrorHandler('No products found', 404));
   res
     .status(200)
