@@ -47,7 +47,7 @@ const Navigation = ({ history }) => {
           ? 'header header--visible'
           : scrollDirection === 'down'
           ? 'header'
-          : 'header'
+          : 'header header--visible'
       }
     >
       <div className="header__container">
@@ -69,7 +69,7 @@ const Navigation = ({ history }) => {
                   {auth.user.role === 'admin' ? (
                     <li className="nav__item nav__link-icon-box">
                       <a href="/admin" className="nav__link">
-                        <svg className="nav__link-icon">
+                        <svg className="icon">
                           <use href={sprite + '#icon-user-tie'} />
                         </svg>
                       </a>

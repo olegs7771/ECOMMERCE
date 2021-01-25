@@ -29,7 +29,7 @@ export default function Drawer() {
           <nav className="drawer__nav">
             <ul className="drawer__container">
               <li className="drawer__container-item">
-                <a href="3" className="drawer__container-link">
+                <a href="/category" className="drawer__container-link">
                   Categories
                 </a>
               </li>
@@ -66,7 +66,7 @@ export default function Drawer() {
           <nav className="drawer__nav">
             <ul className="drawer__container">
               <li className="drawer__container-item">
-                <a href="3" className="drawer__container-link">
+                <a href="/category" className="drawer__container-link">
                   Categories
                 </a>
               </li>

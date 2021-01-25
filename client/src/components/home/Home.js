@@ -4,6 +4,7 @@ import { drawerToggle } from '../../store/actions/drawerAction';
 import { getLast3ProductAction } from '../../store/actions/productAction';
 // import sprite from '../../img/sprite.svg';
 // import { Spinner } from '../../utils/LoadingComponent';
+import imageHome from '../../img/hero homepage.jpg';
 import { Image } from 'cloudinary-react';
 
 const Home = () => {
@@ -60,7 +61,23 @@ const Home = () => {
           {/* LAST ADDED PRODUCTS END  */}
           {/* ////////////////////////////////////////// */}
           {/* MAIN PAGE */}
-          <div className="home__container__2">main</div>
+          <div className="home__container__2">
+            <div className="home__container__2-img-box">
+              <img
+                src={imageHome}
+                alt="hero home"
+                className="home__container__2--img"
+              />
+            </div>
+            <div className="home__container__2-article-box">
+              <p className="home__container__2-article">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga
+                odit, aspernatur cupiditate debitis ad facere expedita sint
+                voluptate, minus blanditiis fugit maiores tempora eligendi quod
+                animi. Cupiditate saepe consequuntur aperiam?
+              </p>
+            </div>
+          </div>
         </div>
       </article>
     </div>
