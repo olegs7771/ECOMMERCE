@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 
 import { withRouter } from 'react-router-dom';
 import sprite from '../../img/sprite.svg';
@@ -14,9 +15,8 @@ const Navigation = ({ history }) => {
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   // STATE
   const [drawer, setDrawer] = useState(false);
-
   const [scrollDirection, setScrollDirection] = useState(null);
-  const [prevOffset, setPrevOffset] = useState(0);
+
   // SET DRAWER REDUX IN STATE
   useEffect(() => {
     setDrawer(drawerRedux);
@@ -31,31 +31,26 @@ const Navigation = ({ history }) => {
   ///////////////////////////////////////////////////////////
 
   // SCROLL OFFSET
-  const handleScrollPosition = () => {
-    let scrollY = window.scrollY;
-    console.log('scrollY', scrollY);
-    console.log('prevOffset', prevOffset);
-    if (scrollY === 0) {
-      setScrollDirection(null);
-    }
-    if (scrollY > prevOffset) {
-      setScrollDirection('down');
-    } else if (scrollY < prevOffset) {
-      setScrollDirection('up');
-    }
-    setPrevOffset(scrollY);
-    console.log('scrollDirection', scrollDirection);
-  };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScrollPosition, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScrollPosition);
-    };
-  }, []);
+  useScrollPosition((position) => {
+    console.log('position', position);
+    if (position.currPos.y > position.prevPos.y) {
+      setScrollDirection('up');
+    } else {
+      setScrollDirection('down');
+    }
+  });
 
   return (
-    <header className="header">
+    <header
+      className={
+        scrollDirection === 'up'
+          ? 'header--sticky'
+          : scrollDirection === 'down'
+          ? 'header'
+          : 'header'
+      }
+    >
       <div className="header__container">
         <div className="header__container__inner">
           {/* ASIDE  */}

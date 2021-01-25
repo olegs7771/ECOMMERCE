@@ -1,9 +1,13 @@
 .header {
   background-color: #fff;
   max-width: 180rem;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  transition: 0.2s easy-in;
+
+  &--sticky {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
   &__container {
     height: 8rem;
