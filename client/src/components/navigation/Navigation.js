@@ -33,7 +33,6 @@ const Navigation = ({ history }) => {
   // SCROLL OFFSET
 
   useScrollPosition((position) => {
-    console.log('position', position);
     if (position.currPos.y > position.prevPos.y) {
       setScrollDirection('up');
     } else {
@@ -45,7 +44,7 @@ const Navigation = ({ history }) => {
     <header
       className={
         scrollDirection === 'up'
-          ? 'header--sticky'
+          ? 'header header--visible'
           : scrollDirection === 'down'
           ? 'header'
           : 'header'

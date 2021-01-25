@@ -1,12 +1,18 @@
 .header {
   background-color: #fff;
   max-width: 180rem;
-  transition: 0.2s easy-in;
+  position: relative;
+  // visibility: hidden;
+  transform: translate(0, -10rem);
+  transition: 0.2s;
 
-  &--sticky {
-    position: sticky;
+  z-index: 100;
+
+  &--visible {
+    // visibility: visible;
     top: 0;
-    z-index: 100;
+    position: sticky;
+    transform: none;
   }
 
   &__container {
