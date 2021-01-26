@@ -27,14 +27,28 @@ export default function Category() {
 
       <div className="pub-category__container">
         <h2 className="heading-2 mb-md pub-category__heading  ">Categories </h2>
-
-        {categoriesRedux.length === 0 ? (
-          <div>No Categories to show</div>
+        {loadingRedux ? (
+          <div>Loading..</div>
         ) : (
-          <div className="pub-category__list">
-            {categoriesRedux.map((category, index) => (
-              <div key={index}>{category.name}</div>
-            ))}
+          <div>
+            {categoriesRedux.length === 0 ? (
+              <div>No Categories to show</div>
+            ) : (
+              <div className="pub-category__list">
+                {categoriesRedux.map((category, index) => (
+                  <div key={index} className="pub-category__card">
+                    <img
+                      src=""
+                      alt="category"
+                      className="pub-category__card--img"
+                    />
+                    <div className="pub-category__card--name">
+                      {category.name}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>

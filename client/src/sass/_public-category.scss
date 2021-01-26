@@ -28,9 +28,20 @@
   &__heading {
     display: inline-block;
     margin: 0 auto;
+    margin-bottom: 4rem;
   }
 
   &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    grid-gap: 1rem;
+  }
+
+  &__card {
     background-color: lightblue;
+    height: 20rem;
+    &--img {
+      width: 100%;
+    }
   }
 }

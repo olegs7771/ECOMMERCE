@@ -15,6 +15,10 @@ const categorySchema = new mongoose.Schema(
       lowercase: true,
       index: true,
     },
+    image: {
+      type: String,
+      required: [true, 'Please provide background image for category'],
+    },
   },
   { timestamps: true }
 );
