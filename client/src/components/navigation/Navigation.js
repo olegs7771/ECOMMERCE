@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
-
+import Logo from '../../img/ecommerce-logo.png';
 import { withRouter } from 'react-router-dom';
 import sprite from '../../img/sprite.svg';
 import GoogleLogout from '../auth/GoogleoAUthLogout';
@@ -61,9 +61,17 @@ const Navigation = ({ history }) => {
             </div>
           </div>
           <nav className="nav ">
-            <ul className="nav__list">
-              {/* TOGGLE AUTH BLOCK  */}
-              {auth.isAuthenticated ? (
+            {/* FLEX  */}
+            {/* TOGGLE AUTH BLOCK  */}
+            {auth.isAuthenticated ? (
+              <ul className="nav__list">
+                {/* LOGO */}
+                <li className="nav__item ">
+                  <a href="/" className="nav__link nav__link-logo">
+                    <img src={Logo} alt="logo" className="nav__item__logo" />
+                  </a>
+                </li>
+
                 <div className="nav__auth">
                   {/* SHOW ONLY IF ROLE ADMIN  */}
                   {auth.user.role === 'admin' ? (
@@ -97,7 +105,15 @@ const Navigation = ({ history }) => {
                     <GoogleLogout history={history} />
                   </li>
                 </div>
-              ) : (
+              </ul>
+            ) : (
+              <ul className="nav__list">
+                {/* LOGO */}
+                <li className="nav__item ">
+                  <a href="/" className="nav__link nav__link-logo">
+                    <img src={Logo} alt="logo" className="nav__item__logo" />
+                  </a>
+                </li>
                 <div className="nav__auth">
                   <li className="nav__item">
                     <a href="/login" className="nav__link">
@@ -116,8 +132,8 @@ const Navigation = ({ history }) => {
                     </a>
                   </li>
                 </div>
-              )}
-            </ul>
+              </ul>
+            )}
           </nav>
         </div>
       </div>

@@ -44,26 +44,28 @@
 .nav {
   grid-column: 2/-1;
   grid-row: 1;
+  @media only screen and (max-width: $lg-bp) {
+    grid-column: 1;
+    padding: 2rem;
+  }
 
-  padding: 2rem;
+  padding: 2rem 0;
   color: $color-black;
 
   position: relative;
 
   &__list {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     list-style: none;
     align-items: center;
-
-    padding: 0 1rem;
   }
 
   &__user,
   &__auth {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
 
     &-box {
       // border: 1px solid black;
@@ -87,6 +89,9 @@
     }
     &--menu {
       cursor: pointer;
+    }
+    &__logo {
+      width: 100%;
     }
   }
 
@@ -129,4 +134,13 @@
       border: 1px solid $color-blue;
     }
   }
+}
+
+.nav__link-logo {
+  width: 20rem;
+  border-left: 1rem solid $color-red;
+
+  background-color: $color-black;
+
+  padding: 1rem 2rem;
 }
