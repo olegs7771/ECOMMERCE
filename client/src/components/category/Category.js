@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { drawerToggle } from '../../store/actions/drawerAction';
 import { getCategoriesList } from '../../store/actions/categoryAction';
+import no_image from '../../img/no_image.png';
 
 export default function Category() {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ export default function Category() {
                 {categoriesRedux.map((category, index) => (
                   <div key={index} className="pub-category__card">
                     <img
-                      src=""
+                      src={category.image ? category.image : no_image}
                       alt="category"
                       className="pub-category__card--img"
                     />

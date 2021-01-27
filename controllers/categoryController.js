@@ -6,9 +6,22 @@ const { cloudinary } = require('../utils/claudinary');
 
 // CREATE GATEGORY BY ADMIN
 const create = asyncCatch(async (req, res, next) => {
-  console.log('req.body create category', req.body);
+  //1) Create slug
+  const slug = slugify(req.body.name, { lower: true });
+  console.log('slug', slug);
+  const uploadedResponse = await cloudinary.uploader.upload(req.body.image, {
+    upload_preset: 'dev_setups',
+    folder: `categories/${slug}`,
+  });
+  //2) Create new body to store in db
+  console.log('uploadedResponse', uploadedResponse);
+  const bodyObject = { name: req.body.name, image: uploadedResponse.public_id };
+
+  const category = await Category.create(bodyObject);
+
+  // console.log('req.body create category', req.body);
   // const category = await Category.create(req.body);
-  // res.status(200).json({ status: 'success', data: category });
+  res.status(200).json({ status: 'success', data: category });
 });
 ////////////////////////////////////////////////////
 // FIND ALL CATEGORIES PUBLIC
