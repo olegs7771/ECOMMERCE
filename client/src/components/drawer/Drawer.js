@@ -34,17 +34,17 @@ export default function Drawer() {
                 </a>
               </li>
               <li className="drawer__container-item">
-                <a href="#!" className="drawer__container-link">
+                <a href="/" className="drawer__container-link">
                   Products
                 </a>
               </li>
               <li className="drawer__container-item">
-                <a href="#!" className="drawer__container-link">
+                <a href="/" className="drawer__container-link">
                   Contact Us
                 </a>
               </li>
               <li className="drawer__container-item">
-                <a href="#!" className="drawer__container-link">
+                <a href="/" className="drawer__container-link">
                   Other
                 </a>
               </li>

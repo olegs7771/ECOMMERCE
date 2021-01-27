@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+import sprite from '../../../img/sprite.svg';
 
-import { uploadImageAction } from '../../../store/actions/productAction';
-
-export default function CardImageForm({
-  product,
-  history,
-  category,
-  delMode,
-  confirmDelete,
-}) {
-  const dispatch = useDispatch();
+export default function CardImageForm({ _selectImage }) {
+  // const dispatch = useDispatch();
   // REDUX
 
   const [selectedFile, setSelectFile] = useState(null);
   const [selectedFilePreview, setSelectFilePreview] = useState(null);
   const [preview, setPreview] = useState(false);
-  const [deleteState, setDeleteState] = useState(false);
+
+  const [submitted, setSubmitted] = useState(false);
 
   const _onChange = (e) => {
+    console.log('e.target', e.target);
     console.log('changed', e.target.files[0]);
     if (!e.target.files[0]) {
       setSelectFilePreview(null);
@@ -40,37 +35,41 @@ export default function CardImageForm({
     };
   };
 
-  const _upload = (e) => {
+  const _submit = (e) => {
     e.preventDefault();
 
     if (!selectedFile || !preview) return;
+    // uploadImage(selectedFilePreview);
+    setSubmitted(true);
     uploadImage(selectedFilePreview);
   };
 
   const uploadImage = (base64EncodedImage) => {
     const data = {
-      product,
-      category,
       file: base64EncodedImage,
-      productId: product._id,
-      slug: product.slug,
-      sub: product.sub,
     };
-
-    dispatch(uploadImageAction(data, history));
+    _selectImage(data);
   };
 
   // SET DELETE MODE HERE AND IN PARENT
 
-  const _setDeleteMode = () => {
-    delMode();
-    setDeleteState(!deleteState);
+  // const [selectedFilePreview, setSelectFilePreview] = useState(null);
+  // const [preview, setPreview] = useState(false);
+  // const [deleteState, setDeleteState] = useState(false);
+  const _clearState = (e) => {
+    console.log('canceled');
+    setPreview(false);
+    setSelectFilePreview(null);
+    setSelectFile(null);
+    setSubmitted(false);
   };
-
   return (
-    <div className="card__form ">
+    <div className="category__cta-block__image-form ">
+      <span className="category__cta-block__image-form-title mb-sm">
+        Pick image for gategory
+      </span>
       {preview && (
-        <div className="profile__avatar-container--preview card__form-preview  ">
+        <div className="category__cta-block__image-form-preview  ">
           <img
             src={selectedFilePreview}
             alt="preview"
@@ -79,55 +78,39 @@ export default function CardImageForm({
           />
         </div>
       )}
-
-      <form onSubmit={_upload} className="card__form-container ">
-        <label className="file">
+      <form
+        onSubmit={_submit}
+        className="category__cta-block__image-form-container "
+      >
+        <label className="custom-file-input-container mb-sm">
           <input
             type="file"
             name="image"
-            className="mb-sm"
             onChange={_onChange}
+            className="custom-file-input"
+            key={Date.now()} //for reseting input file state
           />
+          {submitted && (
+            <svg className="icon category__cta-block__image-form-icon">
+              <use href={sprite + '#icon-checkmark'} />
+            </svg>
+          )}
         </label>
 
         {preview ? (
-          <div className="card__form-btn-group">
+          <div className="category__cta-block__image-form-btn-group">
             <button className="btn" type="submit">
               Submit
             </button>
-            <button
-              className="btn"
-              type="button"
-              onClick={() => setPreview(false)}
-            >
+            <button className="btn" type="button" onClick={_clearState}>
               Cancel
             </button>
           </div>
         ) : (
-          <div className="card__form-btn-group">
+          <div className="category__cta-block__image-form-btn-group">
             <button className="btn" type="submit">
               Submit
             </button>
-
-            {/* SET STATE TO DELETE IN PARENT  */}
-            {deleteState ? (
-              <div className="">
-                <button className="btn" type="button" onClick={_setDeleteMode}>
-                  Cancel
-                </button>
-                <button
-                  className="btn btn-warning"
-                  type="button"
-                  onClick={confirmDelete}
-                >
-                  Delete
-                </button>
-              </div>
-            ) : (
-              <button className="btn" type="button" onClick={_setDeleteMode}>
-                Delete
-              </button>
-            )}
           </div>
         )}
       </form>

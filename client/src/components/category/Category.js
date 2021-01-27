@@ -1,6 +1,6 @@
 // Public Page . Showing list of categories
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { drawerToggle } from '../../store/actions/drawerAction';
 import { getCategoriesList } from '../../store/actions/categoryAction';

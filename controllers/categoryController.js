@@ -2,6 +2,7 @@ const asyncCatch = require('../utils/asyncCatch');
 const Category = require('../models/Category');
 const AppErrorHandler = require('../utils/AppError');
 const slugify = require('slugify');
+const { cloudinary } = require('../utils/claudinary');
 
 // CREATE GATEGORY BY ADMIN
 const create = asyncCatch(async (req, res, next) => {

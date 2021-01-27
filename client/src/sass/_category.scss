@@ -11,12 +11,35 @@
   }
 
   &__cta-block {
-    border: 1px solid green;
+    border-right: 1px solid $color-grey-dark;
     border-radius: 3px;
     display: flex;
     flex-direction: column;
-    padding: 2rem 1rem;
+    padding: 0 1rem 2rem 1rem;
     width: 30%;
+    align-items: center;
+
+    &__image-form {
+      padding: 0;
+      margin: 0 0 2rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &-cintainer {
+        display: flex;
+        justify-content: center;
+      }
+
+      &-title {
+        display: inline-block;
+        font-size: 1.6rem;
+      }
+
+      &-icon {
+        fill: $color-valid;
+      }
+    }
   }
 
   &__list-box {
@@ -98,6 +121,6 @@
 
   &__form {
     padding: 0;
-    background-color: lightblue;
+    // background-color: lightblue;
   }
 }

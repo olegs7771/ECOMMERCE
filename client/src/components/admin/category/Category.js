@@ -16,6 +16,7 @@ import sprite from '../../../img/sprite.svg';
 import Form from '../../../utils/AddForm';
 import CategoryItem from './CategoryItem';
 import Filter from '../../../utils/FilterForm';
+import CategoryImageForm from './CategoryImageForm';
 
 import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
 
@@ -35,17 +36,25 @@ export default function Category(props) {
   const [keyword, setKeyword] = useState('');
   const [error, setError] = useState(null);
   const [name, setName] = useState('');
+  const [image, setImage] = useState(null);
 
-  // FORM ADD CATEGORY
+  // FORM ADD CATEGORY  NAME && IMAGE
   const _onSubmit = (e) => {
     e.preventDefault();
-    const data = { name };
+    const data = { name, image };
     dispatch(createCategoryAction(data));
   };
+
+  // SET NAME FOR NEW CATEGORY coming from child
   const _setName = (e) => {
     setName(e.target.value);
   };
 
+  // SET IMAGE FOR NEW CATEGORY coming from child
+  const _selectImage = (e) => {
+    console.log('e select image', e);
+    setImage(e.file);
+  };
   //LOAD COMPONENT AND FETCH  CATEGORIES
   useEffect(() => {
     dispatch(getCategoriesList());
@@ -95,12 +104,8 @@ export default function Category(props) {
           {auth.isAuthenticated && auth.user.role === 'admin' ? (
             <div className="category__container">
               <div className="category__cta-block">
-                {/* FILTER FORM  */}
-                <Filter
-                  _setFilterSearch={_setFilterSearch}
-                  keyword={keyword}
-                  _setName={_setName}
-                />
+                {/* ADD IMAGE TO CATEGORY  */}
+                <CategoryImageForm _selectImage={_selectImage} />
 
                 {/* CATEGORY CREATE FORM  */}
                 <Form
@@ -112,6 +117,12 @@ export default function Category(props) {
               </div>
               {/* CATEGORY LIST  */}
               <div className="category__list-box">
+                {/* FILTER FORM  */}
+                <Filter
+                  _setFilterSearch={_setFilterSearch}
+                  keyword={keyword}
+                  _setName={_setName}
+                />
                 {loading ? (
                   <Spinner loading={props.loading} />
                 ) : error ? (
