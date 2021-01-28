@@ -103,6 +103,8 @@ export default function Category(props) {
           {/* CHECK ADMIN  */}
           {auth.isAuthenticated && auth.user.role === 'admin' ? (
             <div className="category__container">
+              {/* ///////////////////////////////////////////////////// */}
+              {/* LEFT BLOCK  */}
               <div className="category__cta-block">
                 {/* ADD IMAGE TO CATEGORY  */}
                 <CategoryImageForm _selectImage={_selectImage} />
@@ -115,6 +117,8 @@ export default function Category(props) {
                   title="add category (name)"
                 />
               </div>
+              {/* ///////////////////////////////////////////////////// */}
+              {/* RIGHT BLOCK  */}
               {/* CATEGORY LIST  */}
               <div className="category__list-box">
                 {/* FILTER FORM  */}

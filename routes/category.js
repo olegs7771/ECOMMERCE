@@ -12,7 +12,7 @@ const {
 
 //PUBLIC
 router.route('/').get(list); //get all categories
-router.route('/:slug').get(read);
+router.route('/:slug').get(read); //get one category
 
 //ALL ROUTES PASS AUTHORIZATION MIDDLEWARE
 router.use(protect);

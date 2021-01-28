@@ -18,7 +18,7 @@ import Form from '../../../utils/AddForm';
 import Filter from '../../../utils/FilterForm';
 import SubItem from './SubItem';
 import sprite from '../../../img/sprite.svg';
-import LinkBtn from '../../../utils/LinkBtn';
+import CategoryForSub from '../category/CategoryForSub';
 
 import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
 export default function Sub(props) {
@@ -116,15 +116,16 @@ export default function Sub(props) {
         />
         <div className="category">
           <div className="category__header">
-            <LinkBtn btnText="back to categories" />
+            <h1 className="heading-3 mb-md">{props.match.params.slug}</h1>
 
-            <h1 className="heading-3 mb-md">
-              Sub Categories for [{props.match.params.slug}]
-            </h1>
+            {/* FOR LOADING CATEGORY  */}
+            <CategoryForSub slug={props.match.params.slug} />
           </div>
           {/* CHECK ADMIN  */}
           {auth.isAuthenticated && auth.user.role === 'admin' ? (
             <div className="category__container">
+              {/* //////////////////////////////////////////// */}
+              {/* LEFT BLOCK  */}
               <div className="category__cta-block">
                 {/* FILTER FORM  */}
                 <Filter _setFilterSearch={_setFilterSearch} keyword={keyword} />
@@ -137,7 +138,11 @@ export default function Sub(props) {
                   title="add sub-category (name)"
                 />
               </div>
+
+              {/*///////////////////////////////////////////////  */}
+              {/* RIGHT BLOCK  */}
               {/*SUB-CATEGORY LIST  */}
+
               <div className="category__list-box">
                 {loading ? (
                   <Spinner loading={props.loading} />

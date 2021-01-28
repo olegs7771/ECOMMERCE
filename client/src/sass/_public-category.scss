@@ -33,24 +33,34 @@
 
   &__list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
     grid-gap: 1rem;
   }
 
   &__card {
     background-color: #eee;
-    height: 20rem;
+    width: 100%;
+    height: 15rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    position: relative;
+
     &--img {
       width: 100%;
+      height: 100%;
       opacity: 0.3;
+      position: absolute;
+      overflow: hidden;
     }
     &--name {
-      font-size: 1.6rem;
+      font-size: 2rem;
       font-weight: 700;
+      color: $color-black;
+      position: absolute;
+      transform: translateY(-4rem);
+      text-transform: uppercase;
     }
   }
 }

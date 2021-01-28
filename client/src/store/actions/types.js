@@ -21,6 +21,7 @@ export const CLEAR_OUT_USER = 'CLEAR_OUT_USER';
 
 //CATEGORY
 export const GET_CATEGORIES_LIST = 'GET_CATEGORIES_LIST';
+export const GET_CATEGORY = 'GET_CATEGORY';
 
 //SUB CATEGORY
 export const GET_SUB_LIST = 'GET_SUB_LIST'; //by categoryId

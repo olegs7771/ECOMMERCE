@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   GET_CATEGORIES_LIST,
+  GET_CATEGORY,
   LOADING,
   LOADING_ITEM_CATEGORY,
   GET_API_ERROR_MESSAGE,
@@ -9,6 +10,7 @@ import {
   CLEAR_API_MESSAGE,
 } from './types';
 
+// GET ALL CATEGORIES
 export const getCategoriesList = () => async (dispatch) => {
   dispatch({
     type: LOADING,
@@ -30,6 +32,29 @@ export const getCategoriesList = () => async (dispatch) => {
       payload: false,
     });
     console.log('error to get categories list', err);
+  }
+};
+
+// GET ONE CATEGORY BY SLUG
+export const getCategoryAction = (data) => async (dispatch) => {
+  console.log('getCategoryAction data', data);
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+  try {
+    const res = await axios.get(`/api/v1/category/${data.slug}`);
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+
+    dispatch({
+      type: GET_CATEGORY,
+      payload: res.data.data,
+    });
+  } catch (error) {
+    console.log('error getCategoryAction ', error);
   }
 };
 

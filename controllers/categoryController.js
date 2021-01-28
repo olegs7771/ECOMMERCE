@@ -32,18 +32,22 @@ const list = asyncCatch(async (req, res, next) => {
     .status(200)
     .json({ status: 'success', qnt: categories.length, data: categories });
 });
+
 /////////////////////////////////////////////////////
 // FIND ONE CATEGORY PUBLIC
 const read = asyncCatch(async (req, res, next) => {
+  console.log('req.params read', req.params);
   const category = await Category.findOne({ slug: req.params.slug }).select(
     '-__v'
   );
+  if (!category) return next(new AppErrorHandler('Category not found', 401));
   res.status(200).json({ status: 'success', data: category });
 });
 
 ////////////////////////////////////////////////////////
 // UPDATE CATEGORY NAME
 const update = asyncCatch(async (req, res, next) => {
+  console.log('update category name', req.body);
   //1) CHECK IF BODY HAS NAME (req.params.slug)(req.body.name)
   if (!req.body.name)
     return next(new AppErrorHandler(`Please provide a category name`, 400));
@@ -57,7 +61,7 @@ const update = asyncCatch(async (req, res, next) => {
   //  UPDATE CATEGORY
   category.name = req.body.name;
   category.slug = slugify(req.body.name);
-  await category.save();
+  await category.save({ validateBeforeSave: false });
   const message = `Category ${req.params.slug} updated.`;
   res.status(200).json({ status: 'success', data: category, message });
 });
@@ -65,7 +69,21 @@ const update = asyncCatch(async (req, res, next) => {
 // REMOVE ONE CATEGORY
 const remove = asyncCatch(async (req, res, next) => {
   console.log('req.params', req.params);
+  //1)Delete category in db
   const category = await Category.findOneAndDelete({ slug: req.params.slug });
+  console.log('category remove', category);
+
+  //2 Delete asset in the forlder
+  const deleteResponse = await cloudinary.api.delete_resources(category.image, {
+    all: true,
+  });
+  console.log('deleteResponse', deleteResponse);
+  //3) Delete empty folder in cloudinary
+  const cloudinaryResponse = await cloudinary.api.delete_folder(
+    `categories/${category.slug}`
+  );
+  console.log('cloudinaryResponse', cloudinaryResponse);
+
   if (!category)
     return next(
       new AppErrorHandler(`No category ${req.params.slug} found `, 404)
