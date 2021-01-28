@@ -9,9 +9,10 @@ export default function TextInputForm({
   type,
   name,
   placeholder,
+  styles,
 }) {
   return (
-    <div className="form-group">
+    <div className={`form-group  ${styles}`}>
       <label>
         <div className="form-label--name">{label}</div>
         <input

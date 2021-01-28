@@ -16,6 +16,7 @@ import { Spinner } from '../../../utils/LoadingComponent';
 import BreadCrumbs from '../../navigation/BreadCrumbs';
 import CardImageForm from './CardImageForm';
 import CardImage from './CardImage';
+import TextAreaForm from '../../../utils/TextAreaForm';
 
 export default function Card(props) {
   //  REDUX
@@ -381,23 +382,19 @@ export default function Card(props) {
                       >
                         {edit ? (
                           <div className="card__container__detail-body--item-text-edit">
-                            <textarea
+                            <TextAreaForm
                               type="text"
                               name="description"
-                              className={
-                                errors.description
-                                  ? 'form-input card__input--invalid'
-                                  : 'form-input'
-                              }
                               value={
                                 errors.description
                                   ? errors.description
                                   : values.description
                               }
                               onChange={_onChange}
-                              rows="7"
-                              cols="40"
-                              required
+                              rows={7}
+                              cols={40}
+                              required={true}
+                              errors={errors.description}
                             />
                           </div>
                         ) : (

@@ -6,6 +6,7 @@ import { Image } from 'cloudinary-react';
 import { getCategoryAction } from '../../../store/actions/categoryAction';
 import no_image from '../../../img/no_image.png';
 import TextInputForm from '../../../utils/TextInputForm';
+import TextAreaForm from '../../../utils/TextAreaForm';
 
 export default function CategoryForSub({ slug }) {
   const dispatch = useDispatch();
@@ -14,11 +15,18 @@ export default function CategoryForSub({ slug }) {
   const categoryRedux = useSelector((state) => state.category.category);
   // STATE
   const [edit, setEdit] = useState(false);
+  const [name, setName] = useState('');
+  const [desc, setDesc] = useState('');
 
   // GET CATEGORY ON LOAD
   useEffect(() => {
     dispatch(getCategoryAction({ slug }));
   }, [dispatch, slug]);
+
+  useEffect(() => {
+    setName(categoryRedux.name);
+    setDesc(categoryRedux.description);
+  }, [categoryRedux]);
 
   // CANCEL EDIT
   const _cancelEdit = () => {
@@ -52,10 +60,16 @@ export default function CategoryForSub({ slug }) {
           <div className="category__cfs__detail-block-item">
             <div className="category__cfs__detail-block-item--title">Name</div>
             {edit ? (
-              <TextInputForm />
+              <div className="category__cfs__detail-block-item--text">
+                <TextInputForm
+                  styles={'category__cfs__detail-block-item__form'}
+                  value={name}
+                  _onChange={(e) => setName(e.target.value)}
+                />
+              </div>
             ) : (
               <div className="category__cfs__detail-block-item--text">
-                {categoryRedux.name}
+                {name}
               </div>
             )}
           </div>
@@ -64,9 +78,25 @@ export default function CategoryForSub({ slug }) {
             <div className="category__cfs__detail-block-item--title">
               Description
             </div>
-            <div className="category__cfs__detail-block-item--text">
-              {categoryRedux.description}
-            </div>
+            {edit ? (
+              <TextAreaForm
+                value={desc}
+                type="text"
+                name="desc"
+                onChange={(e) => setDesc(e.target.value)}
+                rows={7}
+                cols={40}
+                required={true}
+              />
+            ) : (
+              <div className="category__cfs__detail-block-item--text">
+                {desc ? (
+                  <div>{desc}</div>
+                ) : (
+                  <div>Add description to category!</div>
+                )}
+              </div>
+            )}
           </div>
           {/* Updated */}
           <div className="category__cfs__detail-block-item">

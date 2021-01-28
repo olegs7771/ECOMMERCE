@@ -157,7 +157,13 @@
         width: 100%;
         display: flex;
         justify-content: flex-start;
-        height: 10rem;
+        height: 12rem;
+
+        &__form {
+          margin-bottom: -3rem;
+          margin-left: -2rem;
+          display: inline-block;
+        }
 
         &--title {
           width: 15rem;
