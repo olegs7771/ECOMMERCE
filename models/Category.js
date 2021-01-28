@@ -19,6 +19,10 @@ const categorySchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please provide background image for category'],
     },
+    description: {
+      type: String,
+      maxlength: [100, 'Max description length 100 chars'],
+    },
   },
   { timestamps: true }
 );
