@@ -3,7 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Image } from 'cloudinary-react';
-import { getCategoryAction } from '../../../store/actions/categoryAction';
+import {
+  getCategoryAction,
+  updateCategoryAction,
+} from '../../../store/actions/categoryAction';
 import no_image from '../../../img/no_image.png';
 import TextInputForm from '../../../utils/TextInputForm';
 import TextAreaForm from '../../../utils/TextAreaForm';
@@ -17,6 +20,7 @@ export default function CategoryForSub({ slug }) {
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
+  const [errors, setErrors] = useState({});
 
   // GET CATEGORY ON LOAD
   useEffect(() => {
@@ -25,12 +29,21 @@ export default function CategoryForSub({ slug }) {
 
   useEffect(() => {
     setName(categoryRedux.name);
-    setDesc(categoryRedux.description);
+    setDesc(categoryRedux.description ? categoryRedux.description : '');
   }, [categoryRedux]);
 
   // CANCEL EDIT
   const _cancelEdit = () => {
     setEdit(false);
+  };
+
+  const _update = () => {
+    const data = {
+      name,
+      desc,
+      slug,
+    };
+    dispatch(updateCategoryAction(data));
   };
 
   return (
@@ -111,7 +124,9 @@ export default function CategoryForSub({ slug }) {
       </div>
       {edit ? (
         <div className="category__cfs__btn-group">
-          <button className="btn">Edit</button>
+          <button className="btn btn-success" onClick={_update}>
+            Update
+          </button>
           <button className="btn btn-grey" onClick={_cancelEdit}>
             Cancel
           </button>

@@ -32,11 +32,13 @@ export default function Sub(props) {
   const drawerRedux = useSelector((state) => state.drawer.drawer);
 
   const errorRedux = useSelector((state) => state.error.errorMessage);
+  const errorsRedux = useSelector((state) => state.error.errors);
   //  STATE
   const [subList, setSublist] = useState([]);
   const [keyword, setKeyword] = useState('');
 
   const [error, setError] = useState({});
+  const [errors, setErrors] = useState({});
   const [name, setName] = useState('');
 
   // FORM ADD CATEGORY
@@ -67,7 +69,7 @@ export default function Sub(props) {
     setSublist(subs.filter(searched(keyword)));
   }, [subs, keyword]);
 
-  //SET STATE ERROR IN COMPONENT
+  //SET STATE ERROR message IN COMPONENT
   useEffect(() => {
     setError(errorRedux);
   }, [errorRedux]);
@@ -136,6 +138,7 @@ export default function Sub(props) {
                   name={name}
                   _setName={_setName}
                   title="add sub-category (name)"
+                  errors={errors}
                 />
               </div>
 

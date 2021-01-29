@@ -21,11 +21,13 @@ const categorySchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      maxlength: [100, 'Max description length 100 chars'],
+      minlength: [20, 'Min description length 20 chars'],
+      maxlength: [200, 'Max description length 200 chars'],
     },
   },
   { timestamps: true }
 );
+
 //CREATE SLUG ON EVERY SAVE or CREATE but on insertMany()❗
 categorySchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
@@ -36,14 +38,32 @@ categorySchema.pre('save', function (next) {
 categorySchema.post('save', function (error, doc, next) {
   console.log('error.name', error.name);
   console.log('error.message', error.message);
+  console.log('test required', error.message.includes('required'));
 
+  // let errors = {};
+  // if (error.name === 'MongoError' && error.code === 11000) {
+  //   errors.name = `[${doc.name}] category name already exists!`;
+  //   next(errors);
+  // } else if (error.name === 'ValidationError') {
+  //   errors.name = error.message.includes('required')
+  //     ? 'Name empty'
+  //     : 'Name too short. Please use meaningfull name';
+  //   next(errors);
+  // } else {
+  //   next(error);
+  // }
+  let errors = {};
   if (error.name === 'MongoError' && error.code === 11000) {
-    next(new Error(`[${doc.name}] category name already exists!`));
-  } else if (error.name === 'ValidationError') {
-    next(new Error('Name too short. Please use meaningfull name'));
-  } else {
-    next(error);
+    errors.name = `[${doc.name}] category name already exists!`;
+    next(errors);
   }
+  errors.name = error.errors.name ? error.errors.name.message : '';
+  errors.description = error.errors.description
+    ? error.errors.description.message
+    : '';
+
+  console.log('errors', errors);
+  next(errors);
 });
 
 categorySchema.post(/^find/, function (err, doc, next) {

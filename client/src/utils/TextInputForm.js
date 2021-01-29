@@ -23,7 +23,6 @@ export default function TextInputForm({
           onChange={_onChange}
           onMouseLeave={_checkField}
           placeholder={placeholder}
-          required
         />
       </label>
       {error ? (

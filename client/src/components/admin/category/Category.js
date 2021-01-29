@@ -30,11 +30,13 @@ export default function Category(props) {
   const auth = useSelector((state) => state.auth);
   const loading = useSelector((state) => state.loading.loading);
   const errorRedux = useSelector((state) => state.error.errorMessage);
+  const errorsRedux = useSelector((state) => state.error.errors);
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   // STATE
   const [categories, setCategories] = useState([]);
   const [keyword, setKeyword] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); //message error
+  const [errors, setErrors] = useState({}); // object errors
   const [name, setName] = useState('');
   const [image, setImage] = useState(null);
 
@@ -48,6 +50,7 @@ export default function Category(props) {
   // SET NAME FOR NEW CATEGORY coming from child
   const _setName = (e) => {
     setName(e.target.value);
+    dispatch(clearErrorReduxState());
   };
 
   // SET IMAGE FOR NEW CATEGORY coming from child
@@ -66,10 +69,14 @@ export default function Category(props) {
     setCategories(categoryList.filter(searched(keyword)));
   }, [categoryList, keyword]);
 
-  //SET STATE ERROR IN COMPONENT
+  //SET STATE ERROR message IN COMPONENT
   useEffect(() => {
     setError(errorRedux);
   }, [errorRedux]);
+  //SET STATE ERRORS IN COMPONENT
+  useEffect(() => {
+    setErrors(errorsRedux);
+  }, [errorsRedux]);
 
   //CLEAR ERROR IN REDUX STATE
   const _clearReduxErrorState = (e) => {
@@ -115,6 +122,7 @@ export default function Category(props) {
                   name={name}
                   _setName={_setName}
                   title="add category (name)"
+                  errors={errors}
                 />
               </div>
               {/* ///////////////////////////////////////////////////// */}

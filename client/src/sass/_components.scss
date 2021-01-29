@@ -30,6 +30,9 @@
   &-delete {
     background-color: $color-red;
   }
+  &-success {
+    background-color: $color-valid;
+  }
 }
 
 .btn-link {
@@ -121,6 +124,10 @@
       background-color: $color-red-light;
     }
   }
+  &__error-message {
+    color: $color-red;
+    font-size: 1.4rem;
+  }
 }
 input[type='radio' i] {
   background-color: initial;
@@ -149,7 +156,7 @@ input[type='radio' i] {
   }
 
   &::before {
-    content: 'Select image ';
+    content: 'Select file ';
     color: black;
     display: inline-block;
     background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);

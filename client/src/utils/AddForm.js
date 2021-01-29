@@ -1,6 +1,12 @@
 import React from 'react';
 
-export default function CategoryForm({ name, _onSubmit, _setName, title }) {
+export default function CategoryForm({
+  name,
+  _onSubmit,
+  _setName,
+  title,
+  errors,
+}) {
   return (
     <form onSubmit={_onSubmit} className="form  category__form">
       <div className="form-group">
@@ -14,6 +20,9 @@ export default function CategoryForm({ name, _onSubmit, _setName, title }) {
             onChange={_setName}
             required
           />
+          {errors.name && (
+            <div className="form__error-message">{errors.name}</div>
+          )}
         </label>
       </div>
 

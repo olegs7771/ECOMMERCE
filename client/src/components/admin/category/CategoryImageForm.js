@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import sprite from '../../../img/sprite.svg';
-
+import { clearErrorReduxState } from '../../../store/actions/categoryAction';
 export default function CardImageForm({ _selectImage }) {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // REDUX
 
   const [selectedFile, setSelectFile] = useState(null);
@@ -62,6 +62,7 @@ export default function CardImageForm({ _selectImage }) {
     setSelectFilePreview(null);
     setSelectFile(null);
     setSubmitted(false);
+    dispatch(clearErrorReduxState());
   };
   return (
     <div className="category__cta-block__image-form ">
@@ -99,9 +100,15 @@ export default function CardImageForm({ _selectImage }) {
 
         {preview ? (
           <div className="category__cta-block__image-form-btn-group">
-            <button className="btn" type="submit">
-              Submit
-            </button>
+            {preview ? (
+              <button className="btn btn-success" type="submit">
+                Confirm
+              </button>
+            ) : (
+              <button className="btn" type="submit">
+                Submit
+              </button>
+            )}
             <button className="btn" type="button" onClick={_clearState}>
               Cancel
             </button>

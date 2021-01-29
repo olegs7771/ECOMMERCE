@@ -47,10 +47,15 @@ const read = asyncCatch(async (req, res, next) => {
 ////////////////////////////////////////////////////////
 // UPDATE CATEGORY NAME
 const update = asyncCatch(async (req, res, next) => {
-  console.log('update category name', req.body);
-  //1) CHECK IF BODY HAS NAME (req.params.slug)(req.body.name)
-  if (!req.body.name)
-    return next(new AppErrorHandler(`Please provide a category name`, 400));
+  console.log('update category name body', req.body);
+  console.log('update category name params', req.params);
+  //1) CHECK IF BODY HAS NAME && DESC (req.params.slug)(req.body.name)
+  // if (!req.body.name)
+  //   return next(new AppErrorHandler(`Please provide a category name`, 400));
+  // if (!req.body.desc)
+  //   return next(
+  //     new AppErrorHandler(`Please provide a category description`, 400)
+  //   );
 
   // 2) CHECK IF CATEGORY EXISTS
   const category = await Category.findOne({ slug: req.params.slug });
@@ -60,8 +65,9 @@ const update = asyncCatch(async (req, res, next) => {
     );
   //  UPDATE CATEGORY
   category.name = req.body.name;
+  category.description = req.body.desc;
   category.slug = slugify(req.body.name);
-  await category.save({ validateBeforeSave: false });
+  await category.save();
   const message = `Category ${req.params.slug} updated.`;
   res.status(200).json({ status: 'success', data: category, message });
 });
