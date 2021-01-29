@@ -7,19 +7,26 @@ export default function TextAreaForm({
   onChange,
   rows,
   cols,
-  errors,
+  error,
   required,
 }) {
   return (
-    <textarea
-      type={type}
-      name={name}
-      className={errors ? 'form-input card__input--invalid' : 'form-input'}
-      value={value}
-      onChange={onChange}
-      rows={rows}
-      cols={cols}
-      required={required}
-    />
+    <div>
+      <textarea
+        type={type}
+        name={name}
+        className={error ? 'form-input card__input--invalid' : 'form-input'}
+        value={value}
+        onChange={onChange}
+        rows={rows}
+        cols={cols}
+        required={required}
+      />
+      {error ? (
+        <div className="form-input__error">
+          <div className="form-input__error--text">{error}</div>
+        </div>
+      ) : null}
+    </div>
   );
 }

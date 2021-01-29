@@ -4,33 +4,44 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Image } from 'cloudinary-react';
 import {
+  // clearMessageReduxState,
+  clearErrorReduxState,
   getCategoryAction,
   updateCategoryAction,
 } from '../../../store/actions/categoryAction';
 import no_image from '../../../img/no_image.png';
 import TextInputForm from '../../../utils/TextInputForm';
 import TextAreaForm from '../../../utils/TextAreaForm';
+import CategoryImageForm from './CategoryImageForm';
 
 export default function CategoryForSub({ slug }) {
   const dispatch = useDispatch();
 
   // REDUX
   const categoryRedux = useSelector((state) => state.category.category);
+  const errorsRedux = useSelector((state) => state.error.errors);
   // STATE
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(false); //edit details
+  const [errors, setErrors] = useState({});
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
-  const [errors, setErrors] = useState({});
+  const [image, setImage] = useState(''); //format64 string
 
   // GET CATEGORY ON LOAD
   useEffect(() => {
     dispatch(getCategoryAction({ slug }));
   }, [dispatch, slug]);
 
+  // SET TO STATE
   useEffect(() => {
     setName(categoryRedux.name);
     setDesc(categoryRedux.description ? categoryRedux.description : '');
   }, [categoryRedux]);
+
+  // SET ERRORS TO STATE
+  useEffect(() => {
+    setErrors(errorsRedux);
+  }, [errorsRedux]);
 
   // CANCEL EDIT
   const _cancelEdit = () => {
@@ -42,8 +53,23 @@ export default function CategoryForSub({ slug }) {
       name,
       desc,
       slug,
+      image,
     };
     dispatch(updateCategoryAction(data));
+  };
+
+  const _onChangeName = (e) => {
+    setName(e.target.value);
+    dispatch(clearErrorReduxState());
+  };
+  const _onChangeDesc = (e) => {
+    setDesc(e.target.value);
+    dispatch(clearErrorReduxState());
+  };
+
+  const _setImage = (data) => {
+    console.log('data', data);
+    setImage(data.file);
   };
 
   return (
@@ -51,21 +77,30 @@ export default function CategoryForSub({ slug }) {
       <div className="category__cfs__container mb-sm">
         {/* ////////////////////////////////// */}
         <div className="category__cfs__img-block">
-          {categoryRedux.image ? (
-            <Image
-              cloudName="dyl4kpmie"
-              publicId={categoryRedux.image}
-              width="600"
-              crop="scale"
-              className="category__cfs__img-block--image "
-            />
-          ) : (
-            <img
-              src={no_image}
-              alt="no_image"
-              className="category__cfs__img-block--image"
-            />
-          )}
+          <div className="category__cfs__img-box mb-sm">
+            {/* EDIT IMAGE  */}
+            {edit ? (
+              <CategoryImageForm _selectImage={_setImage} />
+            ) : (
+              <div>
+                {categoryRedux.image ? (
+                  <Image
+                    cloudName="dyl4kpmie"
+                    publicId={categoryRedux.image}
+                    width="600"
+                    crop="scale"
+                    className="category__cfs__img-block--image "
+                  />
+                ) : (
+                  <img
+                    src={no_image}
+                    alt="no_image"
+                    className="category__cfs__img-block--image"
+                  />
+                )}
+              </div>
+            )}
+          </div>
         </div>
         {/* //////////////////////////////////// */}
         <div className="category__cfs__detail-block">
@@ -77,7 +112,8 @@ export default function CategoryForSub({ slug }) {
                 <TextInputForm
                   styles={'category__cfs__detail-block-item__form'}
                   value={name}
-                  _onChange={(e) => setName(e.target.value)}
+                  _onChange={_onChangeName}
+                  error={errors.name}
                 />
               </div>
             ) : (
@@ -96,10 +132,11 @@ export default function CategoryForSub({ slug }) {
                 value={desc}
                 type="text"
                 name="desc"
-                onChange={(e) => setDesc(e.target.value)}
-                rows={7}
+                onChange={_onChangeDesc}
+                rows={5}
                 cols={40}
                 required={true}
+                error={errors.description}
               />
             ) : (
               <div className="category__cfs__detail-block-item--text">
@@ -117,12 +154,12 @@ export default function CategoryForSub({ slug }) {
               Updated
             </div>
             <div className="category__cfs__detail-block-item--text">
-              {categoryRedux.updatedAt}
+              {new Date(categoryRedux.updatedAt).toLocaleString()}
             </div>
           </div>
         </div>
       </div>
-      {edit ? (
+      {edit || image ? (
         <div className="category__cfs__btn-group">
           <button className="btn btn-success" onClick={_update}>
             Update

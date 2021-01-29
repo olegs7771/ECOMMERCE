@@ -83,7 +83,7 @@ export default function CardImageForm({ _selectImage }) {
         onSubmit={_submit}
         className="category__cta-block__image-form-container "
       >
-        <label className="custom-file-input-container mb-sm">
+        <label className="custom-file-input-container ">
           <input
             type="file"
             name="image"
@@ -99,22 +99,26 @@ export default function CardImageForm({ _selectImage }) {
         </label>
 
         {preview ? (
-          <div className="category__cta-block__image-form-btn-group">
+          <div className="category__cta-block__image-form__btn-group">
             {preview ? (
-              <button className="btn btn-success" type="submit">
+              <button className="btn btn-success btn-sm" type="submit">
                 Confirm
               </button>
             ) : (
-              <button className="btn" type="submit">
+              <button className="btn " type="submit">
                 Submit
               </button>
             )}
-            <button className="btn" type="button" onClick={_clearState}>
+            <button
+              className="btn btn-grey btn-sm"
+              type="button"
+              onClick={_clearState}
+            >
               Cancel
             </button>
           </div>
         ) : (
-          <div className="category__cta-block__image-form-btn-group">
+          <div className="category__cta-block__image-form__btn-group">
             <button className="btn" type="submit">
               Submit
             </button>

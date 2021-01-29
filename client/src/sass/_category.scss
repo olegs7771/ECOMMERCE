@@ -26,9 +26,10 @@
       flex-direction: column;
       align-items: center;
 
-      &-cintainer {
+      &-container {
         display: flex;
         justify-content: center;
+        align-items: center;
       }
 
       &-title {
@@ -38,6 +39,10 @@
 
       &-icon {
         fill: $color-valid;
+      }
+      &__btn-group {
+        width: 40%;
+        display: flex;
       }
     }
   }
@@ -135,14 +140,24 @@
     }
 
     &__img-block {
-      // border-right: 1px solid black;
+      border-right: 1px solid black;
       width: 40%;
       padding: 0 2rem;
+      min-height: 39rem;
 
       &--image {
         width: 100%;
       }
     }
+    &__img-box {
+      // border: 1px solid black;
+      padding: 2rem;
+      min-height: 33rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     &__detail-block {
       padding: 0 2rem;
 
@@ -157,7 +172,7 @@
         width: 100%;
         display: flex;
         justify-content: flex-start;
-        height: 12rem;
+        // height: 12rem;
 
         &__form {
           margin-bottom: -3rem;
@@ -175,9 +190,8 @@
         }
         &--text {
           font-size: 1.4rem;
-
-          display: flex;
-          align-items: center;
+          text-align: left;
+          max-width: 70%;
         }
       }
     }

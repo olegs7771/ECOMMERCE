@@ -33,6 +33,10 @@
   &-success {
     background-color: $color-valid;
   }
+  &-sm {
+    padding: 0.4rem 0.7rem;
+    font-size: 1rem;
+  }
 }
 
 .btn-link {
@@ -144,11 +148,11 @@ input[type='radio' i] {
   outline: none;
   width: 60%;
   &-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: center;
     // background-color: gray;
-    // width: 100%;
+    width: 60%;
     margin: 1rem 0;
   }
   &::-webkit-file-upload-button {

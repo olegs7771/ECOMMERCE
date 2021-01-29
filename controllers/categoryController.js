@@ -49,13 +49,6 @@ const read = asyncCatch(async (req, res, next) => {
 const update = asyncCatch(async (req, res, next) => {
   console.log('update category name body', req.body);
   console.log('update category name params', req.params);
-  //1) CHECK IF BODY HAS NAME && DESC (req.params.slug)(req.body.name)
-  // if (!req.body.name)
-  //   return next(new AppErrorHandler(`Please provide a category name`, 400));
-  // if (!req.body.desc)
-  //   return next(
-  //     new AppErrorHandler(`Please provide a category description`, 400)
-  //   );
 
   // 2) CHECK IF CATEGORY EXISTS
   const category = await Category.findOne({ slug: req.params.slug });

@@ -17,12 +17,12 @@ const categorySchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: [true, 'Please provide background image for category'],
+      // required: [true, 'Please provide background image for category'],
     },
     description: {
       type: String,
       minlength: [20, 'Min description length 20 chars'],
-      maxlength: [200, 'Max description length 200 chars'],
+      maxlength: [300, 'Max description length 300 chars'],
     },
   },
   { timestamps: true }
@@ -57,6 +57,7 @@ categorySchema.post('save', function (error, doc, next) {
     errors.name = `[${doc.name}] category name already exists!`;
     next(errors);
   }
+  errors.image = error.errors.image ? error.errors.image.message : '';
   errors.name = error.errors.name ? error.errors.name.message : '';
   errors.description = error.errors.description
     ? error.errors.description.message

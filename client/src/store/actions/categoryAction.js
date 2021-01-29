@@ -140,10 +140,10 @@ export const updateCategoryAction = (data) => async (dispatch) => {
       payload: false,
     });
     console.log('error to update category', err.response.data);
-    // dispatch({
-    //   type: GET_API_ERROR_MESSAGE,
-    //   payload: err.response.data.message,
-    // });
+    dispatch({
+      type: GET_API_ERRORS,
+      payload: err.response.data.error,
+    });
   }
 };
 
