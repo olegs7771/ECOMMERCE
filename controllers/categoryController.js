@@ -6,9 +6,16 @@ const { cloudinary } = require('../utils/claudinary');
 
 // CREATE GATEGORY BY ADMIN
 const create = asyncCatch(async (req, res, next) => {
+  //1) Check if name correct
+
+  if (req.body.name.length < 3) {
+    return next(new AppErrorHandler('Name too short', 401));
+  }
+
   //1) Create slug
   const slug = slugify(req.body.name, { lower: true });
   console.log('slug', slug);
+
   const uploadedResponse = await cloudinary.uploader.upload(req.body.image, {
     upload_preset: 'dev_setups',
     folder: `categories/${slug}`,
@@ -45,21 +52,34 @@ const read = asyncCatch(async (req, res, next) => {
 });
 
 ////////////////////////////////////////////////////////
-// UPDATE CATEGORY NAME
+// UPDATE CATEGORY  DESC && IMAGE
 const update = asyncCatch(async (req, res, next) => {
-  console.log('update category name body', req.body);
+  // console.log('update category name body', req.body);
   console.log('update category name params', req.params);
 
-  // 2) CHECK IF CATEGORY EXISTS
+  // 1) CHECK IF CATEGORY EXISTS
   const category = await Category.findOne({ slug: req.params.slug });
   if (!category)
     return next(
       new AppErrorHandler(`Category ${req.params.slug} not exists`, 404)
     );
+  console.log('category  found', category);
+
+  //2) DELETE PREVIOUS IMAGE IN CLOUDINARY
+  const deleteResponse = await cloudinary.api.delete_resources(category.image);
+
+  console.log('previous deleted deleteResponse', deleteResponse);
+  //2) UPDATE IMAGE IN CLOUDINARY
+  const uploadedResponse = await cloudinary.uploader.upload(req.body.image, {
+    upload_preset: 'dev_setups',
+    folder: `categories/${category.slug}`,
+  });
+  console.log('uploadedResponse', uploadedResponse);
+
   //  UPDATE CATEGORY
-  category.name = req.body.name;
+
   category.description = req.body.desc;
-  category.slug = slugify(req.body.name);
+  category.image = uploadedResponse.public_id;
   await category.save();
   const message = `Category ${req.params.slug} updated.`;
   res.status(200).json({ status: 'success', data: category, message });

@@ -17,24 +17,26 @@
     flex-direction: column;
     padding: 0 1rem 2rem 1rem;
     width: 30%;
-    align-items: center;
+    align-items: flex-start;
 
     &__image-form {
       padding: 0;
       margin: 0 0 2rem 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
 
       &-container {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
+        width: 100%;
       }
 
       &-title {
-        display: inline-block;
-        font-size: 1.6rem;
+        font-size: 1.2rem;
+        margin: 0 auto;
+        text-transform: uppercase;
       }
 
       &-icon {
@@ -43,6 +45,7 @@
       &__btn-group {
         width: 40%;
         display: flex;
+        justify-content: space-between;
       }
     }
   }

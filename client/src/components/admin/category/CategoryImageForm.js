@@ -66,9 +66,11 @@ export default function CardImageForm({ _selectImage }) {
   };
   return (
     <div className="category__cta-block__image-form ">
-      <span className="category__cta-block__image-form-title mb-sm">
-        Pick image for gategory
-      </span>
+      {!preview && (
+        <span className="category__cta-block__image-form-title ">
+          Pick image for category
+        </span>
+      )}
       {preview && (
         <div className="category__cta-block__image-form-preview  ">
           <img
@@ -98,7 +100,7 @@ export default function CardImageForm({ _selectImage }) {
           )}
         </label>
 
-        {preview ? (
+        {preview && (
           <div className="category__cta-block__image-form__btn-group">
             {preview ? (
               <button className="btn btn-success btn-sm" type="submit">
@@ -115,12 +117,6 @@ export default function CardImageForm({ _selectImage }) {
               onClick={_clearState}
             >
               Cancel
-            </button>
-          </div>
-        ) : (
-          <div className="category__cta-block__image-form__btn-group">
-            <button className="btn" type="submit">
-              Submit
             </button>
           </div>
         )}

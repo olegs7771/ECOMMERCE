@@ -57,7 +57,7 @@ categorySchema.post('save', function (error, doc, next) {
     errors.name = `[${doc.name}] category name already exists!`;
     next(errors);
   }
-  errors.image = error.errors.image ? error.errors.image.message : '';
+  // errors.image = error.errors.image ? error.errors.image.message : '';
   errors.name = error.errors.name ? error.errors.name.message : '';
   errors.description = error.errors.description
     ? error.errors.description.message

@@ -93,21 +93,24 @@ export const createCategoryAction = (data) => async (dispatch) => {
         type: GET_API_ERROR_MESSAGE,
         payload: err.response.data.message,
       });
+    } else {
+      dispatch({
+        type: GET_API_ERRORS,
+        payload: err.response.data.error,
+      });
     }
-    dispatch({
-      type: GET_API_ERRORS,
-      payload: err.response.data.error,
-    });
   }
 };
 
-// UPDATE CATEGORY NAME and DESCRIPTION
+// UPDATE CATEGORY NAME && DESCRIPTION && IMAGE
 export const updateCategoryAction = (data) => async (dispatch) => {
   console.log('update action data', data);
+
   dispatch({
     type: LOADING_ITEM_CATEGORY,
     payload: true,
   });
+
   try {
     const update = await axios.put(`/api/v1/category/${data.slug}`, data);
     console.log('update.data', update.data);
@@ -139,6 +142,7 @@ export const updateCategoryAction = (data) => async (dispatch) => {
       type: LOADING_ITEM_CATEGORY,
       payload: false,
     });
+
     console.log('error to update category', err.response.data);
     dispatch({
       type: GET_API_ERRORS,

@@ -40,7 +40,7 @@ export default function Category(props) {
   const [name, setName] = useState('');
   const [image, setImage] = useState(null);
 
-  // FORM ADD CATEGORY  NAME && IMAGE
+  // FROM AddForm.js  name   AND FROM CategoryImageForm.js image
   const _onSubmit = (e) => {
     e.preventDefault();
     const data = { name, image };
@@ -105,7 +105,7 @@ export default function Category(props) {
       <div>
         {/* <BreadCrumbs link1=" home &nbsp;  " href1="/" current=" categories" /> */}
         <div className="category ">
-          <h1 className="heading-2 mb-md">Category</h1>
+          <h1 className="heading-2 mb-md">Categories</h1>
 
           {/* CHECK ADMIN  */}
           {auth.isAuthenticated && auth.user.role === 'admin' ? (
@@ -113,6 +113,7 @@ export default function Category(props) {
               {/* ///////////////////////////////////////////////////// */}
               {/* LEFT BLOCK  */}
               <div className="category__cta-block">
+                <h3 className="heading-3 mb-md">Add Category</h3>
                 {/* ADD IMAGE TO CATEGORY  */}
                 <CategoryImageForm _selectImage={_selectImage} />
 
