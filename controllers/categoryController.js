@@ -65,24 +65,36 @@ const update = asyncCatch(async (req, res, next) => {
     );
   console.log('category  found', category);
 
-  //2) DELETE PREVIOUS IMAGE IN CLOUDINARY
-  const deleteResponse = await cloudinary.api.delete_resources(category.image);
+  // IF UPDATING ONLY DESCRIPTION
+  if (!req.body.image) {
+    console.log('only text');
+    category.description = req.body.desc;
+    await category.save();
+    const message = `Category ${req.params.slug} updated.`;
+    res.status(200).json({ status: 'success', data: category, message });
+  } else {
+    console.log('updating all');
+    //2) DELETE PREVIOUS IMAGE IN CLOUDINARY
+    const deleteResponse = await cloudinary.api.delete_resources(
+      category.image
+    );
 
-  console.log('previous deleted deleteResponse', deleteResponse);
-  //2) UPDATE IMAGE IN CLOUDINARY
-  const uploadedResponse = await cloudinary.uploader.upload(req.body.image, {
-    upload_preset: 'dev_setups',
-    folder: `categories/${category.slug}`,
-  });
-  console.log('uploadedResponse', uploadedResponse);
+    console.log('previous deleted deleteResponse', deleteResponse);
+    //2) UPDATE IMAGE IN CLOUDINARY
+    const uploadedResponse = await cloudinary.uploader.upload(req.body.image, {
+      upload_preset: 'dev_setups',
+      folder: `categories/${category.slug}`,
+    });
+    console.log('uploadedResponse', uploadedResponse);
 
-  //  UPDATE CATEGORY
+    //  UPDATE CATEGORY
 
-  category.description = req.body.desc;
-  category.image = uploadedResponse.public_id;
-  await category.save();
-  const message = `Category ${req.params.slug} updated.`;
-  res.status(200).json({ status: 'success', data: category, message });
+    category.description = req.body.desc;
+    category.image = uploadedResponse.public_id;
+    await category.save();
+    const message = `Category ${req.params.slug} updated.`;
+    res.status(200).json({ status: 'success', data: category, message });
+  }
 });
 ////////////////////////////////////////////////////
 // REMOVE ONE CATEGORY

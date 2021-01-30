@@ -8,6 +8,7 @@ import {
   GET_API_ERRORS,
   CLEAR_API_ERROR,
   GET_API_MESSAGE,
+  GET_API_MESSAGE_CATEGORY,
   CLEAR_API_MESSAGE,
 } from './types';
 
@@ -120,7 +121,7 @@ export const updateCategoryAction = (data) => async (dispatch) => {
     });
 
     dispatch({
-      type: GET_API_MESSAGE,
+      type: GET_API_MESSAGE_CATEGORY,
       payload: update.data.message,
     });
 

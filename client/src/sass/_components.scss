@@ -163,7 +163,7 @@ input[type='radio' i] {
     content: 'Select file ';
     color: black;
     display: inline-block;
-    background: linear-gradient(top, #f9f9f9, #e3e3e3);
+    background: linear-gradient(0deg, #f9f9f9, #e3e3e3);
     border: 1px solid #999;
     border-radius: 3px;
     padding: 4px 10px;
@@ -182,7 +182,7 @@ input[type='radio' i] {
     outline: 0;
   }
   &::before {
-    background: linear-gradient(top, #e3e3e3, #f9f9f9);
+    background: linear-gradient(0deg, #e3e3e3, #f9f9f9);
   }
 }
 
@@ -201,7 +201,8 @@ input[type='radio' i] {
 
 .message {
   background-color: $color-valid;
-  // width: 60%;
+  border-radius: 3px;
+  width: 60%;
   margin: 1rem auto;
   padding: 2rem 3rem;
   text-align: center;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import sprite from '../../../img/sprite.svg';
 import { clearErrorReduxState } from '../../../store/actions/categoryAction';
-export default function CardImageForm({ _selectImage }) {
+export default function CardImageForm({ _selectImage, isPreviewOn }) {
   const dispatch = useDispatch();
   // REDUX
 
@@ -21,6 +21,7 @@ export default function CardImageForm({ _selectImage }) {
     }
 
     setPreview(true);
+    isPreviewOn(true);
     setSelectFile(e.target.files[0]);
     // setSelectFilePreview(URL.createObjectURL(e.target.files[0]));
 
@@ -59,6 +60,7 @@ export default function CardImageForm({ _selectImage }) {
   const _clearState = (e) => {
     console.log('canceled');
     setPreview(false);
+    isPreviewOn(false);
     setSelectFilePreview(null);
     setSelectFile(null);
     setSubmitted(false);
