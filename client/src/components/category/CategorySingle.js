@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import no_image from '../../img/no_image.png';
 import { getCategoryAction } from '../../store/actions/categoryAction';
 import { getSubListAction } from '../../store/actions/subAction';
+import { getProductsListAction } from '../../store/actions/productAction';
 import { Spinner } from '../../utils/LoadingComponent';
 import ProductPage from '../product/ProductPage';
 
@@ -14,8 +15,12 @@ export default function CategorySingle(props) {
   const dispatch = useDispatch();
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   const loadingRedux = useSelector((state) => state.loading.loading);
+  const loadingProductsRedux = useSelector(
+    (state) => state.loading.loadingProducts
+  );
   const categoryRedux = useSelector((state) => state.category.category);
   const subsRedux = useSelector((state) => state.sub.subs);
+  const productsRedux = useSelector((state) => state.product.products);
 
   // LOAD CATEGORY ON LOAD PAGE
   useEffect(() => {
@@ -27,6 +32,12 @@ export default function CategorySingle(props) {
     dispatch(getSubListAction({ categoryId: props.match.params.categoryId }));
   }, [dispatch, props.match.params.categoryId]);
 
+  //GET PRODUCTS BY CLICKING ON SUB-CATEGORY LINK
+
+  const _getProducts = (e) => {
+    console.log('get products e', e._id);
+    dispatch(getProductsListAction({ subId: e._id }));
+  };
   return (
     <div className="pub-category">
       <div
@@ -63,7 +74,7 @@ export default function CategorySingle(props) {
                 ) : (
                   <img
                     src={no_image}
-                    alt="no image"
+                    alt="no img"
                     className="card__container__gallery--image"
                   />
                 )}
@@ -83,20 +94,34 @@ export default function CategorySingle(props) {
                     <div
                       key={i}
                       className="pub-category__wrapper__sublist--card"
+                      onClick={_getProducts.bind(this, s)}
                     >
-                      <a
-                        href="#"
-                        className="pub-category__wrapper__sublist--item"
-                      >
+                      <div className="pub-category__wrapper__sublist--item">
                         {s.name}
-                      </a>
+                      </div>
                     </div>
                   ))}
                 </div>
               )}
             </section>
             <section className="pub-category__wrapper__productlist">
-              <ProductPage />
+              {loadingProductsRedux ? (
+                <div className="pub-category__wrapper__productlist__spinner">
+                  <Spinner loading={loadingProductsRedux} />
+                </div>
+              ) : (
+                <div>
+                  {productsRedux.length === 0 ? (
+                    <div className="heading-3">No products to show</div>
+                  ) : (
+                    <div className="pub-category__wrapper__productlist__block">
+                      {productsRedux.map((p, i) => (
+                        <ProductPage key={i} />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </section>
           </div>
         )}

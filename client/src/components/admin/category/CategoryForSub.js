@@ -20,6 +20,7 @@ export default function CategoryForSub({ slug }) {
 
   // REDUX
   const categoryRedux = useSelector((state) => state.category.category);
+
   const messageRedux = useSelector((state) => state.message.messageCategory);
   const errorsRedux = useSelector((state) => state.error.errors);
   const loadingRedux = useSelector(
