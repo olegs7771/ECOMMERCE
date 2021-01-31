@@ -7,6 +7,7 @@ import no_image from '../../img/no_image.png';
 import { getCategoryAction } from '../../store/actions/categoryAction';
 import { getSubListAction } from '../../store/actions/subAction';
 import { Spinner } from '../../utils/LoadingComponent';
+import ProductPage from '../product/ProductPage';
 
 export default function CategorySingle(props) {
   // REDUX
@@ -48,8 +49,26 @@ export default function CategorySingle(props) {
           <Spinner loading={loadingRedux} />
         ) : (
           <div className="pub-category__wrapper">
-            .pub-category__wrapper__
-            <h2 className="heading-2 mb-md">{categoryRedux.name}</h2>
+            <div className="pub-category__wrapper__top mb-md">
+              <h2 className="heading-2 mb-md">{categoryRedux.name}</h2>
+              <div className="pub-category__wrapper__top__image-block">
+                {categoryRedux.image ? (
+                  <Image
+                    cloudName="dyl4kpmie"
+                    publicId={categoryRedux.image}
+                    width="400"
+                    crop="scale"
+                    className="card__container__gallery--image "
+                  />
+                ) : (
+                  <img
+                    src={no_image}
+                    alt="no image"
+                    className="card__container__gallery--image"
+                  />
+                )}
+              </div>
+            </div>
             <div className="pub-category__wrapper__description">
               <p className="pub-category__wrapper__description--text">
                 {categoryRedux.description}
@@ -75,6 +94,9 @@ export default function CategorySingle(props) {
                   ))}
                 </div>
               )}
+            </section>
+            <section className="pub-category__wrapper__productlist">
+              <ProductPage />
             </section>
           </div>
         )}

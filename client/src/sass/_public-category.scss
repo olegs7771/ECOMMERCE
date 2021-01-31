@@ -69,7 +69,13 @@
   // EDIT CategorySingle
 
   &__wrapper {
-    // background-color: $color-grey-light-2;
+    &__top {
+      // background-color: $color-grey;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 60%;
+    }
 
     &__description {
       width: 60%;
