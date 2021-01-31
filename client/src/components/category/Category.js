@@ -29,7 +29,7 @@ export default function Category() {
       ></div>
 
       <div className="pub-category__container">
-        <BreadCrumbs href1={'/'} link1={'Home'} current={'Categories'} />
+        <BreadCrumbs href1={'/'} link1={'Home'} current={'Category'} />
         <h2 className="heading-2 mb-md pub-category__heading  ">Categories </h2>
         {loadingRedux ? (
           <div>Loading..</div>
@@ -41,7 +41,7 @@ export default function Category() {
               <div className="pub-category__list">
                 {categoriesRedux.map((category, index) => (
                   <a
-                    href={`/category/${category.slug}`}
+                    href={`/category/${category.slug}/${category._id}`}
                     key={index}
                     className="pub-category__card"
                   >

@@ -33,8 +33,9 @@
 
   &__list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
-    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    grid-gap: 2rem;
+    justify-items: center;
   }
 
   &__card {
@@ -62,6 +63,40 @@
       position: absolute;
       transform: translateY(-4rem);
       text-transform: uppercase;
+    }
+  }
+
+  // EDIT CategorySingle
+
+  &__wrapper {
+    // background-color: $color-grey-light-2;
+
+    &__description {
+      width: 60%;
+      &--text {
+        font-size: 1.6rem;
+      }
+    }
+
+    &__sublist {
+      // background-color: $color-yellow;
+      padding: 5rem 0;
+      &--block {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+        grid-gap: 2rem;
+        justify-items: center;
+      }
+      &--card {
+        background-color: $color-grey;
+        padding: 1rem 2rem;
+        border-radius: 3rem;
+      }
+      &--item {
+        font-size: 1.6rem;
+        text-decoration: none;
+        color: $color-black;
+      }
     }
   }
 }
