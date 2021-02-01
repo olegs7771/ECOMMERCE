@@ -2,12 +2,14 @@ import {
   LOADING,
   LOADING_ITEM_CATEGORY,
   LOADING_FORM_PRODUCT,
+  LOADING_PRODUCTS,
 } from '../actions/types';
 
 const initialState = {
   loading: false,
   loadingItemCategory: false,
   loadingFormProduct: false,
+  loadingProducts: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -26,6 +28,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loadingFormProduct: action.payload,
+      };
+    case LOADING_PRODUCTS:
+      return {
+        ...state,
+        loadingProducts: action.payload,
       };
 
     default:

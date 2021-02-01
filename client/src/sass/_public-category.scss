@@ -89,9 +89,10 @@
       padding: 5rem 0;
       &--block {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
         grid-gap: 2rem;
         justify-items: center;
+        cursor: pointer;
       }
       &--card {
         background-color: $color-grey;
@@ -104,5 +105,25 @@
         color: $color-black;
       }
     }
+
+    &__productlist {
+      min-height: 40rem;
+      &__spinner {
+        display: flex;
+        justify-content: center;
+      }
+
+      &__block {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+        grid-gap: 2rem;
+      }
+    }
+  }
+  // PRODUCT CARD
+
+  &__card {
+    background-color: cadetblue;
+    height: 40rem;
   }
 }

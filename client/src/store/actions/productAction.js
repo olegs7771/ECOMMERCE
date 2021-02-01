@@ -5,6 +5,7 @@ import {
   GET_PRODUCT_ALL,
   LOADING,
   LOADING_FORM_PRODUCT,
+  LOADING_PRODUCTS,
   GET_PRODUCT_OBJECT,
   GET_API_ERRORS,
   GET_API_ERROR_MESSAGE,
@@ -16,13 +17,13 @@ import {
 export const getProductsListAction = (data) => async (dispatch) => {
   console.log('getProductsListAction data', data);
   dispatch({
-    type: LOADING,
+    type: LOADING_PRODUCTS,
     payload: true,
   });
   try {
     const res = await axios.get(`/api/v1/product/${data.subId}`);
     dispatch({
-      type: LOADING,
+      type: LOADING_PRODUCTS,
       payload: false,
     });
     dispatch({
@@ -31,7 +32,7 @@ export const getProductsListAction = (data) => async (dispatch) => {
     });
   } catch (err) {
     dispatch({
-      type: LOADING,
+      type: LOADING_PRODUCTS,
       payload: false,
     });
     console.log('error to get categories list', err);
