@@ -22,6 +22,9 @@ export default function CategorySingle(props) {
   const subsRedux = useSelector((state) => state.sub.subs);
   const productsRedux = useSelector((state) => state.product.products);
 
+  // STATE
+  const [showProducts, setShowProducts] = useState(false);
+
   // LOAD CATEGORY ON LOAD PAGE
   useEffect(() => {
     dispatch(getCategoryAction({ slug: props.match.params.slug }));
@@ -35,6 +38,7 @@ export default function CategorySingle(props) {
   //GET PRODUCTS BY CLICKING ON SUB-CATEGORY LINK
 
   const _getProducts = (e) => {
+    setShowProducts(true);
     console.log('get products e', e._id);
     dispatch(getProductsListAction({ subId: e._id }));
   };
@@ -111,7 +115,7 @@ export default function CategorySingle(props) {
                 </div>
               ) : (
                 <div>
-                  {productsRedux.length === 0 ? (
+                  {productsRedux.length === 0 && showProducts ? (
                     <div className="heading-3">No products to show</div>
                   ) : (
                     <div className="pub-category__wrapper__productlist__block">
