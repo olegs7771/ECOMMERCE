@@ -116,7 +116,13 @@ export default function CategorySingle(props) {
                   ) : (
                     <div className="pub-category__wrapper__productlist__block">
                       {productsRedux.map((p, i) => (
-                        <ProductPage key={i} />
+                        <ProductPage
+                          key={i}
+                          image={p.images[0]}
+                          title={p.title}
+                          brand={p.brand}
+                          price={p.price}
+                        />
                       ))}
                     </div>
                   )}
