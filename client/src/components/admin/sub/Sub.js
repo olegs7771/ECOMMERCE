@@ -110,9 +110,9 @@ export default function Sub(props) {
       ></div>
       <div>
         <BreadCrumbs
-          link1="home &nbsp;"
+          link1="home"
           href1="/"
-          link2=" &rsaquo;&nbsp;&nbsp;  category   "
+          link2="category"
           href2="/admin/category"
           current={`${unslugify(props.match.params.slug)}`}
         />

@@ -191,18 +191,18 @@ export default function Card(props) {
       <div className="card">
         <BreadCrumbs
           // FROM CATEGORY
-          link1="home &nbsp;"
+          link1="home"
           href1="/"
           // FROM SUB-CATEGORY
-          link2=" &rsaquo;&nbsp;&nbsp; category &nbsp; &rsaquo;&nbsp;&nbsp;"
+          link2="category"
           href2="/admin/category"
           // FROM PRODUCT
           link3="sub-category"
           href3={`/admin/sub/${props.match.params.categoryId}/${props.match.params.category}`}
           // FROM PRODUCT CARD
-          link4="&rsaquo;&nbsp;&nbsp;products &nbsp; &nbsp;"
+          link4="products"
           href4={`/admin/${props.match.params.subId}/${props.match.params.category}/${props.match.params.categoryId}/${props.match.params.slug}`}
-          current={`${unslugify(props.match.params.slug)}`}
+          current={unslugify(props.match.params.slug)}
         />
 
         {auth.isAuthenticated && auth.user.role === 'admin' ? (

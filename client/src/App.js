@@ -22,6 +22,7 @@ import Card from './components/admin/card/Card';
 import Home from './components/home/Home';
 import CategoryPage from './components/category/Category';
 import CategorySingle from './components/category/CategorySingle';
+import ProductPage from './components/product/ProductPage';
 import Dashboard from './components/dashboard/Dashboard';
 
 const store = reload(); //ON EVERY RELOAD RESET AUTH USER REDUX STATE
@@ -38,6 +39,11 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/category" component={CategoryPage} />
+          <Route
+            exact
+            path="/product/:productId/:slug/:categoryId/:categorySlug"
+            component={ProductPage}
+          />
           <Route
             exact
             path="/category/:slug/:categoryId"
