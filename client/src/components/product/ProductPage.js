@@ -1,73 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import BreadCrumbs from '../navigation/BreadCrumbs';
 import { Image } from 'cloudinary-react';
-import sprite from '../../img/sprite.svg';
+import { drawerToggle } from '../../store/actions/drawerAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductsListAction } from '../../store/actions/productAction';
+import no_image from '../../img/no_image.png';
+import { Spinner } from '../../utils/LoadingComponent';
 
-export default function ProductPage({ image, title, price, brand }) {
-  const [focused, setFocused] = useState(false);
+export default function ProductPage(props) {
+  // REDUX
+  const dispatch = useDispatch();
+  const drawerRedux = useSelector((state) => state.drawer.drawer);
 
-  const _onFocusIn = () => {
-    setFocused(true);
-  };
-  const _onFocusOut = () => {
-    setFocused(false);
-  };
   return (
-    <div
-      className="pub-category__p-card"
-      onMouseEnter={_onFocusIn}
-      onMouseLeave={_onFocusOut}
-    >
-      {/* <img src={image} alt="product" className="pub-category__p-card--img" /> */}
-      <Image
-        cloudName="dyl4kpmie"
-        publicId={image}
-        width="350"
-        crop="scale"
-        className="pub-category__p-card--image "
-        // onClick={showLargeImage.bind(this, image)}
-      />
-
-      <div className="pub-category__p-card__bottom">
-        {/* Product card BOTTOM LEFT */}
-        <div className="pub-category__p-card__details">
-          <div
-            className={
-              focused
-                ? 'pub-category__p-card__details--name-visible'
-                : 'pub-category__p-card__details--name'
-            }
-          >
-            {title}
-          </div>
-          <div className="pub-category__p-card__details--brand">{brand}</div>
-          <div className="pub-category__p-card__details__price">
-            <span className="pub-category__p-card__details__price--simbol">
-              $
-            </span>
-            <span className="pub-category__p-card__details__price--integer">
-              {price.substring(-3, 2)}
-            </span>
-            <span className="pub-category__p-card__details__price--decimals">
-              {price.substring(price.length - 3)}
-            </span>
-          </div>
-        </div>
-        {/*  Product card BOTTOM RIGHT */}
-
-        <div className="pub-category__p-card__cart ">
-          <div
-            className={
-              focused
-                ? 'nav__link-icon-box pub-category__p-card__cart--visible'
-                : 'nav__link-icon-box pub-category__p-card__cart--icon'
-            }
-          >
-            <svg className="icon">
-              <use href={sprite + '#icon-cart'} />
-            </svg>
-          </div>
+    <div className="pub-product">
+      <div
+        className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
+        onClick={() => dispatch(drawerToggle(false))}
+      ></div>
+      <div className="pub-product__container">
+        <BreadCrumbs
+          href1="/"
+          link1="Home"
+          href2="/category "
+          link2="category"
+          href3={`/category/${props.match.params.categorySlug}/${props.match.params.categoryId}`}
+          link3={props.match.params.categorySlug}
+          current={props.match.params.slug}
+        />
+        <div className="pub-product__wrapper">
+          <div className="pub-product__gallery">Images</div>
+          <div className="pub-product__details">Details</div>
         </div>
       </div>
     </div>
   );
 }
+// `/category/${category.slug}/${category._id}`

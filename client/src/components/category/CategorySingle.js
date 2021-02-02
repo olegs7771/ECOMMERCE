@@ -8,7 +8,7 @@ import { getCategoryAction } from '../../store/actions/categoryAction';
 import { getSubListAction } from '../../store/actions/subAction';
 import { getProductsListAction } from '../../store/actions/productAction';
 import { Spinner } from '../../utils/LoadingComponent';
-import ProductPage from '../product/ProductPage';
+import ProductItem from '../product/ProductItem';
 
 export default function CategorySingle(props) {
   // REDUX
@@ -36,12 +36,12 @@ export default function CategorySingle(props) {
   }, [dispatch, props.match.params.categoryId]);
 
   //GET PRODUCTS BY CLICKING ON SUB-CATEGORY LINK
-
   const _getProducts = (e) => {
     setShowProducts(true);
     console.log('get products e', e._id);
     dispatch(getProductsListAction({ subId: e._id }));
   };
+
   return (
     <div className="pub-category">
       <div
@@ -52,13 +52,15 @@ export default function CategorySingle(props) {
       <div className="pub-category__container">
         <BreadCrumbs
           href1="/"
-          link1="Home &nbsp; &rsaquo;"
-          href2="/category  "
-          link2=" &nbsp; category"
-          current={`${props.match.params.slug}`}
+          link1="Home"
+          href2="/category"
+          link2="category"
+          current={props.match.params.slug}
         />
 
-        <h2 className="heading-2 mb-md pub-category__heading  ">Categories </h2>
+        {/* <h2 className="heading-2 mb-md pub-category__heading  ">
+          Categories!{' '}
+        </h2> */}
 
         {loadingRedux ? (
           <Spinner loading={loadingRedux} />
@@ -120,12 +122,17 @@ export default function CategorySingle(props) {
                   ) : (
                     <div className="pub-category__wrapper__productlist__block">
                       {productsRedux.map((p, i) => (
-                        <ProductPage
+                        <ProductItem
                           key={i}
                           image={p.images[0]}
                           title={p.title}
                           brand={p.brand}
                           price={p.price}
+                          productId={p._id}
+                          slug={p.slug}
+                          history={props.history}
+                          categoryId={props.match.params.categoryId}
+                          categorySlug={props.match.params.slug}
                         />
                       ))}
                     </div>
