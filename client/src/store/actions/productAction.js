@@ -48,14 +48,14 @@ export const getOneProduct = (data) => async (dispatch) => {
     payload: true,
   });
   try {
-    const res = await axios.get(
-      `/api/v1/product/${data.productId}/${data.slug}`
-    );
     dispatch({
       type: LOADING,
       payload: false,
     });
-    // console.log('res.data getOneProduct', res.data);
+    const res = await axios.get(
+      `/api/v1/product/${data.productId}/${data.slug}`
+    );
+
     dispatch({
       type: GET_PRODUCT_OBJECT,
       payload: res.data.data,

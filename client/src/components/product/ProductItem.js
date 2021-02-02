@@ -48,6 +48,7 @@ export default function ProductItem({
       <div className="pub-category__p-card__bottom">
         {/* Product card BOTTOM LEFT */}
         <div className="pub-category__p-card__details">
+          {/* NAME  */}
           <div
             className={
               focused
@@ -57,7 +58,9 @@ export default function ProductItem({
           >
             {title}
           </div>
+          {/* BRAND  */}
           <div className="pub-category__p-card__details--brand">{brand}</div>
+          {/* PRICE  */}
           <div className="pub-category__p-card__details__price">
             <span className="pub-category__p-card__details__price--simbol">
               $
@@ -67,6 +70,20 @@ export default function ProductItem({
             </span>
             <span className="pub-category__p-card__details__price--decimals">
               {price.substring(price.length - 3)}
+            </span>
+          </div>
+          {/* RATING  */}
+          <div className="pub-category__p-card__details__rating">
+            <span className="pub-category__p-card__details__rating__bar">
+              <svg className="icon">
+                <use href={sprite + '#icon-star-full'} />
+              </svg>
+              <svg className="icon">
+                <use href={sprite + '#icon-star-half'} />
+              </svg>
+              <svg className="icon">
+                <use href={sprite + '#icon-star-empty'} />
+              </svg>
             </span>
           </div>
         </div>
