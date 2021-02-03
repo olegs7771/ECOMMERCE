@@ -179,6 +179,17 @@
           margin-left: 1px;
         }
       }
+
+      &__rating {
+        display: flex;
+        align-items: center;
+
+        &__reviews {
+          margin-left: 1rem;
+          font-size: 1.4rem;
+          color: $color-grey-dark;
+        }
+      }
     }
     &__cart {
       // border: 1px solid black;

@@ -6,13 +6,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOneProduct } from '../../store/actions/productAction';
 import no_image from '../../img/no_image.png';
 import { Spinner } from '../../utils/LoadingComponent';
-
+import sprite from '../../img/sprite.svg';
+import sprite_material from '../../img/sprite_material.svg';
 export default function ProductPage(props) {
   // REDUX
   const dispatch = useDispatch();
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   const loadingRedux = useSelector((state) => state.loading.loading);
   const productRedux = useSelector((state) => state.product.product);
+  // STATE
+  const [favorite, setFavorite] = useState(false);
 
   // LOAD PRODUCT ON LOAD
   useEffect(() => {
@@ -23,6 +26,11 @@ export default function ProductPage(props) {
       })
     );
   }, [dispatch, props.match.params.productId, props.match.params.slug]);
+
+  // CLICK ON FAVORITE
+  const _setFav = () => {
+    setFavorite(!favorite);
+  };
 
   return (
     <div className="pub-product">
@@ -62,7 +70,82 @@ export default function ProductPage(props) {
                 ))}
               </div>
             </div>
-            <div className="pub-product__details">details</div>
+            <div className="pub-product__details">
+              {/* LEFT  */}
+              <div className="pub-product__details__name-wrapper">
+                <div className="pub-product__details__name-wrapper__content-left">
+                  <div className="pub-product__details__name-wrapper__content-left__name ">
+                    <div className="pub-product__details__name-wrapper__content-left__name--title">
+                      {productRedux.title}
+                    </div>
+                    <div className="pub-product__details__name-wrapper__content-left__name--brand mb-sm">
+                      {productRedux.brand}
+                    </div>
+                  </div>
+                </div>
+                {/* RIGHT  */}
+                <div className="pub-product__details__name-wrapper__content-right">
+                  <div className="pub-product__details__name-wrapper__content-right__price">
+                    <span className="pub-category__p-card__details__price--simbol">
+                      $
+                    </span>
+                    <span className="pub-category__p-card__details__price--integer">
+                      {productRedux.price.substring(-3, 2)}
+                    </span>
+                    <span className="pub-category__p-card__details__price--decimals">
+                      {productRedux.price.substring(
+                        productRedux.price.length - 3
+                      )}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              {/* RATING STARS */}
+              <div className="pub-product__details__rating-bar mb-sm">
+                <span className="pub-category__p-card__details__rating__bar">
+                  <svg className="icon pub-product__details__rating-bar--icon">
+                    <use href={sprite + '#icon-star-full'} />
+                  </svg>
+                  <svg className="icon pub-product__details__rating-bar--icon">
+                    <use href={sprite + '#icon-star-half'} />
+                  </svg>
+                  <svg className="icon pub-product__details__rating-bar--icon">
+                    <use href={sprite + '#icon-star-empty'} />
+                  </svg>
+                </span>
+                <div className="pub-category__p-card__details__rating__reviews">
+                  <span>(</span>
+                  <span
+                    className="pub-category__p-card__details__rating__reviews--amount 
+                         pub-product__details__rating-bar--amount
+                  "
+                  >
+                    30
+                  </span>
+                  <span>)</span>
+                </div>
+              </div>
+              {/* BUY MODULE  */}
+              <div className="pub-product__details__buy-module ">
+                <button className="btn pub-product__details__buy-module--btn">
+                  Add to cart
+                </button>
+                <div
+                  className="pub-product__details__buy-module__icon"
+                  onClick={_setFav}
+                >
+                  {favorite ? (
+                    <svg className="icon pub-product__details__buy-module__icon--icon">
+                      <use href={sprite_material + '#icon-favorite'} />
+                    </svg>
+                  ) : (
+                    <svg className="icon pub-product__details__buy-module__icon--icon">
+                      <use href={sprite_material + '#icon-favorite_outline'} />
+                    </svg>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>

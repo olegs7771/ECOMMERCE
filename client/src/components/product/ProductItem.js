@@ -85,6 +85,13 @@ export default function ProductItem({
                 <use href={sprite + '#icon-star-empty'} />
               </svg>
             </span>
+            <div className="pub-category__p-card__details__rating__reviews">
+              <span>(</span>
+              <span className="pub-category__p-card__details__rating__reviews--amount">
+                30
+              </span>
+              <span>)</span>
+            </div>
           </div>
         </div>
         {/*  Product card BOTTOM RIGHT */}
