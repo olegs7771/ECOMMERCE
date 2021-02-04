@@ -257,6 +257,7 @@ export default function Card(props) {
                       </button>
                     </div>
                   )}
+
                   {/* IMAGE ADD FORM  */}
                   <CardImageForm
                     product={product}

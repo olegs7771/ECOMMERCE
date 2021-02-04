@@ -33,12 +33,12 @@ export default function ProductPage(props) {
   };
 
   return (
-    <div className="pub-product">
+    <div className="pub-product page">
       <div
         className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
-      <div className="pub-product__container">
+      <div className="pub-product__container container">
         <BreadCrumbs
           href1="/"
           link1="Home"
@@ -70,8 +70,8 @@ export default function ProductPage(props) {
                 ))}
               </div>
             </div>
+            {/* LEFT  */}
             <div className="pub-product__details">
-              {/* LEFT  */}
               <div className="pub-product__details__name-wrapper">
                 <div className="pub-product__details__name-wrapper__content-left">
                   <div className="pub-product__details__name-wrapper__content-left__name ">
@@ -145,6 +145,12 @@ export default function ProductPage(props) {
                   )}
                 </div>
               </div>
+            </div>
+            {/* LEFT IN GRID  */}
+            <div className="pub-product__product-summary mb-sm">
+              <p className="pub-product__product-summary--text">
+                {productRedux.description}
+              </p>
             </div>
           </div>
         )}

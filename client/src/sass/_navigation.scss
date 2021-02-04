@@ -14,10 +14,11 @@
     top: 0;
     position: sticky;
     transform: none;
+    z-index: 100;
   }
 
   &__container {
-    height: 8rem;
+    // height: 8rem;
 
     &__inner {
       display: grid;
@@ -43,12 +44,12 @@
   border-bottom: 0.5px solid #eee;
   grid-column: 2/-1;
   grid-row: 1;
+  padding: 2rem;
   @media only screen and (max-width: $lg-bp) {
     grid-column: 1;
-    padding: 2rem;
   }
 
-  padding: 2rem 0;
+  // padding: 2rem 0;
   color: $color-black;
 
   position: relative;

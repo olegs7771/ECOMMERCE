@@ -1,25 +1,5 @@
 .home {
-  max-width: 180rem;
-  min-height: 100vh;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(13, minmax(0, 1fr));
-  grid-column-gap: 2rem;
-
-  @media only screen and (max-width: $lg-bp) {
-    grid-template-columns: 1fr;
-  }
-
   &__container {
-    grid-column: 2/-1;
-    min-height: 100vh;
-    // background-color: lightblue;
-    padding: 4rem 1rem;
-
-    @media only screen and (max-width: $lg-bp) {
-      grid-column: 1;
-    }
-
     &__main {
       // background-color: lightblue;
       height: 100vh;

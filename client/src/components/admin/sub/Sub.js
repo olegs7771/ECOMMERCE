@@ -103,7 +103,7 @@ export default function Sub(props) {
   // console.log('error', error.sub);
   // &nbsp; &rsaquo;
   return (
-    <div>
+    <div className="category ">
       <div
         className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
         onClick={() => dispatch(drawerToggle(false))}
@@ -116,7 +116,7 @@ export default function Sub(props) {
           href2="/admin/category"
           current={`${unslugify(props.match.params.slug)}`}
         />
-        <div className="category">
+        <div>
           <div className="category__header">
             <h1 className="heading-3 mb-md">{props.match.params.slug}</h1>
 

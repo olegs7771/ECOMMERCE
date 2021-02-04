@@ -30,3 +30,4 @@ app.listen(PORT, () => {
 
 // const price = '1a';
 // console.log(/^\d+(,\d{3})*(\.\d{1,2})?$/.test(price));
+console.log(new Date(1612437485000));

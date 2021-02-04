@@ -20,7 +20,7 @@ export default function CardImage({
       <Image
         cloudName="dyl4kpmie"
         publicId={image}
-        width="150"
+        width="300"
         crop="scale"
         className="card__container__gallery--image "
         onClick={showLargeImage.bind(this, image)}

@@ -20,13 +20,13 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <div className="home">
+    <div className="home page">
       <div
         className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
 
-      <article className="home__container">
+      <article className="home__container container">
         <div className="home__container__main">
           <h1 className="heading-1 mb-md">Welcome</h1>
           {/* LAST ADDED PRODUCTS  */}

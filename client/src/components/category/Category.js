@@ -22,13 +22,13 @@ export default function Category() {
   }, [dispatch]);
 
   return (
-    <div className="pub-category">
+    <div className="pub-category page">
       <div
         className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
 
-      <div className="pub-category__container">
+      <div className="pub-category__container container">
         <BreadCrumbs href1={'/'} link1={'Home'} current={'Category'} />
         <h2 className="heading-2 mb-md pub-category__heading  ">Categories </h2>
         {loadingRedux ? (

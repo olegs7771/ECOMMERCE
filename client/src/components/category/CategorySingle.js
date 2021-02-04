@@ -43,13 +43,13 @@ export default function CategorySingle(props) {
   };
 
   return (
-    <div className="pub-category">
+    <div className="pub-category page">
       <div
         className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
 
-      <div className="pub-category__container">
+      <div className="pub-category__container container">
         <BreadCrumbs
           href1="/"
           link1="Home"
