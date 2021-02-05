@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { withCookies } from 'react-cookie';
 import './App.scss';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -24,12 +24,13 @@ import CategoryPage from './components/category/Category';
 import CategorySingle from './components/category/CategorySingle';
 import ProductPage from './components/product/ProductPage';
 import Dashboard from './components/dashboard/Dashboard';
+import ShoppingCart from './components/shoppingcart/ShoppingCart';
 
 const store = reload(); //ON EVERY RELOAD RESET AUTH USER REDUX STATE
 
 // Drawer
 
-const App = () => {
+const App = (props) => {
   return (
     <Provider store={store}>
       <Router>
@@ -43,6 +44,11 @@ const App = () => {
             exact
             path="/product/:productId/:slug/:categoryId/:categorySlug"
             component={ProductPage}
+          />
+          <Route
+            exact
+            path="/shoppingcart"
+            render={() => <ShoppingCart cookies={props.cookies} />}
           />
           <Route
             exact
@@ -74,4 +80,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withCookies(App);

@@ -3,6 +3,7 @@ import {
   LOADING_ITEM_CATEGORY,
   LOADING_FORM_PRODUCT,
   LOADING_PRODUCTS,
+  LOADING_PRODUCT_CART,
 } from '../actions/types';
 
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
   loadingItemCategory: false,
   loadingFormProduct: false,
   loadingProducts: false,
+  loadingProductCart: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -33,6 +35,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loadingProducts: action.payload,
+      };
+    case LOADING_PRODUCT_CART:
+      return {
+        ...state,
+        loadingProductCart: action.payload,
       };
 
     default:

@@ -6,10 +6,13 @@ import {
   LOADING,
   LOADING_FORM_PRODUCT,
   LOADING_PRODUCTS,
+  LOADING_PRODUCT_CART,
   GET_PRODUCT_OBJECT,
   GET_API_ERRORS,
   GET_API_ERROR_MESSAGE,
   GET_API_MESSAGE,
+  GET_PRODUCT_INTO_CART,
+  REMOVE_PRODUCT_FROM_CART,
 } from './types';
 
 //GET PRODUCTS BY subId
@@ -315,5 +318,55 @@ export const getLast3ProductAction = () => async (dispatch) => {
       payload: false,
     });
     console.log('error getLast3ProductAction', error);
+  }
+};
+
+// GET PRODUCT INTO THE COOKIES (SHOPPINGCART)
+export const getProductInCartAction = (data) => async (dispatch) => {
+  console.log('getProductInCartAction data', data);
+  dispatch({
+    type: LOADING_PRODUCT_CART,
+    payload: true,
+  });
+  try {
+    const res = await axios(`/api/v1/product/shoppingcart/${data.slug}`);
+    dispatch({
+      type: LOADING_PRODUCT_CART,
+      payload: false,
+    });
+    dispatch({
+      type: GET_API_MESSAGE,
+      payload: res.data.status,
+    });
+
+    console.log('res.data getProductInCartAction', res.data);
+  } catch (error) {
+    console.log('getProductInCartAction error ', error);
+  }
+};
+
+// GET PRODUCTS FROM COOKIES TO SHOW IN SHOPPINGCART
+export const fetchProdactsFromCookiesAction = (data) => async (dispatch) => {
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+  try {
+    const res = await axios.post('/api/v1/product/shoppingcart', data);
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    console.log('res.data fetchProdactsFromCookiesAction', res.data);
+    dispatch({
+      type: GET_PRODUCT_INTO_CART,
+      payload: res.data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+    console.log('error fetchProdactsFromCookiesAction', error);
   }
 };

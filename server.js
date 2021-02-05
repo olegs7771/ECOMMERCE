@@ -23,11 +23,5 @@ app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
-// const date = new Date(
-//   Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000
-// );
-// console.log(new Date('2021-01-06T20:26:01.335Z').toDateString());
-
-// const price = '1a';
-// console.log(/^\d+(,\d{3})*(\.\d{1,2})?$/.test(price));
-console.log(new Date(1612437485000));
+// console.log(Math.round(Date.now() / 1000));
+// console.log(Date.now() / 1000);

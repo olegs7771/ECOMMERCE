@@ -15,10 +15,19 @@ const {
   uploadImage,
   deleteImage,
   lastAdded,
+  addProductToCart,
+  removeProductToCart,
+  getProducts4Cart,
 } = require('../controllers/productController');
 
 // PUBLIC ROUTES
 router.route('/last-added').get(lastAdded); // get last added products for home page
+router
+  .route('/shoppingcart/:slug')
+  .get(addProductToCart)
+  .delete(removeProductToCart);
+router.route('/shoppingcart').post(getProducts4Cart);
+
 router.route('/:subId').get(list); // get products by subId
 router.route('/:productId/:slug').get(getOne); //get one product
 

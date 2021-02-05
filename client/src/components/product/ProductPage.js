@@ -3,7 +3,10 @@ import BreadCrumbs from '../navigation/BreadCrumbs';
 import { Image } from 'cloudinary-react';
 import { drawerToggle } from '../../store/actions/drawerAction';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOneProduct } from '../../store/actions/productAction';
+import {
+  getOneProduct,
+  getProductInCartAction,
+} from '../../store/actions/productAction';
 import no_image from '../../img/no_image.png';
 import { Spinner } from '../../utils/LoadingComponent';
 import sprite from '../../img/sprite.svg';
@@ -30,6 +33,11 @@ export default function ProductPage(props) {
   // CLICK ON FAVORITE
   const _setFav = () => {
     setFavorite(!favorite);
+  };
+  // ADD PRODUCT TO SHOPPING CART
+  const _addProductToCart = (e) => {
+    console.log('_addProductToCar e', e);
+    dispatch(getProductInCartAction({ slug: e }));
   };
 
   return (
@@ -127,7 +135,10 @@ export default function ProductPage(props) {
               </div>
               {/* BUY MODULE  */}
               <div className="pub-product__details__buy-module ">
-                <button className="btn pub-product__details__buy-module--btn">
+                <button
+                  className="btn pub-product__details__buy-module--btn"
+                  onClick={_addProductToCart.bind(this, productRedux.slug)}
+                >
                   Add to cart
                 </button>
                 <div

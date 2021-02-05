@@ -174,6 +174,43 @@ const lastAdded = asyncCatch(async (req, res, next) => {
     .json({ qnt: products.length, status: 'success', data: products });
 });
 
+// SHOPPING CART
+const addProductToCart = asyncCatch(async (req, res, next) => {
+  //1 Find product by product slug
+  const product = await Product.findOne({ slug: req.params.slug });
+  if (!product) return next(new AppErrorHandler('No Product Found', 401));
+  console.log('product', product);
+  //2) Add  product to cookie
+  res.cookie(`product_ids|${product._id}`, Math.round(Date.now() / 1000), {
+    expires: new Date(
+      Date.now() +
+        parseInt(process.env.JWT_COOKIE_EXP, 10) * 24 * 60 * 60 * 1000
+    ),
+    // httpOnly: true,
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    sameSite: true,
+  });
+  res.status(200).json({ status: 'success', data: product });
+});
+//Remove Product From Shopping Cart
+const removeProductToCart = asyncCatch(async (req, res, next) => {
+  //1 Find product by product slug
+  const product = await Product.findOne({ slug: req.params.slug });
+  if (!product) return next(new AppErrorHandler('No Product Found', 401));
+  console.log('product', product);
+  // 2) Clear cookie of product
+  res.clearCookie(`product_ids|${product._id}`);
+  res.status(200).json({ status: 'success', data: product });
+});
+
+// GET PRODUCTS FOR SHOPPING CART .Receives array from action.
+const getProducts4Cart = asyncCatch(async (req, res, next) => {
+  console.log('req.body getProducts4Cart', req.body.data);
+  //1) Get Product for Shopping Cart
+  const products = await Product.find().where('_id').in(req.body.data).exec();
+  res.status(200).json({ status: 'success', data: products });
+});
+
 module.exports = {
   create,
   list,
@@ -186,4 +223,7 @@ module.exports = {
   uploadImage,
   deleteImage,
   lastAdded,
+  addProductToCart,
+  removeProductToCart,
+  getProducts4Cart,
 };

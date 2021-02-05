@@ -128,5 +128,9 @@ productSchema.post('save', function (err, doc, next) {
   next(errors);
 });
 
+// productSchema.pre('find', function (next) {
+//   console.log('this', this);
+// });
+
 const Product = mongoose.model('Product', productSchema);
 module.exports = Product;

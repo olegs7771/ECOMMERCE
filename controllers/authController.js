@@ -307,7 +307,9 @@ const clearCookies = asyncCatch(async (req, res, next) => {
   console.log(!req.headers.cookie && !req.headers.cookie.split(';')[1]);
   if (!req.headers.cookie && !req.headers.cookie.split(';')[1]) return next();
   console.log('send cookie');
-  res.cookie('jwt', 'delete');
+  res.cookie('jwt', 'delete', {
+    httpOnly: true,
+  });
   res.json({ message: 'logged out' });
 });
 

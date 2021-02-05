@@ -4,6 +4,8 @@ import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import Logo from '../../img/ecommerce-logo.png';
 import { withRouter } from 'react-router-dom';
 import sprite from '../../img/sprite.svg';
+import sprite_material from '../../img/sprite_material.svg';
+
 import GoogleLogout from '../auth/GoogleoAUthLogout';
 
 import { drawerToggle } from '../../store/actions/drawerAction';
@@ -104,6 +106,15 @@ const Navigation = ({ history }) => {
                   <li className="nav__item">
                     <GoogleLogout history={history} />
                   </li>
+                  <li className="nav__item ">
+                    <a href="/shoppingcart" className="nav__link">
+                      <svg className="nav__link-icon">
+                        <use
+                          href={sprite_material + '#icon-add_shopping_cart'}
+                        />
+                      </svg>
+                    </a>
+                  </li>
                 </div>
               </ul>
             ) : (
@@ -118,7 +129,7 @@ const Navigation = ({ history }) => {
                   <li className="nav__item">
                     <a href="/login" className="nav__link">
                       <svg className="nav__link-icon">
-                        <use href={sprite + '#icon-user'} />
+                        <use href={sprite_material + '#icon-person_outline'} />
                       </svg>
                       Sign In
                     </a>
@@ -126,9 +137,18 @@ const Navigation = ({ history }) => {
                   <li className="nav__item">
                     <a href="/register" className="nav__link">
                       <svg className="nav__link-icon">
-                        <use href={sprite + '#icon-user-plus'} />
+                        <use href={sprite_material + '#icon-person_add_alt'} />
                       </svg>
                       Sign Up
+                    </a>
+                  </li>
+                  <li className="nav__item ">
+                    <a href="/shoppingcart" className="nav__link">
+                      <svg className="nav__link-icon">
+                        <use
+                          href={sprite_material + '#icon-add_shopping_cart'}
+                        />
+                      </svg>
                     </a>
                   </li>
                 </div>
