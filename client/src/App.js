@@ -25,12 +25,27 @@ import CategorySingle from './components/category/CategorySingle';
 import ProductPage from './components/product/ProductPage';
 import Dashboard from './components/dashboard/Dashboard';
 import ShoppingCart from './components/shoppingcart/ShoppingCart';
+import axios from 'axios';
 
 const store = reload(); //ON EVERY RELOAD RESET AUTH USER REDUX STATE
 
 // Drawer
 
 const App = (props) => {
+  // IF sessionId expired or cleared fetch new guest token and userId
+
+  if (!props.allCookies.sessionId) {
+    const fetchUserId = async () => {
+      try {
+        const res = await axios.get('/api/v1/users');
+        console.log('res.data fetchUserId', res.data);
+      } catch (error) {
+        console.log('error fetchUserId', error.response.data);
+      }
+    };
+    fetchUserId();
+  }
+
   return (
     <Provider store={store}>
       <Router>

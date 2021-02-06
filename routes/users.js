@@ -11,13 +11,18 @@ const {
   protect,
   clearCookies,
 } = require('../controllers/authController');
+
+const { getGuestCookieToken } = require('../controllers/guestController');
+
 const {
   getUser,
   uploadAvatar,
   deleteUser,
 } = require('../controllers/userController');
 
-router.route('/').post(checkUserEmailExists);
+// ROUTES PUBLIC
+
+router.route('/').post(checkUserEmailExists).get(getGuestCookieToken);
 router.route('/signup').post(signup);
 router.route('/signupOauth2').post(signOauth2);
 router.route('/loginOauth2').post(loginOauth2);
