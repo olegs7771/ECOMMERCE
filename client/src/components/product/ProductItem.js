@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Image } from 'cloudinary-react';
 import sprite from '../../img/sprite.svg';
+import sprite_material from '../../img/sprite_material.svg';
+import { getProductInCartAction } from '../../store/actions/productAction';
 
 export default function ProductItem({
   image,
@@ -13,6 +17,11 @@ export default function ProductItem({
   categorySlug,
   history,
 }) {
+  // REDUX
+  const dispatch = useDispatch();
+  const loadingRedux = useSelector((state) => state.loading.loadingProductCart);
+
+  // STATE
   const [focused, setFocused] = useState(false);
 
   const _onFocusIn = () => {
@@ -26,6 +35,13 @@ export default function ProductItem({
   const _getProduct = (e) => {
     console.log('product e', e);
     history.push(`/product/${e[0]}/${e[1]}/${categoryId}/${categorySlug}`);
+  };
+
+  // ADD PRODUCT TO SHOPPING CART
+  const _addProductToCart = (e) => {
+    e.stopPropagation();
+
+    dispatch(getProductInCartAction({ slug }));
   };
 
   return (
@@ -104,9 +120,19 @@ export default function ProductItem({
                 : 'nav__link-icon-box pub-category__p-card__cart--icon'
             }
           >
-            <svg className="icon">
-              <use href={sprite + '#icon-cart'} />
-            </svg>
+            {/* ONLOADING  */}
+            {loadingRedux ? (
+              <svg
+                className="icon pub-category__p-card__cart--icon-spinner"
+                onClick={_addProductToCart}
+              >
+                <use href={sprite_material + '#icon-toys'} />
+              </svg>
+            ) : (
+              <svg className="icon " onClick={_addProductToCart}>
+                <use href={sprite + '#icon-cart'} />
+              </svg>
+            )}
           </div>
         </div>
       </div>

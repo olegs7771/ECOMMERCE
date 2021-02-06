@@ -3,12 +3,40 @@
   flex-direction: column;
   align-items: center;
   margin-top: 4rem;
+  &--loading {
+    justify-content: center;
+  }
 
   &__content {
     max-width: 77rem;
     background-color: lightblue;
     width: 100%;
+  }
+  &__header {
+    font-weight: 700;
+    text-transform: none;
+  }
 
-    &__header
+  &__loginpromo {
+    display: flex;
+    margin: 4rem 0;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid $color-grey-light-3;
+    border-radius: 4px;
+    padding: 3.2rem 2rem;
+    &__main {
+      &__hyperlink {
+        font-size: 1.6rem;
+      }
+      &--link {
+        color: $color-black;
+      }
+    }
+    &--icon {
+      height: 3.5rem;
+      width: 3.5rem;
+      cursor: default;
+    }
   }
 }
