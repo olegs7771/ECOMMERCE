@@ -22,21 +22,19 @@ export default function ShoppingCart(props) {
 
   return (
     <div className="page shoppingcart">
-      <div className="container">
-        {loadingRedux || !productsInCartRedux ? (
-          <div>Loading</div>
-        ) : (
-          <div>
-            {productsInCartRedux.length === 0 ? (
-              //   EMPTY CART
-              <div className="shoppingcart__wrapper">Empty Cart</div>
-            ) : (
-              //  CART WITH PRODUCTS
-              <div className="shoppingcart__wrapper">Product in cart</div>
-            )}
-          </div>
-        )}
-      </div>
+      {loadingRedux || !productsInCartRedux ? (
+        <div>Loading</div>
+      ) : (
+        <div className="shoppingcart__content">
+          {productsInCartRedux.length === 0 ? (
+            <div>
+              <div className="shoppingcart__content__header">Your C</div>
+            </div>
+          ) : (
+            <div>Products</div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
