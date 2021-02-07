@@ -1,7 +1,7 @@
 const app = require('./app');
 // require('dotenv').config();
 const mongoose = require('mongoose');
-
+const { promisify } = require('util');
 const PORT = process.env.PORT || 5000;
 
 const DB = process.env.DATABASE.replace(
@@ -22,6 +22,3 @@ mongoose
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
-
-// console.log(Math.round(Date.now() / 1000));
-// console.log(Date.now() / 1000);

@@ -6,17 +6,15 @@ const guestcartSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Provide guest userId'],
     },
-
     userId: {
       type: ObjectId,
       ref: 'User',
     },
-    cart: [
+    products: [
       {
-        productId: {
-          type: String,
-          required: [true, 'Provide product id'],
-        },
+        type: ObjectId,
+        ref: 'Product',
+        required: [true, 'Provide product id'],
       },
     ],
   },
@@ -24,6 +22,13 @@ const guestcartSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+// ADD PRODUCT TO EXISTED CART
+guestcartSchema.methods.addProduct = function (product) {
+  console.log('this', this);
+  this.products.push(product);
+  return this;
+};
 
 const Guestcart = mongoose.model('Guestcart', guestcartSchema);
 module.exports = Guestcart;
