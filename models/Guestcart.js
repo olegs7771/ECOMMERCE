@@ -24,10 +24,18 @@ const guestcartSchema = new mongoose.Schema(
 );
 
 // ADD PRODUCT TO EXISTED CART
-guestcartSchema.methods.addProduct = function (product) {
+guestcartSchema.methods.addProduct = function (productId) {
   console.log('this', this);
-  this.products.push(product);
+  this.products.push(productId);
   return this;
+};
+//REMOVE PRODUCT FROM CART
+guestcartSchema.methods.removeProduct = function (productId) {
+  const index = this.products.indexOf(productId);
+  console.log(index);
+  if (index > -1) {
+    this.products.splice(index, 1);
+  }
 };
 
 const Guestcart = mongoose.model('Guestcart', guestcartSchema);

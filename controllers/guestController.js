@@ -104,7 +104,16 @@ const createGuestCart = asyncCatch(async (req, res, next) => {
 
 // REMOVE PRODUCT FROM CRATE (update)
 const removeProduct = asyncCatch(async (req, res, next) => {
-  console.log('remove project');
+  // 1)Find cart
+  const cart = await Guestcart.findOne({ guestId: req.user });
+  cart.removeProduct(req.body.productId);
+  await cart.save();
+  res.status(200).json({ status: 'success', data: cart });
+});
+
+// DELETE CART IF userId EXPIRED IN cookie
+const deleteCart = asyncCatch(async (req, res, next) => {
+  console.log('delete cart');
 });
 
 module.exports = {
@@ -112,4 +121,5 @@ module.exports = {
   protectGuest,
   createGuestCart,
   removeProduct,
+  deleteCart,
 };
