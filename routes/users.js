@@ -16,6 +16,8 @@ const {
   getGuestCookieToken,
   createGuestCart,
   protectGuest,
+  removeProduct,
+  deleteCart,
 } = require('../controllers/guestController');
 
 const {
@@ -25,7 +27,11 @@ const {
 } = require('../controllers/userController');
 
 // ROUTES PUBLIC
-router.route('/guest/:guestId').post(protectGuest, createGuestCart); //create guest cart
+router
+  .route('/guest/:guestId')
+  .post(protectGuest, createGuestCart)
+  .put(protectGuest, removeProduct)
+  .delete(deleteCart);
 router.route('/').post(checkUserEmailExists).get(getGuestCookieToken);
 router.route('/signup').post(signup);
 router.route('/signupOauth2').post(signOauth2);
