@@ -1,9 +1,13 @@
 import configureStore from '../store/configureStore/configStore';
 import { setCurrentUser, clearOutUser } from '../store/actions/authAction';
+import { setCookieAction } from '../store/actions/cookieAction';
 import jwt_decode from 'jwt-decode';
 const store = configureStore();
 
-export const reload = () => {
+export const reload = (cookies) => {
+  // SET COOKIES IN STATE
+  store.dispatch(setCookieAction(cookies));
+
   if (localStorage.jwtToken) {
     //decode token and get user info and exp
     const decoded = jwt_decode(localStorage.jwtToken);

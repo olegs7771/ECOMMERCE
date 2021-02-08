@@ -279,3 +279,36 @@ input[type='radio' i] {
   width: 2rem;
   cursor: pointer;
 }
+
+// Slide In message, black, from right, sticky
+.slidein__message {
+  background-color: $color-black;
+
+  position: fixed;
+  top: 10rem;
+  transform: translateX(calc(100vw - 40rem));
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: $color-grey-light-3;
+  &__text {
+    width: 60%;
+    background-color: $color-black;
+    &--text {
+    }
+  }
+  &__view-btn {
+    &--btn {
+      background-color: $color-black;
+      border-radius: 0;
+      &:hover {
+        transform: translateY(0);
+        box-shadow: none;
+      }
+    }
+  }
+  &__close-icon {
+    background-color: $color-black;
+  }
+}

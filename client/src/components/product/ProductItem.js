@@ -20,6 +20,7 @@ export default function ProductItem({
   // REDUX
   const dispatch = useDispatch();
   const loadingRedux = useSelector((state) => state.loading.loadingProductCart);
+  const cookieRedux = useSelector((state) => state.cookie.cookie);
 
   // STATE
   const [focused, setFocused] = useState(false);
@@ -40,8 +41,11 @@ export default function ProductItem({
   // ADD PRODUCT TO SHOPPING CART
   const _addProductToCart = (e) => {
     e.stopPropagation();
-
-    dispatch(getProductInCartAction({ slug }));
+    const data = {
+      productId,
+      guestId: cookieRedux.guestId,
+    };
+    dispatch(getProductInCartAction(data));
   };
 
   return (

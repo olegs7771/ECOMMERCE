@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema;
-const guestcartSchema = new mongoose.Schema(
+const cartSchema = new mongoose.Schema(
   {
     guestId: {
       type: String,
@@ -24,13 +24,13 @@ const guestcartSchema = new mongoose.Schema(
 );
 
 // ADD PRODUCT TO EXISTED CART
-guestcartSchema.methods.addProduct = function (productId) {
-  console.log('this', this);
+cartSchema.methods.addProduct = function (productId) {
+  // console.log('this', this);
   this.products.push(productId);
   return this;
 };
 //REMOVE PRODUCT FROM CART
-guestcartSchema.methods.removeProduct = function (productId) {
+cartSchema.methods.removeProduct = function (productId) {
   const index = this.products.indexOf(productId);
   console.log(index);
   if (index > -1) {
@@ -38,5 +38,5 @@ guestcartSchema.methods.removeProduct = function (productId) {
   }
 };
 
-const Guestcart = mongoose.model('Guestcart', guestcartSchema);
-module.exports = Guestcart;
+const Cart = mongoose.model('Cart', cartSchema);
+module.exports = Cart;

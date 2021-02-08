@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { protect, restrictTo } = require('../controllers/authController');
+const { protectGuest } = require('../controllers/guestController');
 
 const {
   create,
@@ -15,18 +16,14 @@ const {
   uploadImage,
   deleteImage,
   lastAdded,
-  addProductToCart,
-  removeProductToCart,
-  getProducts4Cart,
+  createCart,
 } = require('../controllers/productController');
 
 // PUBLIC ROUTES
 router.route('/last-added').get(lastAdded); // get last added products for home page
-router
-  .route('/shoppingcart/:slug')
-  .get(addProductToCart)
-  .delete(removeProductToCart);
-router.route('/shoppingcart').post(getProducts4Cart);
+
+//Protect Guest validate if token valid
+router.route('/guest/:guestId').post(protectGuest, createCart);
 
 router.route('/:subId').get(list); // get products by subId
 router.route('/:productId/:slug').get(getOne); //get one product

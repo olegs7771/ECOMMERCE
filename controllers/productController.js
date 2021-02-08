@@ -2,6 +2,7 @@ const asyncCatch = require('../utils/asyncCatch');
 const Sub = require('../models/Sub');
 const Category = require('../models/Category');
 const Product = require('../models/Product');
+const Cart = require('../models/Cart');
 const AppErrorHandler = require('../utils/AppError');
 const slugify = require('slugify');
 const { cloudinary } = require('../utils/claudinary');
@@ -165,7 +166,7 @@ const deleteImage = asyncCatch(async (req, res, next) => {
 // PUBLIC
 
 const lastAdded = asyncCatch(async (req, res, next) => {
-  console.log('req.query ', req.query);
+  // console.log('req.query ', req.query);
 
   const products = await Product.find().sort({ updatedAt: -1 }).limit(4);
   if (!products) return next(new AppErrorHandler('No products found', 404));
@@ -174,41 +175,39 @@ const lastAdded = asyncCatch(async (req, res, next) => {
     .json({ qnt: products.length, status: 'success', data: products });
 });
 
-// SHOPPING CART
-const addProductToCart = asyncCatch(async (req, res, next) => {
-  //1 Find product by product slug
-  const product = await Product.findOne({ slug: req.params.slug });
-  if (!product) return next(new AppErrorHandler('No Product Found', 401));
+// // SHOPPING CART
+// CREATE GUEST CART by adding one product
+const createCart = asyncCatch(async (req, res, next) => {
+  console.log('req.body createCart', req.body);
+  console.log('createCart params', req.params);
+  console.log('req.user', req.user);
+  // //1) Check if guest already has Cart
+  const cart = await Cart.findOne({ guestId: req.user });
+  //2) FInd Product
+  const product = await Product.findById(req.body.productId);
   console.log('product', product);
-  //2) Add  product to cookie
-  res.cookie(`product_ids|${product._id}`, Math.round(Date.now() / 1000), {
-    expires: new Date(
-      Date.now() +
-        parseInt(process.env.JWT_COOKIE_EXP, 10) * 24 * 60 * 60 * 1000
-    ),
-    // httpOnly: true,
-    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-    sameSite: true,
-  });
-  res.status(200).json({ status: 'success', data: product });
-});
-//Remove Product From Shopping Cart
-const removeProductToCart = asyncCatch(async (req, res, next) => {
-  //1 Find product by product slug
-  const product = await Product.findOne({ slug: req.params.slug });
-  if (!product) return next(new AppErrorHandler('No Product Found', 401));
-  console.log('product', product);
-  // 2) Clear cookie of product
-  res.clearCookie(`product_ids|${product._id}`);
-  res.status(200).json({ status: 'success', data: product });
-});
+  // 3) Check if product still available
+  if (product && product.quantity > 0) {
+    if (cart) {
+      //  UPDATE CART add more products
+      cart.addProduct(req.body.productId);
+      await cart.save();
+      const message = `${product.title} was added to your shopping cart`;
+      res.status(200).json({ status: 'success', message, data: cart });
 
-// GET PRODUCTS FOR SHOPPING CART .Receives array from action.
-const getProducts4Cart = asyncCatch(async (req, res, next) => {
-  console.log('req.body getProducts4Cart', req.body.data);
-  //1) Get Product for Shopping Cart
-  const products = await Product.find().where('_id').in(req.body.data).exec();
-  res.status(200).json({ status: 'success', data: products });
+      console.log('cart exists');
+    } else {
+      console.log('req.user', req.user);
+      const cart = await Cart.create({
+        guestId: req.user,
+        products: req.body.productId,
+      });
+      const message = `${product.title} was added to your shopping cart`;
+      res.status(200).json({ status: 'success', message, data: cart });
+    }
+  } else {
+    next(new AppErrorHandler('Product not available', 401));
+  }
 });
 
 module.exports = {
@@ -223,7 +222,5 @@ module.exports = {
   uploadImage,
   deleteImage,
   lastAdded,
-  addProductToCart,
-  removeProductToCart,
-  getProducts4Cart,
+  createCart,
 };

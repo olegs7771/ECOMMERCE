@@ -21,6 +21,7 @@ export default function CategorySingle(props) {
   const categoryRedux = useSelector((state) => state.category.category);
   const subsRedux = useSelector((state) => state.sub.subs);
   const productsRedux = useSelector((state) => state.product.products);
+  const messageRedux = useSelector((state) => state.message.message);
 
   // STATE
   const [showProducts, setShowProducts] = useState(false);
@@ -48,7 +49,17 @@ export default function CategorySingle(props) {
         className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
-
+      <div className="slidein__message">
+        <div className="slidein__message__text">
+          <p className="slidein__message__text--text">
+            Message herewas added to your shopping cart
+          </p>
+        </div>
+        <div className="slidein__message__view-btn">
+          <button className="btn slidein__message__view-btn--btn">View</button>
+        </div>
+        <div className="slidein__message__close-icon">X</div>
+      </div>
       <div className="pub-category__container container">
         <BreadCrumbs
           href1="/"

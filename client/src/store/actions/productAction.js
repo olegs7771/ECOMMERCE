@@ -321,7 +321,7 @@ export const getLast3ProductAction = () => async (dispatch) => {
   }
 };
 
-// GET PRODUCT INTO THE COOKIES (SHOPPINGCART)
+// CREATE CART FOR GUEST BY ADDING NEW PRODUCT data={guestId,productId}
 export const getProductInCartAction = (data) => async (dispatch) => {
   console.log('getProductInCartAction data', data);
   dispatch({
@@ -329,14 +329,14 @@ export const getProductInCartAction = (data) => async (dispatch) => {
     payload: true,
   });
   try {
-    const res = await axios(`/api/v1/product/shoppingcart/${data.slug}`);
+    const res = await axios.post(`/api/v1/product/guest/${data.guestId}`, data);
     dispatch({
       type: LOADING_PRODUCT_CART,
       payload: false,
     });
     dispatch({
       type: GET_API_MESSAGE,
-      payload: res.data.status,
+      payload: res.data.message,
     });
 
     console.log('res.data getProductInCartAction', res.data);

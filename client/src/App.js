@@ -27,11 +27,10 @@ import Dashboard from './components/dashboard/Dashboard';
 import ShoppingCart from './components/shoppingcart/ShoppingCart';
 import axios from 'axios';
 
-const store = reload(); //ON EVERY RELOAD RESET AUTH USER REDUX STATE
-
 // Drawer
 
 const App = (props) => {
+  const store = reload(props.allCookies); //ON EVERY RELOAD RESET AUTH USER REDUX STATE
   // IF sessionId expired or cleared fetch new guest token and userId
 
   if (!props.allCookies.sessionId) {
@@ -52,7 +51,12 @@ const App = (props) => {
         <Navigation />
         <Drawer />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route
+            exact
+            path="/"
+            // component={Home}
+            render={() => <Home cookies={props.cookies} />}
+          />
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/category" component={CategoryPage} />
           <Route
@@ -64,11 +68,13 @@ const App = (props) => {
             exact
             path="/shoppingcart"
             render={() => <ShoppingCart cookies={props.cookies} />}
+            // component={ShoppingCart}
           />
           <Route
             exact
             path="/category/:slug/:categoryId"
             component={CategorySingle}
+            // render={() => <CategorySingle cookies={props.cookies} />}
           />
           <Route exact path="/register" component={Register} />
           <Route exact path="/confirm/:id/:token" component={Confirmation} />

@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { drawerToggle } from '../../store/actions/drawerAction';
 import { getLast3ProductAction } from '../../store/actions/productAction';
+
 // import sprite from '../../img/sprite.svg';
 // import { Spinner } from '../../utils/LoadingComponent';
 import imageHome from '../../img/hero homepage.jpg';
 import { Image } from 'cloudinary-react';
 
-const Home = () => {
+const Home = (props) => {
   const dispatch = useDispatch();
   // REDUX
   const drawerRedux = useSelector((state) => state.drawer.drawer);

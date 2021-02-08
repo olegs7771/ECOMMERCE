@@ -14,7 +14,7 @@ const {
 
 const {
   getGuestCookieToken,
-  createGuestCart,
+  createCart,
   protectGuest,
   removeProduct,
   deleteCart,
@@ -29,9 +29,9 @@ const {
 // ROUTES PUBLIC
 router
   .route('/guest/:guestId')
-  .post(protectGuest, createGuestCart)
+  .post(protectGuest, createCart)
   .put(protectGuest, removeProduct)
-  .delete(deleteCart);
+  .delete(protectGuest, deleteCart);
 router.route('/').post(checkUserEmailExists).get(getGuestCookieToken);
 router.route('/signup').post(signup);
 router.route('/signupOauth2').post(signOauth2);
