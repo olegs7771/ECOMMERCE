@@ -5,7 +5,15 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 const { promisify } = require('util');
-const { findOne } = require('../models/Cart');
+
+//FIND IN COOKIES JWT token
+const findJwtToken = (cookies) => {
+  const jwtTokenStr = cookies
+    .split(';')
+    .filter((el) => el.startsWith('guest'))[0];
+
+  return jwtTokenStr.split('=')[1];
+};
 
 // ON LOADING APP GET sessionId,userId,token TO COOKIES
 const getGuestCookieToken = asyncCatch(async (req, res, next) => {
@@ -16,7 +24,7 @@ const getGuestCookieToken = asyncCatch(async (req, res, next) => {
     iss: `${req.protocol}://${req.get('host')}`,
   };
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: parseInt(process.env.JWT_TOKEN_EXP), //2d
+    expiresIn: process.env.JWT_COOKIE_EXP_GUEST, //70d
   });
 
   //Send token to cookies
@@ -67,10 +75,10 @@ const getGuestCookieToken = asyncCatch(async (req, res, next) => {
 const protectGuest = asyncCatch(async (req, res, next) => {
   console.log('protect');
   console.log('req.headers', req.headers);
-  let token;
-  if (req.headers.cookie.startsWith('guest')) {
+
+  if (req.headers.cookie) {
     console.log('true');
-    token = req.headers.cookie.split('; ')[0].substring(6);
+    const token = findJwtToken(req.headers.cookie);
     console.log('token', token);
     // 1) check if token valif
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);

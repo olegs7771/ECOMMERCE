@@ -293,8 +293,10 @@ input[type='radio' i] {
   align-items: center;
   color: $color-grey-light-3;
   transition: 0.2s;
+  visibility: hidden;
 
   &--visible {
+    visibility: visible;
     transform: translateX(calc(100vw - 50rem));
   }
 

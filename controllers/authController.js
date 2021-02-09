@@ -244,30 +244,9 @@ const protect = asyncCatch(async (req, res, next) => {
     token = req.headers.authorization.split(' ')[1];
   }
   // TOKEN IN COOKIE
-  // req.headers.cookie.startsWith('G_AUTHUSER_H');
-  // console.log('req.headers.cookie', req.headers.cookie.split(';')[1]);
 
-  // IF COOKIE COMES WITH G_AUTHUSER_H
-  if (req.headers.cookie && req.headers.cookie.startsWith('G_AUTHUSER_H')) {
-    token = req.headers.cookie.split(';')[1].substring(5);
-    // console.log('token1', token);
-    // IF COOKIE COMES WITH jwt only
-  } else if (req.headers.cookie && req.headers.cookie.startsWith('jwt')) {
-    token = req.headers.cookie.substring(4);
-    // console.log('token', token);
-    // IF COMES WITH SameSite=Strict;
-  } else if (
-    req.headers.cookie &&
-    req.headers.cookie.split(';')[1].startsWith('jwt')
-  ) {
-    // console.log('SameSite=Strict');
-    token = req.headers.cookie.split(';')[1].substring(5);
-    //Cookies with guest token and jwt token
-  } else if (
-    req.headers.cookie &&
-    req.headers.cookie.split(';')[0].startsWith('guest')
-  ) {
-    token = findJwtToken(req.headers.cookie);
+  if (req.headers.cookie) {
+    token = findJwtToken(req.headers.cookie); //function filters all cookies object for jwt token
   }
   // console.log('token', token);
   if (!token)
