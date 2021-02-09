@@ -49,10 +49,21 @@ export default function CategorySingle(props) {
         className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
-      <div className="slidein__message">
+      {/* SHOW MESSAGE ON BUYING PRODUCT  */}
+
+      <div
+        className={
+          messageRedux
+            ? 'slidein__message slidein__message--visible'
+            : 'slidein__message'
+        }
+      >
         <div className="slidein__message__text">
           <p className="slidein__message__text--text">
-            Message herewas added to your shopping cart
+            <span className="slidein__message__text--title">
+              {messageRedux ? messageRedux.split(' : ')[0] : null}
+            </span>
+            {messageRedux ? messageRedux.split(' :')[1] : null}
           </p>
         </div>
         <div className="slidein__message__view-btn">
@@ -60,6 +71,7 @@ export default function CategorySingle(props) {
         </div>
         <div className="slidein__message__close-icon">X</div>
       </div>
+
       <div className="pub-category__container container">
         <BreadCrumbs
           href1="/"

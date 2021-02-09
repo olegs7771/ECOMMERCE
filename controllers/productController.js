@@ -192,7 +192,7 @@ const createCart = asyncCatch(async (req, res, next) => {
       //  UPDATE CART add more products
       cart.addProduct(req.body.productId);
       await cart.save();
-      const message = `${product.title} was added to your shopping cart`;
+      const message = `${product.title} : was added to your shopping cart`;
       res.status(200).json({ status: 'success', message, data: cart });
 
       console.log('cart exists');

@@ -338,6 +338,12 @@ export const getProductInCartAction = (data) => async (dispatch) => {
       type: GET_API_MESSAGE,
       payload: res.data.message,
     });
+    setTimeout(() => {
+      dispatch({
+        type: GET_API_MESSAGE,
+        payload: null,
+      });
+    }, 6000);
 
     console.log('res.data getProductInCartAction', res.data);
   } catch (error) {

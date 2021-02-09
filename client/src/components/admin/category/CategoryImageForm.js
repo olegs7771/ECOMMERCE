@@ -21,7 +21,7 @@ export default function CardImageForm({ _selectImage, isPreviewOn }) {
     }
 
     setPreview(true);
-    isPreviewOn(true);
+    // isPreviewOn(true);
     setSelectFile(e.target.files[0]);
     // setSelectFilePreview(URL.createObjectURL(e.target.files[0]));
 

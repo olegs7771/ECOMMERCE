@@ -283,32 +283,47 @@ input[type='radio' i] {
 // Slide In message, black, from right, sticky
 .slidein__message {
   background-color: $color-black;
-
   position: fixed;
   top: 10rem;
-  transform: translateX(calc(100vw - 40rem));
-
+  transform: translateX(calc(100vw));
+  padding: 1rem 2rem;
+  border-radius: 3px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   color: $color-grey-light-3;
+  transition: 0.2s;
+
+  &--visible {
+    transform: translateX(calc(100vw - 50rem));
+  }
+
   &__text {
     width: 60%;
     background-color: $color-black;
+    &--title {
+      font-size: 1.6rem;
+    }
     &--text {
+      font-size: 1.4rem;
     }
   }
   &__view-btn {
+    border-right: 1px solid $color-grey-dark;
     &--btn {
+      cursor: pointer;
       background-color: $color-black;
       border-radius: 0;
       &:hover {
         transform: translateY(0);
         box-shadow: none;
+        text-decoration: underline;
       }
     }
   }
   &__close-icon {
+    cursor: pointer;
     background-color: $color-black;
+    font-size: 1.6rem;
   }
 }
