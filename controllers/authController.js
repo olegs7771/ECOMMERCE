@@ -11,8 +11,17 @@ const AppErrorHandler = require('../utils/AppError');
 const Email = require('../utils/mail');
 const GoogleAuth = require('../utils/GoogleAuth');
 
-//Create res object with token for cookies
+//FIND IN COOKIES JWT token
 
+const findJwtToken = (cookies) => {
+  const jwtTokenStr = cookies
+    .split(';')
+    .filter((el) => el.startsWith(' jwt'))[0];
+
+  return jwtTokenStr.split('=')[1];
+};
+
+//Create res object with token for cookies
 const createSendToken = (user, statusCode, message, req, res) => {
   // CREATE PAYLOAD FOR TOKEN
   const payload = {
@@ -221,7 +230,7 @@ const login = asyncCatch(async (req, res, next) => {
 //PROTECTION OF ROUTES
 
 const protect = asyncCatch(async (req, res, next) => {
-  // console.log('req.headers protect', req.headers);
+  console.log('req.headers protect', req.headers);
   console.log('protect');
   // 1) Check if token exists
   let token;
@@ -249,10 +258,16 @@ const protect = asyncCatch(async (req, res, next) => {
     // IF COMES WITH SameSite=Strict;
   } else if (
     req.headers.cookie &&
-    req.headers.cookie.split(';')[1].startsWith(' jwt')
+    req.headers.cookie.split(';')[1].startsWith('jwt')
   ) {
     // console.log('SameSite=Strict');
     token = req.headers.cookie.split(';')[1].substring(5);
+    //Cookies with guest token and jwt token
+  } else if (
+    req.headers.cookie &&
+    req.headers.cookie.split(';')[0].startsWith('guest')
+  ) {
+    token = findJwtToken(req.headers.cookie);
   }
   // console.log('token', token);
   if (!token)
