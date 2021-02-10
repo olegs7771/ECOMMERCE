@@ -31,24 +31,12 @@ const cartSchema = new mongoose.Schema(
 
 // ADD PRODUCT TO EXISTED CART
 cartSchema.methods.addProduct = function (productId) {
-  console.log('this addProduct', this);
-  console.log('productId', productId);
-  let newArr = [];
-  this.products.forEach((el) => {
-    console.log('el.product', el.product);
-    if (el.product.toString() === productId) {
-      console.log('equal');
-      el.quantity = el.quantity + 1;
-      newArr.push(el);
-      return newArr;
-    }
-    if (el.product.toString() !== productId) {
-      console.log('not equal');
-      return this.products.push({
-        product: productId,
-        quantity: 1,
-      });
-    }
+  console.log('this', this);
+
+  this.products.push({
+    _id: productId,
+    product: productId,
+    quantity: 1,
   });
 };
 //REMOVE PRODUCT FROM CART
@@ -61,7 +49,7 @@ cartSchema.methods.removeProduct = function (productId) {
 };
 
 cartSchema.pre(/^find/, function (next) {
-  this.populate('products').select('-__v');
+  this.populate('products.product').select('-__v');
   next();
 });
 

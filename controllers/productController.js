@@ -202,6 +202,7 @@ const createCart = asyncCatch(async (req, res, next) => {
         guestId: req.user,
         products: [
           {
+            _id: req.body.productId,
             product: req.body.productId,
             quantity: 1,
           },
