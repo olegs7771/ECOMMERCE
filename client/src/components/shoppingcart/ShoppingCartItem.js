@@ -35,6 +35,21 @@ export default function ShoppingCartItem({ item }) {
           <div className="productlist__item__information-container__controls">
             <div className="productlist__item__information-container__controls__quantity">
               <div className="productlist__item__information-container__controls__quantity__dropdown">
+                {/* DROPDOWN SELECT  */}
+                <select
+                  name="quantity"
+                  // value={values.color}
+                  // onChange={_onChange}
+                  className="form-input  "
+                  required
+                >
+                  <option>Select Color</option>
+                  {/* {initialState.colors.map((color) => (
+                      <option value={color} key={color}>
+                        {color}
+                      </option>
+                    ))} */}
+                </select>
                 dorpdown
               </div>
             </div>

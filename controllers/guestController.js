@@ -75,7 +75,6 @@ const protectGuest = asyncCatch(async (req, res, next) => {
   // console.log('req.headers', req.headers);
 
   if (req.headers.cookie) {
-    console.log('true');
     const token = findJwtToken(req.headers.cookie);
     // console.log('token', token);
     // 1) check if token valif
@@ -83,7 +82,6 @@ const protectGuest = asyncCatch(async (req, res, next) => {
     // console.log('decoded', decoded);
     // console.log('req.params.guestId', req.params.guestId);
     if (decoded.sub === req.params.guestId) {
-      console.log('true');
       //Token Valid 👍
       // ADD TO req object guestId
       req.user = req.params.guestId;

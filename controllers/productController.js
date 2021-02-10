@@ -178,29 +178,34 @@ const lastAdded = asyncCatch(async (req, res, next) => {
 // // SHOPPING CART
 // CREATE GUEST CART by adding one product
 const createCart = asyncCatch(async (req, res, next) => {
-  console.log('req.body createCart', req.body);
-  console.log('createCart params', req.params);
-  console.log('req.user', req.user);
+  // console.log('req.body createCart', req.body);
+  // console.log('createCart params', req.params);
+  // console.log('req.user', req.user);
   // //1) Check if guest already has Cart
   const cart = await Cart.findOne({ guestId: req.user });
   //2) FInd Product
   const product = await Product.findById(req.body.productId);
-  console.log('product', product);
+  // console.log('product', product);
   // 3) Check if product still available
   if (product && product.quantity > 0) {
     if (cart) {
+      console.log('cart exists');
       //  UPDATE CART add more products
       cart.addProduct(req.body.productId);
+
       await cart.save();
       const message = `${product.title} : was added to your shopping cart`;
       res.status(200).json({ status: 'success', message, data: cart });
-
-      console.log('cart exists');
     } else {
       console.log('req.user', req.user);
       const cart = await Cart.create({
         guestId: req.user,
-        products: req.body.productId,
+        products: [
+          {
+            product: req.body.productId,
+            quantity: 1,
+          },
+        ],
       });
       const message = `${product.title} was added to your shopping cart`;
       res.status(200).json({ status: 'success', message, data: cart });
