@@ -210,6 +210,33 @@ const createCart = asyncCatch(async (req, res, next) => {
   }
 });
 
+// REMOVE PRODUCT FROM CART (update)
+const removeProduct = asyncCatch(async (req, res, next) => {
+  // 1)Find cart
+  const cart = await Cart.findOne({ guestId: req.user });
+  cart.removeProduct(req.body.productId);
+  await cart.save();
+  res.status(200).json({ status: 'success', data: cart });
+});
+
+// DELETE CART IF userId EXPIRED IN cookie
+const deleteCart = asyncCatch(async (req, res, next) => {
+  console.log('delete cart');
+  // 1)Find Cart by userId
+  const cart = await Cart.findOneAndDelete({ guestId: req.user });
+  console.log('cart', cart);
+});
+
+// FETCH PRODUCTS FROM SHOPPINGCART
+const getProductsCart = asyncCatch(async (req, res, next) => {
+  console.log('req.user getProductsCart', req.user);
+  //1) Find Shopping Cart by req.user
+  const cart = await Cart.findOne({ guestId: req.user });
+  if (!cart)
+    return next(new AppErrorHandler(`Shoppingcart not found for ${req.user}`));
+  res.status(200).json({ status: 'success', data: cart });
+});
+
 module.exports = {
   create,
   list,
@@ -223,4 +250,7 @@ module.exports = {
   deleteImage,
   lastAdded,
   createCart,
+  removeProduct,
+  getProductsCart,
+  deleteCart,
 };

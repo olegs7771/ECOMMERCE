@@ -1,4 +1,3 @@
-const Cart = require('../models/Cart');
 const asyncCatch = require('../utils/asyncCatch');
 const AppErrorHandler = require('../utils/AppError');
 const jwt = require('jsonwebtoken');
@@ -10,8 +9,7 @@ const { promisify } = require('util');
 const findJwtToken = (cookies) => {
   const jwtTokenStr = cookies
     .split(';')
-    .filter((el) => el.startsWith('guest'))[0];
-
+    .filter((el) => el.trim().startsWith('guest'))[0];
   return jwtTokenStr.split('=')[1];
 };
 
@@ -73,17 +71,17 @@ const getGuestCookieToken = asyncCatch(async (req, res, next) => {
 
 // CHECK IF GUEST HAS VALID TOKEN
 const protectGuest = asyncCatch(async (req, res, next) => {
-  console.log('protect');
-  console.log('req.headers', req.headers);
+  // console.log('protect');
+  // console.log('req.headers', req.headers);
 
   if (req.headers.cookie) {
     console.log('true');
     const token = findJwtToken(req.headers.cookie);
-    console.log('token', token);
+    // console.log('token', token);
     // 1) check if token valif
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-    console.log('decoded', decoded);
-    console.log('req.params.guestId', req.params.guestId);
+    // console.log('decoded', decoded);
+    // console.log('req.params.guestId', req.params.guestId);
     if (decoded.sub === req.params.guestId) {
       console.log('true');
       //Token Valid 👍
@@ -95,53 +93,11 @@ const protectGuest = asyncCatch(async (req, res, next) => {
       next(new AppErrorHandler('guest not valid', 400));
     }
   } else {
-    next(new AppErrorHandler('No valid guest token'));
+    next(new AppErrorHandler('No valid guest token', 400));
   }
-});
-
-// CREATE GUEST CART by adding one product
-const createCart = asyncCatch(async (req, res, next) => {
-  console.log('req.body createCart', req.body);
-  //1) Check if guest already has Cart
-  const cart = await Cart.findOne({ guestId: req.user });
-  if (cart) {
-    //  UPDATE CART add more products
-    cart.addProduct(req.body.productId);
-    await cart.save();
-    res.status(200).json({ data: cart });
-
-    console.log('cart exists');
-  } else {
-    console.log('req.user', req.user);
-    const cart = await Cart.create({
-      guestId: req.user,
-      products: req.body.productId,
-    });
-    res.status(200).json({ status: 'success', data: cart });
-  }
-});
-
-// REMOVE PRODUCT FROM CART (update)
-const removeProduct = asyncCatch(async (req, res, next) => {
-  // 1)Find cart
-  const cart = await Cart.findOne({ guestId: req.user });
-  cart.removeProduct(req.body.productId);
-  await cart.save();
-  res.status(200).json({ status: 'success', data: cart });
-});
-
-// DELETE CART IF userId EXPIRED IN cookie
-const deleteCart = asyncCatch(async (req, res, next) => {
-  console.log('delete cart');
-  // 1)Find Cart by userId
-  const cart = await Cart.findOneAndDelete({ guestId: req.user });
-  console.log('cart', cart);
 });
 
 module.exports = {
   getGuestCookieToken,
   protectGuest,
-  createCart,
-  removeProduct,
-  deleteCart,
 };

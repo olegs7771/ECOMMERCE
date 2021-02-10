@@ -9,12 +9,17 @@
 
   &__content {
     max-width: 77rem;
-    background-color: lightblue;
+
     width: 100%;
   }
   &__header {
-    font-weight: 700;
-    text-transform: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &--text {
+      font-weight: 700;
+      text-transform: none;
+    }
   }
 
   &__loginpromo {
@@ -37,6 +42,67 @@
       height: 3.5rem;
       width: 3.5rem;
       cursor: default;
+    }
+  }
+
+  &__checkout {
+    // width: 100%;
+    margin: 3rem 0;
+    &__btn {
+      &--btn {
+        width: 100%;
+        padding: 2rem 0;
+        border-radius: 3rem;
+      }
+    }
+  }
+}
+.productlist {
+  background-color: blanchedalmond;
+  &__item {
+    border-bottom: 1px solid black;
+    padding: 4rem 0;
+    &__contents {
+      display: flex;
+    }
+
+    &__image-container {
+      margin: 0 4rem;
+    }
+    &__information-container {
+      width: 100%;
+      display: grid;
+      grid-row-gap: 2rem;
+      grid-template-rows: repeat(1, fit-content(7rem) [row-start]4rem[row-end]);
+      grid-template-columns: auto auto;
+      &__list {
+        list-style: none;
+        &__title {
+          &--title {
+            font-weight: 700;
+            font-size: 1.6rem;
+          }
+        }
+        &__brand {
+          &--brand {
+            font-size: 1.6rem;
+          }
+        }
+      }
+      &__controls {
+        grid-row: 2;
+        grid-column: 1/-1;
+        display: grid;
+        grid-template-columns: 7rem max-content;
+        align-items: center;
+      }
+      &__prices {
+        text-align: right;
+        &--price {
+          font-weight: 700;
+          font-size: 1.6rem;
+        }
+      }
     }
   }
 }

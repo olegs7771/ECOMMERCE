@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProdactsFromCookiesAction } from '../../store/actions/productAction';
-import { setCookieAction } from '../../store/actions/cookieAction';
+import { getProductsFromCartAction } from '../../store/actions/productAction';
 
 import sprite_material from '../../img/sprite_material.svg';
+import ShoppingCartItem from './ShoppingCartItem';
 
 export default function ShoppingCart(props) {
   const dispatch = useDispatch();
@@ -12,10 +12,16 @@ export default function ShoppingCart(props) {
     (state) => state.product.shoppingcart
   );
   const loadingRedux = useSelector((state) => state.loading.loading);
+  const cookieRedux = useSelector((state) => state.cookie.cookie);
 
+  // GET SHOPPINGCART ITEMS TO REDUX
+  useEffect(() => {
+    dispatch(getProductsFromCartAction({ guestId: cookieRedux.guestId }));
+  }, [dispatch, cookieRedux.guestId]);
+  console.log('productsInCartRedux', productsInCartRedux);
   return (
     <div className="page shoppingcart">
-      {loadingRedux || !productsInCartRedux ? (
+      {loadingRedux || productsInCartRedux.length === 0 ? (
         <div className="shoppingcart__content">Loading</div>
       ) : (
         <div className="shoppingcart__content">
@@ -52,7 +58,32 @@ export default function ShoppingCart(props) {
               </div>
             </div>
           ) : (
-            <div>Products</div>
+            <div>
+              <div className="shoppingcart__header ">
+                <div className="heading-2 shoppingcart__header--text">
+                  Shopping cart
+                </div>
+                <div className="shoppingcart__header__btn">
+                  <div className="nav__link-icon-box">
+                    <svg className="icon">
+                      <use href={sprite_material + '#icon-keyboard_control'} />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div className="shoppingcart__checkout">
+                <div className="shoppingcart__checkout__btn ">
+                  <button className="btn shoppingcart__checkout__btn--btn">
+                    Continue to checkout
+                  </button>
+                </div>
+              </div>
+              <div className="productlist">
+                {productsInCartRedux.products.map((item, index) => (
+                  <ShoppingCartItem key={index} item={item} />
+                ))}
+              </div>
+            </div>
           )}
         </div>
       )}

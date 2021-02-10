@@ -17,13 +17,21 @@ const {
   deleteImage,
   lastAdded,
   createCart,
+  getProductsCart,
+  deleteCart,
+  removeProduct,
 } = require('../controllers/productController');
 
 // PUBLIC ROUTES
 router.route('/last-added').get(lastAdded); // get last added products for home page
 
 //Protect Guest validate if token valid
-router.route('/guest/:guestId').post(protectGuest, createCart);
+router
+  .route('/guest/:guestId')
+  .post(protectGuest, createCart)
+  .delete(protectGuest, deleteCart)
+  .put(protectGuest, removeProduct)
+  .get(protectGuest, getProductsCart);
 
 router.route('/:subId').get(list); // get products by subId
 router.route('/:productId/:slug').get(getOne); //get one product

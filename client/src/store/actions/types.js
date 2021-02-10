@@ -38,5 +38,5 @@ export const GET_SUB_ALL = 'GET_SUB_ALL'; //get all existing for quantity
 export const GET_PRODUCT_LIST = 'GET_PRODUCT_LIST';
 export const GET_PRODUCT_OBJECT = 'GET_PRODUCT_OBJECT';
 export const GET_PRODUCT_ALL = 'GET_PRODUCT_ALL'; //get all existing for quantity
-export const GET_PRODUCT_INTO_CART = 'GET_PRODUCT_INTO_CART';
+export const GET_PRODUCTS_FROM_CART = 'GET_PRODUCTS_FROM_CART';
 export const REMOVE_PRODUCT_FROM_CART = 'REMOVE_PRODUCT_FROM_CART';

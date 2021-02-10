@@ -11,7 +11,7 @@ import {
   GET_API_ERRORS,
   GET_API_ERROR_MESSAGE,
   GET_API_MESSAGE,
-  GET_PRODUCT_INTO_CART,
+  GET_PRODUCTS_FROM_CART,
   REMOVE_PRODUCT_FROM_CART,
 } from './types';
 
@@ -351,28 +351,26 @@ export const getProductInCartAction = (data) => async (dispatch) => {
   }
 };
 
-// GET PRODUCTS FROM COOKIES TO SHOW IN SHOPPINGCART
-export const fetchProdactsFromCookiesAction = (data) => async (dispatch) => {
+// GET PRODUCT FROM SHOPPING CART
+export const getProductsFromCartAction = (data) => async (dispatch) => {
+  console.log('getProductsFromCartAction data', data);
   dispatch({
     type: LOADING,
     payload: true,
   });
   try {
-    const res = await axios.post('/api/v1/product/shoppingcart', data);
     dispatch({
       type: LOADING,
       payload: false,
     });
-    console.log('res.data fetchProdactsFromCookiesAction', res.data);
+
+    const res = await axios.get(`/api/v1/product/guest/${data.guestId}`);
+    console.log('res.data getProductsFromCartAction', res.data);
     dispatch({
-      type: GET_PRODUCT_INTO_CART,
+      type: GET_PRODUCTS_FROM_CART,
       payload: res.data.data,
     });
   } catch (error) {
-    dispatch({
-      type: LOADING,
-      payload: false,
-    });
-    console.log('error fetchProdactsFromCookiesAction', error);
+    console.log('error getProductsFromCartAction ', error.response.data);
   }
 };
