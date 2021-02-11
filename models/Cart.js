@@ -31,13 +31,11 @@ const cartSchema = new mongoose.Schema(
 
 // ADD PRODUCT TO EXISTED CART
 cartSchema.methods.addProduct = function (productId) {
-  console.log('this', this);
+  console.log('productId', productId);
+  console.log('this addProduct', this);
+  const arrProduct = this.products.map(item=>())
+  
 
-  this.products.push({
-    _id: productId,
-    product: productId,
-    quantity: 1,
-  });
 };
 //REMOVE PRODUCT FROM CART
 cartSchema.methods.removeProduct = function (productId) {
