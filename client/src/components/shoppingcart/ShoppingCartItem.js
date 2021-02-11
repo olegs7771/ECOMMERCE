@@ -9,7 +9,7 @@ export default function ShoppingCartItem({ item }) {
         <div className="productlist__item__image-container">
           <Image
             cloudName="dyl4kpmie"
-            publicId={item.images[0]}
+            publicId={item.product.images[0]}
             width="200"
             crop="scale"
             className="productlist__item__image-container--image "

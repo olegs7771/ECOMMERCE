@@ -240,7 +240,30 @@ const getProductsCart = asyncCatch(async (req, res, next) => {
   const cart = await Cart.findOne({ guestId: req.user });
   if (!cart)
     return next(new AppErrorHandler(`Shoppingcart not found for ${req.user}`));
-  res.status(200).json({ status: 'success', data: cart });
+  //CALCULATE QUANTITY FOR SAME PRODUCTS
+
+  //GET unique objects
+  console.log('cart.products', cart.products);
+
+  const idArray = cart.products.map((item) => item);
+
+  const countUnique = (arr) => {
+    console.log('arr', arr);
+    const counts = [];
+    for (var i = 0; i < arr.length; i++) {
+      counts[arr[i]] = 1 + (counts[arr[i]] || 0);
+    }
+    return counts;
+  };
+  const result = countUnique(idArray);
+  console.log('result', result);
+
+  for (item in result) {
+    console.log('item', item);
+  }
+
+  res.status(200);
+  // .json({ status: 'success', data: countUnique(arrayOfUniqueId) });
 });
 
 module.exports = {

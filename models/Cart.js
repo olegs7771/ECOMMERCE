@@ -48,10 +48,10 @@ cartSchema.methods.removeProduct = function (productId) {
   }
 };
 
-cartSchema.pre(/^find/, function (next) {
-  this.populate('products.product').select('-__v');
-  next();
-});
+// cartSchema.pre(/^find/, function (next) {
+//   this.populate('products.product').select('-__v');
+//   next();
+// });
 
 const Cart = mongoose.model('Cart', cartSchema);
 module.exports = Cart;

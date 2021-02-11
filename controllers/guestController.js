@@ -71,16 +71,11 @@ const getGuestCookieToken = asyncCatch(async (req, res, next) => {
 
 // CHECK IF GUEST HAS VALID TOKEN
 const protectGuest = asyncCatch(async (req, res, next) => {
-  // console.log('protect');
-  // console.log('req.headers', req.headers);
-
   if (req.headers.cookie) {
     const token = findJwtToken(req.headers.cookie);
-    // console.log('token', token);
+
     // 1) check if token valif
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-    // console.log('decoded', decoded);
-    // console.log('req.params.guestId', req.params.guestId);
     if (decoded.sub === req.params.guestId) {
       //Token Valid 👍
       // ADD TO req object guestId
