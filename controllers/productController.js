@@ -197,6 +197,8 @@ const createCart = asyncCatch(async (req, res, next) => {
       const message = `${product.title} : was added to your shopping cart`;
       res.status(200).json({ status: 'success', message, data: cart });
     } else {
+      // CREATE NEW CART
+
       console.log('req.user', req.user);
       const cart = await Cart.create({
         guestId: req.user,
