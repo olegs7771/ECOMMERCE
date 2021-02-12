@@ -45,14 +45,14 @@ const productSchema = new mongoose.Schema(
       type: ObjectId,
       ref: 'Sub',
     },
-    quantity: {
+    instock: {
       type: Number,
       required: [true, 'Please provide quntity'],
-      validate: {
+      instock: {
         validator: function (value) {
           return /^[0-9]*$/.test(value);
         },
-        message: 'Quantity accept only numbers',
+        message: 'instock accept only numbers',
       },
     },
     sold: {
@@ -122,7 +122,7 @@ productSchema.post('save', function (err, doc, next) {
     ? err.errors.description.message
     : '';
   errors.price = err.errors.price ? err.errors.price.message : '';
-  errors.quantity = err.errors.quantity ? err.errors.quantity.message : '';
+  errors.instock = err.errors.instock ? err.errors.instock.message : '';
 
   console.log('errors', errors);
   next(errors);

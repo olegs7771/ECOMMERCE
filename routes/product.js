@@ -19,7 +19,7 @@ const {
   createCart,
   getProductsCart,
   deleteCart,
-  removeProduct,
+  updateProduct,
 } = require('../controllers/productController');
 
 // PUBLIC ROUTES
@@ -30,7 +30,7 @@ router
   .route('/guest/:guestId')
   .post(protectGuest, createCart)
   .delete(protectGuest, deleteCart)
-  .put(protectGuest, removeProduct)
+  .put(protectGuest, updateProduct)
   .get(protectGuest, getProductsCart);
 
 router.route('/:subId').get(list); // get products by subId

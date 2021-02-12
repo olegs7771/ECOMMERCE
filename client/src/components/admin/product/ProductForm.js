@@ -21,7 +21,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
     category: '',
     subs: [],
     shipping: '',
-    quantity: '',
+    instock: '',
     images: [],
     colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
     brands: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS'],
@@ -56,7 +56,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
         title: values.title,
         description: values.description,
         price: values.price,
-        quantity: values.quantity,
+        instock: values.instock,
         shipping: values.shipping,
         color: values.color,
         brand: values.brand,
@@ -137,13 +137,13 @@ export default function ProductForm({ open, categoryId, subId, close }) {
             {/* CENTER BLOCK  */}
             <div className="product__form-c-block">
               <TextInputForm
-                error={errors.quantity}
-                value={values.quantity}
+                error={errors.instock}
+                value={values.instock}
                 _onChange={_onChange}
                 _checkField={_checkField}
-                label="Quantity"
+                label="instock"
                 type="text"
-                name="quantity"
+                name="instock"
                 placeholder="use only numbers 0-9"
               />
 

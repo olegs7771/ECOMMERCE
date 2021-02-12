@@ -2,6 +2,8 @@ import React from 'react';
 import { Image } from 'cloudinary-react';
 
 export default function ShoppingCartItem({ item }) {
+  const options = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+
   return (
     <div className="productlist__item">
       <div className="productlist__item__contents">
@@ -20,16 +22,16 @@ export default function ShoppingCartItem({ item }) {
           <ul className="productlist__item__information-container__list">
             <li className="productlist__item__information-container__list__title">
               <div className="productlist__item__information-container__list__title--title">
-                {item.title}
+                {item.product.title}
               </div>
             </li>
             <li className="productlist__item__information-container__list__brand">
               <div className="productlist__item__information-container__list__brand--brand">
-                {item.brand}
+                {item.product.brand}
               </div>
             </li>
             <li className="productlist__item__information-container__list__color">
-              {item.color}
+              {item.product.color}
             </li>
           </ul>
           <div className="productlist__item__information-container__controls">
@@ -43,12 +45,12 @@ export default function ShoppingCartItem({ item }) {
                   className="form-input  "
                   required
                 >
-                  <option>Select Color</option>
-                  {/* {initialState.colors.map((color) => (
-                      <option value={color} key={color}>
-                        {color}
-                      </option>
-                    ))} */}
+                  <option>{item.quantity}</option>
+                  {options.map((num) => (
+                    <option value={num} key={num}>
+                      {num}
+                    </option>
+                  ))}
                 </select>
                 dorpdown
               </div>
@@ -61,7 +63,7 @@ export default function ShoppingCartItem({ item }) {
           </div>
           <div className="productlist__item__information-container__prices">
             <div className="productlist__item__information-container__prices--price">
-              $ {item.price}
+              $ {item.product.price}
             </div>
           </div>
         </div>
