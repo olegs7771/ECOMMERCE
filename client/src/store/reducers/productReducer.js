@@ -3,7 +3,7 @@ import {
   GET_PRODUCT_ALL,
   GET_PRODUCT_OBJECT,
   GET_PRODUCTS_FROM_CART,
-  REMOVE_PRODUCT_FROM_CART,
+  // REMOVE_PRODUCT_FROM_CART,
 } from '../actions/types';
 
 const initialState = {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsFromCartAction } from '../../store/actions/productAction';
 import { SpinnerPuffLoader } from '../../utils/LoadingComponent';
@@ -24,10 +24,20 @@ export default function ShoppingCart(props) {
   const arrOfProducts = productsInCartRedux.products;
   console.log('arrOfProducts', arrOfProducts);
 
+  if (arrOfProducts) {
+    const total = (arr) => {
+      let totalPrice;
+      console.log('arr', arr);
+      return arr.map(
+        (elem) => (totalPrice = parseFloat(elem.product.price) * elem.quantity)
+      );
+    };
 
-  const total = (arr) => {
-    return arr.map(elem=>elem.price)
-
+    console.log(
+      'total',
+      total(arrOfProducts).reduce((acc, val) => acc + val)
+    );
+  }
   return (
     <div className="page shoppingcart">
       {/* LOADING OVERLAY  */}

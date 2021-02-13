@@ -7,7 +7,7 @@ import {
   getOneProduct,
   getProductInCartAction,
 } from '../../store/actions/productAction';
-import no_image from '../../img/no_image.png';
+// import no_image from '../../img/no_image.png';
 import { Spinner } from '../../utils/LoadingComponent';
 import sprite from '../../img/sprite.svg';
 import sprite_material from '../../img/sprite_material.svg';

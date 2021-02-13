@@ -22,3 +22,6 @@ mongoose
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+const arr = [79.98, 402];
+console.log(arr.reduce((acc, val) => acc + val));
