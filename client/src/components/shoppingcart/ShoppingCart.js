@@ -20,6 +20,14 @@ export default function ShoppingCart(props) {
     dispatch(getProductsFromCartAction({ guestId: cookieRedux.guestId }));
   }, [dispatch, cookieRedux.guestId]);
 
+  //  FUNCTION TO CALCULATE TOTAL
+  const arrOfProducts = productsInCartRedux.products;
+  console.log('arrOfProducts', arrOfProducts);
+
+
+  const total = (arr) => {
+    return arr.map(elem=>elem.price)
+
   return (
     <div className="page shoppingcart">
       {/* LOADING OVERLAY  */}
