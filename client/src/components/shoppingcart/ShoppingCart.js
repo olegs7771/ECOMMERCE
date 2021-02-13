@@ -171,15 +171,29 @@ export default function ShoppingCart(props) {
                   </div>
                 </div>
                 <div className="shoppingcart__ordersummary">
-                  <div className="shoppingcart__ordertotal__spacing">
-                    order total spacing
+                  <div className="mb-sm">
+                    <strong>Order summary</strong>
                   </div>
-                  <div className="shoppingcart__ordertotal__row shoppingcart__ordertotal__spacing">
-                    shoppingcart__ordertotal__row
+                  <div className="shoppingcart__ordertotal__row ">
+                    <span></span>
                   </div>
-                  <hr className="shoppingcart__ordersummary__divider" />
+
+                  <div className="shoppingcart__ordertotal__row mb-sm">
+                    <div className="shoppingcart__ordertotal-delivery-lable">
+                      Total delivery cost
+                    </div>
+                    <div className="shoppingcart__ordertotal-delivery-price">
+                      Exluding delivery
+                    </div>
+                  </div>
+                  <hr className="shoppingcart__ordersummary__divider mb-sm" />
                   <div className="shoppingcart__ordertotal__row">
-                    subtotal + price
+                    <span className="shoppingcart__ordersummary__total-lable">
+                      Subtotal
+                    </span>
+                    <span className="shoppingcart__ordersummary__total-price">
+                      price
+                    </span>
                   </div>
                 </div>
 

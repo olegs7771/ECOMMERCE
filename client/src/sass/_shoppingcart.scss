@@ -71,6 +71,25 @@
       }
     }
   }
+  &__ordersummary {
+    margin: 4rem 0;
+    font-size: 1.6rem;
+    &__divider {
+      border-bottom: 2px solid $color-black;
+    }
+    &__total-lable {
+      font-weight: 700;
+    }
+    &__total-price {
+      font-weight: 700;
+      font-size: 2rem;
+    }
+  }
+
+  &__ordertotal__row {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 .productlist {
   // background-color: blanchedalmond;
