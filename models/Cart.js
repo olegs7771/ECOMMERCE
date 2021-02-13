@@ -64,14 +64,8 @@ cartSchema.methods.updateProduct = function (productId, amountUpdate) {
   console.log('productArr', productArr);
   productArr.forEach((product) => {
     console.log('product', product);
-    // IF amountUpdate===0 user gives 0 amount then remove product from cart
-    if (amountUpdate < 1) {
-      return (this.products = this.products.filter(
-        (el) => el.product.toString() !== productId
-      ));
-    } else {
-      return (product.quantity = amountUpdate);
-    }
+
+    return (product.quantity = amountUpdate);
   });
 };
 

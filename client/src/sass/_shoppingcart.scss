@@ -9,8 +9,23 @@
 
   &__content {
     max-width: 77rem;
-
     width: 100%;
+    &__loading {
+      max-width: 77rem;
+      width: 100%;
+
+      min-height: 100vh;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      z-index: 100;
+      visibility: hidden;
+      &--visible {
+        visibility: visible;
+      }
+    }
   }
   &__header {
     display: flex;
@@ -58,9 +73,14 @@
   }
 }
 .productlist {
-  background-color: blanchedalmond;
+  // background-color: blanchedalmond;
   &__item {
-    border-bottom: 1px solid black;
+    &__wrapper {
+      position: relative;
+    }
+
+    border-bottom: 1px solid $color-grey-light-3;
+    // position: relative;
     padding: 4rem 0;
     &__contents {
       display: flex;
@@ -95,6 +115,13 @@
         display: grid;
         grid-template-columns: 7rem max-content;
         align-items: center;
+        &__quantity__dropdown {
+          width: 100%;
+          position: relative;
+        }
+        &__remove {
+          margin-left: 2rem;
+        }
       }
       &__prices {
         text-align: right;
@@ -102,6 +129,25 @@
           font-weight: 700;
           font-size: 1.6rem;
         }
+      }
+    }
+    // WHILE LOADING BLURE
+    &--blured {
+      filter: blur(2px);
+    }
+    //DISPLAY OVERLAY ON LOADING
+    &__overlay {
+      display: none;
+
+      &--visible {
+        display: flex;
+
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: transparent;
+        z-index: 100;
+        filter: blur(0);
       }
     }
   }

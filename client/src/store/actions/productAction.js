@@ -359,18 +359,52 @@ export const getProductsFromCartAction = (data) => async (dispatch) => {
     payload: true,
   });
   try {
-    dispatch({
-      type: LOADING,
-      payload: false,
-    });
-
     const res = await axios.get(`/api/v1/product/guest/${data.guestId}`);
     console.log('res.data getProductsFromCartAction', res.data);
     dispatch({
       type: GET_PRODUCTS_FROM_CART,
       payload: res.data.data,
     });
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
   } catch (error) {
     console.log('error getProductsFromCartAction ', error.response.data);
+  }
+};
+
+// UPDATE PRODUCTS IN SHOPPINGCART receive guestId&&productId
+
+export const updateProductCartAction = (data) => async (dispatch) => {
+  console.log('updateProductCartAction data', data);
+
+  try {
+    const update = await axios.put(
+      `/api/v1/product/guest/${data.guestId}`,
+      data
+    );
+    //RELOAD SHOPPING CART
+    const res = await axios.get(`/api/v1/product/guest/${data.guestId}`);
+    dispatch({
+      type: GET_PRODUCTS_FROM_CART,
+      payload: res.data.data,
+    });
+
+    console.log('res.data updateProductCartAction', update.data);
+
+    dispatch({
+      type: GET_API_MESSAGE,
+      payload: update.data.status,
+    });
+    //  CLEAR MESSAGE TO STOP LOADING IN ShoppingCartItem.js
+    setTimeout(() => {
+      dispatch({
+        type: GET_API_MESSAGE,
+        payload: null,
+      });
+    }, 3000);
+  } catch (error) {
+    console.log('error to update product in cart', error.response.data);
   }
 };
