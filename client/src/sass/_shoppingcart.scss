@@ -139,7 +139,11 @@
           position: relative;
         }
         &__remove {
-          margin-left: 2rem;
+          margin-left: 4rem;
+          cursor: pointer;
+          &--remove {
+            font-size: 1.4rem;
+          }
         }
       }
       &__prices {

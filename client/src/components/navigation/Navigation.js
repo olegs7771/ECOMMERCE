@@ -15,14 +15,19 @@ const Navigation = ({ history }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const drawerRedux = useSelector((state) => state.drawer.drawer);
-  const cartproductsRedux = useSelector((state) => state.product.shoppingcart);
+  const cartproductsRedux = useSelector(
+    (state) => state.product.shoppingcart.products
+  );
   // STATE
   const [drawer, setDrawer] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(null);
+  const [cart, setCart] = useState(false); //show blue dot if cart has products
 
   // SET DRAWER REDUX IN STATE
   useEffect(() => {
-    setDrawer(drawerRedux);
+    if (drawerRedux) {
+      setDrawer(drawerRedux);
+    }
   }, [drawerRedux]);
 
   const _drawerToggle = () => {
@@ -34,7 +39,6 @@ const Navigation = ({ history }) => {
   ///////////////////////////////////////////////////////////
 
   // SCROLL OFFSET
-
   useScrollPosition((position) => {
     if (position.currPos.y > position.prevPos.y) {
       setScrollDirection('up');
@@ -43,8 +47,16 @@ const Navigation = ({ history }) => {
     }
   });
 
-  console.log('cartproductsRedux', cartproductsRedux);
+  // SET CART STATE IF CART PRODUCTS CHANGE IN SHOPPING CART
+  useEffect(() => {
+    if (cartproductsRedux) {
+      if (cartproductsRedux.length > 0) {
+        setCart(true);
+      }
+    }
+  }, [cartproductsRedux]);
 
+  console.log('cartproductsRedux', cartproductsRedux);
   return (
     <header
       className={
@@ -152,7 +164,7 @@ const Navigation = ({ history }) => {
                     <a
                       href="/shoppingcart"
                       className={
-                        cartproductsRedux.length !== 0
+                        cart
                           ? 'nav__link nav__link-cart' //show blue dot if cart not empty
                           : 'nav__link'
                       }

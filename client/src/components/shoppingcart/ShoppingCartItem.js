@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Image } from 'cloudinary-react';
 import sprite_material from '../../img/sprite_material.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProductCartAction } from '../../store/actions/productAction';
+import {
+  updateProductCartAction,
+  removeProductAction,
+} from '../../store/actions/productAction';
 import { SpinnerPuffLoader } from '../../utils/LoadingComponent';
 
 export default function ShoppingCartItem({ item }) {
@@ -30,6 +33,15 @@ export default function ShoppingCartItem({ item }) {
     };
     dispatch(updateProductCartAction(data));
     setLoading(true);
+  };
+
+  // REMOVE PRODUCT FROM CART
+  const _removeProdct = (e) => {
+    const data = {
+      productId: item._id,
+      guestId,
+    };
+    dispatch(removeProductAction(data));
   };
 
   return (
@@ -102,7 +114,10 @@ export default function ShoppingCartItem({ item }) {
                   </svg>
                 </div>
               </div>
-              <div className="productlist__item__information-container__controls__remove">
+              <div
+                className="productlist__item__information-container__controls__remove"
+                onClick={_removeProdct}
+              >
                 <span className="productlist__item__information-container__controls__remove--remove">
                   Remove product
                 </span>

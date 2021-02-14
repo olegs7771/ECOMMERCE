@@ -411,6 +411,26 @@ export const updateProductCartAction = (data) => async (dispatch) => {
 
 // REMOVE PRODUCT FROM CART BY productId
 
-export const removeProductAction = (data) => (dispatch) => {
-  console.log('removeProductAction data1', data);
+export const removeProductAction = (data) => async (dispatch) => {
+  console.log('removeProductAction data', data);
+
+  try {
+    const res = await axios.patch(
+      `/api/v1/product/guest/${data.guestId}`,
+      data
+    );
+    console.log('res.data removeProductAction', res.data);
+    dispatch({
+      type: GET_API_MESSAGE,
+      payload: res.data.message,
+    });
+    setTimeout(() => {
+      dispatch({
+        type: GET_API_MESSAGE,
+        payload: null,
+      });
+    }, 6000);
+  } catch (error) {
+    console.log('error', error.response.data);
+  }
 };

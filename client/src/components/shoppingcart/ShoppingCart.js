@@ -22,14 +22,17 @@ export default function ShoppingCart(props) {
 
   //  FUNCTION TO CALCULATE TOTAL
   const arrOfProducts = productsInCartRedux.products;
-  console.log('arrOfProducts', arrOfProducts);
+  // console.log('arrOfProducts', arrOfProducts.length);
   let totalPrice;
   if (arrOfProducts) {
-    const total = (arr) => {
-      console.log('arr', arr);
-      return arr.map((elem) => parseFloat(elem.product.price) * elem.quantity);
-    };
-    totalPrice = total(arrOfProducts).reduce((acc, val) => acc + val);
+    if (arrOfProducts.length > 0) {
+      const total = (arr) => {
+        return arr.map(
+          (elem) => parseFloat(elem.product.price) * elem.quantity
+        );
+      };
+      totalPrice = total(arrOfProducts).reduce((acc, val) => acc + val);
+    }
   }
   return (
     <div className="page shoppingcart">
