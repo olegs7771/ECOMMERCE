@@ -412,5 +412,5 @@ export const updateProductCartAction = (data) => async (dispatch) => {
 // REMOVE PRODUCT FROM CART BY productId
 
 export const removeProductAction = (data) => (dispatch) => {
-  console.log('removeProductAction data', data);
+  console.log('removeProductAction data1', data);
 };
