@@ -56,6 +56,11 @@ cartSchema.methods.addProduct = function (productId) {
 cartSchema.methods.removeProduct = function (productId) {
   console.log('this.removeProduct', this);
   console.log('productId', productId);
+  const removedArr = this.products.filter(
+    (elem) => elem._id.toString() !== productId
+  );
+  this.products = removedArr;
+  return this;
 };
 
 //UPDATE PRODUCT

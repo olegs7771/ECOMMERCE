@@ -408,3 +408,9 @@ export const updateProductCartAction = (data) => async (dispatch) => {
     console.log('error to update product in cart', error.response.data);
   }
 };
+
+// REMOVE PRODUCT FROM CART BY productId
+
+export const removeProductAction = (data) => (dispatch) => {
+  console.log('removeProductAction data', data);
+};

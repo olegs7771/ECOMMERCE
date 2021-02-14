@@ -225,6 +225,7 @@ const updateProduct = asyncCatch(async (req, res, next) => {
   console.log('req.params', req.params);
   //   // 1)Find cart
   const cart = await Cart.findOne({ guestId: req.user });
+  console.log('cart to update', cart);
   cart.updateProduct(req.body.productId, req.body.amountUpdate);
   await cart.save();
   res.status(200).json({ status: 'success', data: cart });
@@ -256,12 +257,21 @@ const getProductsCart = asyncCatch(async (req, res, next) => {
 
 // REMOVE PRODUCT FROM CART by user/guest
 const removeProduct = asyncCatch(async (req, res, next) => {
-  // 1) Find cart
-  const cart = await Cart.find({ guestId: req.user });
+  //1)Find product
+  const product = await Product.findById(req.body.productId);
+  //2) Find cart
+  const cart = await Cart.findOne({ guestId: req.user });
   if (!cart)
     return next(new AppErrorHandler(`Shoppingcart not found for ${req.user}`));
-  console.log('cart', cart);
+  console.log('cart to remove', cart);
   cart.removeProduct(req.body.productId);
+  console.log(cart.removeProduct(req.body.productId));
+
+  await cart.save();
+  res.status(200).json({
+    status: 'success',
+    message: `${product.title}:  was removed from shopping cart`,
+  });
 });
 
 module.exports = {
