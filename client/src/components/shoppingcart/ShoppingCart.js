@@ -23,20 +23,13 @@ export default function ShoppingCart(props) {
   //  FUNCTION TO CALCULATE TOTAL
   const arrOfProducts = productsInCartRedux.products;
   console.log('arrOfProducts', arrOfProducts);
-
+  let totalPrice;
   if (arrOfProducts) {
     const total = (arr) => {
-      let totalPrice;
       console.log('arr', arr);
-      return arr.map(
-        (elem) => (totalPrice = parseFloat(elem.product.price) * elem.quantity)
-      );
+      return arr.map((elem) => parseFloat(elem.product.price) * elem.quantity);
     };
-
-    console.log(
-      'total',
-      total(arrOfProducts).reduce((acc, val) => acc + val)
-    );
+    totalPrice = total(arrOfProducts).reduce((acc, val) => acc + val);
   }
   return (
     <div className="page shoppingcart">
@@ -210,8 +203,15 @@ export default function ShoppingCart(props) {
                       Subtotal
                     </span>
                     <span className="shoppingcart__ordersummary__total-price">
-                      price
+                      ${totalPrice}
                     </span>
+                  </div>
+                </div>
+                <div className="shoppingcart__checkout">
+                  <div className="shoppingcart__checkout__btn ">
+                    <button className="btn shoppingcart__checkout__btn--btn">
+                      Continue to checkout
+                    </button>
                   </div>
                 </div>
 

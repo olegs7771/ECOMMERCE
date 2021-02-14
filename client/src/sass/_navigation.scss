@@ -113,6 +113,20 @@
     color: $color-black;
     display: flex;
   }
+  // SHOW PRODUCT IN CART
+  &__link-cart {
+    position: relative;
+
+    &::after {
+      content: '';
+      height: 1rem;
+      width: 1rem;
+      border-radius: 50%;
+      background-color: $color-blue-3;
+      position: absolute;
+      transform: translate(1.5rem, -0.5rem);
+    }
+  }
 }
 .nav__link-icon {
   height: 2.5rem;
@@ -132,6 +146,14 @@
 
     &--selected {
       border: 1px solid $color-blue;
+    }
+
+    &--visible {
+      display: none;
+
+      @media only screen and (max-width: $lg-bp) {
+        display: flex;
+      }
     }
   }
 }

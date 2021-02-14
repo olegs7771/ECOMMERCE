@@ -52,6 +52,11 @@ cartSchema.methods.addProduct = function (productId) {
     });
   }
 };
+//REMOVE PRODUCT FROM CART
+cartSchema.methods.removeProduct = function (productId) {
+  console.log('this.removeProduct', this);
+  console.log('productId', productId);
+};
 
 //UPDATE PRODUCT
 cartSchema.methods.updateProduct = function (productId, amountUpdate) {

@@ -187,7 +187,7 @@ const createCart = asyncCatch(async (req, res, next) => {
   const product = await Product.findById(req.body.productId);
   // console.log('product', product);
   // 3) Check if product still available
-  if (product && product.quantity > 0) {
+  if (product && product.instock > 0) {
     if (cart) {
       console.log('cart exists');
       //  UPDATE CART add more products
@@ -245,10 +245,23 @@ const getProductsCart = asyncCatch(async (req, res, next) => {
   const cart = await Cart.find({ guestId: req.user });
   if (!cart)
     return next(new AppErrorHandler(`Shoppingcart not found for ${req.user}`));
-  //CALCULATE QUANTITY FOR SAME PRODUCTS
+  console.log('cart', cart);
+  if (cart.length < 1)
+    return res.status(200).json({ status: 'success', data: cart });
+
   for (objectCart of cart) {
     res.status(200).json({ status: 'success', data: objectCart });
   }
+});
+
+// REMOVE PRODUCT FROM CART by user/guest
+const removeProduct = asyncCatch(async (req, res, next) => {
+  // 1) Find cart
+  const cart = await Cart.find({ guestId: req.user });
+  if (!cart)
+    return next(new AppErrorHandler(`Shoppingcart not found for ${req.user}`));
+  console.log('cart', cart);
+  cart.removeProduct(req.body.productId);
 });
 
 module.exports = {
@@ -267,4 +280,5 @@ module.exports = {
   updateProduct,
   getProductsCart,
   deleteCart,
+  removeProduct,
 };

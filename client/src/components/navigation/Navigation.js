@@ -15,6 +15,7 @@ const Navigation = ({ history }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const drawerRedux = useSelector((state) => state.drawer.drawer);
+  const cartproductsRedux = useSelector((state) => state.product.shoppingcart);
   // STATE
   const [drawer, setDrawer] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(null);
@@ -42,6 +43,8 @@ const Navigation = ({ history }) => {
     }
   });
 
+  console.log('cartproductsRedux', cartproductsRedux);
+
   return (
     <header
       className={
@@ -58,7 +61,7 @@ const Navigation = ({ history }) => {
           <div className="header__container__inner__aside">
             <div className="nav__link-icon-box" onClick={_drawerToggle}>
               <svg className="icon">
-                <use href={sprite + '#icon-menu'} />
+                <use href={sprite_material + '#icon-menu'} />
               </svg>
             </div>
           </div>
@@ -107,10 +110,13 @@ const Navigation = ({ history }) => {
                     <GoogleLogout history={history} />
                   </li>
                   <li className="nav__item ">
-                    <a href="/shoppingcart" className="nav__link">
-                      <svg className="nav__link-icon">
+                    <a
+                      href="/shoppingcart"
+                      className="nav__link nav__link-cart"
+                    >
+                      <svg className="nav__link-icon ">
                         <use
-                          href={sprite_material + '#icon-add_shopping_cart'}
+                          href={sprite_material + '#icon-local_grocery_store'}
                         />
                       </svg>
                     </a>
@@ -143,14 +149,29 @@ const Navigation = ({ history }) => {
                     </a>
                   </li>
                   <li className="nav__item ">
-                    <a href="/shoppingcart" className="nav__link">
-                      <svg className="nav__link-icon">
+                    <a
+                      href="/shoppingcart"
+                      className={
+                        cartproductsRedux.length !== 0
+                          ? 'nav__link nav__link-cart' //show blue dot if cart not empty
+                          : 'nav__link'
+                      }
+                    >
+                      <svg className="nav__link-icon ">
                         <use
-                          href={sprite_material + '#icon-add_shopping_cart'}
+                          href={sprite_material + '#icon-local_grocery_store'}
                         />
                       </svg>
                     </a>
                   </li>
+                  <div
+                    className="nav__link-icon-box nav__link-icon-box--visible"
+                    onClick={_drawerToggle}
+                  >
+                    <svg className="icon">
+                      <use href={sprite_material + '#icon-menu'} />
+                    </svg>
+                  </div>
                 </div>
               </ul>
             )}

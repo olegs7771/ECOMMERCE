@@ -20,6 +20,7 @@ const {
   getProductsCart,
   deleteCart,
   updateProduct,
+  removeProduct,
 } = require('../controllers/productController');
 
 // PUBLIC ROUTES
@@ -31,7 +32,8 @@ router
   .post(protectGuest, createCart)
   .delete(protectGuest, deleteCart)
   .put(protectGuest, updateProduct)
-  .get(protectGuest, getProductsCart);
+  .get(protectGuest, getProductsCart)
+  .patch(protectGuest, removeProduct);
 
 router.route('/:subId').get(list); // get products by subId
 router.route('/:productId/:slug').get(getOne); //get one product
