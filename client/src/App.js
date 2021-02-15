@@ -3,7 +3,7 @@ import { withCookies } from 'react-cookie';
 import './App.scss';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { reload } from './utils/reloadUserAuth';
+import { reload, reloadCart } from './utils/reloadUserAuth';
 // ROUTES
 import Navigation from './components/navigation/Navigation';
 import Drawer from './components/drawer/Drawer';
@@ -43,6 +43,12 @@ const App = (props) => {
       }
     };
     fetchUserId();
+  }
+
+  // IF PRODUCTS IN SHOPPINGCART FETCH CART ON EVERY RELOAD
+  if (Object.keys(props.allCookies).some((el) => el.startsWith('productId'))) {
+    console.log('products in cart');
+    reloadCart(props.allCookies.guestId);
   }
 
   return (

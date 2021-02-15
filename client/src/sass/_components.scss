@@ -290,7 +290,13 @@ input[type='radio' i] {
 
   &--visible {
     visibility: visible;
-    transform: translateX(calc(100vw - 50rem));
+    transform: translateX(calc(100vw - 35vw));
+    // min-height: 8rem;
+    background-color: $color-black;
+
+    &__remove {
+      transform: translateX(calc(100vw - 65vw));
+    }
   }
 
   &__text {
@@ -301,6 +307,9 @@ input[type='radio' i] {
     }
     &--text {
       font-size: 1.4rem;
+    }
+    &__remove {
+      width: 100%;
     }
   }
   &__view-btn {

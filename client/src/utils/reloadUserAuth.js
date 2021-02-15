@@ -1,8 +1,15 @@
 import configureStore from '../store/configureStore/configStore';
 import { setCurrentUser, clearOutUser } from '../store/actions/authAction';
 import { setCookieAction } from '../store/actions/cookieAction';
+import { getProductsFromCartAction } from '../store/actions/productAction';
 import jwt_decode from 'jwt-decode';
 const store = configureStore();
+
+export const reloadCart = (guestId) => {
+  console.log('guestId in reload ', guestId);
+  const data = { guestId };
+  store.dispatch(getProductsFromCartAction(data));
+};
 
 export const reload = (cookies) => {
   // SET COOKIES IN STATE

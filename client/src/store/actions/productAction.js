@@ -330,10 +330,13 @@ export const getProductInCartAction = (data) => async (dispatch) => {
   });
   try {
     const res = await axios.post(`/api/v1/product/guest/${data.guestId}`, data);
+    // FETCH PRODUCTS FROM NEWLY CREATED CART TO SHOW IN HEADER
+    const list = await axios.get(`/api/v1/product/guest/${data.guestId}`);
     dispatch({
-      type: LOADING_PRODUCT_CART,
-      payload: false,
+      type: GET_PRODUCTS_FROM_CART,
+      payload: list.data.data,
     });
+
     dispatch({
       type: GET_API_MESSAGE,
       payload: res.data.message,
@@ -344,6 +347,10 @@ export const getProductInCartAction = (data) => async (dispatch) => {
         payload: null,
       });
     }, 6000);
+    dispatch({
+      type: LOADING_PRODUCT_CART,
+      payload: false,
+    });
 
     console.log('res.data getProductInCartAction', res.data);
   } catch (error) {
@@ -419,11 +426,18 @@ export const removeProductAction = (data) => async (dispatch) => {
       `/api/v1/product/guest/${data.guestId}`,
       data
     );
-    console.log('res.data removeProductAction', res.data);
     dispatch({
       type: GET_API_MESSAGE,
       payload: res.data.message,
     });
+    // FETCH PRODUCTS FROM NEWLY CREATED CART TO SHOW IN HEADER
+    const list = await axios.get(`/api/v1/product/guest/${data.guestId}`);
+    dispatch({
+      type: GET_PRODUCTS_FROM_CART,
+      payload: list.data.data,
+    });
+
+    console.log('res.data removeProductAction', res.data);
     setTimeout(() => {
       dispatch({
         type: GET_API_MESSAGE,
