@@ -175,7 +175,8 @@ const lastAdded = asyncCatch(async (req, res, next) => {
     .json({ qnt: products.length, status: 'success', data: products });
 });
 
-// // SHOPPING CART
+// // SHOPPING CART 🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒
+
 // CREATE GUEST CART by adding one product
 const createCart = asyncCatch(async (req, res, next) => {
   // console.log('req.body createCart', req.body);
@@ -187,7 +188,8 @@ const createCart = asyncCatch(async (req, res, next) => {
   const product = await Product.findById(req.body.productId);
   // console.log('product', product);
   // 3) Check if product still available
-  if (product && product.instock > 0) {
+
+  if (product && product.instock !== 0) {
     if (cart) {
       console.log('cart exists');
       //  UPDATE CART add more products
@@ -195,6 +197,17 @@ const createCart = asyncCatch(async (req, res, next) => {
 
       await cart.save();
       const message = `${product.title} : was added to your shopping cart`;
+      // SENT PRODUCT TO cookies
+      res.cookie(`productId_${product._id}`, Math.round(Date.now() / 1000), {
+        expires: new Date(
+          Date.now() +
+            parseInt(process.env.CART_COOKIE_EXP, 10) * 24 * 60 * 60 * 1000 //30d
+        ),
+
+        secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+        sameSite: true,
+      });
+
       res.status(200).json({ status: 'success', message, data: cart });
     } else {
       // CREATE NEW CART
@@ -210,6 +223,17 @@ const createCart = asyncCatch(async (req, res, next) => {
           },
         ],
       });
+      //SAVE PRODUCT IN cookie
+      res.cookie(`productId_${product._id}`, Math.round(Date.now() / 1000), {
+        expires: new Date(
+          Date.now() +
+            parseInt(process.env.CART_COOKIE_EXP, 10) * 24 * 60 * 60 * 1000 //30d
+        ),
+
+        secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+        sameSite: true,
+      });
+
       const message = `${product.title} was added to your shopping cart`;
       res.status(200).json({ status: 'success', message, data: cart });
     }

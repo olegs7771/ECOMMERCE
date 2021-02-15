@@ -5,10 +5,9 @@ import Logo from '../../img/ecommerce-logo.png';
 import { withRouter } from 'react-router-dom';
 import sprite from '../../img/sprite.svg';
 import sprite_material from '../../img/sprite_material.svg';
-
 import GoogleLogout from '../auth/GoogleoAUthLogout';
-
 import { drawerToggle } from '../../store/actions/drawerAction';
+import { cookie } from 'express-validator';
 
 const Navigation = ({ history }) => {
   // REDUX
@@ -18,6 +17,7 @@ const Navigation = ({ history }) => {
   const cartproductsRedux = useSelector(
     (state) => state.product.shoppingcart.products
   );
+  const cookieRedux = useSelector((state) => state.cookie.cookie);
   // STATE
   const [drawer, setDrawer] = useState(false);
   const [scrollDirection, setScrollDirection] = useState(null);
@@ -47,16 +47,17 @@ const Navigation = ({ history }) => {
     }
   });
 
-  // SET CART STATE IF CART PRODUCTS CHANGE IN SHOPPING CART
+  // SET CART STATE IF CART PRODUCTS CHANGE IN SHOPPING CART in cookies
   useEffect(() => {
-    if (cartproductsRedux) {
-      if (cartproductsRedux.length > 0) {
-        setCart(true);
-      }
-    }
-  }, [cartproductsRedux]);
+    setCart(Object.keys(cookieRedux).some((el) => el.startsWith('productId'))); //check for cookies
+  }, [cookieRedux]);
 
-  console.log('cartproductsRedux', cartproductsRedux);
+  // console.log(
+  //   'cookieRedux',
+  //   Object.keys(cookieRedux).some((el) => el.startsWith('productId'))
+  // );
+
+  // console.log('cartproductsRedux', cartproductsRedux);
   return (
     <header
       className={

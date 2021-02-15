@@ -16,7 +16,7 @@ const GoogleAuth = require('../utils/GoogleAuth');
 const findJwtToken = (cookies) => {
   const jwtTokenStr = cookies
     .split(';')
-    .filter((el) => el.startsWith(' jwt'))[0];
+    .filter((el) => el.trim().startsWith('jwt'))[0];
 
   return jwtTokenStr.split('=')[1];
 };

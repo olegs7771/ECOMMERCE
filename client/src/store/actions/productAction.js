@@ -360,7 +360,7 @@ export const getProductsFromCartAction = (data) => async (dispatch) => {
   });
   try {
     const res = await axios.get(`/api/v1/product/guest/${data.guestId}`);
-    console.log('res.data getProductsFromCartAction', res.data);
+    // console.log('res.data getProductsFromCartAction', res.data);
     dispatch({
       type: GET_PRODUCTS_FROM_CART,
       payload: res.data.data,
