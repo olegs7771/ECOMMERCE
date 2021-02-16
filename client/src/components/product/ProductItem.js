@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Image } from 'cloudinary-react';
@@ -19,11 +19,14 @@ export default function ProductItem({
 }) {
   // REDUX
   const dispatch = useDispatch();
-  const loadingRedux = useSelector((state) => state.loading.loadingProductCart);
+  // const loadingRedux = useSelector((state) => state.loading.loadingProductCart);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
+  const messageRedux = useSelector((state) => state.message.message);
 
   // STATE
   const [focused, setFocused] = useState(false);
+  const [loading, setLoading] = useState(false); //local state only
+  const [done, setDone] = useState(false); // show V for 1 sec in cart icon afetr purchise been made
 
   const _onFocusIn = () => {
     setFocused(true);
@@ -46,7 +49,19 @@ export default function ProductItem({
       guestId: cookieRedux.guestId,
     };
     dispatch(getProductInCartAction(data));
+    setLoading(true);
   };
+
+  // STOP LOADING IN STATE ON MESSAGE
+  useEffect(() => {
+    setLoading(false);
+    if (loading) {
+      setDone(true);
+    }
+    setTimeout(() => {
+      setDone(false);
+    }, 2000);
+  }, [messageRedux]);
 
   return (
     <div
@@ -125,7 +140,7 @@ export default function ProductItem({
             }
           >
             {/* ONLOADING  */}
-            {loadingRedux ? (
+            {loading ? (
               <svg
                 className="icon pub-category__p-card__cart--icon-spinner"
                 onClick={_addProductToCart}
@@ -134,7 +149,11 @@ export default function ProductItem({
               </svg>
             ) : (
               <svg className="icon " onClick={_addProductToCart}>
-                <use href={sprite + '#icon-cart'} />
+                {done ? (
+                  <use href={sprite_material + '#icon-check'} />
+                ) : (
+                  <use href={sprite_material + '#icon-add_shopping_cart'} />
+                )}
               </svg>
             )}
           </div>

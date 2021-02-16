@@ -13,9 +13,7 @@ const Navigation = ({ history }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const drawerRedux = useSelector((state) => state.drawer.drawer);
-  const cartproductsRedux = useSelector(
-    (state) => state.product.shoppingcart.products
-  );
+  const cartRedux = useSelector((state) => state.product.shoppingcart);
 
   // STATE
   const [drawer, setDrawer] = useState(false);
@@ -48,21 +46,20 @@ const Navigation = ({ history }) => {
 
   // SET CART STATE IF CART PRODUCTS CHANGE IN SHOPPING CART in cookies
   useEffect(() => {
-    if (cartproductsRedux) {
-      if (cartproductsRedux.length !== 0) {
+    if (Object.keys(cartRedux).length !== 0) {
+      if (cartRedux.products.length !== 0) {
         setCart(true); //check for cookies
       } else {
         setCart(false);
       }
     }
-  }, [cartproductsRedux]);
+  }, [cartRedux]);
 
   // console.log(
   //   'cookieRedux',
   //   Object.keys(cookieRedux).some((el) => el.startsWith('productId'))
   // );
 
-  console.log('cartproductsRedux', cartproductsRedux);
   return (
     <header
       className={

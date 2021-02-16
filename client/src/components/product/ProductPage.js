@@ -15,10 +15,13 @@ export default function ProductPage(props) {
   // REDUX
   const dispatch = useDispatch();
   const drawerRedux = useSelector((state) => state.drawer.drawer);
-  const loadingRedux = useSelector((state) => state.loading.loading);
+  const loadingRedux = useSelector((state) => state.loading.loadingProductCart);
   const productRedux = useSelector((state) => state.product.product);
+  const cookieRedux = useSelector((state) => state.cookie.cookie);
+
   // STATE
   const [favorite, setFavorite] = useState(false);
+  const [done, setDone] = useState(false); // show V for 1 sec in cart icon afetr purchise been made
 
   // LOAD PRODUCT ON LOAD
   useEffect(() => {
@@ -36,29 +39,38 @@ export default function ProductPage(props) {
   };
   // ADD PRODUCT TO SHOPPING CART
   const _addProductToCart = (e) => {
-    console.log('_addProductToCar e', e);
-    dispatch(getProductInCartAction({ slug: e }));
-  };
+    const data = {
+      productId: productRedux._id,
+      guestId: cookieRedux.guestId,
+    };
 
-  return (
-    <div className="pub-product page">
-      <div
-        className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
-        onClick={() => dispatch(drawerToggle(false))}
-      ></div>
-      <div className="pub-product__container container">
-        <BreadCrumbs
-          href1="/"
-          link1="Home"
-          href2="/category "
-          link2="category"
-          href3={`/category/${props.match.params.categorySlug}/${props.match.params.categoryId}`}
-          link3={props.match.params.categorySlug}
-          current={props.match.params.slug}
-        />
-        {loadingRedux || !productRedux ? (
-          <Spinner loading={true} />
-        ) : (
+    dispatch(getProductInCartAction(data));
+  };
+  // DEFINE BUTTON TEXT
+
+  if (!productRedux) {
+    return (
+      <div className="pub-product page">
+        <Spinner />
+      </div>
+    );
+  } else {
+    return (
+      <div className="pub-product page">
+        <div
+          className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
+          onClick={() => dispatch(drawerToggle(false))}
+        ></div>
+        <div className="pub-product__container container">
+          <BreadCrumbs
+            href1="/"
+            link1="Home"
+            href2="/category "
+            link2="category"
+            href3={`/category/${props.match.params.categorySlug}/${props.match.params.categoryId}`}
+            link3={props.match.params.categorySlug}
+            current={props.match.params.slug}
+          />
           <div className="pub-product__wrapper">
             <div className="pub-product__gallery">
               {productRedux.images.length === 0 && (
@@ -125,8 +137,8 @@ export default function ProductPage(props) {
                   <span>(</span>
                   <span
                     className="pub-category__p-card__details__rating__reviews--amount 
-                         pub-product__details__rating-bar--amount
-                  "
+                           pub-product__details__rating-bar--amount
+                    "
                   >
                     30
                   </span>
@@ -135,11 +147,21 @@ export default function ProductPage(props) {
               </div>
               {/* BUY MODULE  */}
               <div className="pub-product__details__buy-module ">
+                {/* BUTTON  */}
                 <button
                   className="btn pub-product__details__buy-module--btn"
-                  onClick={_addProductToCart.bind(this, productRedux.slug)}
+                  onClick={_addProductToCart}
                 >
-                  Add to cart
+                  {loadingRedux ? (
+                    <svg
+                      className="icon pub-category__p-card__cart--icon-spinner"
+                      onClick={_addProductToCart}
+                    >
+                      <use href={sprite_material + '#icon-toys'} />
+                    </svg>
+                  ) : (
+                    'Added!'
+                  )}
                 </button>
                 <div
                   className="pub-product__details__buy-module__icon"
@@ -164,8 +186,8 @@ export default function ProductPage(props) {
               </p>
             </div>
           </div>
-        )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }

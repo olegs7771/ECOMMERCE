@@ -321,7 +321,7 @@ export const getLast3ProductAction = () => async (dispatch) => {
   }
 };
 
-// CREATE CART FOR GUEST BY ADDING NEW PRODUCT data={guestId,productId}
+// CREATE CART FOR GUEST BY ADDING NEW PRODUCT data={guestId,productId} 🛒
 export const getProductInCartAction = (data) => async (dispatch) => {
   console.log('getProductInCartAction data', data);
   dispatch({
@@ -354,7 +354,11 @@ export const getProductInCartAction = (data) => async (dispatch) => {
 
     console.log('res.data getProductInCartAction', res.data);
   } catch (error) {
-    console.log('getProductInCartAction error ', error);
+    dispatch({
+      type: LOADING_PRODUCT_CART,
+      payload: false,
+    });
+    console.log('getProductInCartAction error ', error.response.data);
   }
 };
 

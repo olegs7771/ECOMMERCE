@@ -267,16 +267,20 @@ const deleteCart = asyncCatch(async (req, res, next) => {
 const getProductsCart = asyncCatch(async (req, res, next) => {
   console.log('req.user getProductsCart', req.user);
   //1) Find Shopping Cart by req.user
-  const cart = await Cart.find({ guestId: req.user });
+  const cart = await Cart.findOne({ guestId: req.user });
   if (!cart)
-    return next(new AppErrorHandler(`Shoppingcart not found for ${req.user}`));
-  console.log('cart', cart);
-  if (cart.length < 1)
-    return res.status(200).json({ status: 'success', data: cart });
+    // return next(new AppErrorHandler(`Shoppingcart not found for ${req.user}`));
+    return res
+      .status(200)
+      .json({ status: 'success', message: 'no cart found', data: {} });
 
-  for (objectCart of cart) {
-    res.status(200).json({ status: 'success', data: objectCart });
-  }
+  console.log('cart', cart);
+
+  return res.status(200).json({ status: 'success', data: cart });
+
+  // for (objectCart of cart) {
+  //   res.status(200).json({ status: 'success', data: objectCart });
+  // }
 });
 
 // REMOVE PRODUCT FROM CART by user/guest
