@@ -187,6 +187,7 @@
 
         &-spinner {
           animation: rotate-spinner 1s infinite linear;
+          fill: $color-grey;
         }
       }
       &--visible {

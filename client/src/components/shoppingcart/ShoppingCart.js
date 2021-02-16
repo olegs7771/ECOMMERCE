@@ -11,7 +11,6 @@ export default function ShoppingCart(props) {
   // REDUX
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   const cartRedux = useSelector((state) => state.product.shoppingcart);
-  const loadingRedux = useSelector((state) => state.loading.loading);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const authRedux = useSelector((state) => state.auth);
   const messageRedux = useSelector((state) => state.message.message);
@@ -36,6 +35,8 @@ export default function ShoppingCart(props) {
           );
         };
         totalPrice = total(arrOfProducts).reduce((acc, val) => acc + val);
+
+        totalPrice = Math.round((totalPrice + Number.EPSILON) * 1000) / 1000;
       }
     }
   }
