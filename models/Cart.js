@@ -79,7 +79,7 @@ cartSchema.methods.updateProduct = function (productId, amountUpdate) {
   });
 };
 
-cartSchema.pre('find', function (next) {
+cartSchema.pre(/^find/, function (next) {
   this.populate('products.product').select('-__v');
   next();
 });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Image } from 'cloudinary-react';
@@ -21,9 +21,11 @@ export default function ProductItem({
   const dispatch = useDispatch();
   const loadingRedux = useSelector((state) => state.loading.loadingProductCart);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
+  const messageRedux = useSelector((state) => state.message.message);
 
   // STATE
   const [focused, setFocused] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const _onFocusIn = () => {
     setFocused(true);
@@ -46,7 +48,13 @@ export default function ProductItem({
       guestId: cookieRedux.guestId,
     };
     dispatch(getProductInCartAction(data));
+    setLoading(true);
   };
+
+  // STOP LOADING IN STATE ON MESSAGE
+  useEffect(() => {
+    setLoading(false);
+  }, [messageRedux]);
 
   return (
     <div

@@ -16,26 +16,30 @@ export default function ShoppingCart(props) {
   const authRedux = useSelector((state) => state.auth);
   const messageRedux = useSelector((state) => state.message.message);
 
+  // STATE
+
   // GET SHOPPINGCART ITEMS TO REDUX
   useEffect(() => {
     dispatch(getProductsFromCartAction({ guestId: cookieRedux.guestId }));
   }, [dispatch, cookieRedux.guestId]);
 
   //  FUNCTION TO CALCULATE TOTAL
-  const arrOfProducts = cartRedux.products;
-  // console.log('arrOfProducts', arrOfProducts.length);
   let totalPrice;
-  if (arrOfProducts) {
-    if (arrOfProducts.length > 0) {
-      const total = (arr) => {
-        return arr.map(
-          (elem) => parseFloat(elem.product.price) * elem.quantity
-        );
-      };
-      totalPrice = total(arrOfProducts).reduce((acc, val) => acc + val);
+  if (Object.keys(cartRedux).length !== 0) {
+    const arrOfProducts = cartRedux.products;
+    // console.log('arrOfProducts', arrOfProducts.length);
+    if (arrOfProducts) {
+      if (arrOfProducts.length > 0) {
+        const total = (arr) => {
+          return arr.map(
+            (elem) => parseFloat(elem.product.price) * elem.quantity
+          );
+        };
+        totalPrice = total(arrOfProducts).reduce((acc, val) => acc + val);
+      }
     }
   }
-  if (cartRedux) {
+  if (Object.keys(cartRedux).length !== 0) {
     return (
       <div className="page shoppingcart">
         <div
@@ -60,18 +64,6 @@ export default function ShoppingCart(props) {
             </p>
           </div>
         </div>
-
-        {/* LOADING OVERLAY  */}
-        <div
-          className={
-            loadingRedux
-              ? ' shoppingcart__content__loading shoppingcart__content__loading--visible '
-              : 'shoppingcart__content__loading '
-          }
-        >
-          <SpinnerPuffLoader />
-        </div>
-        {/* LOADING OVERLAY END */}
 
         <div className="shoppingcart__content">
           {authRedux.isAuthenticated ? (
@@ -181,7 +173,7 @@ export default function ShoppingCart(props) {
                   </div>
 
                   <div className="productlist">
-                    {cartRedux.products.products.map((item, index) => (
+                    {cartRedux.products.map((item, index) => (
                       <ShoppingCartItem key={index} item={item} />
                     ))}
                   </div>
@@ -256,6 +248,10 @@ export default function ShoppingCart(props) {
       </div>
     );
   } else {
-    return <div>Loading</div>;
+    return (
+      <div className="page shoppingcart">
+        <SpinnerPuffLoader />
+      </div>
+    );
   }
 }
