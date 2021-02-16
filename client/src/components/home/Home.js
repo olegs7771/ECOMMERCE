@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { drawerToggle } from '../../store/actions/drawerAction';
+
 import { getLast3ProductAction } from '../../store/actions/productAction';
 
 // import sprite from '../../img/sprite.svg';
@@ -8,10 +8,10 @@ import { getLast3ProductAction } from '../../store/actions/productAction';
 import imageHome from '../../img/hero homepage.jpg';
 import { Image } from 'cloudinary-react';
 
-const Home = (props) => {
+const Home = () => {
   const dispatch = useDispatch();
   // REDUX
-  const drawerRedux = useSelector((state) => state.drawer.drawer);
+
   const productsRedux = useSelector((state) => state.product.products);
   // const loadingRedux = useSelector((state) => state.loading.loading);
 
@@ -22,11 +22,6 @@ const Home = (props) => {
 
   return (
     <div className="home page">
-      <div
-        className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
-        onClick={() => dispatch(drawerToggle(false))}
-      ></div>
-
       <article className="home__container container">
         <div className="home__container__main">
           <h1 className="heading-1 mb-md">Welcome</h1>

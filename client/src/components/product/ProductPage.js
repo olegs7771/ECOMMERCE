@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import BreadCrumbs from '../navigation/BreadCrumbs';
 import { Image } from 'cloudinary-react';
-import { drawerToggle } from '../../store/actions/drawerAction';
+
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getOneProduct,
   getProductInCartAction,
 } from '../../store/actions/productAction';
 // import no_image from '../../img/no_image.png';
-import { Spinner } from '../../utils/LoadingComponent';
+
 import sprite from '../../img/sprite.svg';
 import sprite_material from '../../img/sprite_material.svg';
 export default function ProductPage(props) {
   // REDUX
   const dispatch = useDispatch();
-  const drawerRedux = useSelector((state) => state.drawer.drawer);
+
   const loadingRedux = useSelector((state) => state.loading.loadingProductCart);
   const productRedux = useSelector((state) => state.product.product);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
@@ -62,10 +62,6 @@ export default function ProductPage(props) {
   } else {
     return (
       <div className="pub-product page">
-        <div
-          className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
-          onClick={() => dispatch(drawerToggle(false))}
-        ></div>
         <div className="pub-product__container container">
           <BreadCrumbs
             href1="/"

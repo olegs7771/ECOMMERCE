@@ -32,5 +32,4 @@ export const reload = (cookies) => {
       store.dispatch(clearOutUser());
     }
   }
-  return store;
 };
