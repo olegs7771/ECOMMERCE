@@ -18,6 +18,7 @@ export default function ProductPage(props) {
   const loadingRedux = useSelector((state) => state.loading.loadingProductCart);
   const productRedux = useSelector((state) => state.product.product);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
+  const messageRedux = useSelector((state) => state.message.message);
 
   // STATE
   const [favorite, setFavorite] = useState(false);
@@ -47,13 +48,17 @@ export default function ProductPage(props) {
     dispatch(getProductInCartAction(data));
   };
   // DEFINE BUTTON TEXT
+  useEffect(() => {
+    if (loadingRedux) {
+      setDone(true);
+    }
+    setTimeout(() => {
+      setDone(false);
+    }, 3000);
+  }, [messageRedux]);
 
   if (!productRedux) {
-    return (
-      <div className="pub-product page">
-        <Spinner />
-      </div>
-    );
+    return <div className="pub-product page">Loading...</div>;
   } else {
     return (
       <div className="pub-product page">
@@ -160,7 +165,7 @@ export default function ProductPage(props) {
                       <use href={sprite_material + '#icon-toys'} />
                     </svg>
                   ) : (
-                    'Added!'
+                    <div>{done ? 'Added!' : 'Add to cart'}</div>
                   )}
                 </button>
                 <div

@@ -69,7 +69,7 @@ cartSchema.methods.updateProduct = function (productId, amountUpdate) {
   console.log('productId', productId);
   console.log('amountUpdate', amountUpdate);
   const productArr = this.products.filter(
-    (el) => el.product.toString() === productId
+    (el) => el._id.toString() === productId
   );
   console.log('productArr', productArr);
   productArr.forEach((product) => {

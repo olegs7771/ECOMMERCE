@@ -1,5 +1,6 @@
 import React from 'react';
 import { withCookies } from 'react-cookie';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.scss';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -20,6 +21,7 @@ import Product from './components/admin/product/Product';
 import Card from './components/admin/card/Card';
 // PUBLIC
 import Home from './components/home/Home';
+import Footer from './components/footer/Footer';
 import CategoryPage from './components/category/Category';
 import CategorySingle from './components/category/CategorySingle';
 import ProductPage from './components/product/ProductPage';
@@ -30,6 +32,8 @@ import axios from 'axios';
 // Drawer
 
 const App = (props) => {
+  // REDUX
+
   const store = reload(props.allCookies); //ON EVERY RELOAD RESET AUTH USER REDUX STATE
   // IF sessionId expired or cleared fetch new guest token and userId
 
@@ -50,6 +54,9 @@ const App = (props) => {
     console.log('products in cart');
     reloadCart(props.allCookies.guestId);
   }
+  // PREVENT SCROLL IF DRAWER ON
+
+  console.log('document.body', (document.body.style.overflow = 'visible'));
 
   return (
     <Provider store={store}>
@@ -102,6 +109,7 @@ const App = (props) => {
             component={Card}
           />
         </Switch>
+        <Footer />
       </Router>
     </Provider>
   );
