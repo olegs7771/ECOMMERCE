@@ -71,6 +71,7 @@ const getGuestCookieToken = asyncCatch(async (req, res, next) => {
 
 // CHECK IF GUEST HAS VALID TOKEN
 const protectGuest = asyncCatch(async (req, res, next) => {
+  console.log('req.headers', req.headers);
   if (req.headers.cookie) {
     const token = findJwtToken(req.headers.cookie);
 

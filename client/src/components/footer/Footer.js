@@ -11,7 +11,10 @@ export default function Footer() {
         className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
-      <div className="container footer__container">footer11</div>
+      <div className="container footer__container">
+        {' '}
+        &copy; All Rights Reserved
+      </div>
     </div>
   );
 }
