@@ -1,5 +1,5 @@
-import React from 'react';
-import { withCookies } from 'react-cookie';
+import React, { useEffect } from 'react';
+
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // ROUTES
@@ -23,33 +23,21 @@ import CategorySingle from '../components/category/CategorySingle';
 import ProductPage from '../components/product/ProductPage';
 import Dashboard from '../components/dashboard/Dashboard';
 import ShoppingCart from '../components/shoppingcart/ShoppingCart';
-import axios from 'axios';
-import { reload, reloadCart } from '../utils/reloadUserAuth';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const MainApp = (props) => {
-  const dispatch = useDispatch();
   // REDUX
+  const drawerRedux = useSelector((state) => state.drawer.drawer);
 
-  reload(props.allCookies); //ON EVERY RELOAD RESET AUTH USER REDUX STATE
-  // IF sessionId expired or cleared fetch new guest token and userId
-  if (!props.allCookies.sessionId) {
-    const fetchUserId = async () => {
-      try {
-        const res = await axios.get('/api/v1/users');
-        console.log('res.data fetchUserId', res.data);
-      } catch (error) {
-        console.log('error fetchUserId', error.response.data);
-      }
-    };
-    fetchUserId();
-  }
-  // IF PRODUCTS IN SHOPPINGCART FETCH CART ON EVERY RELOAD
-  if (Object.keys(props.allCookies).some((el) => el.startsWith('productId'))) {
-    console.log('products in cart');
-    reloadCart(props.allCookies.guestId);
-  }
+  // NO SCROLL ON DRAWER ON
+  useEffect(() => {
+    if (drawerRedux) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'visible';
+    }
+  }, [drawerRedux]);
 
   return (
     <Router>
@@ -106,4 +94,4 @@ const MainApp = (props) => {
   );
 };
 
-export default withCookies(MainApp);
+export default MainApp;

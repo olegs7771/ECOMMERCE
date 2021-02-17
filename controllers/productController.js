@@ -265,7 +265,7 @@ const deleteCart = asyncCatch(async (req, res, next) => {
 
 // // FETCH PRODUCTS FROM SHOPPINGCART
 const getProductsCart = asyncCatch(async (req, res, next) => {
-  console.log('req.user getProductsCart', req.user);
+  // console.log('req.user getProductsCart', req.user);
   //1) Find Shopping Cart by req.user
   const cart = await Cart.findOne({ guestId: req.user });
   if (!cart)

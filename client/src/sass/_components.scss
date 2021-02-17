@@ -1,6 +1,6 @@
 .page {
   max-width: 180rem;
-  min-height: 100vh;
+  // min-height: 100vh;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(13, minmax(0, 1fr));
@@ -8,12 +8,13 @@
 
   @media only screen and (max-width: $lg-bp) {
     grid-template-columns: 1fr;
+    display: block;
   }
 }
 
 .container {
   grid-column: 2/-1;
-  min-height: 100vh;
+
   // background-color: lightblue;
   padding: 4rem 1rem;
 

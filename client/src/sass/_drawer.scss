@@ -3,14 +3,16 @@
   grid-row: 1;
   background-color: #fff;
   min-height: 120vh;
-  position: absolute;
+  position: fixed;
   z-index: 8000;
   visibility: hidden;
   transform: translate(-47rem, -10rem);
   transition: 0.2s;
   width: 30rem;
   right: auto;
-
+  overflow-y: auto;
+  overflow-x: hidden;
+  top: 10rem;
   &--open {
     visibility: visible;
     transform: translate(0, -10rem);

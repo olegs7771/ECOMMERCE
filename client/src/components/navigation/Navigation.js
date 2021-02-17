@@ -11,8 +11,8 @@ import { drawerToggle } from '../../store/actions/drawerAction';
 const Navigation = ({ history }) => {
   // REDUX
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
   const drawerRedux = useSelector((state) => state.drawer.drawer);
+  const auth = useSelector((state) => state.auth);
   const cartRedux = useSelector((state) => state.product.shoppingcart);
 
   // STATE
@@ -22,17 +22,19 @@ const Navigation = ({ history }) => {
 
   // SET DRAWER REDUX IN STATE
   useEffect(() => {
-    if (drawerRedux) {
+    if (!drawerRedux) {
       setDrawer(drawerRedux);
     }
   }, [drawerRedux]);
 
   const _drawerToggle = () => {
+    console.log('menu click');
     setDrawer(!drawer);
   };
   useEffect(() => {
     dispatch(drawerToggle(drawer));
   }, [dispatch, drawer]);
+
   ///////////////////////////////////////////////////////////
 
   // SCROLL OFFSET
@@ -54,11 +56,6 @@ const Navigation = ({ history }) => {
       }
     }
   }, [cartRedux]);
-
-  // console.log(
-  //   'cookieRedux',
-  //   Object.keys(cookieRedux).some((el) => el.startsWith('productId'))
-  // );
 
   return (
     <header
@@ -127,7 +124,11 @@ const Navigation = ({ history }) => {
                   <li className="nav__item ">
                     <a
                       href="/shoppingcart"
-                      className="nav__link nav__link-cart"
+                      className={
+                        cart
+                          ? ' nav__link  nav__link-cart' //show blue dot if cart not empty
+                          : 'nav__link'
+                      }
                     >
                       <svg className="nav__link-icon ">
                         <use
@@ -136,6 +137,14 @@ const Navigation = ({ history }) => {
                       </svg>
                     </a>
                   </li>
+                  <div
+                    className="nav__link-icon-box nav__link-icon-box--visible"
+                    onClick={_drawerToggle}
+                  >
+                    <svg className="icon">
+                      <use href={sprite_material + '#icon-menu'} />
+                    </svg>
+                  </div>
                 </div>
               </ul>
             ) : (
@@ -168,7 +177,7 @@ const Navigation = ({ history }) => {
                       href="/shoppingcart"
                       className={
                         cart
-                          ? 'nav__link nav__link-cart' //show blue dot if cart not empty
+                          ? ' nav__link  nav__link-cart' //show blue dot if cart not empty
                           : 'nav__link'
                       }
                     >

@@ -58,7 +58,7 @@ export const signOauth2Action = (data, history) => async (dispatch) => {
       localStorage.setItem('jwtToken', token);
 
       //SET TOKEN
-      setAuthToken();
+      setAuthToken(token);
 
       const decoded = jwt_decoded(token);
       console.log('decoded', decoded);

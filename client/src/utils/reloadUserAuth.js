@@ -12,6 +12,8 @@ export const reloadCart = (guestId) => {
 };
 
 export const reload = (cookies) => {
+  console.log('reload');
+
   // SET COOKIES IN STATE
   store.dispatch(setCookieAction(cookies));
 
@@ -26,10 +28,12 @@ export const reload = (cookies) => {
       role: decoded.role,
       avatar: decoded.avatar,
     };
+
     store.dispatch(setCurrentUser(dataToRedux));
     const timeNow = parseInt(Date.now() / 1000, 10);
     if (decoded.exp < timeNow) {
       store.dispatch(clearOutUser());
     }
   }
+  return store;
 };

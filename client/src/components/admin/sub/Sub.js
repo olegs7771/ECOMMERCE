@@ -32,7 +32,7 @@ export default function Sub(props) {
   const drawerRedux = useSelector((state) => state.drawer.drawer);
 
   const errorRedux = useSelector((state) => state.error.errorMessage);
-  const errorsRedux = useSelector((state) => state.error.errors);
+  // const errorsRedux = useSelector((state) => state.error.errors);
   //  STATE
   const [subList, setSublist] = useState([]);
   const [keyword, setKeyword] = useState('');
