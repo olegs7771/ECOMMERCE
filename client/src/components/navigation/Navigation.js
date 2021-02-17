@@ -148,6 +148,7 @@ const Navigation = ({ history }) => {
                 </div>
               </ul>
             ) : (
+              // NOT AUTHENTICATED 🛑
               <ul className="nav__list">
                 {/* LOGO */}
                 <li className="nav__item ">
@@ -155,10 +156,22 @@ const Navigation = ({ history }) => {
                     <img src={Logo} alt="logo" className="nav__item__logo" />
                   </a>
                 </li>
+                {/* SEARCH  */}
+                <li className="nav__item nav__item__search">
+                  <svg className="nav__link-icon nav__item__search__icon ">
+                    <use href={sprite_material + '#icon-search'} />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="What are you looking for?"
+                    className="nav__item__search__input"
+                  />
+                </li>
+
                 <div className="nav__auth">
                   <li className="nav__item">
                     <a href="/login" className="nav__link">
-                      <svg className="nav__link-icon">
+                      <svg className="nav__link-icon ">
                         <use href={sprite_material + '#icon-person_outline'} />
                       </svg>
                       Sign In

@@ -236,7 +236,7 @@ export const loginUserAction = (data, history) => async (dispatch) => {
       if (decoded.role === 'admin') {
         history.push('/admin');
       } else {
-        history.push('/dashboard');
+        history.push('/');
       }
     }
   } catch (err) {

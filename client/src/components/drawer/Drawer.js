@@ -22,10 +22,10 @@ export default function Drawer() {
           </div>
         </div>
       </div>
-      {/* ADMIN OR USER  */}
+
       <div className="drawer__container">
-        {auth.user.role === 'user' ? (
-          // RANDOM VISITOR
+        {!auth.isAuthenticated ? (
+          // User
           <nav className="drawer__nav">
             <ul className="drawer__container">
               <li className="drawer__container-item">
@@ -35,7 +35,7 @@ export default function Drawer() {
               </li>
               <li className="drawer__container-item">
                 <a href="/" className="drawer__container-link">
-                  Products
+                  My Products
                 </a>
               </li>
               <li className="drawer__container-item">
@@ -46,46 +46,30 @@ export default function Drawer() {
               <li className="drawer__container-item">
                 <a href="/" className="drawer__container-link">
                   Other
-                </a>
-              </li>
-            </ul>
-          </nav>
-        ) : auth.user.role === 'admin' ? (
-          // ADMIN
-          <nav className="drawer__nav">
-            <ul className="drawer__container">
-              <li className="drawer__container-item">
-                <a href="/admin/category" className="drawer__container-link">
-                  Categories
                 </a>
               </li>
             </ul>
           </nav>
         ) : (
-          // LOGGED GENERIC USER
+          // ATHENTICATED
           <nav className="drawer__nav">
-            <ul className="drawer__container">
-              <li className="drawer__container-item">
-                <a href="/category" className="drawer__container-link">
-                  Categories
-                </a>
-              </li>
-              <li className="drawer__container-item">
-                <a href="3" className="drawer__container-link">
-                  Products
-                </a>
-              </li>
-              <li className="drawer__container-item">
-                <a href="3" className="drawer__container-link">
-                  Contact Us
-                </a>
-              </li>
-              <li className="drawer__container-item">
-                <a href="3" className="drawer__container-link">
-                  Other
-                </a>
-              </li>
-            </ul>
+            {auth.user.role === 'admin' ? (
+              <ul className="drawer__container">
+                <li className="drawer__container-item">
+                  <a href="/admin/category" className="drawer__container-link">
+                    Categories Admin
+                  </a>
+                </li>
+              </ul>
+            ) : (
+              <ul className="drawer__container">
+                <li className="drawer__container-item">
+                  <a href="/admin/category" className="drawer__container-link">
+                    Categories User Saved Products
+                  </a>
+                </li>
+              </ul>
+            )}
           </nav>
         )}
       </div>
