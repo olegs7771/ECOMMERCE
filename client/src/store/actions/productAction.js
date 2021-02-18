@@ -328,10 +328,21 @@ export const getProductInCartAction = (data) => async (dispatch) => {
     type: LOADING_PRODUCT_CART,
     payload: true,
   });
+
   try {
-    const res = await axios.post(`/api/v1/product/guest/${data.guestId}`, data);
-    // FETCH PRODUCTS FROM NEWLY CREATED CART TO SHOW IN HEADER
-    const list = await axios.get(`/api/v1/product/guest/${data.guestId}`);
+    let res;
+    let list;
+    // CREATE CART AS GUEST
+    if (data.guestId) {
+      res = await axios.post(`/api/v1/product/guest/${data.guestId}`, data);
+      // FETCH PRODUCTS FROM NEWLY CREATED CART TO SHOW IN HEADER
+      list = await axios.get(`/api/v1/product/guest/${data.guestId}`);
+      // CREATE CART AS AN AUTH USER
+    } else if (data.userId) {
+      res = await axios.post(`/api/v1/product/user/${data.userId}`, data);
+      // FETCH PRODUCTS FROM NEWLY CREATED CART TO SHOW IN HEADER
+      list = await axios.get(`/api/v1/product/user/${data.userId}`);
+    }
     dispatch({
       type: GET_PRODUCTS_FROM_CART,
       payload: list.data.data,
@@ -371,7 +382,8 @@ export const getProductsFromCartAction = (data) => async (dispatch) => {
   });
   try {
     const res = await axios.get(`/api/v1/product/guest/${data.guestId}`);
-    // console.log('res.data getProductsFromCartAction', res.data);
+    console.log('res.data getProductsFromCartAction', res.data);
+
     dispatch({
       type: GET_PRODUCTS_FROM_CART,
       payload: res.data.data,

@@ -179,67 +179,67 @@ const lastAdded = asyncCatch(async (req, res, next) => {
 
 // CREATE GUEST CART by adding one product
 const createCart = asyncCatch(async (req, res, next) => {
-  // console.log('req.body createCart', req.body);
-  // console.log('createCart params', req.params);
-  // console.log('req.user', req.user);
-  // //1) Check if guest already has Cart
-  const cart = await Cart.findOne({ guestId: req.user });
-  //2) FInd Product
-  const product = await Product.findById(req.body.productId);
-  // console.log('product', product);
-  // 3) Check if product still available
+  console.log('req.body createCart', req.body);
+  console.log('createCart params', req.params);
+  console.log('req.user', req.user);
+  // // //1) Check if guest already has Cart
+  // const cart = await Cart.findOne({ guestId: req.user });
+  // //2) FInd Product
+  // const product = await Product.findById(req.body.productId);
+  // // console.log('product', product);
+  // // 3) Check if product still available
 
-  if (product && product.instock !== 0) {
-    if (cart) {
-      console.log('cart exists');
-      //  UPDATE CART add more products
-      cart.addProduct(req.body.productId);
+  // if (product && product.instock !== 0) {
+  //   if (cart) {
+  //     console.log('cart exists');
+  //     //  UPDATE CART add more products
+  //     cart.addProduct(req.body.productId);
 
-      await cart.save();
-      const message = `${product.title} : was added to your shopping cart`;
-      // SENT PRODUCT TO cookies
-      res.cookie(`productId_${product._id}`, Math.round(Date.now() / 1000), {
-        expires: new Date(
-          Date.now() +
-            parseInt(process.env.CART_COOKIE_EXP, 10) * 24 * 60 * 60 * 1000 //30d
-        ),
+  //     await cart.save();
+  //     const message = `${product.title} : was added to your shopping cart`;
+  //     // SENT PRODUCT TO cookies
+  //     res.cookie(`productId_${product._id}`, Math.round(Date.now() / 1000), {
+  //       expires: new Date(
+  //         Date.now() +
+  //           parseInt(process.env.CART_COOKIE_EXP, 10) * 24 * 60 * 60 * 1000 //30d
+  //       ),
 
-        secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-        sameSite: true,
-      });
+  //       secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+  //       sameSite: true,
+  //     });
 
-      res.status(200).json({ status: 'success', message, data: cart });
-    } else {
-      // CREATE NEW CART
+  //     res.status(200).json({ status: 'success', message, data: cart });
+  //   } else {
+  //     // CREATE NEW CART
 
-      console.log('req.user', req.user);
-      const cart = await Cart.create({
-        guestId: req.user,
-        products: [
-          {
-            _id: req.body.productId,
-            product: req.body.productId,
-            quantity: 1,
-          },
-        ],
-      });
-      //SAVE PRODUCT IN cookie
-      res.cookie(`productId_${product._id}`, Math.round(Date.now() / 1000), {
-        expires: new Date(
-          Date.now() +
-            parseInt(process.env.CART_COOKIE_EXP, 10) * 24 * 60 * 60 * 1000 //30d
-        ),
+  //     console.log('req.user', req.user);
+  //     const cart = await Cart.create({
+  //       guestId: req.user,
+  //       products: [
+  //         {
+  //           _id: req.body.productId,
+  //           product: req.body.productId,
+  //           quantity: 1,
+  //         },
+  //       ],
+  //     });
+  //     //SAVE PRODUCT IN cookie
+  //     res.cookie(`productId_${product._id}`, Math.round(Date.now() / 1000), {
+  //       expires: new Date(
+  //         Date.now() +
+  //           parseInt(process.env.CART_COOKIE_EXP, 10) * 24 * 60 * 60 * 1000 //30d
+  //       ),
 
-        secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-        sameSite: true,
-      });
+  //       secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+  //       sameSite: true,
+  //     });
 
-      const message = `${product.title} was added to your shopping cart`;
-      res.status(200).json({ status: 'success', message, data: cart });
-    }
-  } else {
-    next(new AppErrorHandler('Product not available', 401));
-  }
+  //     const message = `${product.title} was added to your shopping cart`;
+  //     res.status(200).json({ status: 'success', message, data: cart });
+  //   }
+  // } else {
+  //   next(new AppErrorHandler('Product not available', 401));
+  // }
 });
 
 // UPDATE EXISTING PRODUCT INCART
@@ -265,16 +265,24 @@ const deleteCart = asyncCatch(async (req, res, next) => {
 
 // // FETCH PRODUCTS FROM SHOPPINGCART
 const getProductsCart = asyncCatch(async (req, res, next) => {
-  // console.log('req.user getProductsCart', req.user);
+  console.log('req.user getProductsCart', req.user);
   //1) Find Shopping Cart by req.user
   const cart = await Cart.findOne({ guestId: req.user });
   if (!cart)
     // return next(new AppErrorHandler(`Shoppingcart not found for ${req.user}`));
-    return res
-      .status(200)
-      .json({ status: 'success', message: 'no cart found', data: {} });
+    return res.status(200).json({
+      status: 'success',
+      message: 'no cart created',
+      data: {
+        products: [],
+      },
+    });
 
   console.log('cart', cart);
+  if (cart.products.length === 0) {
+    console.log('cart.products.length', cart.products.length);
+    return res.status(200).json({ status: 'success', data: cart });
+  }
 
   return res.status(200).json({ status: 'success', data: cart });
 

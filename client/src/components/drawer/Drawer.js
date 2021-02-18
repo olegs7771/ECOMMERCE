@@ -64,8 +64,8 @@ export default function Drawer() {
             ) : (
               <ul className="drawer__container">
                 <li className="drawer__container-item">
-                  <a href="/admin/category" className="drawer__container-link">
-                    Categories User Saved Products
+                  <a href="/category" className="drawer__container-link">
+                    Categories User
                   </a>
                 </li>
               </ul>
