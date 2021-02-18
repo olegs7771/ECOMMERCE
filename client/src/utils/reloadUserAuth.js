@@ -5,10 +5,17 @@ import { getProductsFromCartAction } from '../store/actions/productAction';
 import jwt_decode from 'jwt-decode';
 const store = configureStore();
 
-export const reloadCart = (guestId) => {
-  console.log('guestId in reload ', guestId);
-  const data = { guestId };
-  store.dispatch(getProductsFromCartAction(data));
+//gets either user or guest
+export const reloadCart = (user, type) => {
+  if (type === 'guest') {
+    console.log('user in reload ', user);
+    const data = { guestId: user };
+    store.dispatch(getProductsFromCartAction(data));
+  } else if (type === 'user') {
+    console.log('user in reload ', user);
+    const data = { userId: user };
+    store.dispatch(getProductsFromCartAction(data));
+  }
 };
 
 export const reload = (cookies) => {

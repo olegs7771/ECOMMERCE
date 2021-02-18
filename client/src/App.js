@@ -20,15 +20,15 @@ const App = (props) => {
     };
     fetchUserId();
   }
-  // IF PRODUCTS IN SHOPPINGCART FETCH CART ON EVERY RELOAD
-  if (Object.keys(props.allCookies).some((el) => el.startsWith('productId'))) {
-    console.log('products in cart');
-    reloadCart(props.allCookies.guestId);
-  }
+  // IF PRODUCTS IN SHOPPINGCART FETCH CART ON EVERY RELOAD FOR GUEST IN COOKIES
+  // if (Object.keys(props.allCookies).some((el) => el.startsWith('productId'))) {
+  //   console.log('products in cart');
+  //   reloadCart(props.allCookies.guestId);
+  // }
 
   return (
     <Provider store={store}>
-      <MainApp />
+      <MainApp cookies={props} />
     </Provider>
   );
 };

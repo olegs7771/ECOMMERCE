@@ -286,9 +286,9 @@ const getProductsCart = asyncCatch(async (req, res, next) => {
 
   return res.status(200).json({ status: 'success', data: cart });
 
-  // for (objectCart of cart) {
-  //   res.status(200).json({ status: 'success', data: objectCart });
-  // }
+  for (objectCart of cart) {
+    res.status(200).json({ status: 'success', data: objectCart });
+  }
 });
 
 // REMOVE PRODUCT FROM CART by user/guest

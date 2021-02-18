@@ -25,10 +25,26 @@ import Dashboard from '../components/dashboard/Dashboard';
 import ShoppingCart from '../components/shoppingcart/ShoppingCart';
 
 import { useSelector } from 'react-redux';
+import { reloadCart } from '../utils/reloadUserAuth';
 
 const MainApp = (props) => {
   // REDUX
   const drawerRedux = useSelector((state) => state.drawer.drawer);
+  const authRedux = useSelector((state) => state.auth);
+  // RELOAD SHOPPING CART FOR AUTH USER.IF NOT LOGGED GET CART FOR GUEST
+  if (authRedux.isAuthenticated) {
+    console.log('products in cart for user');
+    reloadCart(authRedux.user.id, 'user');
+  } else {
+    if (
+      Object.keys(props.cookies.allCookies).some((el) =>
+        el.startsWith('productId')
+      )
+    ) {
+      console.log('products in cart for guest');
+      reloadCart(props.cookies.allCookies.guestId, 'guest');
+    }
+  }
 
   // NO SCROLL ON DRAWER ON
   useEffect(() => {

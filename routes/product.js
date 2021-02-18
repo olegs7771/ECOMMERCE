@@ -28,7 +28,7 @@ router.route('/last-added').get(lastAdded); // get last added products for home 
 
 //Protect Guest VALIDATED ROUTES if guest token valid
 router
-  .route('/guest/:guestId')
+  .route('/cart/:guestId')
   .post(protectGuest, createCart)
   .delete(protectGuest, deleteCart)
   .put(protectGuest, updateProduct)
@@ -39,7 +39,7 @@ router.route('/:productId/:slug').get(getOne); //get one product
 
 // PROTECTED USER VALIDATED ROUTES  if user token Valid
 router
-  .route('/user/:userId')
+  .route('/cart/user/:userId')
   .get(protect, getProductsCart)
   .post(protect, createCart);
 
