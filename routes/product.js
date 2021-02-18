@@ -26,7 +26,7 @@ const {
 // PUBLIC ROUTES
 router.route('/last-added').get(lastAdded); // get last added products for home page
 
-//Protect Guest validate if token valid
+//Protect Guest VALIDATED ROUTES if guest token valid
 router
   .route('/guest/:guestId')
   .post(protectGuest, createCart)
@@ -34,9 +34,14 @@ router
   .put(protectGuest, updateProduct)
   .get(protectGuest, getProductsCart)
   .patch(protectGuest, removeProduct);
-
 router.route('/:subId').get(list); // get products by subId
 router.route('/:productId/:slug').get(getOne); //get one product
+
+// PROTECTED USER VALIDATED ROUTES  if user token Valid
+router
+  .route('/user/:userId')
+  .get(protect, getProductsCart)
+  .post(protect, createCart);
 
 router.use(protect, restrictTo('admin'));
 //PROTECTED ROUTES

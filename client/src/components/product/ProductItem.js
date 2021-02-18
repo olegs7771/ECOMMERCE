@@ -22,6 +22,7 @@ export default function ProductItem({
   // const loadingRedux = useSelector((state) => state.loading.loadingProductCart);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const messageRedux = useSelector((state) => state.message.message);
+  const authRedux = useSelector((state) => state.auth);
 
   // STATE
   const [focused, setFocused] = useState(false);
@@ -42,12 +43,24 @@ export default function ProductItem({
   };
 
   // ADD PRODUCT TO SHOPPING CART
+  //As Auth User
+
   const _addProductToCart = (e) => {
     e.stopPropagation();
-    const data = {
-      productId,
-      guestId: cookieRedux.guestId,
-    };
+    //As Guest
+    let data;
+    if (!authRedux.isAuthenticated) {
+      data = {
+        productId,
+        guestId: cookieRedux.guestId,
+      };
+      //As auth user
+    } else {
+      data = {
+        productId,
+        userId: authRedux.user.id,
+      };
+    }
     dispatch(getProductInCartAction(data));
     setLoading(true);
   };
