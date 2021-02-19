@@ -15,6 +15,7 @@ export default function ShoppingCartItem({ item }) {
   const dispatch = useDispatch();
   const guestId = useSelector((state) => state.cookie.cookie.guestId);
   const messageRedux = useSelector((state) => state.message.message);
+  const authRedux = useSelector((state) => state.auth);
 
   //UPON ARRIVING MESSAGE AFTER UPDATE REVERSE loading to false
   useEffect(() => {
@@ -24,13 +25,24 @@ export default function ShoppingCartItem({ item }) {
   //STATE
   const [loading, setLoading] = useState(false);
 
+  // UPDATE AMOUNT
   const _onChangeSelect = (e) => {
     console.log('e select', e.target.value);
-    const data = {
-      guestId,
-      productId: item.product._id,
-      amountUpdate: e.target.value,
-    };
+    let data;
+    if (authRedux.isAuthenticated) {
+      data = {
+        userId: authRedux.user.id,
+        productId: item.product._id,
+        amountUpdate: e.target.value,
+      };
+    } else {
+      const data = {
+        guestId,
+        productId: item.product._id,
+        amountUpdate: e.target.value,
+      };
+    }
+
     dispatch(updateProductCartAction(data));
     setLoading(true);
   };

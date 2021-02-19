@@ -41,7 +41,10 @@ router.route('/:productId/:slug').get(getOne); //get one product
 router
   .route('/cart/user/:userId')
   .get(protect, getProductsCart)
-  .post(protect, createCart);
+  .post(protect, createCart)
+  .put(protect, updateProduct)
+  .patch(protect, removeProduct)
+  .delete(protect, deleteCart);
 
 router.use(protect, restrictTo('admin'));
 //PROTECTED ROUTES

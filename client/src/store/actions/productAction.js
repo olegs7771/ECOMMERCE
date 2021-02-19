@@ -433,12 +433,23 @@ export const updateProductCartAction = (data) => async (dispatch) => {
   console.log('updateProductCartAction data', data);
 
   try {
-    const update = await axios.put(
-      `/api/v1/product/cart/${data.guestId}`,
-      data
-    );
-    //RELOAD SHOPPING CART
-    const res = await axios.get(`/api/v1/product/cart/${data.guestId}`);
+    let update;
+    let res;
+    if (data.userId) {
+      //User
+      update = await axios.put(
+        `/api/v1/product/cart/user/${data.userId}`,
+        data
+      );
+      //RELOAD SHOPPING CART
+      res = await axios.get(`/api/v1/product/cart/user/${data.userId}`);
+    } else {
+      //Guest
+      update = await axios.put(`/api/v1/product/cart/${data.guestId}`, data);
+      //RELOAD SHOPPING CART
+      res = await axios.get(`/api/v1/product/cart/${data.guestId}`);
+    }
+
     dispatch({
       type: GET_PRODUCTS_FROM_CART,
       payload: res.data.data,

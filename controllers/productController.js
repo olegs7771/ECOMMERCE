@@ -277,7 +277,14 @@ const updateProduct = asyncCatch(async (req, res, next) => {
   console.log('req.body', req.body);
   console.log('req.params', req.params);
   //   // 1)Find cart
-  const cart = await Cart.findOne({ guestId: req.user });
+  let cart;
+  if (typeof req.user === 'object') {
+    //User
+    cart = await Cart.findOne({ userId: req.user.id });
+  } else {
+    //Guest
+    cart = await Cart.findOne({ guestId: req.user });
+  }
   console.log('cart to update', cart);
   cart.updateProduct(req.body.productId, req.body.amountUpdate);
   await cart.save();
