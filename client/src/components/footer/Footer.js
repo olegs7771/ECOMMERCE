@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { drawerToggle } from '../../store/actions/drawerAction';
 import { useDispatch, useSelector } from 'react-redux';
 export default function Footer() {

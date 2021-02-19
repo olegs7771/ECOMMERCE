@@ -7,7 +7,7 @@ import {
   getOneProduct,
   getProductInCartAction,
 } from '../../store/actions/productAction';
-// import no_image from '../../img/no_image.png';
+import SlideInMessage from '../../utils/SlideInMessage';
 
 import sprite from '../../img/sprite.svg';
 import sprite_material from '../../img/sprite_material.svg';
@@ -55,13 +55,16 @@ export default function ProductPage(props) {
     setTimeout(() => {
       setDone(false);
     }, 3000);
-  }, [messageRedux]);
+  }, [messageRedux, loadingRedux]);
 
   if (!productRedux) {
     return <div className="pub-product page">Loading...</div>;
   } else {
     return (
       <div className="pub-product page">
+        {/* SHOW MESSAGE ON BUYING PRODUCT  */}
+        <SlideInMessage messageRedux={messageRedux} />
+
         <div className="pub-product__container container">
           <BreadCrumbs
             href1="/"

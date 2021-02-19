@@ -46,15 +46,15 @@ export const getProductsListAction = (data) => async (dispatch) => {
 
 export const getOneProduct = (data) => async (dispatch) => {
   console.log('getOneProduct data', data);
-  dispatch({
-    type: LOADING,
-    payload: true,
-  });
+  // dispatch({
+  //   type: LOADING,
+  //   payload: true,
+  // });
   try {
-    dispatch({
-      type: LOADING,
-      payload: false,
-    });
+    // dispatch({
+    //   type: LOADING,
+    //   payload: false,
+    // });
     const res = await axios.get(
       `/api/v1/product/${data.productId}/${data.slug}`
     );
@@ -64,10 +64,10 @@ export const getOneProduct = (data) => async (dispatch) => {
       payload: res.data.data,
     });
   } catch (err) {
-    dispatch({
-      type: LOADING,
-      payload: false,
-    });
+    // dispatch({
+    //   type: LOADING,
+    //   payload: false,
+    // });
 
     console.log('error in getOneProduct', err.response.data);
   }
@@ -306,7 +306,7 @@ export const getLast3ProductAction = () => async (dispatch) => {
       payload: false,
     });
 
-    console.log('res.data getLast3ProductAction ', res.data);
+    // console.log('res.data getLast3ProductAction ', res.data);
 
     dispatch({
       type: GET_PRODUCT_ALL,
@@ -323,7 +323,8 @@ export const getLast3ProductAction = () => async (dispatch) => {
 
 // CREATE CART FOR GUEST BY ADDING NEW PRODUCT data={guestId,productId} 🛒
 export const getProductInCartAction = (data) => async (dispatch) => {
-  console.log('getProductInCartAction data', data.userId);
+  console.log('getProductInCartAction data userId', data.userId);
+  console.log('getProductInCartAction data guestId', data.guestId);
   dispatch({
     type: LOADING_PRODUCT_CART,
     payload: true,
@@ -337,7 +338,7 @@ export const getProductInCartAction = (data) => async (dispatch) => {
       console.log('guest');
       res = await axios.post(`/api/v1/product/cart/${data.guestId}`, data);
       // FETCH PRODUCTS FROM NEWLY CREATED CART TO SHOW IN HEADER
-      // list = await axios.get(`/api/v1/product/guest/${data.guestId}`);
+      list = await axios.get(`/api/v1/product/cart/${data.guestId}`);
       // CREATE CART AS AN AUTH USER
     } else if (data.userId) {
       console.log('user');
@@ -376,24 +377,17 @@ export const getProductInCartAction = (data) => async (dispatch) => {
 };
 
 // GET PRODUCT FROM SHOPPING CART
-export const getProductsFromCartAction = (data) => async (dispatch) => {
-  console.log('getProductsFromCartAction data', data);
+export const getProductsCartGuestAction = (data) => async (dispatch) => {
+  // console.log('getProductsCartGuestAction data', data);
   dispatch({
     type: LOADING,
     payload: true,
   });
   try {
-    let res;
-    if (data.userId) {
-      //GET USER SHOOPING CART
-      console.log('user get productCart');
-      res = await axios.get(`/api/v1/product/cart/user/${data.userId}`);
-    } else if (data.guestId) {
-      //GET GUEST SHOPPING CART
-      console.log('guest get productCart');
-      res = await axios.get(`/api/v1/product/cart/${data.guestId}`);
-    }
-    console.log('res.data getProductsFromCartAction', res.data);
+    //GET GUEST SHOPPING CART
+    // console.log('guest get productCart');
+    const res = await axios.get(`/api/v1/product/cart/${data.guestId}`);
+    // console.log('res.data getProductsCartGuestAction', res.data);
 
     dispatch({
       type: GET_PRODUCTS_FROM_CART,
@@ -404,7 +398,32 @@ export const getProductsFromCartAction = (data) => async (dispatch) => {
       payload: false,
     });
   } catch (error) {
-    console.log('error getProductsFromCartAction ', error.response.data);
+    console.log('error getProductsCartGuestAction ', error.response.data);
+  }
+};
+// GET PRODUCT FROM SHOPPING CART FOR USER
+export const getProductsCartUserAction = (data) => async (dispatch) => {
+  // console.log('getProductsCartUserAction data', data);
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
+  try {
+    //GET GUEST SHOPPING CART
+    // console.log('guest get productCart');
+    const res = await axios.get(`/api/v1/product/cart/user/${data.userId}`);
+    // console.log('res.data getProductsCartUserAction', res.data);
+
+    dispatch({
+      type: GET_PRODUCTS_FROM_CART,
+      payload: res.data.data,
+    });
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
+  } catch (error) {
+    console.log('error getProductsCartGuestAction ', error.response.data);
   }
 };
 
@@ -415,7 +434,7 @@ export const updateProductCartAction = (data) => async (dispatch) => {
 
   try {
     const update = await axios.put(
-      `/api/v1/product/guest/${data.guestId}`,
+      `/api/v1/product/cart/${data.guestId}`,
       data
     );
     //RELOAD SHOPPING CART
@@ -429,7 +448,7 @@ export const updateProductCartAction = (data) => async (dispatch) => {
 
     dispatch({
       type: GET_API_MESSAGE,
-      payload: update.data.status,
+      payload: update.data.message,
     });
     //  CLEAR MESSAGE TO STOP LOADING IN ShoppingCartItem.js
     setTimeout(() => {

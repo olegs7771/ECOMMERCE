@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProductsFromCartAction } from '../../store/actions/productAction';
-import { Spinner, SpinnerPuffLoader } from '../../utils/LoadingComponent';
+import {
+  getProductsCartGuestAction,
+  getProductsCartUserAction,
+} from '../../store/actions/productAction';
+import { SpinnerPuffLoader } from '../../utils/LoadingComponent';
 import sprite_material from '../../img/sprite_material.svg';
 import ShoppingCartItem from './ShoppingCartItem';
 import { drawerToggle } from '../../store/actions/drawerAction';
@@ -19,8 +22,17 @@ export default function ShoppingCart(props) {
 
   // GET SHOPPINGCART ITEMS TO REDUX
   useEffect(() => {
-    dispatch(getProductsFromCartAction({ guestId: cookieRedux.guestId }));
-  }, [dispatch, cookieRedux.guestId]);
+    if (authRedux.isAuthenticated) {
+      dispatch(getProductsCartUserAction({ userId: authRedux.user.id }));
+    } else {
+      dispatch(getProductsCartGuestAction({ guestId: cookieRedux.guestId }));
+    }
+  }, [
+    dispatch,
+    cookieRedux.guestId,
+    authRedux.isAuthenticated,
+    authRedux.user.id,
+  ]);
 
   //  FUNCTION TO CALCULATE TOTAL
   let totalPrice;

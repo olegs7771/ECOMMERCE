@@ -230,8 +230,8 @@ const login = asyncCatch(async (req, res, next) => {
 //PROTECTION OF ROUTES
 
 const protect = asyncCatch(async (req, res, next) => {
-  console.log('req.headers protect', req.headers);
-  console.log('protect');
+  // console.log('req.headers protect', req.headers);
+
   // 1) Check if token exists
   let token;
   // TOKEN IN HEADER AUTHORIZATION !!! USING ONLY TOKEN IN COOKIES FOR MORE PROTECTION
@@ -281,7 +281,7 @@ const protect = asyncCatch(async (req, res, next) => {
   // STORE FOUND USER IN req OBJECT PIPELINE
   req.user = user;
   res.locals.user = user;
-
+  console.log('protected');
   next();
 });
 

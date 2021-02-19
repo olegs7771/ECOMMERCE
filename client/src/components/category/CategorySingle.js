@@ -9,6 +9,7 @@ import { getSubListAction } from '../../store/actions/subAction';
 import { getProductsListAction } from '../../store/actions/productAction';
 import { Spinner } from '../../utils/LoadingComponent';
 import ProductItem from '../product/ProductItem';
+import SlideInMessage from '../../utils/SlideInMessage';
 
 export default function CategorySingle(props) {
   // REDUX
@@ -50,27 +51,7 @@ export default function CategorySingle(props) {
         onClick={() => dispatch(drawerToggle(false))}
       ></div>
       {/* SHOW MESSAGE ON BUYING PRODUCT  */}
-
-      <div
-        className={
-          messageRedux
-            ? 'slidein__message slidein__message--visible'
-            : 'slidein__message'
-        }
-      >
-        <div className="slidein__message__text">
-          <p className="slidein__message__text--text">
-            <span className="slidein__message__text--title">
-              {messageRedux ? messageRedux.split(' : ')[0] : null}
-            </span>
-            {messageRedux ? messageRedux.split(' :')[1] : null}
-          </p>
-        </div>
-        <div className="slidein__message__view-btn">
-          <button className="btn slidein__message__view-btn--btn">View</button>
-        </div>
-        <div className="slidein__message__close-icon">X</div>
-      </div>
+      <SlideInMessage messageRedux={messageRedux} />
 
       <div className="pub-category__container container">
         <BreadCrumbs

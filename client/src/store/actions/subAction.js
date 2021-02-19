@@ -3,7 +3,7 @@ import {
   LOADING_ITEM_CATEGORY,
   LOADING,
   GET_API_MESSAGE,
-  // GET_API_ERRORS,
+  GET_API_ERRORS,
   GET_API_ERROR_MESSAGE,
   // CLEAR_API_ERROR,
   GET_SUB_ALL,
@@ -79,15 +79,15 @@ export const createSubAction = (data) => async (dispatch) => {
       payload: list.data.data,
     });
   } catch (err) {
-    console.log('error in creating category', err.response.data);
+    console.log('error in creating sub', err.response.data);
     dispatch({
       type: LOADING,
       payload: false,
     });
 
     dispatch({
-      type: GET_API_ERROR_MESSAGE,
-      payload: err.response.data.message,
+      type: GET_API_ERRORS,
+      payload: err.response.data.error,
     });
   }
 };

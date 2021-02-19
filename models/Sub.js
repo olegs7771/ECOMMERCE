@@ -30,22 +30,32 @@ const subSchema = new mongoose.Schema(
 
 // CHECK FOR SUB-CATEGORY CATEGORY NAME
 subSchema.post('save', function (error, doc, next) {
-  console.log('err.message', error.message);
+  // console.log('err.message', error.message);
+  // if (error.name === 'MongoError' && error.code === 11000) {
+  //   next(new Error(`[${doc.name}] sub-category name already exists!`));
+  // } else if (
+  //   error.name === 'ValidationError' &&
+  //   error.message.includes('short')
+  // ) {
+  //   next(new Error('Name too short. Please use meaningfull name'));
+  // } else if (
+  //   error.name === 'ValidationError' &&
+  //   error.message.includes('long')
+  // ) {
+  //   next(new Error('Name too long. Please use meaningfull name'));
+  // } else {
+  //   next(error);
+  // }
+  let errors = {};
   if (error.name === 'MongoError' && error.code === 11000) {
-    next(new Error(`[${doc.name}] sub-category name already exists!`));
-  } else if (
-    error.name === 'ValidationError' &&
-    error.message.includes('short')
-  ) {
-    next(new Error('Name too short. Please use meaningfull name'));
-  } else if (
-    error.name === 'ValidationError' &&
-    error.message.includes('long')
-  ) {
-    next(new Error('Name too long. Please use meaningfull name'));
-  } else {
-    next(error);
+    errors.name = `[${doc.name}] category name already exists!`;
+    next(errors);
   }
+  // errors.image = error.errors.image ? error.errors.image.message : '';
+  errors.name = error.errors.name ? error.errors.name.message : '';
+
+  console.log('errors', errors);
+  next(errors);
 });
 
 subSchema.post('find', function (err, doc, next) {

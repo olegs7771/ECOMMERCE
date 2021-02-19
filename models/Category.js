@@ -36,22 +36,6 @@ categorySchema.pre('save', function (next) {
 
 // CHECK FOR DUBLICATE CATEGORY NAME AND VALID LENGTH
 categorySchema.post('save', function (error, doc, next) {
-  console.log('error.name', error.name);
-  console.log('error.message', error.message);
-  console.log('test required', error.message.includes('required'));
-
-  // let errors = {};
-  // if (error.name === 'MongoError' && error.code === 11000) {
-  //   errors.name = `[${doc.name}] category name already exists!`;
-  //   next(errors);
-  // } else if (error.name === 'ValidationError') {
-  //   errors.name = error.message.includes('required')
-  //     ? 'Name empty'
-  //     : 'Name too short. Please use meaningfull name';
-  //   next(errors);
-  // } else {
-  //   next(error);
-  // }
   let errors = {};
   if (error.name === 'MongoError' && error.code === 11000) {
     errors.name = `[${doc.name}] category name already exists!`;

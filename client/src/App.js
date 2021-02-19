@@ -2,7 +2,7 @@ import React from 'react';
 import { withCookies } from 'react-cookie';
 import MainApp from './components/MainApp';
 import axios from 'axios';
-import { reload, reloadCart } from './utils/reloadUserAuth';
+import { reload } from './utils/reloadUserAuth';
 import './App.scss';
 import { Provider } from 'react-redux';
 

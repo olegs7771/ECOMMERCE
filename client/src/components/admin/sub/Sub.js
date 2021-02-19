@@ -20,7 +20,6 @@ import SubItem from './SubItem';
 import sprite from '../../../img/sprite.svg';
 import CategoryForSub from '../category/CategoryForSub';
 
-import ErrorMessageWithBtn from '../../../utils/ErrorMessageWithBtn';
 export default function Sub(props) {
   const dispatch = useDispatch();
 
@@ -30,15 +29,11 @@ export default function Sub(props) {
   const subs = useSelector((state) => state.sub.subs);
   const products = useSelector((state) => state.product.products);
   const drawerRedux = useSelector((state) => state.drawer.drawer);
-
-  const errorRedux = useSelector((state) => state.error.errorMessage);
+  const errorsRedux = useSelector((state) => state.error.errors);
   // const errorsRedux = useSelector((state) => state.error.errors);
   //  STATE
   const [subList, setSublist] = useState([]);
   const [keyword, setKeyword] = useState('');
-
-  const [error, setError] = useState({});
-  const [errors, setErrors] = useState({});
   const [name, setName] = useState('');
 
   // FORM ADD CATEGORY
@@ -53,6 +48,7 @@ export default function Sub(props) {
   };
   const _setName = (e) => {
     setName(e.target.value);
+    dispatch(clearErrorReduxState());
   };
 
   //LOAD COMPONENT AND FETCH SUB CATEGORIES
@@ -68,18 +64,6 @@ export default function Sub(props) {
   useEffect(() => {
     setSublist(subs.filter(searched(keyword)));
   }, [subs, keyword]);
-
-  //SET STATE ERROR message IN COMPONENT
-  useEffect(() => {
-    setError(errorRedux);
-  }, [errorRedux]);
-
-  //CLEAR ERROR IN REDUX STATE
-  const _clearReduxErrorState = (e) => {
-    e.preventDefault();
-    setError({});
-    dispatch(clearErrorReduxState());
-  };
 
   const _deleteSub = (e) => {
     const data = {
@@ -138,7 +122,7 @@ export default function Sub(props) {
                   name={name}
                   _setName={_setName}
                   title="add sub-category (name)"
-                  errors={errors}
+                  errors={errorsRedux}
                 />
               </div>
 
@@ -149,38 +133,23 @@ export default function Sub(props) {
               <div className="category__list-box">
                 {loading ? (
                   <Spinner loading={props.loading} />
-                ) : error ? (
-                  <ErrorMessageWithBtn
-                    errorState={error.sub}
-                    _clearReduxErrorState={_clearReduxErrorState}
-                  />
                 ) : (
                   <ul className="category__list">
                     {subList.length === 0 ? (
                       <div className="heading-3">No sub-categories found</div>
                     ) : (
                       <div>
-                        {false ? (
-                          // <ErrorMessageWithBtn
-                          //   errorState={errorState}
-                          //   _clearReduxErrorState={_clearReduxErrorState}
-                          // />
-                          <div>error</div>
-                        ) : (
-                          <div>
-                            {subList.map((sub, i) => (
-                              <SubItem
-                                category={props.match.params.slug}
-                                sub={sub}
-                                _deleteSub={_deleteSub}
-                                sprite={sprite}
-                                key={i}
-                                categoryId={props.match.params.categoryId}
-                                products={products} //all existing products to show quantity
-                              />
-                            ))}
-                          </div>
-                        )}
+                        {subList.map((sub, i) => (
+                          <SubItem
+                            category={props.match.params.slug}
+                            sub={sub}
+                            _deleteSub={_deleteSub}
+                            sprite={sprite}
+                            key={i}
+                            categoryId={props.match.params.categoryId}
+                            products={products} //all existing products to show quantity
+                          />
+                        ))}
                       </div>
                     )}
                   </ul>

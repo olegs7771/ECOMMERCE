@@ -66,6 +66,7 @@ export default function ProductItem({
   };
 
   // STOP LOADING IN STATE ON MESSAGE
+
   useEffect(() => {
     setLoading(false);
     if (loading) {
@@ -74,7 +75,7 @@ export default function ProductItem({
     setTimeout(() => {
       setDone(false);
     }, 2000);
-  }, [messageRedux]);
+  }, [messageRedux, loading]);
 
   return (
     <div

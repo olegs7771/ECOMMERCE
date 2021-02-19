@@ -1,25 +1,26 @@
 import configureStore from '../store/configureStore/configStore';
 import { setCurrentUser, clearOutUser } from '../store/actions/authAction';
 import { setCookieAction } from '../store/actions/cookieAction';
-import { getProductsFromCartAction } from '../store/actions/productAction';
+import {
+  getProductsCartGuestAction,
+  getProductsCartUserAction,
+} from '../store/actions/productAction';
 import jwt_decode from 'jwt-decode';
 const store = configureStore();
 
 //gets either user or guest
 export const reloadCart = (user, type) => {
   if (type === 'guest') {
-    console.log('user in reload ', user);
     const data = { guestId: user };
-    store.dispatch(getProductsFromCartAction(data));
+    store.dispatch(getProductsCartGuestAction(data));
   } else if (type === 'user') {
-    console.log('user in reload ', user);
     const data = { userId: user };
-    store.dispatch(getProductsFromCartAction(data));
+    store.dispatch(getProductsCartUserAction(data));
   }
 };
 
 export const reload = (cookies) => {
-  console.log('reload');
+  // console.log('reload');
 
   // SET COOKIES IN STATE
   store.dispatch(setCookieAction(cookies));

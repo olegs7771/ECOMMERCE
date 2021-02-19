@@ -10,6 +10,7 @@
   &__content {
     max-width: 77rem;
     width: 100%;
+    min-height: 100vh;
   }
   &__header {
     display: flex;

@@ -33,15 +33,17 @@ const MainApp = (props) => {
   const authRedux = useSelector((state) => state.auth);
   // RELOAD SHOPPING CART FOR AUTH USER.IF NOT LOGGED GET CART FOR GUEST
   if (authRedux.isAuthenticated) {
-    console.log('products in cart for user');
-    reloadCart(authRedux.user.id, 'user');
+    // console.log('products in cart for user');
+    setTimeout(() => {
+      reloadCart(authRedux.user.id, 'user'); //delay to let Login.js render its state
+    }, 0);
   } else {
     if (
       Object.keys(props.cookies.allCookies).some((el) =>
         el.startsWith('productId')
       )
     ) {
-      console.log('products in cart for guest');
+      // console.log('products in cart for guest');
       reloadCart(props.cookies.allCookies.guestId, 'guest');
     }
   }

@@ -31,14 +31,14 @@ const cartSchema = new mongoose.Schema(
 
 // ADD PRODUCT TO EXISTED CART
 cartSchema.methods.addProduct = function (productId) {
-  console.log('productId', productId);
-  console.log('this addProduct', this);
+  // console.log('productId', productId);
+  // console.log('this addProduct', this);
   const arrProduct = this.products.filter(
     (el) => el.product.toString() !== productId
   );
-  console.log('arrProduct', arrProduct);
+  // console.log('arrProduct', arrProduct);
   if (arrProduct.length === 0) {
-    console.log('product not exists');
+    // console.log('product not exists');
     return this.products.push({
       quantity: 1,
       _id: productId,
@@ -47,7 +47,7 @@ cartSchema.methods.addProduct = function (productId) {
   } else {
     // PRODUCT EXISTS
     arrProduct.forEach((product) => {
-      console.log('product', product);
+      // console.log('product', product);
       return (product.quantity = product.quantity + 1);
     });
   }
@@ -65,9 +65,9 @@ cartSchema.methods.removeProduct = function (productId) {
 
 //UPDATE PRODUCT
 cartSchema.methods.updateProduct = function (productId, amountUpdate) {
-  console.log('this update', this);
-  console.log('productId', productId);
-  console.log('amountUpdate', amountUpdate);
+  // console.log('this update', this);
+  // console.log('productId', productId);
+  // console.log('amountUpdate', amountUpdate);
   const productArr = this.products.filter(
     (el) => el._id.toString() === productId
   );
