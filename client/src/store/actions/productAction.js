@@ -479,13 +479,22 @@ export const removeProductAction = (data) => async (dispatch) => {
   console.log('removeProductAction data', data);
 
   try {
-    const res = await axios.patch(`/api/v1/product/cart/${data.guestId}`, data);
+    let res;
+    let list;
+    if (data.userId) {
+      //User
+      res = await axios.patch(`/api/v1/product/cart/user/${data.userId}`, data);
+      list = await axios.get(`/api/v1/product/cart/user/${data.userId}`);
+    } else {
+      //Guest
+      res = await axios.patch(`/api/v1/product/cart/${data.guestId}`, data);
+      list = await axios.get(`/api/v1/product/cart/${data.guestId}`);
+    }
     dispatch({
       type: GET_API_MESSAGE,
       payload: res.data.message,
     });
     // FETCH PRODUCTS FROM NEWLY CREATED CART TO SHOW IN HEADER
-    const list = await axios.get(`/api/v1/product/cart/${data.guestId}`);
     dispatch({
       type: GET_PRODUCTS_FROM_CART,
       payload: list.data.data,
