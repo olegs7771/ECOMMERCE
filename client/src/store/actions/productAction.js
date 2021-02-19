@@ -344,7 +344,7 @@ export const getProductInCartAction = (data) => async (dispatch) => {
       console.log('user');
       res = await axios.post(`/api/v1/product/cart/user/${data.userId}`, data);
       // FETCH PRODUCTS FROM NEWLY CREATED CART TO SHOW IN HEADER
-      // list = await axios.get(`/api/v1/product/user/${data.userId}`);
+      list = await axios.get(`/api/v1/product/cart/user/${data.userId}`);
     }
     dispatch({
       type: GET_PRODUCTS_FROM_CART,

@@ -182,11 +182,26 @@ const createCart = asyncCatch(async (req, res, next) => {
   console.log('req.body createCart', req.body);
   console.log('createCart params', req.params);
   console.log('req.user', req.user);
-  // // //1) Check if guest already has Cart
-  const cart = await Cart.findOne({ guestId: req.user });
-  // //2) FInd Product
-  const product = await Product.findById(req.body.productId);
-  // console.log('product', product);
+
+  let cart;
+  let product;
+
+  if (typeof req.user === 'object') {
+    //User
+    // // //1) Check if guest already has Cart
+    cart = await Cart.findOne({ userId: req.user._id });
+    // //2) FInd Product
+    product = await Product.findById(req.body.productId);
+  } else {
+    //Guest
+    // // //1) Check if guest already has Cart
+    cart = await Cart.findOne({ guestId: req.user });
+    // //2) FInd Product
+    product = await Product.findById(req.body.productId);
+  }
+
+  console.log('product', product);
+  console.log('cart', cart);
   // 3) Check if product still available
 
   if (product && product.instock !== 0) {
@@ -211,18 +226,32 @@ const createCart = asyncCatch(async (req, res, next) => {
       res.status(200).json({ status: 'success', message, data: cart });
     } else {
       // CREATE NEW CART
+      let cartObject;
+      if (typeof req.user === 'object') {
+        //For user
+        cartObject = await Cart.create({
+          userId: req.user._id,
+          products: [
+            {
+              _id: req.body.productId,
+              product: req.body.productId,
+              quantity: 1,
+            },
+          ],
+        });
+      } else {
+        cartObject = await Cart.create({
+          guestId: req.user,
+          products: [
+            {
+              _id: req.body.productId,
+              product: req.body.productId,
+              quantity: 1,
+            },
+          ],
+        });
+      }
 
-      console.log('req.user', req.user);
-      const cart = await Cart.create({
-        guestId: req.user,
-        products: [
-          {
-            _id: req.body.productId,
-            product: req.body.productId,
-            quantity: 1,
-          },
-        ],
-      });
       //SAVE PRODUCT IN cookie
       res.cookie(`productId_${product._id}`, Math.round(Date.now() / 1000), {
         expires: new Date(
@@ -235,7 +264,7 @@ const createCart = asyncCatch(async (req, res, next) => {
       });
 
       const message = `${product.title} was added to your shopping cart`;
-      res.status(200).json({ status: 'success', message, data: cart });
+      res.status(200).json({ status: 'success', message, data: cartObject });
     }
   } else {
     next(new AppErrorHandler('Product not available', 401));

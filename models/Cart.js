@@ -4,11 +4,9 @@ const cartSchema = new mongoose.Schema(
   {
     guestId: {
       type: String,
-      required: [true, 'Provide guest userId'],
     },
     userId: {
-      type: ObjectId,
-      ref: 'User',
+      type: String,
     },
     products: [
       {
