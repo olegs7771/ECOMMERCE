@@ -345,20 +345,28 @@ const getProductsCart = asyncCatch(async (req, res, next) => {
 const removeProduct = asyncCatch(async (req, res, next) => {
   console.log('req.user remove', req.user);
   //1)Find product
-  // const product = await Product.findById(req.body.productId);
+  const product = await Product.findById(req.body.productId);
   // //2) Find cart
-  // const cart = await Cart.findOne({ guestId: req.user });
-  // if (!cart)
-  //   return next(new AppErrorHandler(`Shoppingcart not found for ${req.user}`));
-  // console.log('cart to remove', cart);
-  // cart.removeProduct(req.body.productId);
-  // console.log(cart.removeProduct(req.body.productId));
+  let cart;
+  if (typeof req.user === 'object') {
+    //User
+    cart = await Cart.findOne({ userId: req.user.id });
+  } else {
+    //Guest
+    cart = await Cart.findOne({ guestId: req.user });
+  }
 
-  // await cart.save();
-  // res.status(200).json({
-  //   status: 'success',
-  //   message: `${product.title}:  was removed from shopping cart`,
-  // });
+  if (!cart)
+    return next(new AppErrorHandler(`Shoppingcart not found for ${req.user}`));
+  console.log('cart to remove', cart);
+  cart.removeProduct(req.body.productId);
+  console.log(cart.removeProduct(req.body.productId));
+
+  await cart.save();
+  res.status(200).json({
+    status: 'success',
+    message: `${product.title}:  was removed from shopping cart`,
+  });
 });
 
 module.exports = {

@@ -49,10 +49,19 @@ export default function ShoppingCartItem({ item }) {
 
   // REMOVE PRODUCT FROM CART
   const _removeProdct = (e) => {
-    const data = {
-      productId: item._id,
-      guestId,
-    };
+    let data;
+    if (authRedux.isAuthenticated) {
+      data = {
+        productId: item._id,
+        userId: authRedux.user.id,
+      };
+    } else {
+      data = {
+        productId: item._id,
+        guestId,
+      };
+    }
+
     dispatch(removeProductAction(data));
   };
 
