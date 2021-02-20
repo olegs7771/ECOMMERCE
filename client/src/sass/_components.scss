@@ -268,6 +268,59 @@ input[type='radio' i] {
     pointer-events: all;
   }
 }
+
+// MODAL BACKDROP
+.modal {
+  &__wrapper {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 400;
+
+    &__backdrop {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      opacity: 1;
+      pointer-events: none;
+      // visibility: hidden;
+      background: rgba(0, 0, 0, 0.15);
+    }
+  }
+  &__sheets {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 100;
+    overflow: hidden;
+    // max-width: 60rem;
+    display: flex;
+    flex-direction: column;
+    &__header {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      // padding: 0 2rem;
+      align-items: center;
+      height: 7rem;
+      min-height: 7rem;
+      position: sticky;
+      background-color: rgb(187, 161, 161);
+      z-index: 100;
+    }
+  }
+}
+
 .icon {
   height: 2rem;
   width: 2rem;

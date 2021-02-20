@@ -52,6 +52,8 @@ export default function ShoppingCart(props) {
       }
     }
   }
+
+  // COMPONENT
   if (Object.keys(cartRedux).length !== 0) {
     return (
       <div className="page shoppingcart">
@@ -92,6 +94,27 @@ export default function ShoppingCart(props) {
               ) : (
                 // CART NOT EMPTY
                 <div>
+                  {/* MODAL   */}
+                  <div className="modal__wrapper">
+                    <div className="modal__wrapper__backdrop"></div>
+                    <div className="modal__sheets">
+                      <div className="modal__sheets__header">
+                        <div className="modal__sheets__header__icon">X</div>
+                        <div className="modal__sheets__header__title__wrapper">
+                          <span className="modal__sheets__header__title__wrapper--text">
+                            Shopping cart
+                          </span>
+                        </div>
+                        <div className="modal__sheets__header__icon">
+                          arrow back
+                        </div>
+                      </div>
+                      <div className="modal__sheets__content__wrapper">
+                        Modal Content
+                      </div>
+                    </div>
+                  </div>
+                  {/* MODAL END  */}
                   <div className="shoppingcart__header ">
                     <div className="heading-2 shoppingcart__header--text">
                       Shopping cart

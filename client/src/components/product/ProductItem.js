@@ -68,13 +68,14 @@ export default function ProductItem({
   // STOP LOADING IN STATE ON MESSAGE
 
   useEffect(() => {
-    if (loading) {
-      setDone(true);
-    }
-    if (done) {
+    if (messageRedux) {
       setLoading(false);
+      setDone(true);
+      setTimeout(() => {
+        setDone(false);
+      }, 1000);
     }
-  }, [messageRedux, loading, done]);
+  }, [messageRedux]);
 
   return (
     <div
