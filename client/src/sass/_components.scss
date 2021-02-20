@@ -303,7 +303,8 @@ input[type='radio' i] {
     background-color: #fff;
     z-index: 100;
     overflow: hidden;
-    // max-width: 60rem;
+    max-width: 48rem;
+    width: calc(100% - 3rem);
     display: flex;
     flex-direction: column;
     &__header {
