@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   getProductsCartGuestAction,
@@ -6,6 +6,7 @@ import {
 } from '../../store/actions/productAction';
 import { SpinnerPuffLoader } from '../../utils/LoadingComponent';
 import sprite_material from '../../img/sprite_material.svg';
+import sprite from '../../img/sprite.svg';
 import ShoppingCartItem from './ShoppingCartItem';
 import { drawerToggle } from '../../store/actions/drawerAction';
 
@@ -19,6 +20,7 @@ export default function ShoppingCart(props) {
   const messageRedux = useSelector((state) => state.message.message);
 
   // STATE
+  const [modal, setModal] = useState(false);
 
   // GET SHOPPINGCART ITEMS TO REDUX
   useEffect(() => {
@@ -33,6 +35,16 @@ export default function ShoppingCart(props) {
     authRedux.isAuthenticated,
     authRedux.user.id,
   ]);
+
+  // TOGGLE MODAL
+  const _toggleModal = (e) => {
+    e.stopPropagation();
+    setModal(!modal);
+  };
+  const _closeModal = (e) => {
+    e.stopPropagation();
+    setModal(false);
+  };
 
   //  FUNCTION TO CALCULATE TOTAL
   let totalPrice;
@@ -52,11 +64,16 @@ export default function ShoppingCart(props) {
       }
     }
   }
+  // EMPTY CART
+  const _emptyCart = (e) => {
+    e.stopPropagation();
+    console.log('empty cart');
+  };
 
   // COMPONENT
   if (Object.keys(cartRedux).length !== 0) {
     return (
-      <div className="page shoppingcart">
+      <div className="page shoppingcart" onClick={_closeModal}>
         <div
           className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
           onClick={() => dispatch(drawerToggle(false))}
@@ -95,22 +112,60 @@ export default function ShoppingCart(props) {
                 // CART NOT EMPTY
                 <div>
                   {/* MODAL   */}
-                  <div className="modal__wrapper">
-                    <div className="modal__wrapper__backdrop"></div>
-                    <div className="modal__sheets">
+                  <div
+                    className={
+                      modal
+                        ? 'modal__wrapper'
+                        : 'modal__wrapper modal__wrapper--close'
+                    }
+                  >
+                    <div
+                      className={
+                        modal
+                          ? 'modal__wrapper__backdrop'
+                          : 'modal__wrapper__backdrop modal__wrapper__backdrop--close'
+                      }
+                    ></div>
+                    <div
+                      className={
+                        modal
+                          ? 'modal__sheets modal__sheets--open'
+                          : 'modal__sheets'
+                      }
+                    >
                       <div className="modal__sheets__header">
-                        <div className="modal__sheets__header__icon">X</div>
+                        <div className="nav__link-icon-box">
+                          <svg className="icon">
+                            <use href={sprite + '#icon-cross'} />
+                          </svg>
+                        </div>
                         <div className="modal__sheets__header__title__wrapper">
                           <span className="modal__sheets__header__title__wrapper--text">
                             Shopping cart
                           </span>
                         </div>
-                        <div className="modal__sheets__header__icon">
-                          arrow back
+                        <div className="nav__link-icon-box">
+                          <svg className="icon ">
+                            <use href={sprite + '#icon-arrow-left2'} />
+                          </svg>
                         </div>
                       </div>
-                      <div className="modal__sheets__content__wrapper">
-                        Modal Content
+                      <div className="modal__sheets__content">
+                        <div className="modal__sheets__content__btn">
+                          <button
+                            className="btn modal__sheets__content__btn--btn"
+                            onClick={_emptyCart}
+                          >
+                            <svg className="icon modal__sheets__content__btn__icon">
+                              <use href={sprite + '#icon-bin'} />
+                            </svg>
+                            <span className="modal__sheets__content__btn__text">
+                              <span className="modal__sheets__content__btn__text--text">
+                                Empty Cart
+                              </span>
+                            </span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -120,7 +175,10 @@ export default function ShoppingCart(props) {
                       Shopping cart
                     </div>
                     <div className="shoppingcart__header__btn">
-                      <div className="nav__link-icon-box">
+                      <div
+                        className="nav__link-icon-box"
+                        onClick={_toggleModal}
+                      >
                         <svg className="icon">
                           <use
                             href={sprite_material + '#icon-keyboard_control'}

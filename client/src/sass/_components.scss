@@ -282,6 +282,12 @@ input[type='radio' i] {
     justify-content: center;
     pointer-events: none;
     z-index: 400;
+    visibility: visible;
+    pointer-events: all;
+
+    &--close {
+      visibility: hidden;
+    }
 
     &__backdrop {
       position: absolute;
@@ -291,8 +297,14 @@ input[type='radio' i] {
       bottom: 0;
       opacity: 1;
       pointer-events: none;
-      // visibility: hidden;
+      visibility: visible;
       background: rgba(0, 0, 0, 0.15);
+      transition: 0.2s;
+      &--close {
+        transition: 0.2s;
+        visibility: hidden;
+        opacity: 0;
+      }
     }
   }
   &__sheets {
@@ -304,20 +316,70 @@ input[type='radio' i] {
     z-index: 100;
     overflow: hidden;
     max-width: 48rem;
-    width: calc(100% - 3rem);
     display: flex;
     flex-direction: column;
+    transform: translateX(50rem);
+    width: calc(100% - 3rem);
+    transition: 0.2s;
+    // pointer-events: none;
+    overflow: hidden;
+
+    &--open {
+      width: calc(100% - 3rem);
+      transform: translateX(0);
+      transition: 0.2s;
+    }
+
     &__header {
       display: flex;
       flex-direction: row-reverse;
       justify-content: space-between;
-      // padding: 0 2rem;
+      padding: 0 2rem;
       align-items: center;
       height: 7rem;
       min-height: 7rem;
       position: sticky;
-      background-color: rgb(187, 161, 161);
+      // background-color: rgb(187, 161, 161);
       z-index: 100;
+
+      &__title {
+        &__wrapper {
+          &--text {
+            font-size: 1.6rem;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+    &__content {
+      // background-color: cadetblue;
+      height: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      &__btn {
+        width: 80%;
+        margin-top: 4rem;
+        &--btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2rem 0 2.5rem 0;
+          width: 100%;
+          background-color: $color-black;
+          border-radius: 30rem;
+        }
+        &__icon {
+          fill: $color-grey;
+        }
+        &__text {
+          margin-left: 1rem;
+          padding: 0.5rem 0 0 0;
+          &--text {
+            font-size: 1.8rem;
+          }
+        }
+      }
     }
   }
 }
