@@ -297,10 +297,25 @@ const updateProduct = asyncCatch(async (req, res, next) => {
 
 // // DELETE CART IF userId EXPIRED IN cookie
 const deleteCart = asyncCatch(async (req, res, next) => {
-  console.log('delete cart');
-  // 1)Find Cart by userId
-  const cart = await Cart.findOneAndDelete({ guestId: req.user });
-  console.log('cart', cart);
+  if (typeof req.user === 'object') {
+    //Delete for User
+    console.log('delete cart');
+    // 1)Find Cart by userId
+    const cart = await Cart.findOneAndDelete({ userId: req.user.id });
+    if (!cart) return next(new AppErrorHandler('No cart found for user', 400));
+    console.log('cart user', cart);
+  } else {
+    //Delete for Guest
+    console.log('delete cart');
+    // 1)Find Cart by userId
+    const cart = await Cart.findOneAndDelete({ guestId: req.user });
+    if (!cart) return next(new AppErrorHandler('No cart found for guest', 400));
+
+    console.log('cart guest', cart);
+  }
+  res
+    .status(200)
+    .json({ status: 'success', message: 'Shopping cart was deleted' });
 });
 
 // // FETCH PRODUCTS FROM SHOPPINGCART for guest or user

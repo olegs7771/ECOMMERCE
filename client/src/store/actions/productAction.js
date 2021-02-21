@@ -511,3 +511,42 @@ export const removeProductAction = (data) => async (dispatch) => {
     console.log('error', error.response.data);
   }
 };
+
+//DELETE SHOPPING CART EITHER BY USER OR GUEST
+
+export const deleteCartAction = (data) => async (dispatch) => {
+  console.log('deleteCartAction data', data);
+  let res;
+  let list;
+  try {
+    if (data.userId) {
+      //User
+      res = await axios.delete(`/api/v1/product/cart/user/${data.userId}`);
+      list = await axios.get(`/api/v1/product/cart/user/${data.userId}`);
+    } else {
+      //Guest
+      res = await axios.delete(`/api/v1/product/cart/${data.guestId}`);
+      list = await axios.get(`/api/v1/product/cart/${data.guestId}`);
+    }
+    console.log('res.data deleteCartAction ', res.data);
+    dispatch({
+      type: GET_API_MESSAGE,
+      payload: res.data.message,
+    });
+    // FETCH PRODUCTS FROM NEWLY CREATED CART TO SHOW IN HEADER
+    dispatch({
+      type: GET_PRODUCTS_FROM_CART,
+      payload: list.data.data,
+    });
+
+    console.log('res.data removeProductAction', res.data);
+    setTimeout(() => {
+      dispatch({
+        type: GET_API_MESSAGE,
+        payload: null,
+      });
+    }, 6000);
+  } catch (error) {
+    console.log('error to delete ', error.response.data);
+  }
+};
