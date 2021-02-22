@@ -176,6 +176,9 @@
         display: flex;
       }
     }
+    &--no-b-radius {
+      border-radius: 3px;
+    }
   }
 }
 

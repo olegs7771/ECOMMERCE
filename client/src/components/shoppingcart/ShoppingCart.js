@@ -10,9 +10,9 @@ import sprite_material from '../../img/sprite_material.svg';
 import sprite from '../../img/sprite.svg';
 import ShoppingCartItem from './ShoppingCartItem';
 import { drawerToggle } from '../../store/actions/drawerAction';
-import { auth } from 'google-auth-library';
+import { withRouter } from 'react-router-dom';
 
-export default function ShoppingCart(props) {
+const ShoppingCart = (props) => {
   const dispatch = useDispatch();
   // REDUX
   const drawerRedux = useSelector((state) => state.drawer.drawer);
@@ -24,7 +24,7 @@ export default function ShoppingCart(props) {
   // STATE
   const [modal, setModal] = useState(false);
 
-  // GET SHOPPINGCART ITEMS TO REDUX
+  // GET SHOPPINGCART ITEMS FROM DB
   useEffect(() => {
     if (authRedux.isAuthenticated) {
       dispatch(getProductsCartUserAction({ userId: authRedux.user.id }));
@@ -52,7 +52,6 @@ export default function ShoppingCart(props) {
   let totalPrice;
   if (Object.keys(cartRedux).length !== 0) {
     const arrOfProducts = cartRedux.products;
-    // console.log('arrOfProducts', arrOfProducts.length);
     if (arrOfProducts) {
       if (arrOfProducts.length > 0) {
         const total = (arr) => {
@@ -79,6 +78,11 @@ export default function ShoppingCart(props) {
       };
     }
     dispatch(deleteCartAction(data));
+  };
+
+  // PUSH TO ORDER SUMMARY COMPONENT
+  const _pushToOrder = () => {
+    props.history.push('/order');
   };
 
   // COMPONENT
@@ -200,7 +204,10 @@ export default function ShoppingCart(props) {
                   </div>
                   <div className="shoppingcart__checkout">
                     <div className="shoppingcart__checkout__btn ">
-                      <button className="btn shoppingcart__checkout__btn--btn">
+                      <button
+                        className="btn shoppingcart__checkout__btn--btn"
+                        onClick={_pushToOrder}
+                      >
                         Continue to checkout
                       </button>
                     </div>
@@ -238,7 +245,10 @@ export default function ShoppingCart(props) {
                   </div>
                   <div className="shoppingcart__checkout">
                     <div className="shoppingcart__checkout__btn ">
-                      <button className="btn shoppingcart__checkout__btn--btn">
+                      <button
+                        className="btn shoppingcart__checkout__btn--btn"
+                        onClick={_pushToOrder}
+                      >
                         Continue to checkout
                       </button>
                     </div>
@@ -363,7 +373,10 @@ export default function ShoppingCart(props) {
 
                   <div className="shoppingcart__checkout">
                     <div className="shoppingcart__checkout__btn ">
-                      <button className="btn shoppingcart__checkout__btn--btn">
+                      <button
+                        className="btn shoppingcart__checkout__btn--btn"
+                        onClick={_pushToOrder}
+                      >
                         Continue to checkout
                       </button>
                     </div>
@@ -429,7 +442,10 @@ export default function ShoppingCart(props) {
                   </div>
                   <div className="shoppingcart__checkout">
                     <div className="shoppingcart__checkout__btn ">
-                      <button className="btn shoppingcart__checkout__btn--btn">
+                      <button
+                        className="btn shoppingcart__checkout__btn--btn"
+                        onClick={_pushToOrder}
+                      >
                         Continue to checkout
                       </button>
                     </div>
@@ -451,4 +467,6 @@ export default function ShoppingCart(props) {
       </div>
     );
   }
-}
+};
+
+export default withRouter(ShoppingCart);

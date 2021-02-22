@@ -88,6 +88,14 @@ const Navigation = ({ history }) => {
                     <img src={Logo} alt="logo" className="nav__item__logo" />
                   </a>
                 </li>
+                <li className="nav__item nav__link-icon-box nav__link-icon-box--no-b-radius">
+                  <a href="/dashboard" className="nav__link">
+                    <svg className="icon">
+                      <use href={sprite_material + '#icon-dashboard'} />
+                    </svg>
+                    Dashboard
+                  </a>
+                </li>
 
                 <div className="nav__auth">
                   {/* SHOW ONLY IF ROLE ADMIN  */}

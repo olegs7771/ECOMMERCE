@@ -23,6 +23,7 @@ import CategorySingle from '../components/category/CategorySingle';
 import ProductPage from '../components/product/ProductPage';
 import Dashboard from '../components/dashboard/Dashboard';
 import ShoppingCart from '../components/shoppingcart/ShoppingCart';
+import Order from '../components/order/Order';
 
 import { useSelector } from 'react-redux';
 import { reloadCart } from '../utils/reloadUserAuth';
@@ -81,6 +82,7 @@ const MainApp = (props) => {
           render={() => <ShoppingCart cookies={props.cookies} />}
           // component={ShoppingCart}
         />
+        <Route exact path="/order" component={Order} />
         <Route
           exact
           path="/category/:slug/:categoryId"
