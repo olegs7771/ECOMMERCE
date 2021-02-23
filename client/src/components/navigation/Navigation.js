@@ -88,19 +88,11 @@ const Navigation = ({ history }) => {
                     <img src={Logo} alt="logo" className="nav__item__logo" />
                   </a>
                 </li>
-<<<<<<< HEAD
-                <li className="nav__item nav__link-icon-box nav__link-icon-box--radius-sm">
-                  <a href="/dashboard" className="nav__link">
-                    <svg className="icon">
-                      <use href={sprite_material + '#icon-dashboard'} />
-                    </svg>{' '}
-=======
                 <li className="nav__item nav__link-icon-box nav__link-icon-box--no-b-radius">
                   <a href="/dashboard" className="nav__link">
                     <svg className="icon">
                       <use href={sprite_material + '#icon-dashboard'} />
                     </svg>
->>>>>>> c8c7aa6f51bb29c9351c08dbbbe44742b272de50
                     Dashboard
                   </a>
                 </li>

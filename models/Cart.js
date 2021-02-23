@@ -32,7 +32,7 @@ cartSchema.methods.addProduct = function (productId) {
   // console.log('productId', productId);
   // console.log('this addProduct', this);
   const arrProduct = this.products.filter(
-    (el) => el.product.toString() !== productId
+    (el) => el._id.toString() === productId
   );
   // console.log('arrProduct', arrProduct);
   if (arrProduct.length === 0) {

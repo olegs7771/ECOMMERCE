@@ -146,7 +146,7 @@ export default function ShoppingCartItem({ item }) {
             </div>
             <div className="productlist__item__information-container__prices">
               <div className="productlist__item__information-container__prices--price">
-                $ {item.product.price}
+                $ {item.product.price * item.quantity}
               </div>
             </div>
           </div>

@@ -102,6 +102,7 @@
       &__list {
         list-style: none;
         &__title {
+          display: flex;
           &--title {
             font-weight: 700;
             font-size: 1.6rem;
@@ -111,6 +112,10 @@
           &--brand {
             font-size: 1.6rem;
           }
+        }
+        &--quantity {
+          margin-left: 1rem;
+          font-size: 1.4rem;
         }
       }
       &__controls {

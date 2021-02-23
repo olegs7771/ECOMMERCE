@@ -3,6 +3,8 @@ import { Image } from 'cloudinary-react';
 import sprite_material from '../../img/sprite_material.svg';
 
 export default function OrderProductItem({ item }) {
+  //Total price for one product
+
   return (
     <div className="productlist__item__contents">
       {/* IMAGE  */}
@@ -22,6 +24,9 @@ export default function OrderProductItem({ item }) {
             <div className="productlist__item__information-container__list__title--title">
               {item.product.title}
             </div>
+            <div className="productlist__item__information-container__list--quantity">
+              x {item.quantity}
+            </div>
           </li>
           <li className="productlist__item__information-container__list__brand">
             <div className="productlist__item__information-container__list__brand--brand">
@@ -37,7 +42,7 @@ export default function OrderProductItem({ item }) {
         </div>
         <div className="productlist__item__information-container__prices">
           <div className="productlist__item__information-container__prices--price">
-            $ {item.product.price}
+            $ {parseFloat(item.product.price * item.quantity)}
           </div>
         </div>
       </div>
