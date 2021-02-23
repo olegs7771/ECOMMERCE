@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  withRouter,
+} from 'react-router-dom';
 
 // ROUTES
 import Navigation from '../components/navigation/Navigation';
@@ -23,6 +28,7 @@ import CategorySingle from '../components/category/CategorySingle';
 import ProductPage from '../components/product/ProductPage';
 import Dashboard from '../components/dashboard/Dashboard';
 import ShoppingCart from '../components/shoppingcart/ShoppingCart';
+import Order from '../components/order/Order';
 
 import { useSelector } from 'react-redux';
 import { reloadCart } from '../utils/reloadUserAuth';
@@ -79,7 +85,11 @@ const MainApp = (props) => {
           exact
           path="/shoppingcart"
           render={() => <ShoppingCart cookies={props.cookies} />}
-          // component={ShoppingCart}
+        />
+        <Route
+          exact
+          path="/order"
+          render={() => <Order cookies={props.cookies} />}
         />
         <Route
           exact

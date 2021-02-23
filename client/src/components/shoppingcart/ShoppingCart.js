@@ -10,9 +10,9 @@ import sprite_material from '../../img/sprite_material.svg';
 import sprite from '../../img/sprite.svg';
 import ShoppingCartItem from './ShoppingCartItem';
 import { drawerToggle } from '../../store/actions/drawerAction';
-import { auth } from 'google-auth-library';
+import { withRouter } from 'react-router-dom';
 
-export default function ShoppingCart(props) {
+const ShoppingCart = (props) => {
   const dispatch = useDispatch();
   // REDUX
   const drawerRedux = useSelector((state) => state.drawer.drawer);
@@ -79,6 +79,11 @@ export default function ShoppingCart(props) {
       };
     }
     dispatch(deleteCartAction(data));
+  };
+
+  // PUSH TO ORDER COMPONENT
+  const _pushToOrder = () => {
+    props.history.push('/order');
   };
 
   // COMPONENT
@@ -200,7 +205,10 @@ export default function ShoppingCart(props) {
                   </div>
                   <div className="shoppingcart__checkout">
                     <div className="shoppingcart__checkout__btn ">
-                      <button className="btn shoppingcart__checkout__btn--btn">
+                      <button
+                        className="btn shoppingcart__checkout__btn--btn"
+                        onClick={_pushToOrder}
+                      >
                         Continue to checkout
                       </button>
                     </div>
@@ -238,7 +246,10 @@ export default function ShoppingCart(props) {
                   </div>
                   <div className="shoppingcart__checkout">
                     <div className="shoppingcart__checkout__btn ">
-                      <button className="btn shoppingcart__checkout__btn--btn">
+                      <button
+                        className="btn shoppingcart__checkout__btn--btn"
+                        onClick={_pushToOrder}
+                      >
                         Continue to checkout
                       </button>
                     </div>
@@ -363,7 +374,10 @@ export default function ShoppingCart(props) {
 
                   <div className="shoppingcart__checkout">
                     <div className="shoppingcart__checkout__btn ">
-                      <button className="btn shoppingcart__checkout__btn--btn">
+                      <button
+                        className="btn shoppingcart__checkout__btn--btn"
+                        onClick={_pushToOrder}
+                      >
                         Continue to checkout
                       </button>
                     </div>
@@ -429,7 +443,10 @@ export default function ShoppingCart(props) {
                   </div>
                   <div className="shoppingcart__checkout">
                     <div className="shoppingcart__checkout__btn ">
-                      <button className="btn shoppingcart__checkout__btn--btn">
+                      <button
+                        className="btn shoppingcart__checkout__btn--btn"
+                        onClick={_pushToOrder}
+                      >
                         Continue to checkout
                       </button>
                     </div>
@@ -451,4 +468,6 @@ export default function ShoppingCart(props) {
       </div>
     );
   }
-}
+};
+
+export default withRouter(ShoppingCart);
