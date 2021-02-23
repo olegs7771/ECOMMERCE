@@ -36,7 +36,7 @@ export default function ShoppingCartItem({ item }) {
         amountUpdate: e.target.value,
       };
     } else {
-      const data = {
+      data = {
         guestId,
         productId: item.product._id,
         amountUpdate: e.target.value,

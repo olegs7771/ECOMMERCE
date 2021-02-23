@@ -3,9 +3,10 @@
   border-bottom: 1px solid black;
 
   &__header {
-    background-color: cornsilk;
+    // background-color: cornsilk;
     display: flex;
     align-items: center;
+    justify-content: space-around;
 
     &__edit {
       font-size: 1.6rem;
@@ -18,10 +19,18 @@
   &__buyer {
     width: 100%;
     background-color: lightblue;
+    &__address-heading {
+      display: flex;
+      justify-content: center;
+    }
+
+    &__address {
+      padding: 2rem 6rem;
+    }
   }
   &__cart {
     width: 100%;
-    background-color: gainsboro;
+    // background-color: gainsboro;
     padding: 3rem;
   }
 }

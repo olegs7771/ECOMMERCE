@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SpinnerPuffLoader } from '../../utils/LoadingComponent';
 import {
@@ -7,15 +7,16 @@ import {
   // deleteCartAction,
 } from '../../store/actions/productAction';
 import OrderProductItem from './OrderProductItem';
+import OrderAddressForm from './OrderAddressForm';
 
 export default function Order() {
   const dispatch = useDispatch();
   // REDUX
-  const drawerRedux = useSelector((state) => state.drawer.drawer);
+  // const drawerRedux = useSelector((state) => state.drawer.drawer);
   const cartRedux = useSelector((state) => state.product.shoppingcart);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const authRedux = useSelector((state) => state.auth);
-  const messageRedux = useSelector((state) => state.message.message);
+  // const messageRedux = useSelector((state) => state.message.message);
 
   // GET SHOPPINGCART ITEMS FROM DB
   useEffect(() => {
@@ -54,14 +55,19 @@ export default function Order() {
     return (
       <div className="order page">
         <div className="container">
-          <div className="order__header">
-            <h1 className="heading-2 mb-sm ">Order Summary</h1>
+          <div className="order__header mb-md">
+            <h2 className="heading-2 ">Order Summary</h2>
             <a href="/shoppingcart" className="order__header__edit">
-              Edit
+              Edit Cart
             </a>
           </div>
           <div className="order__wrapper">
-            <div className="order__buyer">Buyer Details</div>
+            <div className="order__buyer">
+              <div className="order__buyer__address-heading">
+                <div className="h3 heading-3 ">Shipping Address</div>
+              </div>
+              <OrderAddressForm />
+            </div>
             <div className="order__cart">
               <div className="productlist">
                 {cartRedux.products.map((item, index) => (

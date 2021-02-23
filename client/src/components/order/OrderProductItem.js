@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image } from 'cloudinary-react';
-import sprite_material from '../../img/sprite_material.svg';
+// import sprite_material from '../../img/sprite_material.svg';
 
 export default function OrderProductItem({ item }) {
   //Total price for one product

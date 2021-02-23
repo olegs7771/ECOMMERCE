@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  withRouter,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // ROUTES
 import Navigation from '../components/navigation/Navigation';

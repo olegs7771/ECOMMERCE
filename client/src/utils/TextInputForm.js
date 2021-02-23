@@ -33,3 +33,7 @@ export default function TextInputForm({
     </div>
   );
 }
+
+TextInputForm.defaultProps = {
+  type: 'text',
+};
