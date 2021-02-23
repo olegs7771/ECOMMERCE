@@ -54,7 +54,12 @@ export default function Order() {
     return (
       <div className="order page">
         <div className="container">
-          <h1 className="heading-2 mb-sm">Order Summary</h1>
+          <div className="order__header">
+            <h1 className="heading-2 mb-sm ">Order Summary</h1>
+            <a href="/shoppingcart" className="order__header__edit">
+              Edit
+            </a>
+          </div>
           <div className="order__wrapper">
             <div className="order__buyer">Buyer Details</div>
             <div className="order__cart">

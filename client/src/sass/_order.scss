@@ -2,6 +2,16 @@
   background-color: $color-grey;
   border-bottom: 1px solid black;
 
+  &__header {
+    background-color: cornsilk;
+    display: flex;
+    align-items: center;
+
+    &__edit {
+      font-size: 1.6rem;
+    }
+  }
+
   &__wrapper {
     display: flex;
   }
