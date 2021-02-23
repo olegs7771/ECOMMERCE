@@ -24,7 +24,7 @@ const ShoppingCart = (props) => {
   // STATE
   const [modal, setModal] = useState(false);
 
-  // GET SHOPPINGCART ITEMS TO REDUX
+  // GET SHOPPINGCART ITEMS FROM DB
   useEffect(() => {
     if (authRedux.isAuthenticated) {
       dispatch(getProductsCartUserAction({ userId: authRedux.user.id }));
@@ -52,7 +52,6 @@ const ShoppingCart = (props) => {
   let totalPrice;
   if (Object.keys(cartRedux).length !== 0) {
     const arrOfProducts = cartRedux.products;
-    // console.log('arrOfProducts', arrOfProducts.length);
     if (arrOfProducts) {
       if (arrOfProducts.length > 0) {
         const total = (arr) => {
@@ -81,7 +80,7 @@ const ShoppingCart = (props) => {
     dispatch(deleteCartAction(data));
   };
 
-  // PUSH TO ORDER COMPONENT
+  // PUSH TO ORDER SUMMARY COMPONENT
   const _pushToOrder = () => {
     props.history.push('/order');
   };

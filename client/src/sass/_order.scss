@@ -1,0 +1,16 @@
+.order {
+  background-color: $color-grey;
+  border-bottom: 1px solid black;
+
+  &__wrapper {
+    display: flex;
+  }
+  &__buyer {
+    width: 100%;
+    background-color: lightblue;
+  }
+  &__cart {
+    width: 100%;
+    background-color: gainsboro;
+  }
+}
