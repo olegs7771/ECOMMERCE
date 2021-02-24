@@ -121,6 +121,9 @@
     text-align: left;
     margin-left: 1rem;
     font-weight: 700;
+    &__select {
+      padding-bottom: 1rem;
+    }
   }
 
   &-input {
@@ -156,6 +159,7 @@
       border: 1px solid #ccc;
       border-radius: 0.4rem;
       outline: none;
+      transform: translateY(-0.5rem);
     }
   }
   &__error-message {

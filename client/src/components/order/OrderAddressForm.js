@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import TextInputForm from '../../utils/TextInputForm';
 import SelectInputForm from '../../utils/SelectInputForm';
 
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+
 export default function OrderAddressForm() {
   // STATE
   const initialState = {
@@ -33,7 +36,12 @@ export default function OrderAddressForm() {
   const [values, setValues] = useState(initialState);
 
   const _onChange = (e) => {
-    setValues({ ...initialState, [e.target.name]: e.target.value });
+    console.log('e', e);
+    if (e.target === undefined) {
+      setValues({ ...values, phone: e }); //for phone field
+    } else {
+      setValues({ ...values, [e.target.name]: e.target.value });
+    }
   };
 
   return (
@@ -106,7 +114,7 @@ export default function OrderAddressForm() {
             array={initialState.province_territory}
             value={values.province_territory_value}
             styles={{
-              title: 'form-label--name',
+              title: 'form-label--name form-label--name__select',
               form_input: 'form-input-select',
             }}
             name="province_territory_value"
@@ -124,9 +132,24 @@ export default function OrderAddressForm() {
           name="zipcode"
           placeholder=" Zipcode "
           styles={{ title: 'form-label--name' }}
+          containerClass={{ width: '100%' }}
         />
       </div>
-      <button className="btn">Put an order</button>
+
+      <div className="order__buyer__address__row__phone-wrapper mb-sm">
+        <PhoneInput
+          country={'us'}
+          value={values.phone}
+          onChange={(phone) => _onChange(phone)}
+          enableAreaCodes={true}
+          onlyCountries={['ca', 'us']}
+          enableAreaCodes={['ca', 'usa']}
+          country={'ca'}
+          inputClass="order__buyer__address__row__phone"
+        />
+      </div>
+
+      <button className="btn">order now</button>
     </div>
   );
 }

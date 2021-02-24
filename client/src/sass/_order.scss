@@ -34,12 +34,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        &__phone {
+          width: 100% !important;
+        }
 
         &__gap {
           width: 1rem;
         }
         &__select-wrapper {
           width: 100%;
+        }
+        &__phone-wrapper {
+          width: 50%;
         }
       }
     }
