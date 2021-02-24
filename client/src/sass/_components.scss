@@ -103,7 +103,7 @@
 
   &-group {
     margin-bottom: 1rem;
-
+    width: 100%;
     &__radio {
       border: 1px solid $color-grey-dark;
       border-radius: 3px;
@@ -119,6 +119,8 @@
     font-size: 1.2rem;
     text-transform: uppercase;
     text-align: left;
+    margin-left: 1rem;
+    font-weight: 700;
   }
 
   &-input {
@@ -144,6 +146,16 @@
     &--invalid {
       border: 2px solid $color-red;
       background-color: $color-red-light;
+    }
+    &-select {
+      color: $color-grey-dark;
+      width: 100%;
+      padding: 1.1rem 2rem;
+      // margin: 0.6rem 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 0.4rem;
+      outline: none;
     }
   }
   &__error-message {

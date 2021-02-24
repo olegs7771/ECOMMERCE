@@ -18,19 +18,34 @@
   }
   &__buyer {
     width: 100%;
-    background-color: lightblue;
+    // background-color: lightblue;
+
     &__address-heading {
       display: flex;
       justify-content: center;
     }
 
     &__address {
-      padding: 2rem 6rem;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 4rem;
+
+      &__row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__gap {
+          width: 1rem;
+        }
+        &__select-wrapper {
+          width: 100%;
+        }
+      }
     }
   }
   &__cart {
     width: 100%;
-    // background-color: gainsboro;
     padding: 3rem;
   }
 }

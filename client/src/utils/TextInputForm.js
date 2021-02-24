@@ -12,9 +12,9 @@ export default function TextInputForm({
   styles,
 }) {
   return (
-    <div className={`form-group  ${styles}`}>
+    <div className="form-group">
       <label>
-        <div className="form-label--name">{label}</div>
+        <div className={styles.title}>{label}</div>
         <input
           type={type}
           name={name}

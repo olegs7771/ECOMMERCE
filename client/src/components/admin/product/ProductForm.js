@@ -4,6 +4,8 @@ import { createProductAction } from '../../../store/actions/productAction';
 import { clearMessageReduxState } from '../../../store/actions/categoryAction';
 import TextInputForm from '../../../utils/TextInputForm';
 import { Spinner } from '../../../utils/LoadingComponent';
+import SelectInputForm from '../../../utils/SelectInputForm';
+
 export default function ProductForm({ open, categoryId, subId, close }) {
   const dispatch = useDispatch();
 
@@ -110,6 +112,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
                 type="text"
                 name="title"
                 placeholder="Name of product.."
+                styles={{ title: 'form-label--name', form_input: 'form-input' }}
               />
 
               <div className="form-group">
@@ -145,46 +148,26 @@ export default function ProductForm({ open, categoryId, subId, close }) {
                 type="text"
                 name="instock"
                 placeholder="use only numbers 0-9"
+                styles={{ title: 'form-label--name', form_input: 'form-input' }}
               />
-
-              <div className="form-group">
-                <label>
-                  <div className="form-label--name">Pick your Color</div>
-                  <select
-                    name="color"
-                    value={values.color}
-                    onChange={_onChange}
-                    className="form-input  "
-                    required
-                  >
-                    <option>Select Color</option>
-                    {initialState.colors.map((color) => (
-                      <option value={color} key={color}>
-                        {color}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              </div>
-              <div className="form-group">
-                <label>
-                  <div className="form-label--name">Pick your Brand</div>
-                  <select
-                    name="brand"
-                    value={values.brand}
-                    onChange={_onChange}
-                    className="form-input  "
-                    required
-                  >
-                    <option>Select Brand</option>
-                    {initialState.brands.map((brand) => (
-                      <option value={brand} key={brand}>
-                        {brand}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              </div>
+              <SelectInputForm
+                _onChange={_onChange}
+                array={initialState.colors}
+                value={values.color}
+                styles={{ title: 'form-label--name', form_input: 'form-input' }}
+                name="color"
+                label="Pick your color"
+                select="Select color"
+              />
+              <SelectInputForm
+                _onChange={_onChange}
+                array={initialState.brands}
+                value={values.brand}
+                styles={{ title: 'form-label--name', form_input: 'form-input' }}
+                name="brand"
+                label="Pick your brand"
+                select="Select brand"
+              />
             </div>
             {/* RIGHT BLOCK  */}
             <div className="product__form-r-block">
@@ -197,6 +180,7 @@ export default function ProductForm({ open, categoryId, subId, close }) {
                 type="text"
                 name="price"
                 placeholder="eg 100.00"
+                styles={{ title: 'form-label--name', form_input: 'form-input' }}
               />
 
               <div className="form-label--name">Shipping</div>
