@@ -12,6 +12,7 @@ export default function OrderAddressForm() {
     first_name: '',
     last_name: '',
     business_name: '',
+    email: '',
     street_address: '',
     suit_apt: '',
     city: '',
@@ -36,19 +37,18 @@ export default function OrderAddressForm() {
   };
 
   const [values, setValues] = useState(initialState);
+  const [errors, setErrors] = useState({});
 
   const _onChange = (e) => {
-    console.log('e.target', e.target.name);
+    console.log('e', e);
     if (e.target === undefined) {
       setValues({ ...values, phone: e }); //for phone field
     } else {
       setValues({ ...values, [e.target.name]: e.target.value });
     }
-    //On Select Province Get cities array
-    if (e.target.name === 'province_territory_value') {
-      console.log('true');
-    }
   };
+
+  const _makeOrder = () => {};
 
   return (
     <div className="order__buyer__address">
@@ -94,7 +94,7 @@ export default function OrderAddressForm() {
         />
       </div>
       <div className="order__buyer__address__row">
-        <div className="order__buyer__address__row__select-wrapper">
+        <div className="order__buyer__address__row__wrapper">
           <SelectInputForm
             _onChange={_onChange}
             array={initialState.province_territory}
@@ -109,22 +109,22 @@ export default function OrderAddressForm() {
             title="Select Province/Territory"
           />
         </div>
-
         <div className="order__buyer__address__row__gap"></div>
-
-        {/* <CanadianCitiesFieldForm
-          _onChange={_onChange}
-          array={cities}
-          value={values.city}
-          styles={{
-            title: 'form-label--name form-label--name__select',
-            form_input: 'form-input-select',
-          }}
-          name="city"
-          label="City/Town"
-          select="Select City/Town"
-          title="City/Town"
-        /> */}
+        <div className="order__buyer__address__row__wrapper">
+          <CanadianCitiesFieldForm
+            _onChange={_onChange}
+            province={values.province_territory_value}
+            value={values.city}
+            styles={{
+              title: 'form-label--name form-label--name__select',
+              form_input: 'form-input-select',
+            }}
+            name="city"
+            label="City/Town"
+            select="Select City/Town"
+            title="City/Town"
+          />
+        </div>
       </div>
       <div className="order__buyer__address__row">
         <TextInputForm
@@ -147,21 +147,34 @@ export default function OrderAddressForm() {
           containerClass={{ width: '100%' }}
         />
       </div>
-
-      <div className="order__buyer__address__row__phone-wrapper mb-sm">
-        <PhoneInput
-          country={'us'}
-          value={values.phone}
-          onChange={(phone) => _onChange(phone)}
-          enableAreaCodes={true}
-          onlyCountries={['ca', 'us']}
-          enableAreaCodes={['ca', 'usa']}
-          country={'ca'}
-          inputClass="order__buyer__address__row__phone"
+      <div className="order__buyer__address__row">
+        <div className="order__buyer__address__row__wrapper mb-sm">
+          <PhoneInput
+            country={'us'}
+            value={values.phone}
+            onChange={(phone) => _onChange(phone)}
+            enableAreaCodes={true}
+            onlyCountries={['ca', 'us']}
+            // enableAreaCodes={['ca', 'usa']}
+            country={'ca'}
+            inputClass="order__buyer__address__row__phone"
+          />
+        </div>
+        <div className="order__buyer__address__row__gap"></div>
+        <TextInputForm
+          value={values.zipcode}
+          _onChange={_onChange}
+          label="Zipcode"
+          name="zipcode"
+          placeholder=" Zipcode "
+          styles={{ title: 'form-label--name' }}
+          containerClass={{ width: '100%' }}
         />
       </div>
 
-      <button className="btn">order now</button>
+      <button className="btn" onClick={_makeOrder}>
+        order now
+      </button>
     </div>
   );
 }

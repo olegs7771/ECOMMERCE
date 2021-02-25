@@ -66,7 +66,7 @@ const bc_cities = [
   'North Cowichan',
   'Surrey',
   'Cranbrook',
-  'North Vancouver',
+
   'Terrace',
   'Dawson Creek',
   'North Vancouver',
@@ -76,7 +76,6 @@ const bc_cities = [
   'Vancouver',
   'Fernie',
   'Parksville',
-  'Vancouver',
   'Invermere',
   'Peace River',
   'Vernon',
@@ -110,7 +109,6 @@ const manitoba_cities = [
   'Neepawa',
 ];
 const New_Brunswick_cities = [
-  ,
   'Cap-Pele',
   'Miramichi',
   'Saint John',
@@ -280,7 +278,6 @@ const Ontario_cities = [
   'Waterloo',
   'Fort Frances',
   'North York',
-  'Waterloo',
   'Gananoque',
   'Norwich',
   'Welland',
@@ -351,7 +348,6 @@ const Quebec_cities = [
   'Coaticook',
   'LaSalle',
   'Sorel',
-  'Coaticook',
   'Laval',
   'Thetford Mines',
   'Dorval',
@@ -381,7 +377,7 @@ const Saskatchewan_cities = [
   'Yorkton',
   'Gravelbourg',
 ];
-const Yukon_cities = [, 'Carcross', 'Whitehorse'];
+const Yukon_cities = ['Carcross', 'Whitehorse'];
 const Nunavut_cities = ['Arviant', 'Rankin Inlet'];
 
 const getCitiesArray = (province) => {
