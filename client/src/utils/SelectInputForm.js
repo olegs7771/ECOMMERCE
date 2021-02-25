@@ -1,5 +1,4 @@
 import React from 'react';
-import sprite_material from '../img/sprite_material.svg';
 
 export default function SelectInputForm({
   styles,

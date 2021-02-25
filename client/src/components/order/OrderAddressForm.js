@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TextInputForm from '../../utils/TextInputForm';
 import SelectInputForm from '../../utils/SelectInputForm';
+import CanadianCitiesFieldForm from '../../utils/CanadianCitiesFieldForm';
 
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -21,6 +22,7 @@ export default function OrderAddressForm() {
       'Manitoba',
       'British Columbia',
       'Prince Edward Island',
+      'Nova Scotia',
       'Saskatchewan',
       'Alberta',
       'Newfoundland and Labrador',
@@ -36,11 +38,15 @@ export default function OrderAddressForm() {
   const [values, setValues] = useState(initialState);
 
   const _onChange = (e) => {
-    console.log('e', e);
+    console.log('e.target', e.target.name);
     if (e.target === undefined) {
       setValues({ ...values, phone: e }); //for phone field
     } else {
       setValues({ ...values, [e.target.name]: e.target.value });
+    }
+    //On Select Province Get cities array
+    if (e.target.name === 'province_territory_value') {
+      console.log('true');
     }
   };
 
@@ -88,26 +94,6 @@ export default function OrderAddressForm() {
         />
       </div>
       <div className="order__buyer__address__row">
-        <TextInputForm
-          value={values.suit_apt}
-          _onChange={_onChange}
-          label="Suit/Apt"
-          name="suit_apt"
-          placeholder=" Suit or apartment "
-          styles={{ title: 'form-label--name' }}
-        />
-        <div className="order__buyer__address__row__gap"></div>
-
-        <TextInputForm
-          value={values.city}
-          _onChange={_onChange}
-          label="City"
-          name="city"
-          placeholder=" City "
-          styles={{ title: 'form-label--name' }}
-        />
-      </div>
-      <div className="order__buyer__address__row">
         <div className="order__buyer__address__row__select-wrapper">
           <SelectInputForm
             _onChange={_onChange}
@@ -123,6 +109,32 @@ export default function OrderAddressForm() {
             title="Select Province/Territory"
           />
         </div>
+
+        <div className="order__buyer__address__row__gap"></div>
+
+        {/* <CanadianCitiesFieldForm
+          _onChange={_onChange}
+          array={cities}
+          value={values.city}
+          styles={{
+            title: 'form-label--name form-label--name__select',
+            form_input: 'form-input-select',
+          }}
+          name="city"
+          label="City/Town"
+          select="Select City/Town"
+          title="City/Town"
+        /> */}
+      </div>
+      <div className="order__buyer__address__row">
+        <TextInputForm
+          value={values.suit_apt}
+          _onChange={_onChange}
+          label="Suit/Apt"
+          name="suit_apt"
+          placeholder=" Suit or apartment "
+          styles={{ title: 'form-label--name' }}
+        />
         <div className="order__buyer__address__row__gap"></div>
 
         <TextInputForm
