@@ -37,7 +37,8 @@
     "pug": "^3.0.0",
     "slugify": "^1.4.6",
     "stripe": "^8.137.0",
-    "uuidv4": "^6.2.6"
+    "uuidv4": "^6.2.6",
+    "validator": "^13.5.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"

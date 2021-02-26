@@ -38,6 +38,7 @@ const alberta_cities = [
   'Wood Buffalo',
   'Ft. Saskatchewan',
   'Provost',
+  'other',
 ];
 
 const bc_cities = [
@@ -66,7 +67,6 @@ const bc_cities = [
   'North Cowichan',
   'Surrey',
   'Cranbrook',
-
   'Terrace',
   'Dawson Creek',
   'North Vancouver',
@@ -87,6 +87,7 @@ const bc_cities = [
   'Whistler',
   'Langley',
   'Port Hardy',
+  'other',
 ];
 
 const manitoba_cities = [
@@ -107,6 +108,7 @@ const manitoba_cities = [
   'Morden',
   'Gimli',
   'Neepawa',
+  'other',
 ];
 const New_Brunswick_cities = [
   'Cap-Pele',
@@ -124,6 +126,7 @@ const New_Brunswick_cities = [
   'Memramcook',
   'Sackville',
   'Tracadie-Sheila',
+  'other',
 ];
 
 const Newfoundland_And_Labrador_cities = [
@@ -137,12 +140,14 @@ const Newfoundland_And_Labrador_cities = [
   'Mount Pearl',
   "St. John's",
   'Brigus',
+  'other',
 ];
 
 const Northwest_Territories_cities = [
   'Town of Hay River',
   'Town of Inuvik',
   'Yellowknife',
+  'other',
 ];
 const Nova_Scotia_cities = [
   'Amherst',
@@ -174,6 +179,7 @@ const Nova_Scotia_cities = [
   'Yarmouth',
   'Halifax',
   'Parrsboro',
+  'other',
 ];
 
 const Ontario_cities = [
@@ -305,6 +311,7 @@ const Ontario_cities = [
   'Haldimand-Norfork',
   'Owen Sound',
   'York',
+  'other',
 ];
 
 const Prince_Edward_Island_cities = [
@@ -315,6 +322,7 @@ const Prince_Edward_Island_cities = [
   'Souris',
   'Summerside',
   'Cornwall',
+  'Other',
 ];
 
 const Quebec_cities = [
@@ -355,6 +363,7 @@ const Quebec_cities = [
   'Victoriaville',
   'Drummondville',
   'Levis',
+  'Other',
 ];
 const Saskatchewan_cities = [
   'Avonlea',
@@ -376,9 +385,10 @@ const Saskatchewan_cities = [
   'Shell Lake',
   'Yorkton',
   'Gravelbourg',
+  'other',
 ];
-const Yukon_cities = ['Carcross', 'Whitehorse'];
-const Nunavut_cities = ['Arviant', 'Rankin Inlet'];
+const Yukon_cities = ['Carcross', 'Whitehorse', 'other'];
+const Nunavut_cities = ['Arviant', 'Rankin Inlet', 'other'];
 
 const getCitiesArray = (province) => {
   let array = [];

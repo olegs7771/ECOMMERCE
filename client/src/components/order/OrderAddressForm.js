@@ -37,14 +37,23 @@ export default function OrderAddressForm() {
   };
 
   const [values, setValues] = useState(initialState);
-  const [errors, setErrors] = useState({});
+  const [showCity, setShowCity] = useState(false); //toggle open input field for other city
 
   const _onChange = (e) => {
-    console.log('e', e);
+    console.log('e', e.target.name);
     if (e.target === undefined) {
       setValues({ ...values, phone: e }); //for phone field
     } else {
+      // setShowCity(false);
       setValues({ ...values, [e.target.name]: e.target.value });
+    }
+    //Handle other city not in list
+    if (e.target.name === 'city' && e.target.value === 'other') {
+      console.log('other city', e.target.value);
+      setShowCity(true);
+    }
+    if (e.target.name === 'province_territory_value') {
+      setShowCity(false);
     }
   };
 
@@ -87,12 +96,13 @@ export default function OrderAddressForm() {
         <div className="order__buyer__address__row__gap"></div>
 
         <TextInputForm
-          value={values.street_address}
+          value={values.email}
           _onChange={_onChange}
-          label="Street"
-          name="street_address"
-          placeholder=" Your street name.."
+          label="Email"
+          name="email"
+          placeholder=" example@somemail.com "
           styles={{ title: 'form-label--name' }}
+          containerClass={{ width: '100%' }}
           required={true}
         />
       </div>
@@ -114,23 +124,36 @@ export default function OrderAddressForm() {
           />
         </div>
         <div className="order__buyer__address__row__gap"></div>
-        <div className="order__buyer__address__row__wrapper">
-          <CanadianCitiesFieldForm
-            _onChange={_onChange}
-            province={values.province_territory_value}
+        {showCity ? (
+          <TextInputForm
             value={values.city}
-            styles={{
-              title: 'form-label--name form-label--name__select',
-              form_input: 'form-input-select',
-            }}
-            name="city"
+            _onChange={_onChange}
             label="City/Town"
-            select="Select City/Town"
-            title="City/Town"
+            name="city"
+            placeholder=" other city/town "
+            styles={{ title: 'form-label--name' }}
             required={true}
           />
-        </div>
+        ) : (
+          <div className="order__buyer__address__row__wrapper">
+            <CanadianCitiesFieldForm
+              _onChange={_onChange}
+              province={values.province_territory_value}
+              value={values.city}
+              styles={{
+                title: 'form-label--name form-label--name__select',
+                form_input: 'form-input-select',
+              }}
+              name="city"
+              label="City/Town"
+              select="Select City/Town"
+              title="City/Town"
+              required={true}
+            />
+          </div>
+        )}
       </div>
+
       <div className="order__buyer__address__row">
         <TextInputForm
           value={values.suit_apt}
@@ -144,13 +167,12 @@ export default function OrderAddressForm() {
         <div className="order__buyer__address__row__gap"></div>
 
         <TextInputForm
-          value={values.zipcode}
+          value={values.street_address}
           _onChange={_onChange}
-          label="Zipcode"
-          name="zipcode"
-          placeholder=" Zipcode "
+          label="Street"
+          name="street_address"
+          placeholder=" Your street name.."
           styles={{ title: 'form-label--name' }}
-          containerClass={{ width: '100%' }}
           required={true}
         />
       </div>
@@ -178,11 +200,11 @@ export default function OrderAddressForm() {
         </div>
         <div className="order__buyer__address__row__gap"></div>
         <TextInputForm
-          value={values.email}
+          value={values.zipcode}
           _onChange={_onChange}
-          label="Email"
-          name="email"
-          placeholder=" example@somemail.com "
+          label="Zipcode"
+          name="zipcode"
+          placeholder=" Zipcode "
           styles={{ title: 'form-label--name' }}
           containerClass={{ width: '100%' }}
           required={true}
