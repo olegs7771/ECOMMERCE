@@ -60,6 +60,7 @@ export default function OrderAddressForm() {
           name="first_name"
           placeholder="John"
           styles={{ title: 'form-label--name' }}
+          required={true}
           //  error,
           //  _checkField,
         />
@@ -71,6 +72,7 @@ export default function OrderAddressForm() {
           name="last_name"
           placeholder="Brown"
           styles={{ title: 'form-label--name' }}
+          required={true}
         />
       </div>
       <div className="order__buyer__address__row">
@@ -91,6 +93,7 @@ export default function OrderAddressForm() {
           name="street_address"
           placeholder=" Your street name.."
           styles={{ title: 'form-label--name' }}
+          required={true}
         />
       </div>
       <div className="order__buyer__address__row">
@@ -107,6 +110,7 @@ export default function OrderAddressForm() {
             label="Province/Territory"
             select="Select Province/Territory"
             title="Select Province/Territory"
+            required={true}
           />
         </div>
         <div className="order__buyer__address__row__gap"></div>
@@ -123,6 +127,7 @@ export default function OrderAddressForm() {
             label="City/Town"
             select="Select City/Town"
             title="City/Town"
+            required={true}
           />
         </div>
       </div>
@@ -134,6 +139,7 @@ export default function OrderAddressForm() {
           name="suit_apt"
           placeholder=" Suit or apartment "
           styles={{ title: 'form-label--name' }}
+          required={true}
         />
         <div className="order__buyer__address__row__gap"></div>
 
@@ -145,10 +151,17 @@ export default function OrderAddressForm() {
           placeholder=" Zipcode "
           styles={{ title: 'form-label--name' }}
           containerClass={{ width: '100%' }}
+          required={true}
         />
       </div>
       <div className="order__buyer__address__row">
         <div className="order__buyer__address__row__wrapper mb-sm">
+          <div className="order__buyer__address__row__phone--lable">
+            Phone
+            <span className="order__buyer__address__row__phone--lable-icon">
+              *
+            </span>
+          </div>
           <PhoneInput
             country={'us'}
             value={values.phone}
@@ -158,6 +171,7 @@ export default function OrderAddressForm() {
             // enableAreaCodes={['ca', 'usa']}
             country={'ca'}
             inputClass="order__buyer__address__row__phone"
+            required={true}
           />
         </div>
         <div className="order__buyer__address__row__gap"></div>
@@ -169,6 +183,7 @@ export default function OrderAddressForm() {
           placeholder=" Zipcode "
           styles={{ title: 'form-label--name' }}
           containerClass={{ width: '100%' }}
+          required={true}
         />
       </div>
 

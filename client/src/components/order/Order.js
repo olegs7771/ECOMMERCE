@@ -64,7 +64,10 @@ export default function Order() {
           <div className="order__wrapper">
             <div className="order__buyer">
               <div className="order__buyer__address-heading">
-                <div className="h3 heading-3 ">Shipping Address</div>
+                <div className="h3 heading-3">Shipping Address</div>
+                <div className="order__buyer__address-heading--icon">
+                  * - required fields
+                </div>
               </div>
               <OrderAddressForm />
             </div>

@@ -8,10 +8,14 @@ export default function SelectInputForm({
   name,
   label,
   select,
+  required,
 }) {
   return (
     <div className="form-group">
-      <div className={styles.title}>{label}</div>
+      <div className={styles.title}>
+        {label}
+        {required ? <span className="form-group--required-icon">*</span> : null}
+      </div>
       <select
         name={name}
         value={value}

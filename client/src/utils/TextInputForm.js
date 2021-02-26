@@ -10,11 +10,17 @@ export default function TextInputForm({
   name,
   placeholder,
   styles,
+  required,
 }) {
   return (
     <div className="form-group">
       <label>
-        <div className={styles.title}>{label}</div>
+        <div className={styles.title}>
+          {label}{' '}
+          {required ? (
+            <span className="form-group--required-icon">*</span>
+          ) : null}
+        </div>
         <input
           type={type}
           name={name}

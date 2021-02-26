@@ -433,11 +433,15 @@ export default function CanadianCitiesFieldForm({
   name,
   label,
   select,
+  required,
 }) {
   const array = getCitiesArray(province);
   return (
     <div className="form-group">
-      <div className={styles.title}>{label}</div>
+      <div className={styles.title}>
+        {label}{' '}
+        {required ? <span className="form-group--required-icon">*</span> : null}
+      </div>
       <select
         name={name}
         value={value}
