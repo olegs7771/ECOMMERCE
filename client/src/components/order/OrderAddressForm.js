@@ -162,25 +162,27 @@ export default function OrderAddressForm() {
               *
             </span>
           </div>
-          <PhoneInput
-            country={'us'}
-            value={values.phone}
-            onChange={(phone) => _onChange(phone)}
-            enableAreaCodes={true}
-            onlyCountries={['ca', 'us']}
-            // enableAreaCodes={['ca', 'usa']}
-            country={'ca'}
-            inputClass="order__buyer__address__row__phone"
-            required={true}
-          />
+          <div className="order__buyer__address__row__wrapper">
+            <PhoneInput
+              country={'us'}
+              value={values.phone}
+              onChange={(phone) => _onChange(phone)}
+              enableAreaCodes={true}
+              onlyCountries={['ca', 'us']}
+              // enableAreaCodes={['ca', 'usa']}
+              country={'ca'}
+              inputClass="order__buyer__address__row__phone"
+              required={true}
+            />
+          </div>
         </div>
         <div className="order__buyer__address__row__gap"></div>
         <TextInputForm
-          value={values.zipcode}
+          value={values.email}
           _onChange={_onChange}
-          label="Zipcode"
-          name="zipcode"
-          placeholder=" Zipcode "
+          label="Email"
+          name="email"
+          placeholder=" example@somemail.com "
           styles={{ title: 'form-label--name' }}
           containerClass={{ width: '100%' }}
           required={true}
