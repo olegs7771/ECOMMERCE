@@ -1,5 +1,5 @@
 const app = require('./app');
-const validator = require('validator');
+
 // require('dotenv').config();
 const mongoose = require('mongoose');
 const { promisify } = require('util');
@@ -24,4 +24,4 @@ app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
-console.log(validator.isMobilePhone('+1 204-943-9151', ['en-CA', 'en-US']));
+// console.log(validator.isMobilePhone('+1 204-943-9151', ['en-CA', 'en-US']));

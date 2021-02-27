@@ -1,7 +1,15 @@
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema;
-const orderSchema = new mongoose.Schema({
-  buyer: {
+const validator = require('validator');
+const orderSchema = new mongoose.Schema(
+  {
+    guestId: {
+      type: String,
+    },
+    userId: {
+      type: ObjectId,
+      ref: 'User',
+    },
     fname: {
       type: String,
       required: [true, 'Name  required'],
@@ -46,10 +54,53 @@ const orderSchema = new mongoose.Schema({
       minlength: [3, 'Min name length 3 chars'],
       maxlength: [20, 'Max name length 30 chars'],
     },
-    phone: {},
+    phone: {
+      type: String,
+      validate: {
+        validator: function (v) {
+          return validator.isMobilePhone(v, ['en-CA', 'en-US']);
+        },
+        message: (props) => `${props.value} is not valid phone number`,
+      },
+      required: [true, 'Phone number required'],
+    },
+    zipcode: {
+      type: String,
+      validate: {
+        validator: function (v) {
+          return /^([A-Za-z]\d[A-Za-z][-]?\d[A-Za-z]\d)/.test(v);
+        },
+        message: (props) => `${props.value} is not valid zipcode format`,
+      },
+      required: [true, 'Zipcode  required'],
+    },
+
+    cart: {
+      type: ObjectId,
+      ref: 'Cart',
+    },
   },
-  cart: {
-    type: ObjectId,
-    ref: 'Cart',
-  },
+  {
+    timestamps: true,
+  }
+);
+
+// CUSTOM ERROR HANDLING
+
+orderSchema.post('save', function (err, doc, next) {
+  let errors = {};
+  errors.fname = err.errors.fname ? err.errors.fname.message : '';
+  errors.lname = err.errors.lname ? err.errors.lname.message : '';
+  errors.email = err.errors.email ? err.errors.email.message : '';
+  errors.city = err.errors.city ? err.errors.city.message : '';
+  errors.suit = err.errors.suit ? err.errors.suit.message : '';
+  errors.street = err.errors.street ? err.errors.street.message : '';
+  errors.phone = err.errors.phone ? err.errors.phone.message : '';
+  errors.zipcode = err.errors.zipcode ? err.errors.zipcode.message : '';
+
+  console.log('errors', errors);
+  next(errors);
 });
+
+const Order = mongoose.model('Order', orderSchema);
+module.exports = Order;

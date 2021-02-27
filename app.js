@@ -16,6 +16,7 @@ const users = require('./routes/users');
 const category = require('./routes/category');
 const sub = require('./routes/sub');
 const product = require('./routes/product');
+const order = require('./routes/order');
 
 //FOR UPLOADING FILES
 app.use(fileUpload());
@@ -45,12 +46,11 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-//Test middleware
-
 app.use('/api/v1/users', users);
 app.use('/api/v1/category', category);
 app.use('/api/v1/sub', sub);
 app.use('/api/v1/product', product);
+app.use('/api/v1/order', order);
 
 //Errors for missing routes
 

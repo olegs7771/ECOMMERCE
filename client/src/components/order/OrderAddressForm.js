@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TextInputForm from '../../utils/TextInputForm';
 import SelectInputForm from '../../utils/SelectInputForm';
 import CanadianCitiesFieldForm from '../../utils/CanadianCitiesFieldForm';
+import { createOrderGuestAction } from '../../store/actions/orderAction';
 
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -186,12 +187,10 @@ export default function OrderAddressForm() {
           </div>
           <div className="order__buyer__address__row__wrapper">
             <PhoneInput
-              country={'us'}
               value={values.phone}
               onChange={(phone) => _onChange(phone)}
-              enableAreaCodes={true}
               onlyCountries={['ca', 'us']}
-              // enableAreaCodes={['ca', 'usa']}
+              enableAreaCodes={['ca', 'usa']}
               country={'ca'}
               inputClass="order__buyer__address__row__phone"
               required={true}
