@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 import TextInputForm from '../../utils/TextInputForm';
 import SelectInputForm from '../../utils/SelectInputForm';
 import CanadianCitiesFieldForm from '../../utils/CanadianCitiesFieldForm';
+import { useDispatch, useSelector } from 'react-redux';
 import { createOrderGuestAction } from '../../store/actions/orderAction';
 
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
 export default function OrderAddressForm() {
+  const dispatch = useDispatch();
+  // REDUX
+  const authRedux = useSelector((state) => state.auth);
+  const cookieRedux = useSelector((state) => state.cookie.cookie);
+
   // STATE
   const initialState = {
     first_name: '',
@@ -58,7 +64,34 @@ export default function OrderAddressForm() {
     }
   };
 
-  const _makeOrder = () => {};
+  // CREATE ORDER ACTION
+  const _makeOrder = () => {
+    let buyerObj = {
+      fname: values.first_name,
+      lname: values.last_name,
+      email: values.email,
+      city: values.city,
+      suit: values.suit_apt,
+      street: values.street_address,
+      phone: values.phone,
+      zipcode: values.zipcode,
+    };
+    let data;
+    if (authRedux.isAuthenticated) {
+      //User
+      data = {
+        ...buyerObj,
+        userId: authRedux.user.id,
+      };
+    } else {
+      //Guest
+      data = {
+        ...buyerObj,
+        guestId: cookieRedux.guestId,
+      };
+    }
+    dispatch(createOrderGuestAction(data));
+  };
 
   return (
     <div className="order__buyer__address">

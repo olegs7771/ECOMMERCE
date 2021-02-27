@@ -7,7 +7,9 @@ const { protectGuest } = require('../controllers/guestController');
 const { createOrder } = require('../controllers/orderController');
 
 //Create order by guest
+router.route('/user/:userId').post(protect, createOrder);
 
-router.route('/:guestId').post(protectGuest, createOrder);
+//Create order by guest
+router.route('/guest/:guestId').post(protectGuest, createOrder);
 
 module.exports = router;
