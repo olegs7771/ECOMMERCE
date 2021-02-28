@@ -37,7 +37,7 @@ const createOrder = asyncCatch(async (req, res, next) => {
       ...orderObj,
       guestId: req.user,
     };
-    const res = await Order.create(order);
+    // const res = await Order.create(order);
   }
   console.log('order', order);
   //Find Cart
@@ -47,30 +47,12 @@ const createOrder = asyncCatch(async (req, res, next) => {
 
   //Create products line_items for STRIPE
 
-  // success_url: `${req.protocol}://${req.get('host')}/my-tours`,
-  console.log(req.get('host'));
-  //CREATE STRIPE SESSION
-  // const session = await stripe.checkout.sessions.create({
-  //   payment_method_types: ['card'],
-  //   line_items: [
-  //     {
-  //       price_data: {
-  //         currency: 'cad',
-  //         product_data: {
-  //           name: 'Stubborn Attachments',
-  //           images: ['https://i.imgur.com/EHyR2nP.png'],
-  //         },
-  //         unit_amount: 2000,
-  //       },
-  //       quantity: 1,
-  //     },
-  //   ],
-  //   mode: 'payment',
-  //   // success_url: `${req.protocol}://${req.get('host')}/checkout`,
-  //   success_url: `http://localhost:3000/order`,
-  //   cancel_url: `http://localhost:3000/order`,
-  // });
-  // console.log('session', session);
+  const customer = await stripe.customers.create({
+    email: req.body.email,
+  });
+
+  console.log('customer', customer);
+  const result = await stripe.charges.create({});
 
   res.status(200).json({ status: 'success', data: cart });
 });
