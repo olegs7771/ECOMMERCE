@@ -37,6 +37,7 @@
       &__row {
         display: flex;
         align-items: center;
+        height: 10.2rem;
 
         &__phone {
           width: 100% !important;
@@ -73,8 +74,8 @@
       }
       &__form-group {
         height: 9.2rem;
-        &-select {
-          height: 8.7rem;
+        &--other {
+          transform: translateY(0.6rem);
         }
       }
     }

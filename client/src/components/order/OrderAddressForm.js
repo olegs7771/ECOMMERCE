@@ -4,6 +4,7 @@ import SelectInputForm from '../../utils/SelectInputForm';
 import CanadianCitiesFieldForm from '../../utils/CanadianCitiesFieldForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrderGuestAction } from '../../store/actions/orderAction';
+import { clearErrorReduxState } from '../../store/actions/categoryAction';
 
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -48,16 +49,20 @@ export default function OrderAddressForm({ cartId }) {
   const [showCity, setShowCity] = useState(false); //toggle open input field for other city
 
   const _onChange = (e) => {
+    dispatch(clearErrorReduxState());
     setValues({ ...values, [e.target.name]: e.target.value });
   };
   const _onChangePhone = (e) => {
+    dispatch(clearErrorReduxState());
     setValues({ ...values, phone: e });
   };
   const _onChangeProvince = (e) => {
+    dispatch(clearErrorReduxState());
     setShowCity(false);
     setValues({ ...values, [e.target.name]: e.target.value });
   };
   const _onChangeCity = (e) => {
+    dispatch(clearErrorReduxState());
     console.log('e.target.value city', e.target.value);
     if (e.target.value === 'other') {
       setShowCity(true);
@@ -189,7 +194,8 @@ export default function OrderAddressForm({ cartId }) {
             placeholder=" other city/town "
             styles={{
               title: 'form-label--name',
-              form_group: 'form-group order__buyer__address__form-group',
+              form_group:
+                'form-group order__buyer__address__form-group form-group order__buyer__address__form-group--other',
             }}
             required={true}
             error={errorsRedux.city}
