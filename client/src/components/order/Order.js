@@ -69,7 +69,7 @@ export default function Order() {
                   * - required fields
                 </div>
               </div>
-              <OrderAddressForm />
+              <OrderAddressForm cartId={cartRedux._id} />
             </div>
             <div className="order__cart">
               <div className="productlist">

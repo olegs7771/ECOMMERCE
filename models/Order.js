@@ -37,6 +37,7 @@ const orderSchema = new mongoose.Schema(
     },
     province: {
       type: String,
+      required: [true, 'Select province/territory'],
     },
     city: {
       type: String,
@@ -68,14 +69,14 @@ const orderSchema = new mongoose.Schema(
       type: String,
       validate: {
         validator: function (v) {
-          return /^([A-Za-z]\d[A-Za-z][-]?\d[A-Za-z]\d)/.test(v);
+          return /^\d{5}-\d{4}|\d{5}|[A-Z]\d[A-Z] \d[A-Z]\d$/.test(v);
         },
         message: (props) => `${props.value} is not valid zipcode format`,
       },
       required: [true, 'Zipcode  required'],
     },
 
-    cart: {
+    cartId: {
       type: ObjectId,
       ref: 'Cart',
     },
@@ -85,6 +86,10 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
+orderSchema.pre('save', function () {
+  console.log('this pre save', this);
+});
+
 // CUSTOM ERROR HANDLING
 
 orderSchema.post('save', function (err, doc, next) {
@@ -92,6 +97,7 @@ orderSchema.post('save', function (err, doc, next) {
   errors.fname = err.errors.fname ? err.errors.fname.message : '';
   errors.lname = err.errors.lname ? err.errors.lname.message : '';
   errors.email = err.errors.email ? err.errors.email.message : '';
+  errors.province = err.errors.province ? err.errors.province.message : '';
   errors.city = err.errors.city ? err.errors.city.message : '';
   errors.suit = err.errors.suit ? err.errors.suit.message : '';
   errors.street = err.errors.street ? err.errors.street.message : '';

@@ -24,6 +24,7 @@ import ProductPage from '../components/product/ProductPage';
 import Dashboard from '../components/dashboard/Dashboard';
 import ShoppingCart from '../components/shoppingcart/ShoppingCart';
 import Order from '../components/order/Order';
+import OrderCheckout from '../components/order/OrderCheckout';
 
 import { useSelector } from 'react-redux';
 import { reloadCart } from '../utils/reloadUserAuth';
@@ -87,6 +88,7 @@ const MainApp = (props) => {
           render={() => <Order cookies={props.cookies} />}
         />
         <Route exact path="/order" component={Order} />
+        <Route exact path="/checkout" component={OrderCheckout} />
         <Route
           exact
           path="/category/:slug/:categoryId"

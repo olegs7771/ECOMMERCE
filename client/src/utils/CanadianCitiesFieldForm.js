@@ -322,7 +322,7 @@ const Prince_Edward_Island_cities = [
   'Souris',
   'Summerside',
   'Cornwall',
-  'Other',
+  'other',
 ];
 
 const Quebec_cities = [
@@ -363,7 +363,7 @@ const Quebec_cities = [
   'Victoriaville',
   'Drummondville',
   'Levis',
-  'Other',
+  'other',
 ];
 const Saskatchewan_cities = [
   'Avonlea',
@@ -444,10 +444,11 @@ export default function CanadianCitiesFieldForm({
   label,
   select,
   required,
+  error,
 }) {
   const array = getCitiesArray(province);
   return (
-    <div className="form-group">
+    <div className={styles.form_group}>
       <div className={styles.title}>
         {label}{' '}
         {required ? <span className="form-group--required-icon">*</span> : null}
@@ -456,7 +457,9 @@ export default function CanadianCitiesFieldForm({
         name={name}
         value={value}
         onChange={_onChange}
-        className={styles.form_input}
+        className={
+          error ? 'form-input form-input--invalid ' : styles.form_input
+        }
         required
       >
         <option>{select}</option>
@@ -466,6 +469,11 @@ export default function CanadianCitiesFieldForm({
           </option>
         ))}
       </select>
+      {error ? (
+        <div className="form-input__error">
+          <div className="form-input__error--text">{error}</div>
+        </div>
+      ) : null}
     </div>
   );
 }

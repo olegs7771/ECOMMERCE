@@ -9,9 +9,10 @@ export default function SelectInputForm({
   label,
   select,
   required,
+  error,
 }) {
   return (
-    <div className="form-group">
+    <div className={styles.form_group}>
       <div className={styles.title}>
         {label}
         {required ? <span className="form-group--required-icon">*</span> : null}
@@ -20,7 +21,9 @@ export default function SelectInputForm({
         name={name}
         value={value}
         onChange={_onChange}
-        className={styles.form_input}
+        className={
+          error ? 'form-input form-input--invalid ' : styles.form_input
+        }
         required
       >
         <option>{select}</option>
@@ -30,6 +33,11 @@ export default function SelectInputForm({
           </option>
         ))}
       </select>
+      {error ? (
+        <div className="form-input__error">
+          <div className="form-input__error--text">{error}</div>
+        </div>
+      ) : null}
     </div>
   );
 }

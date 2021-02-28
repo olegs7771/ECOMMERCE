@@ -13,7 +13,7 @@ export default function TextInputForm({
   required,
 }) {
   return (
-    <div className="form-group">
+    <div className={styles.form_group}>
       <label>
         <div className={styles.title}>
           {label}{' '}
