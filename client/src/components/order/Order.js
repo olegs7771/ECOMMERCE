@@ -8,8 +8,9 @@ import {
 } from '../../store/actions/productAction';
 import OrderProductItem from './OrderProductItem';
 import OrderAddressForm from './OrderAddressForm';
+import { withRouter } from 'react-router-dom';
 
-export default function Order() {
+const Order = (props) => {
   const dispatch = useDispatch();
   // REDUX
   // const drawerRedux = useSelector((state) => state.drawer.drawer);
@@ -69,7 +70,11 @@ export default function Order() {
                   * - required fields
                 </div>
               </div>
-              <OrderAddressForm cartId={cartRedux._id} />
+              <OrderAddressForm
+                cartId={cartRedux._id}
+                history={props.history}
+                total={totalPrice}
+              />
             </div>
             <div className="order__cart">
               <div className="productlist">
@@ -115,4 +120,6 @@ export default function Order() {
       </div>
     );
   }
-}
+};
+
+export default withRouter(Order);

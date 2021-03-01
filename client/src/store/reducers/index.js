@@ -8,6 +8,7 @@ import subReducer from './subReducer';
 import productReducer from './productReducer';
 import drawerReducer from './drawerReducer';
 import cookieReducer from './cookieReducer';
+import orderReducer from './orderReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   product: productReducer,
   drawer: drawerReducer,
   cookie: cookieReducer,
+  order: orderReducer,
 });

@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextInputForm from '../../utils/TextInputForm';
 import SelectInputForm from '../../utils/SelectInputForm';
 import CanadianCitiesFieldForm from '../../utils/CanadianCitiesFieldForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrderGuestAction } from '../../store/actions/orderAction';
-import { clearErrorReduxState } from '../../store/actions/categoryAction';
+import {
+  clearErrorReduxState,
+  // clearMessageReduxState,
+} from '../../store/actions/categoryAction';
 
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
-export default function OrderAddressForm({ cartId }) {
+export default function OrderAddressForm({ cartId, history, total }) {
   const dispatch = useDispatch();
   // REDUX
   const authRedux = useSelector((state) => state.auth);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const errorsRedux = useSelector((state) => state.error.errors);
+  // const messageRedux = useSelector((state) => state.message.message);
+  const orderRedux = useSelector((state) => state.order.order);
 
   // STATE
   const initialState = {
@@ -84,6 +89,7 @@ export default function OrderAddressForm({ cartId }) {
       street: values.street_address,
       phone: values.phone,
       zipcode: values.zipcode,
+      total,
       cartId,
     };
     let data;
@@ -102,6 +108,13 @@ export default function OrderAddressForm({ cartId }) {
     }
     dispatch(createOrderGuestAction(data));
   };
+
+  //IF ORDER CREATED PUSH TO PAYMENT PAGE
+  useEffect(() => {
+    if (orderRedux._id) {
+      history.push(`/checkout/${orderRedux._id}`);
+    }
+  }, [orderRedux, history, dispatch]);
 
   return (
     <div className="order__buyer__address">

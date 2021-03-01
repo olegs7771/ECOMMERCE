@@ -80,7 +80,17 @@ const orderSchema = new mongoose.Schema(
       type: ObjectId,
       ref: 'Cart',
     },
+
+    payment: {
+      type: Boolean,
+      default: false,
+    },
+    total: {
+      type: String,
+      required: [true, 'Provide total price for order'],
+    },
   },
+
   {
     timestamps: true,
   }

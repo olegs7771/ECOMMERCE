@@ -88,7 +88,7 @@ const MainApp = (props) => {
           render={() => <Order cookies={props.cookies} />}
         />
         <Route exact path="/order" component={Order} />
-        <Route exact path="/checkout" component={OrderCheckout} />
+        <Route exact path="/checkout/:orderId" component={OrderCheckout} />
         <Route
           exact
           path="/category/:slug/:categoryId"

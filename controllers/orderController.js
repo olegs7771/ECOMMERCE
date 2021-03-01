@@ -4,8 +4,9 @@ const asyncCatch = require('../utils/asyncCatch');
 const AppErrorHandler = require('../utils/AppError');
 const Cart = require('../models/Cart');
 const Order = require('../models/Order');
+const { findOneAndUpdate } = require('../models/Order');
 
-//Create Order By Guest
+//Create Order By Guest/User
 const createOrder = asyncCatch(async (req, res, next) => {
   console.log('Create order');
   console.log('req.user', req.user);
@@ -22,39 +23,40 @@ const createOrder = asyncCatch(async (req, res, next) => {
     zipcode: req.body.zipcode,
     fname: req.body.fname,
     cartId: req.body.cartId,
+    total: req.body.total,
   };
-  let order;
+  let data;
+  let newOrder;
+
   if (typeof req.user === 'object') {
     //User
     //1) Create order for Guest
-    order = {
+    data = {
       ...orderObj,
       usertId: req.user._id,
     };
   } else {
     //Guest
-    order = {
+    data = {
       ...orderObj,
       guestId: req.user,
     };
-    // const res = await Order.create(order);
+    //Check if user/guest already has order created by cartId
+    // const order = await Order.findOne({cartId:req.body.cartId})
+    // if(order){
+    //Order Exists -> Update Order
+
+    newOrder = await Order.findOneAndUpdate({ cartId: req.body.cartId }, data);
+    // }
+    // if null than create new order
+    if (!newOrder) {
+      newOrder = await Order.create(data);
+    }
   }
-  console.log('order', order);
-  //Find Cart
+  //GET Cart
   const cart = await Cart.findById(req.body.cartId);
   if (!cart) return next(new AppErrorHandler('cart not found', 400));
-  console.log('cart.products ', cart.products);
-
-  //Create products line_items for STRIPE
-
-  const customer = await stripe.customers.create({
-    email: req.body.email,
-  });
-
-  console.log('customer', customer);
-  const result = await stripe.charges.create({});
-
-  res.status(200).json({ status: 'success', data: cart });
+  res.status(200).json({ status: 'success', data: newOrder, cart });
 });
 
 module.exports = { createOrder };
