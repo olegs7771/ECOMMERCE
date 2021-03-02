@@ -112,9 +112,22 @@ export default function OrderAddressForm({ cartId, history, total }) {
   //IF ORDER CREATED PUSH TO PAYMENT PAGE
   useEffect(() => {
     if (orderRedux._id) {
-      history.push(`/checkout/${orderRedux._id}`);
+      if (authRedux.isAuthenticated) {
+        //User
+        history.push(`/checkout/${authRedux.user.id}`);
+      } else {
+        //Guest
+        history.push(`/checkout/${cookieRedux.guestId}`);
+      }
     }
-  }, [orderRedux, history, dispatch]);
+  }, [
+    orderRedux,
+    history,
+    dispatch,
+    authRedux.user.id,
+    cookieRedux.guestId,
+    authRedux,
+  ]);
 
   return (
     <div className="order__buyer__address">

@@ -8,6 +8,7 @@ import {
 } from '../../store/actions/productAction';
 import OrderProductItem from './OrderProductItem';
 import OrderAddressForm from './OrderAddressForm';
+import OrderPayment from './OrderPayment';
 import { withRouter } from 'react-router-dom';
 
 const Order = (props) => {
@@ -108,6 +109,7 @@ const Order = (props) => {
                   </span>
                 </div>
               </div>
+              <OrderPayment />
             </div>
           </div>
         </div>

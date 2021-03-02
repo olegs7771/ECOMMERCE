@@ -42,10 +42,10 @@ export const createOrderGuestAction = (data) => async (dispatch) => {
     });
 
     //GET CART INTO import { connect } from 'react-redux'
-    dispatch({
-      type: GET_PRODUCTS_FROM_CART,
-      payload: res.data.cart,
-    });
+    // dispatch({
+    //   type: GET_PRODUCTS_FROM_CART,
+    //   payload: res.data.cart,
+    // });
   } catch (error) {
     dispatch({
       type: LOADING,
@@ -59,8 +59,22 @@ export const createOrderGuestAction = (data) => async (dispatch) => {
   }
 };
 
-// FETCH ORDER FOR CHECKOUT PAGE
+// FETCH ORDER FOR CHECKOUT PAGE user/guest
 
-export const getOrderAction = (data) => (dispatch) => {
+export const getOrderAction = (data) => async (dispatch) => {
   console.log('getOrderAction data', data);
+  let res;
+  try {
+    if (data.userId) {
+      //User
+      res = await axios.get(`/api/v1/order/user/${data.userId}`);
+      console.log('res.data getOrderAction', res.data);
+    } else {
+      //Guest
+      res = await axios.get(`/api/v1/order/guest/${data.guestId}`);
+      console.log('res.data getOrderAction', res.data);
+    }
+  } catch (error) {
+    console.log('error to get order', error.response.data);
+  }
 };

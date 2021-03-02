@@ -35,6 +35,9 @@ const createOrder = asyncCatch(async (req, res, next) => {
       ...orderObj,
       usertId: req.user._id,
     };
+    //Check if user/guest already has order created by cartId
+    //Order Exists -> Update Order
+    newOrder = await Order.findOneAndUpdate({ guestId: req.user._id }, data);
   } else {
     //Guest
     data = {
@@ -42,21 +45,33 @@ const createOrder = asyncCatch(async (req, res, next) => {
       guestId: req.user,
     };
     //Check if user/guest already has order created by cartId
-    // const order = await Order.findOne({cartId:req.body.cartId})
-    // if(order){
     //Order Exists -> Update Order
+    newOrder = await Order.findOneAndUpdate({ guestId: req.user }, data);
 
-    newOrder = await Order.findOneAndUpdate({ cartId: req.body.cartId }, data);
-    // }
     // if null than create new order
     if (!newOrder) {
       newOrder = await Order.create(data);
     }
   }
   //GET Cart
-  const cart = await Cart.findById(req.body.cartId);
-  if (!cart) return next(new AppErrorHandler('cart not found', 400));
-  res.status(200).json({ status: 'success', data: newOrder, cart });
+
+  res.status(200).json({ status: 'success', data: newOrder });
+});
+//GET ORDER AND CART FOR CHECKOUT page by orderId
+
+const getOrder = asyncCatch(async (req, res, next) => {
+  let order;
+
+  if (typeof req.user === 'object') {
+    //User
+    console.log('get order for user');
+  } else {
+    //Guest
+    order = await Order.findOne({ guestId: req.params.guestId });
+    console.log('order', order);
+    if (!order) return next(new AppErrorHandler('No order found', 400));
+    res.status(200).json({ status: 'success', data: order });
+  }
 });
 
-module.exports = { createOrder };
+module.exports = { createOrder, getOrder };
