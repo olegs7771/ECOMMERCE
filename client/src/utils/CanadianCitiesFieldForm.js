@@ -445,6 +445,7 @@ export default function CanadianCitiesFieldForm({
   select,
   required,
   error,
+  disabled,
 }) {
   const array = getCitiesArray(province);
   return (
@@ -461,6 +462,7 @@ export default function CanadianCitiesFieldForm({
           error ? 'form-input form-input--invalid ' : styles.form_input
         }
         required
+        disabled={disabled}
       >
         <option>{select}</option>
         {array.map((val) => (

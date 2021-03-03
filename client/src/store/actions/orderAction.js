@@ -93,7 +93,7 @@ export const paymentIntentAction = (data) => async (dispatch) => {
   console.log('paymentIntentAction data', data);
 
   try {
-    const res = await axios.post(`/api/v1/order/guest/payment/${}`)
+    // const res = await axios.post(`/api/v1/order/guest/payment/${}`)
   } catch (error) {
     console.log('error paymentIntentAction ', error.response.data);
   }

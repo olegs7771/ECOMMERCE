@@ -11,6 +11,7 @@ export default function TextInputForm({
   placeholder,
   styles,
   required,
+  disabled,
 }) {
   return (
     <div className={styles.form_group}>
@@ -29,6 +30,7 @@ export default function TextInputForm({
           onChange={_onChange}
           onMouseLeave={_checkField}
           placeholder={placeholder}
+          disabled={disabled}
         />
       </label>
       {error ? (

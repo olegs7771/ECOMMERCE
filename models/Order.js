@@ -96,13 +96,30 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
-orderSchema.pre('save', function () {
-  console.log('this pre save', this);
-});
+// orderSchema.pre('findOneAndUpdate', function () {
+//   console.log('this pre save', this);
+// });
 
-// CUSTOM ERROR HANDLING
+// CUSTOM ERROR HANDLING FOR SAVE
 
 orderSchema.post('save', function (err, doc, next) {
+  let errors = {};
+  errors.fname = err.errors.fname ? err.errors.fname.message : '';
+  errors.lname = err.errors.lname ? err.errors.lname.message : '';
+  errors.email = err.errors.email ? err.errors.email.message : '';
+  errors.province = err.errors.province ? err.errors.province.message : '';
+  errors.city = err.errors.city ? err.errors.city.message : '';
+  errors.suit = err.errors.suit ? err.errors.suit.message : '';
+  errors.street = err.errors.street ? err.errors.street.message : '';
+  errors.phone = err.errors.phone ? err.errors.phone.message : '';
+  errors.zipcode = err.errors.zipcode ? err.errors.zipcode.message : '';
+
+  console.log('errors', errors);
+  next(errors);
+});
+
+// CUSTOM ERROR HANDLE FOR UPDATE
+orderSchema.post('findOneAndUpdate', function (err, doc, next) {
   let errors = {};
   errors.fname = err.errors.fname ? err.errors.fname.message : '';
   errors.lname = err.errors.lname ? err.errors.lname.message : '';

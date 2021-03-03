@@ -10,6 +10,7 @@ export default function SelectInputForm({
   select,
   required,
   error,
+  disabled,
 }) {
   return (
     <div className={styles.form_group}>
@@ -25,6 +26,7 @@ export default function SelectInputForm({
           error ? 'form-input form-input--invalid ' : styles.form_input
         }
         required
+        disabled={disabled}
       >
         <option>{select}</option>
         {array.map((val) => (

@@ -3,11 +3,15 @@ import TextInputForm from '../../utils/TextInputForm';
 import SelectInputForm from '../../utils/SelectInputForm';
 import CanadianCitiesFieldForm from '../../utils/CanadianCitiesFieldForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { createOrderGuestAction } from '../../store/actions/orderAction';
+import {
+  createOrderGuestAction,
+  clearOrderStateAction,
+} from '../../store/actions/orderAction';
 import {
   clearErrorReduxState,
   // clearMessageReduxState,
 } from '../../store/actions/categoryAction';
+import OrderPayment from './OrderPayment';
 
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -52,6 +56,9 @@ export default function OrderAddressForm({ cartId, history, total }) {
 
   const [values, setValues] = useState(initialState);
   const [showCity, setShowCity] = useState(false); //toggle open input field for other city
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  //disable edit fields after user opened payment form
+  const [disable, setDisable] = useState(false);
 
   const _onChange = (e) => {
     dispatch(clearErrorReduxState());
@@ -77,9 +84,10 @@ export default function OrderAddressForm({ cartId, history, total }) {
     }
   };
 
-  // CREATE ORDER ACTION
-  const _makeOrder = () => {
-    let buyerObj = {
+  //Cretate Order in DB
+  const _orderDetails = () => {
+    let data;
+    const deatailObject = {
       fname: values.first_name,
       lname: values.last_name,
       email: values.email,
@@ -89,45 +97,32 @@ export default function OrderAddressForm({ cartId, history, total }) {
       street: values.street_address,
       phone: values.phone,
       zipcode: values.zipcode,
-      total,
       cartId,
+      total,
     };
-    let data;
     if (authRedux.isAuthenticated) {
-      //User
       data = {
-        ...buyerObj,
+        ...deatailObject,
         userId: authRedux.user.id,
       };
     } else {
-      //Guest
       data = {
-        ...buyerObj,
+        ...deatailObject,
         guestId: cookieRedux.guestId,
       };
     }
+
     dispatch(createOrderGuestAction(data));
   };
 
-  //IF ORDER CREATED PUSH TO PAYMENT PAGE
+  //If Order was created than open payment form to Proceed
+
   useEffect(() => {
     if (orderRedux._id) {
-      if (authRedux.isAuthenticated) {
-        //User
-        history.push(`/checkout/${authRedux.user.id}`);
-      } else {
-        //Guest
-        history.push(`/checkout/${cookieRedux.guestId}`);
-      }
+      setDisable(true);
+      setShowPaymentForm(true);
     }
-  }, [
-    orderRedux,
-    history,
-    dispatch,
-    authRedux.user.id,
-    cookieRedux.guestId,
-    authRedux,
-  ]);
+  }, [orderRedux._id, dispatch]);
 
   return (
     <div className="order__buyer__address">
@@ -144,7 +139,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
           }}
           required={true}
           error={errorsRedux.fname}
-          //  _checkField,
+          disabled={disable}
         />
         <div className="order__buyer__address__row__gap"></div>
         <TextInputForm
@@ -159,6 +154,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
           }}
           required={true}
           error={errorsRedux.lname}
+          disabled={disable}
         />
       </div>
       <div className="order__buyer__address__row">
@@ -173,6 +169,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
             form_group: 'form-group order__buyer__address__form-group',
           }}
           error={errorsRedux.business_name}
+          disabled={disable}
         />
         <div className="order__buyer__address__row__gap"></div>
 
@@ -189,6 +186,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
           containerClass={{ width: '100%' }}
           required={true}
           error={errorsRedux.email}
+          disabled={disable}
         />
       </div>
       <div className="order__buyer__address__row">
@@ -208,6 +206,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
             title="Select Province/Territory"
             required={true}
             error={errorsRedux.province}
+            disabled={disable}
           />
         </div>
         <div className="order__buyer__address__row__gap"></div>
@@ -225,6 +224,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
             }}
             required={true}
             error={errorsRedux.city}
+            disabled={disable}
           />
         ) : (
           <div className="order__buyer__address__row__wrapper">
@@ -244,6 +244,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
               title="City/Town"
               required={true}
               error={errorsRedux.city}
+              disabled={disable}
             />
           </div>
         )}
@@ -262,6 +263,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
           }}
           required={true}
           error={errorsRedux.suit}
+          disabled={disable}
         />
         <div className="order__buyer__address__row__gap"></div>
 
@@ -277,6 +279,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
           }}
           required={true}
           error={errorsRedux.street}
+          disabled={disable}
         />
       </div>
       <div className="order__buyer__address__row">
@@ -321,12 +324,23 @@ export default function OrderAddressForm({ cartId, history, total }) {
           containerClass={{ width: '100%' }}
           required={true}
           error={errorsRedux.zipcode}
+          disabled={disable}
         />
       </div>
-
-      <button className="btn" onClick={_makeOrder}>
-        order now
-      </button>
+      <div
+        className={
+          showPaymentForm
+            ? 'order__payment__wrapper order__payment__wrapper--visible'
+            : 'order__payment__wrapper'
+        }
+      >
+        <OrderPayment order={orderRedux} />
+        {showPaymentForm ? null : (
+          <button className="btn order__btn-wrapper" onClick={_orderDetails}>
+            Proceed to Payment
+          </button>
+        )}
+      </div>
     </div>
   );
 }

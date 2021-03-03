@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   CardElement,
   Elements,
@@ -7,46 +9,74 @@ import {
 } from '@stripe/react-stripe-js';
 
 import { loadStripe } from '@stripe/stripe-js';
+import { paymentIntentAction } from '../../store/actions/orderAction';
 
-const CheckOutForm = () => {
+const CheckOutForm = (props) => {
+  const dispatch = useDispatch();
+
   const stripe = useStripe();
   const elements = useElements();
 
   const _onSubmit = async (e) => {
+    const { fname, lname, email, phone } = props.props.order;
+    const billing_details = {
+      name: fname + ' ' + lname,
+      email,
+      phone,
+    };
     e.preventDefault();
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement),
+      billing_details,
     });
     if (error) {
-      console.log('error', error);
-    } else {
-      console.log('paymentMethod', paymentMethod);
+      return console.log('error', error);
     }
+
+    // console.log('paymentMethod', paymentMethod);
+    const data = {
+      total: props.props.order.total * 100,
+      paymentMethod,
+    };
+    dispatch(paymentIntentAction(data));
   };
 
   return (
     <form onSubmit={_onSubmit}>
-      <CardElement />
-      <button className="btn" type="submit" disabled={!stripe}>
-        Pay
-      </button>
+      <CardElement
+        options={{
+          style: {
+            base: {
+              fontSize: '16px',
+              color: '#424770',
+              '::placeholder': {
+                color: '#aab7c4',
+              },
+            },
+            invalid: {
+              color: '#9e2146',
+            },
+          },
+        }}
+      />
+      <div className="order__btn-group">
+        <button className="btn" type="submit" disabled={!stripe}>
+          Pay ${props.props.order.total}
+        </button>
+      </div>
     </form>
   );
 };
 
-export default function OrderPayment() {
+export default function OrderPayment(props) {
   const [stipePromise, setStripePromise] = useState(() =>
     loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
   );
 
-  // const stripePromise = loadStripe(
-  //   process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
-  // );
-
   return (
     <Elements stripe={stipePromise}>
-      <CheckOutForm />
+      <CheckOutForm props={props} />
     </Elements>
   );
 }

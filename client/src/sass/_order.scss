@@ -38,6 +38,9 @@
         display: flex;
         align-items: center;
         height: 10.2rem;
+        position: relative;
+        background-color: $color-grey;
+        z-index: 30;
 
         &__phone {
           width: 100% !important;
@@ -83,5 +86,29 @@
   &__cart {
     width: 100%;
     padding: 3rem;
+  }
+
+  //ORDER PAYMENT FORM
+  &__payment__wrapper {
+    border: 1px solid black;
+    transform: translateY(-10rem);
+    background-color: $color-grey;
+
+    transition: 0.3s;
+    &--visible {
+      transition: 0.3s;
+      transform: translateY(0);
+      margin-top: 0;
+    }
+  }
+  &__btn-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+  }
+
+  &__btn-wrapper {
+    margin-top: 3rem;
+    width: 100%;
   }
 }

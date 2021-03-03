@@ -6,9 +6,10 @@ import {
   getProductsCartUserAction,
   // deleteCartAction,
 } from '../../store/actions/productAction';
+
 import OrderProductItem from './OrderProductItem';
 import OrderAddressForm from './OrderAddressForm';
-import OrderPayment from './OrderPayment';
+
 import { withRouter } from 'react-router-dom';
 
 const Order = (props) => {
@@ -48,6 +49,7 @@ const Order = (props) => {
         totalPrice = total(arrOfProducts).reduce((acc, val) => acc + val);
 
         totalPrice = Math.round((totalPrice + Number.EPSILON) * 1000) / 1000;
+        //Clear Order in redux for editing new one with updated total
       }
     }
   }
@@ -109,7 +111,6 @@ const Order = (props) => {
                   </span>
                 </div>
               </div>
-              <OrderPayment />
             </div>
           </div>
         </div>

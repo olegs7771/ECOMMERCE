@@ -46,19 +46,27 @@ const createOrder = asyncCatch(async (req, res, next) => {
     };
     //Check if user/guest already has order created by cartId
     //Order Exists -> Update Order
-    newOrder = await Order.findOneAndUpdate({ guestId: req.user }, data);
+    console.log('update data', data);
+    newOrder = await Order.findOneAndUpdate({ guestId: req.user }, data, {
+      runValidators: true,
+      new: true,
+    });
 
     // if null than create new order
     if (!newOrder) {
+      console.log('data to db ', data);
       newOrder = await Order.create(data);
     }
   }
-  //GET Cart
-
   res.status(200).json({ status: 'success', data: newOrder });
 });
-//GET ORDER AND CART FOR CHECKOUT page by orderId
 
+//MAKE PAYMENT INTENT
+const paymentIntent = asyncCatch(async (req, res, next) => {
+  console.log('payment intent');
+});
+
+//GET ORDER AND CART FOR CHECKOUT page by orderId
 const getOrder = asyncCatch(async (req, res, next) => {
   let order;
 
@@ -74,4 +82,4 @@ const getOrder = asyncCatch(async (req, res, next) => {
   }
 });
 
-module.exports = { createOrder, getOrder };
+module.exports = { createOrder, getOrder, paymentIntent };
