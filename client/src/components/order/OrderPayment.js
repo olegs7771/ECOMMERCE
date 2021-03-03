@@ -38,6 +38,7 @@ const CheckOutForm = (props) => {
     const data = {
       total: props.props.order.total * 100,
       paymentMethod,
+      guestId: props.props.order.guestId,
     };
     dispatch(paymentIntentAction(data));
   };
@@ -73,6 +74,7 @@ export default function OrderPayment(props) {
   const [stipePromise, setStripePromise] = useState(() =>
     loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
   );
+  const [success, setSuccess] = useState();
 
   return (
     <Elements stripe={stipePromise}>
