@@ -63,7 +63,18 @@ const createOrder = asyncCatch(async (req, res, next) => {
 
 //MAKE PAYMENT INTENT
 const paymentIntent = asyncCatch(async (req, res, next) => {
+  console.log('req.user', req.user);
+  console.log('req.body', req.body);
   console.log('payment intent');
+
+  const payment = await stripe.paymentIntents.create({
+    amount: req.body.total,
+    currency: 'cad',
+    description: 'some description',
+    payment_method: req.body.paymentMethod.id,
+    confirm: true,
+  });
+  console.log('payment', payment);
 });
 
 //GET ORDER AND CART FOR CHECKOUT page by orderId

@@ -103,16 +103,24 @@ const orderSchema = new mongoose.Schema(
 // CUSTOM ERROR HANDLING FOR SAVE
 
 orderSchema.post('save', function (err, doc, next) {
+  console.log('doc', doc);
+  console.log('err in model', err);
+  console.log('err in model', err.name);
+  console.log('err in model', err.code);
   let errors = {};
-  errors.fname = err.errors.fname ? err.errors.fname.message : '';
-  errors.lname = err.errors.lname ? err.errors.lname.message : '';
-  errors.email = err.errors.email ? err.errors.email.message : '';
-  errors.province = err.errors.province ? err.errors.province.message : '';
-  errors.city = err.errors.city ? err.errors.city.message : '';
-  errors.suit = err.errors.suit ? err.errors.suit.message : '';
-  errors.street = err.errors.street ? err.errors.street.message : '';
-  errors.phone = err.errors.phone ? err.errors.phone.message : '';
-  errors.zipcode = err.errors.zipcode ? err.errors.zipcode.message : '';
+  if (err.name === 'MongoError' && err.code === '11000') {
+    errors.email = 'Such Email already exists!';
+  } else {
+    errors.fname = err.errors.fname ? err.errors.fname.message : '';
+    errors.lname = err.errors.lname ? err.errors.lname.message : '';
+    errors.email = err.errors.email ? err.errors.email.message : '';
+    errors.province = err.errors.province ? err.errors.province.message : '';
+    errors.city = err.errors.city ? err.errors.city.message : '';
+    errors.suit = err.errors.suit ? err.errors.suit.message : '';
+    errors.street = err.errors.street ? err.errors.street.message : '';
+    errors.phone = err.errors.phone ? err.errors.phone.message : '';
+    errors.zipcode = err.errors.zipcode ? err.errors.zipcode.message : '';
+  }
 
   console.log('errors', errors);
   next(errors);
@@ -131,7 +139,7 @@ orderSchema.post('findOneAndUpdate', function (err, doc, next) {
   errors.phone = err.errors.phone ? err.errors.phone.message : '';
   errors.zipcode = err.errors.zipcode ? err.errors.zipcode.message : '';
 
-  console.log('errors', errors);
+  console.log('errors in model update', errors);
   next(errors);
 });
 
