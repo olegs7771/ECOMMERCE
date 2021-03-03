@@ -4,6 +4,7 @@ import {
   LOADING,
   GET_API_MESSAGE,
   GET_ORDER,
+  CLEAR_ORDER_STATE,
   GET_PRODUCTS_FROM_CART,
 } from './types';
 
@@ -76,5 +77,24 @@ export const getOrderAction = (data) => async (dispatch) => {
     }
   } catch (error) {
     console.log('error to get order', error.response.data);
+  }
+};
+
+//CLEAR ORDER IN REDUX
+export const clearOrderStateAction = (data) => (dispatch) => {
+  dispatch({
+    type: CLEAR_ORDER_STATE,
+    payload: {},
+  });
+};
+
+//Make Payment Intent
+export const paymentIntentAction = (data) => async (dispatch) => {
+  console.log('paymentIntentAction data', data);
+
+  try {
+    const res = await axios.post(`/api/v1/order/guest/payment/${}`)
+  } catch (error) {
+    console.log('error paymentIntentAction ', error.response.data);
   }
 };
