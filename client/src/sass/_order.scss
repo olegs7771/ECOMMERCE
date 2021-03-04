@@ -111,4 +111,25 @@
     margin-top: 3rem;
     width: 100%;
   }
+  //ORDER RECEIPT PAGE
+
+  &__receipt {
+    &__wrapper {
+      max-width: 70%;
+      border: 1px solid black;
+      margin: 0 auto;
+    }
+    &__header {
+      &__row {
+        display: flex;
+        align-items: center;
+      }
+      &__title {
+        &--text {
+          font-size: 2rem;
+          font-weight: 700;
+        }
+      }
+    }
+  }
 }

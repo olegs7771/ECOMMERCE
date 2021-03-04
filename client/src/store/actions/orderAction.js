@@ -91,6 +91,7 @@ export const clearOrderStateAction = (data) => (dispatch) => {
 //Make Payment Intent
 export const paymentIntentAction = (data, history) => async (dispatch) => {
   console.log('paymentIntentAction data', data);
+
   dispatch({
     type: LOADING,
     payload: true,
@@ -118,7 +119,8 @@ export const paymentIntentAction = (data, history) => async (dispatch) => {
       payload: res.data.message,
     });
     //PUSH TO RECIEPT PAGE
-    history.push('/receipt', {
+    history.push({
+      pathname: '/receipt',
       data: res.data.data,
       message: res.data.message,
     });

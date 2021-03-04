@@ -40,7 +40,8 @@ const CheckOutForm = (props) => {
       paymentMethod,
       guestId: props.props.order.guestId,
     };
-    dispatch(paymentIntentAction(data, props.history));
+
+    dispatch(paymentIntentAction(data, props.props.history));
   };
 
   return (
