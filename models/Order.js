@@ -89,6 +89,17 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Provide total price for order'],
     },
+    paymentId: {
+      type: String,
+      Date,
+    },
+    paymentAt: {
+      type: Date,
+    },
+
+    orderNumber: {
+      type: Number,
+    },
   },
 
   {
@@ -103,10 +114,10 @@ const orderSchema = new mongoose.Schema(
 // CUSTOM ERROR HANDLING FOR SAVE
 
 orderSchema.post('save', function (err, doc, next) {
-  console.log('doc', doc);
-  console.log('err in model', err);
-  console.log('err in model', err.name);
-  console.log('err in model', err.code);
+  // console.log('doc', doc);
+  // console.log('err in model', err);
+  // console.log('err in model', err.name);
+  // console.log('err in model', err.code);
   let errors = {};
   if (err.name === 'MongoError' && err.code === '11000') {
     errors.email = 'Such Email already exists!';

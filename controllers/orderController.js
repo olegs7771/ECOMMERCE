@@ -23,7 +23,8 @@ const createOrder = asyncCatch(async (req, res, next) => {
     zipcode: req.body.zipcode,
     fname: req.body.fname,
     cartId: req.body.cartId,
-    total: req.body.total,
+    total: req.body.total.toFixed(2),
+    // paymentAt: Date.now(),
   };
   let data;
   let newOrder;
@@ -75,6 +76,29 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
     confirm: true,
   });
   console.log('payment', payment);
+  if (payment.id) {
+    //PAYMENT SUCCEEDED
+    // 1) UPDATE ORDER IN db
+    const randomNum = Math.random().toString();
+    const order = await Order.findOneAndUpdate(
+      { guestId: req.user },
+      {
+        payment: true,
+        paymentAt: Date.now(),
+        paymentId: payment.id,
+        orderNumber: randomNum.substring(randomNum.length - 10),
+      },
+      { runValidators: true, new: true }
+    );
+    //Send Email To Client with Receipt
+    res
+      .status(200)
+      .json({
+        status: 'success',
+        message: 'Thank you for purchase',
+        data: order,
+      });
+  }
 });
 
 //GET ORDER AND CART FOR CHECKOUT page by orderId

@@ -107,7 +107,7 @@ const Order = (props) => {
                     Subtotal
                   </span>
                   <span className="shoppingcart__ordersummary__total-price">
-                    ${totalPrice}
+                    ${totalPrice.toFixed(2)}
                   </span>
                 </div>
               </div>

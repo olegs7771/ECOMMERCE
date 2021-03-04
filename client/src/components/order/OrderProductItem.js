@@ -42,7 +42,7 @@ export default function OrderProductItem({ item }) {
         </div>
         <div className="productlist__item__information-container__prices">
           <div className="productlist__item__information-container__prices--price">
-            $ {parseFloat(item.product.price * item.quantity)}
+            $ {parseFloat(item.product.price * item.quantity).toFixed(2)}
           </div>
         </div>
       </div>

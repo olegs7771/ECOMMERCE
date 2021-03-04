@@ -89,15 +89,39 @@ export const clearOrderStateAction = (data) => (dispatch) => {
 };
 
 //Make Payment Intent
-export const paymentIntentAction = (data) => async (dispatch) => {
+export const paymentIntentAction = (data, history) => async (dispatch) => {
   console.log('paymentIntentAction data', data);
+  dispatch({
+    type: LOADING,
+    payload: true,
+  });
 
   try {
+    dispatch({
+      type: LOADING,
+      payload: false,
+    });
     const res = await axios.post(
       `/api/v1/order/guest/payment/${data.guestId}`,
       data
     );
     console.log('res.data paymentIntentAction', res.data);
+
+    //GET ORDER INTO REDUX
+    dispatch({
+      type: GET_ORDER,
+      payload: res.data.data,
+    });
+    //GET MESSAGE INTO REDUX
+    dispatch({
+      type: GET_API_MESSAGE,
+      payload: res.data.message,
+    });
+    //PUSH TO RECIEPT PAGE
+    history.push('/receipt', {
+      data: res.data.data,
+      message: res.data.message,
+    });
   } catch (error) {
     console.log('error paymentIntentAction ', error.response.data);
   }

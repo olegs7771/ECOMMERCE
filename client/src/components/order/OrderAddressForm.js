@@ -24,6 +24,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
   const errorsRedux = useSelector((state) => state.error.errors);
   // const messageRedux = useSelector((state) => state.message.message);
   const orderRedux = useSelector((state) => state.order.order);
+  const loadingRedux = useSelector((state) => state.loading.loading);
 
   // STATE
   const initialState = {
@@ -334,7 +335,11 @@ export default function OrderAddressForm({ cartId, history, total }) {
             : 'order__payment__wrapper'
         }
       >
-        <OrderPayment order={orderRedux} />
+        <OrderPayment
+          order={orderRedux}
+          loading={loadingRedux}
+          history={history}
+        />
         {showPaymentForm ? null : (
           <button className="btn order__btn-wrapper" onClick={_orderDetails}>
             Proceed to Payment

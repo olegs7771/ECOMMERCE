@@ -40,7 +40,7 @@ const CheckOutForm = (props) => {
       paymentMethod,
       guestId: props.props.order.guestId,
     };
-    dispatch(paymentIntentAction(data));
+    dispatch(paymentIntentAction(data, props.history));
   };
 
   return (
@@ -62,9 +62,15 @@ const CheckOutForm = (props) => {
         }}
       />
       <div className="order__btn-group">
-        <button className="btn" type="submit" disabled={!stripe}>
-          Pay ${props.props.order.total}
-        </button>
+        {props.loading ? (
+          <button className="btn" type="submit" disabled={!stripe}>
+            Processing..
+          </button>
+        ) : (
+          <button className="btn" type="submit" disabled={!stripe}>
+            Pay ${props.props.order.total}
+          </button>
+        )}
       </div>
     </form>
   );
@@ -74,7 +80,6 @@ export default function OrderPayment(props) {
   const [stipePromise, setStripePromise] = useState(() =>
     loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
   );
-  const [success, setSuccess] = useState();
 
   return (
     <Elements stripe={stipePromise}>
