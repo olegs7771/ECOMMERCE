@@ -53,10 +53,17 @@ export default function OrderReceipt(props) {
               </div>
               <div className="order__receipt__header__order-number">
                 <p className="order__receipt__header__order-number--text">
-                  Your order number is 11111111000000000
+                  Your order number is
+                  <span className="order__receipt__header__order-number--text-bold">
+                    {' '}
+                    {orderRedux.orderNumber}
+                  </span>
                 </p>
                 <p className="order__receipt__header__order-number--text">
-                  A confirmation of your order has been sent to some@email.com
+                  A confirmation of your order has been sent to{' '}
+                  <span className="order__receipt__header__order-number--text-bold">
+                    {orderRedux.email}
+                  </span>
                 </p>
               </div>
             </div>
@@ -102,10 +109,11 @@ export default function OrderReceipt(props) {
                       Address
                     </div>
                     <p className="order__receipt__main__delivery__address__address--text">
-                      85 israel asper way
+                      {orderRedux.suit} {orderRedux.street}
                     </p>
                     <p className="order__receipt__main__delivery__address__address--text">
-                      Winnipeg,MB R3C 0L5,Canada
+                      {orderRedux.city},{orderRedux.province}{' '}
+                      {orderRedux.zipcode},Canada
                     </p>
                   </div>
                 </div>
@@ -153,7 +161,24 @@ export default function OrderReceipt(props) {
                   </button>
                 </div>
               </div>
-              <div className="order__receipt__costumer">Costumer</div>
+              <div className="order__receipt__costumer mb-xsm">
+                <div className="order__receipt__costumer__policy">
+                  <p className="order__receipt__costumer__policy--text">
+                    You can amend or cancel your order until:
+                  </p>
+                </div>
+                <div className="order__receipt__costumer__policy__date mb-xsm">
+                  <div className="order__receipt__costumer__policy__date--text">
+                    Tuesday 21 May, 23:43
+                  </div>
+                </div>
+                <button className="btn order__receipt__costumer__policy__btn">
+                  Make changes to your order
+                </button>
+              </div>
+              <button className="btn order__receipt__cta__btn">
+                Continue Shopping
+              </button>
             </div>
           </main>
         </div>
