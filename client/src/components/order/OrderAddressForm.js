@@ -3,6 +3,7 @@ import TextInputForm from '../../utils/TextInputForm';
 import SelectInputForm from '../../utils/SelectInputForm';
 import CanadianCitiesFieldForm from '../../utils/CanadianCitiesFieldForm';
 import { useDispatch, useSelector } from 'react-redux';
+import { provinceCode } from '../../utils/ProvinceCode';
 import {
   createOrderGuestAction,
   // clearOrderStateAction,
@@ -72,7 +73,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
   const _onChangeProvince = (e) => {
     dispatch(clearErrorReduxState());
     setShowCity(false);
-    setValues({ ...values, [e.target.name]: e.target.value });
+    setValues({ ...values, [e.target.name]: provinceCode(e.target.value) });
   };
   const _onChangeCity = (e) => {
     dispatch(clearErrorReduxState());
