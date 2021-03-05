@@ -74,6 +74,16 @@ export const getOrderAction = (data) => async (dispatch) => {
       //Guest
       res = await axios.get(`/api/v1/order/guest/${data.guestId}`);
       console.log('res.data getOrderAction', res.data);
+      //GET ORDER INTO REDUX
+      dispatch({
+        type: GET_ORDER,
+        payload: res.data.data.order,
+      });
+      //GET ORDER INTO REDUX
+      dispatch({
+        type: GET_PRODUCTS_FROM_CART,
+        payload: res.data.data.cart,
+      });
     }
   } catch (error) {
     console.log('error to get order', error.response.data);
@@ -120,9 +130,7 @@ export const paymentIntentAction = (data, history) => async (dispatch) => {
     });
     //PUSH TO RECIEPT PAGE
     history.push({
-      pathname: '/receipt',
-      data: res.data.data,
-      message: res.data.message,
+      pathname: `/receipt/${res.data.data._id}`,
     });
   } catch (error) {
     console.log('error paymentIntentAction ', error.response.data);

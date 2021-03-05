@@ -91,13 +91,11 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
       { runValidators: true, new: true }
     );
     //Send Email To Client with Receipt
-    res
-      .status(200)
-      .json({
-        status: 'success',
-        message: 'Thank you for purchase',
-        data: order,
-      });
+    res.status(200).json({
+      status: 'success',
+      message: 'Thank you for purchase',
+      data: order,
+    });
   }
 });
 
@@ -113,7 +111,11 @@ const getOrder = asyncCatch(async (req, res, next) => {
     order = await Order.findOne({ guestId: req.params.guestId });
     console.log('order', order);
     if (!order) return next(new AppErrorHandler('No order found', 400));
-    res.status(200).json({ status: 'success', data: order });
+    //Find Cart to show in receipt page
+    const cart = await Cart.findById(order.cartId);
+    if (!cart) return next(new AppErrorHandler('No cart found', 400));
+
+    res.status(200).json({ status: 'success', data: { order, cart } });
   }
 });
 

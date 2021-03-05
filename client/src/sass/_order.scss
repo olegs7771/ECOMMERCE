@@ -111,25 +111,197 @@
     margin-top: 3rem;
     width: 100%;
   }
+  ////////////////////////////////////////////////////////////
   //ORDER RECEIPT PAGE
 
   &__receipt {
     &__wrapper {
       max-width: 70%;
-      border: 1px solid black;
+      // border: 1px solid black;
       margin: 0 auto;
+      font-family: $font-secondary;
     }
     &__header {
-      &__row {
+      &__container {
         display: flex;
-        align-items: center;
+        background-color: $color-green-light;
+        border: 1px solid $color-grey-dark;
+        border-radius: 5px;
+        padding: 2rem;
+      }
+      &__left {
+        // border: 1px solid black;
+        width: 15%;
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 6px;
+        align-items: flex-start;
+      }
+      &__right {
+        // border: 1px solid black;
+        padding-left: 2rem;
       }
       &__title {
         &--text {
-          font-size: 2rem;
+          font-size: 2.5rem;
           font-weight: 700;
         }
       }
+      &__icon {
+        background-color: $color-valid;
+        padding: 0.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &--icon {
+          fill: #fff;
+        }
+      }
+      &__order-number {
+        font-size: 1.4rem;
+        // font-weight: 700;
+        color: $color-grey-dark2;
+      }
+    }
+    &__main {
+      display: flex;
+      margin: 1rem 0;
+
+      &__delivery {
+        border: 1px solid $color-grey-dark;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 40%;
+        margin-right: 1rem;
+
+        &__title {
+          display: flex;
+          justify-content: center;
+          margin: 1rem 0;
+          &--text {
+            font-size: 2rem;
+            font-weight: 700;
+          }
+        }
+
+        &__block {
+          display: flex;
+        }
+        &__date {
+          // border: 1px solid black;
+          padding: 0 1.2rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          &__block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 1rem;
+            border-radius: 5px;
+            background-color: $color-grey-light-2;
+          }
+          &--weekday {
+            font-size: 1.6rem;
+            text-transform: uppercase;
+          }
+          &--day {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 0.6;
+          }
+          &--month {
+            font-size: 1.6rem;
+            text-transform: uppercase;
+          }
+        }
+        //ADDRESS
+        &__address {
+          display: flex;
+          flex-direction: column;
+          // border: 1px solid black;
+
+          &__date {
+            &__title {
+              font-size: 1.6rem;
+              font-weight: 700;
+            }
+            &--text {
+              font-size: 1.4rem;
+            }
+          }
+          &__address {
+            &--text {
+              font-size: 1.4rem;
+            }
+          }
+        }
+      }
+      // ORDER
+      &__order {
+        background-color: #fff;
+        border: 1px solid $color-grey-dark;
+        border-radius: 5px;
+        &__wrapper {
+          width: 60%;
+        }
+
+        &__block {
+          padding: 0 4rem;
+          border-bottom: 1px solid $color-grey-dark;
+        }
+        &__list {
+        }
+        &__item {
+          display: flex;
+          justify-content: space-between;
+
+          &:not(:last-child) {
+            border-bottom: 1px solid $color-grey-dark;
+          }
+
+          padding: 1rem 3rem;
+        }
+        &__title {
+          font-size: 1.6rem;
+          &-total {
+            font-size: 2rem;
+            font-weight: 900;
+          }
+        }
+        &__text {
+          font-size: 1.6rem;
+          &-total {
+            font-size: 2rem;
+            font-weight: 900;
+          }
+        }
+      }
+    }
+    //CTA
+    &__cta {
+      padding: 1rem;
+      background-color: $color-grey;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      &__btn {
+        width: 100%;
+        background-color: #fff;
+        color: $color-blue-3;
+        font-weight: 700;
+        cursor: pointer;
+        border: 1px solid $color-blue-3;
+      }
+    }
+    // COSTUMER POLICY
+    &__costumer {
+      border: 1px solid $color-grey-dark;
+      border-radius: 5px;
     }
   }
 }

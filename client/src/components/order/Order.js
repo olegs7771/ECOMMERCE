@@ -15,7 +15,7 @@ import { withRouter } from 'react-router-dom';
 const Order = (props) => {
   const dispatch = useDispatch();
   // REDUX
-  // const drawerRedux = useSelector((state) => state.drawer.drawer);
+
   const cartRedux = useSelector((state) => state.product.shoppingcart);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const authRedux = useSelector((state) => state.auth);
