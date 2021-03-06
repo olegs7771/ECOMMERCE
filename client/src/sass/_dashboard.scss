@@ -1,0 +1,48 @@
+.dashboard {
+  min-height: 100vh;
+  &__wrapper {
+    display: grid;
+    grid-template-columns: 20rem 20rem 1fr;
+  }
+  &__nav {
+    &__list {
+      //   border: 1px solid black;
+      height: 100%;
+      //   background-color: $color-black;
+    }
+    &__item {
+      display: flex;
+      justify-content: center;
+      padding: 0.5rem 1rem;
+      margin-bottom: 0.3rem;
+      background-color: $color-grey;
+      border: 1px solid $color-grey-light-3;
+      border-radius: 5px;
+      &:hover {
+        background-color: $color-grey-light-2;
+      }
+    }
+    &__link {
+      text-decoration: none;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: $color-black;
+    }
+  }
+
+  //   DETAILS BLOCK
+  &__details {
+    &__list {
+    }
+    &__item {
+      display: flex;
+      justify-content: center;
+
+      padding: 0.5rem 1rem;
+    }
+    &__link {
+      text-decoration: none;
+      font-size: 1.6rem;
+    }
+  }
+}

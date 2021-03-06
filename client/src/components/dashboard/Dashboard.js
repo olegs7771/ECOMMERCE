@@ -8,13 +8,43 @@ export default function Dashboard(props) {
   const drawerRedux = useSelector((state) => state.drawer.drawer);
 
   return (
-    <div className="dashboard">
-      <div
-        className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
-        onClick={() => dispatch(drawerToggle(false))}
-      ></div>
-      <div className="dashboard__container">
-        <h2 className="heading-2 mb-sm">User Dashboard</h2>
+    <div className="page dashboard">
+      <div className="container">
+        <div className="dashboard__wrapper">
+          <div className="dashboard__nav">
+            <ul className="dashboard__nav__list">
+              <li className="dashboard__nav__item">
+                <a href="#!" className="dashboard__nav__link">
+                  Orders
+                </a>
+              </li>
+              <li className="dashboard__nav__item">
+                <a href="#!" className="dashboard__nav__link">
+                  Orders
+                </a>
+              </li>
+              <li className="dashboard__nav__item">
+                <a href="#!" className="dashboard__nav__link">
+                  Orders
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="dashboard__details">
+            <ul className="dashboard__details__list">
+              <li className="dashboard__details__item">
+                <a href="#!" className="dashboard__details__link">
+                  order date
+                </a>
+              </li>
+              <li className="dashboard__details__item">
+                <a href="#!" className="dashboard__details__link">
+                  order date
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
