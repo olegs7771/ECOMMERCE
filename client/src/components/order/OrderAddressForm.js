@@ -5,7 +5,7 @@ import CanadianCitiesFieldForm from '../../utils/CanadianCitiesFieldForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { provinceCode } from '../../utils/ProvinceCode';
 import {
-  createOrderGuestAction,
+  createOrderAction,
   // clearOrderStateAction,
 } from '../../store/actions/orderAction';
 import {
@@ -29,10 +29,10 @@ export default function OrderAddressForm({ cartId, history, total }) {
 
   // STATE
   const initialState = {
-    first_name: '',
+    first_name: authRedux.user.name ? authRedux.user.name : '',
     last_name: '',
     business_name: '',
-    email: '',
+    email: authRedux.user.email ? authRedux.user.email : '',
     street_address: '',
     suit_apt: '',
     city: '',
@@ -52,6 +52,8 @@ export default function OrderAddressForm({ cartId, history, total }) {
       'Nunavut',
     ],
     province_territory_value: '',
+    province: '',
+    country: '',
     zipcode: '',
     phone: '',
   };
@@ -66,15 +68,22 @@ export default function OrderAddressForm({ cartId, history, total }) {
     dispatch(clearErrorReduxState());
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-  const _onChangePhone = (e) => {
+  const _onChangePhone = (e, country) => {
+    console.log('e phone', e, country);
     dispatch(clearErrorReduxState());
-    setValues({ ...values, phone: e });
+    setValues({ ...values, phone: e, country: country.name }); //get number and country to state
   };
   const _onChangeProvince = (e) => {
+    console.log('e province', e);
     dispatch(clearErrorReduxState());
     setShowCity(false);
-    setValues({ ...values, [e.target.name]: provinceCode(e.target.value) });
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+      province: provinceCode(e.target.value),
+    });
   };
+
   const _onChangeCity = (e) => {
     dispatch(clearErrorReduxState());
     console.log('e.target.value city', e.target.value);
@@ -93,12 +102,13 @@ export default function OrderAddressForm({ cartId, history, total }) {
       fname: values.first_name,
       lname: values.last_name,
       email: values.email,
-      province: values.province_territory_value,
       city: values.city,
       suit: values.suit_apt,
       street: values.street_address,
       phone: values.phone,
       zipcode: values.zipcode,
+      country: values.country,
+      province: values.province,
       cartId,
       total,
     };
@@ -114,7 +124,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
       };
     }
 
-    dispatch(createOrderGuestAction(data));
+    dispatch(createOrderAction(data));
   };
 
   //If Order was created than open payment form to Proceed
@@ -134,7 +144,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
           _onChange={_onChange}
           label="First Name"
           name="first_name"
-          placeholder="John"
+          placeholder="First Name"
           styles={{
             title: 'form-label--name',
             form_group: 'form-group order__buyer__address__form-group',
@@ -149,7 +159,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
           _onChange={_onChange}
           label="Last Name"
           name="last_name"
-          placeholder="Brown"
+          placeholder="Last Name"
           styles={{
             title: 'form-label--name',
             form_group: 'form-group order__buyer__address__form-group',
@@ -295,7 +305,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
           <div className="order__buyer__address__row__wrapper--phone">
             <PhoneInput
               value={values.phone}
-              onChange={(phone) => _onChangePhone(phone)}
+              onChange={(phone, country) => _onChangePhone(phone, country)}
               onlyCountries={['ca', 'us']}
               enableAreaCodes={['ca', 'usa']}
               country={'ca'}

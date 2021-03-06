@@ -13,9 +13,10 @@ import { paymentIntentAction } from '../../store/actions/orderAction';
 
 const CheckOutForm = (props) => {
   const dispatch = useDispatch();
-
   const stripe = useStripe();
   const elements = useElements();
+  // REDUX
+  const authRedux = useSelector((state) => state.auth);
 
   const _onSubmit = async (e) => {
     const { fname, lname, email, phone } = props.props.order;
@@ -33,13 +34,20 @@ const CheckOutForm = (props) => {
     if (error) {
       return console.log('error', error);
     }
-
-    // console.log('paymentMethod', paymentMethod);
-    const data = {
-      total: props.props.order.total * 100,
-      paymentMethod,
-      guestId: props.props.order.guestId,
-    };
+    let data;
+    if (authRedux.isAuthenticated) {
+      data = {
+        total: props.props.order.total * 100,
+        paymentMethod,
+        userId: authRedux.user.id,
+      };
+    } else {
+      data = {
+        total: props.props.order.total * 100,
+        paymentMethod,
+        guestId: props.props.order.guestId,
+      };
+    }
 
     dispatch(paymentIntentAction(data, props.props.history));
   };

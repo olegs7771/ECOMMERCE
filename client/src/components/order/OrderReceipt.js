@@ -15,12 +15,26 @@ export default function OrderReceipt(props) {
 
   // LOAD ORDER AND CART ON COMPONENT to show in receipt
   useEffect(() => {
-    const data = {
-      guestId: cookieRedux.guestId,
-      orderId: props.match.params.orderId,
-    };
+    let data;
+    if (authRedux.isAuthenticated) {
+      data = {
+        userId: authRedux.user.id,
+        orderId: props.match.params.orderId,
+      };
+    } else {
+      data = {
+        guestId: cookieRedux.guestId,
+        orderId: props.match.params.orderId,
+      };
+    }
     dispatch(getOrderAction(data));
-  }, []);
+  }, [
+    authRedux.isAuthenticated,
+    authRedux.user.id,
+    cookieRedux.guestId,
+    props.match.params.orderId,
+    dispatch,
+  ]);
 
   if (Object.keys(orderRedux).length === 0) {
     return (
@@ -112,8 +126,8 @@ export default function OrderReceipt(props) {
                       {orderRedux.suit} {orderRedux.street}
                     </p>
                     <p className="order__receipt__main__delivery__address__address--text">
-                      {orderRedux.city},{orderRedux.province}{' '}
-                      {orderRedux.zipcode},Canada
+                      {orderRedux.city} {orderRedux.province} ,{' '}
+                      {orderRedux.zipcode} , {orderRedux.country}
                     </p>
                   </div>
                 </div>
@@ -176,7 +190,10 @@ export default function OrderReceipt(props) {
                   Make changes to your order
                 </button>
               </div>
-              <button className="btn order__receipt__cta__btn">
+              <button
+                className="btn order__receipt__cta__btn"
+                onClick={props.history.push('/')}
+              >
                 Continue Shopping
               </button>
             </div>

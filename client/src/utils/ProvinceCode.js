@@ -1,4 +1,5 @@
 export const provinceCode = (province) => {
+  console.log('province', province);
   let code;
   code =
     province === 'Ontario'

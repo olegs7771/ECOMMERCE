@@ -45,6 +45,10 @@ const orderSchema = new mongoose.Schema(
       minlength: [3, 'Min name length 3 chars'],
       maxlength: [20, 'Max name length 30 chars'],
     },
+    country: {
+      type: String,
+      required: [true, 'City  required'],
+    },
     suit: {
       type: String,
       required: [true, 'suit/apt required'],

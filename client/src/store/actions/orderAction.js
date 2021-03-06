@@ -9,7 +9,7 @@ import {
 } from './types';
 
 // Create Order for Guest
-export const createOrderGuestAction = (data) => async (dispatch) => {
+export const createOrderAction = (data) => async (dispatch) => {
   dispatch({
     type: LOADING,
     payload: true,
@@ -24,11 +24,12 @@ export const createOrderGuestAction = (data) => async (dispatch) => {
     if (data.userId) {
       //User
       res = await axios.post(`/api/v1/order/user/${data.userId}`, data);
-      console.log('createOrderGuestAction res.data user', res.data);
+      console.log('createOrderUserAction res.data user', res.data);
+    } else {
+      //Guest
+      res = await axios.post(`/api/v1/order/guest/${data.guestId}`, data);
+      console.log('createOrderGuestAction res.data guest', res.data);
     }
-    //Guest
-    res = await axios.post(`/api/v1/order/guest/${data.guestId}`, data);
-    console.log('createOrderGuestAction res.data guest', res.data);
 
     //GET MESSAGE TO PUSH CHECKOUT PAGE after order created
     dispatch({
@@ -74,17 +75,17 @@ export const getOrderAction = (data) => async (dispatch) => {
       //Guest
       res = await axios.get(`/api/v1/order/guest/${data.guestId}`);
       console.log('res.data getOrderAction', res.data);
-      //GET ORDER INTO REDUX
-      dispatch({
-        type: GET_ORDER,
-        payload: res.data.data.order,
-      });
-      //GET ORDER INTO REDUX
-      dispatch({
-        type: GET_PRODUCTS_FROM_CART,
-        payload: res.data.data.cart,
-      });
     }
+    //GET ORDER INTO REDUX
+    dispatch({
+      type: GET_ORDER,
+      payload: res.data.data.order,
+    });
+    //GET ORDER INTO REDUX
+    dispatch({
+      type: GET_PRODUCTS_FROM_CART,
+      payload: res.data.data.cart,
+    });
   } catch (error) {
     console.log('error to get order', error.response.data);
   }
@@ -112,10 +113,15 @@ export const paymentIntentAction = (data, history) => async (dispatch) => {
       type: LOADING,
       payload: false,
     });
-    const res = await axios.post(
-      `/api/v1/order/guest/payment/${data.guestId}`,
-      data
-    );
+    let res;
+    if (data.userId) {
+      res = await axios.post(`/api/v1/order/user/payment/${data.userId}`, data);
+    } else {
+      res = await axios.post(
+        `/api/v1/order/guest/payment/${data.guestId}`,
+        data
+      );
+    }
     console.log('res.data paymentIntentAction', res.data);
 
     //GET ORDER INTO REDUX

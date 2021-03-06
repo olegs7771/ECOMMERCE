@@ -24,7 +24,7 @@ const createOrder = asyncCatch(async (req, res, next) => {
     fname: req.body.fname,
     cartId: req.body.cartId,
     total: req.body.total.toFixed(2),
-    // paymentAt: Date.now(),
+    country: req.body.country,
   };
   let data;
   let newOrder;
@@ -34,11 +34,19 @@ const createOrder = asyncCatch(async (req, res, next) => {
     //1) Create order for Guest
     data = {
       ...orderObj,
-      usertId: req.user._id,
+      userId: req.user._id,
     };
     //Check if user/guest already has order created by cartId
     //Order Exists -> Update Order
-    newOrder = await Order.findOneAndUpdate({ guestId: req.user._id }, data);
+    newOrder = await Order.findOneAndUpdate({ userId: req.user._id }, data, {
+      runValidators: true,
+      new: true,
+    });
+    // if null than create new order
+    if (!newOrder) {
+      console.log('data to db ', data);
+      newOrder = await Order.create(data);
+    }
   } else {
     //Guest
     data = {
@@ -80,16 +88,33 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
     //PAYMENT SUCCEEDED
     // 1) UPDATE ORDER IN db
     const randomNum = Math.random().toString();
-    const order = await Order.findOneAndUpdate(
-      { guestId: req.user },
-      {
-        payment: true,
-        paymentAt: Date.now(),
-        paymentId: payment.id,
-        orderNumber: randomNum.substring(randomNum.length - 10),
-      },
-      { runValidators: true, new: true }
-    );
+    let order;
+    if (typeof req.user === 'object') {
+      //User
+      order = await Order.findOneAndUpdate(
+        { userId: req.user },
+        {
+          payment: true,
+          paymentAt: Date.now(),
+          paymentId: payment.id,
+          orderNumber: randomNum.substring(randomNum.length - 10),
+        },
+        { runValidators: true, new: true }
+      );
+    } else {
+      //Guest
+      order = await Order.findOneAndUpdate(
+        { guestId: req.user },
+        {
+          payment: true,
+          paymentAt: Date.now(),
+          paymentId: payment.id,
+          orderNumber: randomNum.substring(randomNum.length - 10),
+        },
+        { runValidators: true, new: true }
+      );
+    }
+
     //Send Email To Client with Receipt
     res.status(200).json({
       status: 'success',
@@ -105,7 +130,14 @@ const getOrder = asyncCatch(async (req, res, next) => {
 
   if (typeof req.user === 'object') {
     //User
-    console.log('get order for user');
+    order = await Order.findOne({ userId: req.params.userId });
+    console.log('order', order);
+    if (!order) return next(new AppErrorHandler('No order found', 400));
+    //Find Cart to show in receipt page
+    const cart = await Cart.findById(order.cartId);
+    if (!cart) return next(new AppErrorHandler('No cart found', 400));
+
+    res.status(200).json({ status: 'success', data: { order, cart } });
   } else {
     //Guest
     order = await Order.findOne({ guestId: req.params.guestId });

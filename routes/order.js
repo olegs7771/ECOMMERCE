@@ -12,6 +12,7 @@ const {
 
 //Create order by guest
 router.route('/user/:userId').post(protect, createOrder).get(protect, getOrder);
+router.route('/user/payment/:userId').post(protect, paymentIntent);
 
 //Create order by guest
 router
