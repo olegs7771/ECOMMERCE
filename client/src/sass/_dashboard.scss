@@ -32,13 +32,17 @@
 
   //   DETAILS BLOCK
   &__details {
+    border: 1px solid black;
+
     &__list {
     }
     &__item {
       display: flex;
       justify-content: center;
-
       padding: 0.5rem 1rem;
+      &__orders {
+        position: relative;
+      }
     }
     &__link {
       text-decoration: none;
