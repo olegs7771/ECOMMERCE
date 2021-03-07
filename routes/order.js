@@ -9,12 +9,17 @@ const {
   getOrder,
   paymentIntent,
   getAllOrders,
+  getOrderById,
 } = require('../controllers/orderController');
 
 // User Order
-router.route('/user/:userId').post(protect, createOrder).get(protect, getOrder);
+router
+  .route('/user/:userId/')
+  .post(protect, createOrder)
+  .get(protect, getOrder);
 router.route('/user/orders/:userId').get(protect, getAllOrders); //show all users orders
 router.route('/user/payment/:userId').post(protect, paymentIntent);
+router.route('/order/:userId/:orderId').get(protect, getOrderById);
 
 // Guestr Order
 router

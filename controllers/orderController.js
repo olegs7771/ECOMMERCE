@@ -150,13 +150,34 @@ const getOrder = asyncCatch(async (req, res, next) => {
     res.status(200).json({ status: 'success', data: { order, cart } });
   }
 });
+//GET ORDER AND CART FOR USER DASHBOARD BY orderId
+const getOrderById = asyncCatch(async (req, res, next) => {
+  let order;
+
+  order = await Order.findById(req.params.orderId);
+  console.log('order', order);
+  if (!order) return next(new AppErrorHandler('No order found', 400));
+  //Find Cart to show in receipt page
+  const cart = await Cart.findById(order.cartId);
+  if (!cart) return next(new AppErrorHandler('No cart found', 400));
+
+  res.status(200).json({ status: 'success', data: { order, cart } });
+});
+
+// GET ALL ORDERS TO SHOW IN MODAL DASHBOARD
 
 const getAllOrders = asyncCatch(async (req, res, next) => {
   // 1)Fetch all existing orders for user
   // console.log('req.user', req.user);
-  const orders = await Order.find({ userId: req.body._id, payment: true });
+  const orders = await Order.find({ userId: req.user._id });
   console.log(orders);
   res.status(200).json({ status: 'success', data: orders });
 });
 
-module.exports = { createOrder, getOrder, paymentIntent, getAllOrders };
+module.exports = {
+  createOrder,
+  getOrder,
+  paymentIntent,
+  getAllOrders,
+  getOrderById,
+};

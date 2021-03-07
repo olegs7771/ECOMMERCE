@@ -90,6 +90,30 @@ export const getOrderAction = (data) => async (dispatch) => {
     console.log('error to get order', error.response.data);
   }
 };
+// FETCH ORDER FOR DASHBOARD BY orderId FOR USER
+export const getOrderByIdAction = (data) => async (dispatch) => {
+  console.log('getOrderByidAction data', data);
+  let res;
+  try {
+    //User
+    res = await axios.get(`/api/v1/order/order/${data.userId}/${data.orderId}`);
+    console.log('res.data getOrderAction', res.data);
+
+    //GET ORDER INTO REDUX
+    dispatch({
+      type: GET_ORDER,
+      payload: res.data.data.order,
+    });
+    //GET ORDER INTO REDUX
+    dispatch({
+      type: GET_PRODUCTS_FROM_CART,
+      payload: res.data.data.cart,
+    });
+  } catch (error) {
+    console.log('error to get order', error.response.data);
+  }
+};
+
 // FETCH ALL ORDERS FOR DASHBOARD USER
 export const getAllOrdersAction = (data) => async (dispatch) => {
   console.log('getAllOrdersAction data', data);
