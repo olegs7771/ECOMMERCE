@@ -4,6 +4,7 @@ import {
   LOADING,
   GET_API_MESSAGE,
   GET_ORDER,
+  GET_ALL_ORDERS,
   CLEAR_ORDER_STATE,
   GET_PRODUCTS_FROM_CART,
 } from './types';
@@ -62,7 +63,6 @@ export const createOrderAction = (data) => async (dispatch) => {
 };
 
 // FETCH ORDER FOR CHECKOUT PAGE user/guest
-
 export const getOrderAction = (data) => async (dispatch) => {
   console.log('getOrderAction data', data);
   let res;
@@ -85,6 +85,24 @@ export const getOrderAction = (data) => async (dispatch) => {
     dispatch({
       type: GET_PRODUCTS_FROM_CART,
       payload: res.data.data.cart,
+    });
+  } catch (error) {
+    console.log('error to get order', error.response.data);
+  }
+};
+// FETCH ALL ORDERS FOR DASHBOARD USER
+export const getAllOrdersAction = (data) => async (dispatch) => {
+  console.log('getAllOrdersAction data', data);
+
+  try {
+    //User
+    const res = await axios.get(`/api/v1/order/user/orders/${data.userId}`);
+    console.log('res.data getOrderAction', res.data);
+
+    //GET ORDERS INTO REDUX
+    dispatch({
+      type: GET_ALL_ORDERS,
+      payload: res.data.data,
     });
   } catch (error) {
     console.log('error to get order', error.response.data);

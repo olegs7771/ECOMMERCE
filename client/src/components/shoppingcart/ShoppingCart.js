@@ -11,6 +11,7 @@ import sprite from '../../img/sprite.svg';
 import ShoppingCartItem from './ShoppingCartItem';
 import { drawerToggle } from '../../store/actions/drawerAction';
 import { withRouter } from 'react-router-dom';
+import ModalSlideToLeft from '../../utils/ModalSlideToLeft';
 
 const ShoppingCart = (props) => {
   const dispatch = useDispatch();
@@ -127,63 +128,28 @@ const ShoppingCart = (props) => {
                 // CART NOT EMPTY
                 <div>
                   {/* MODAL   */}
-                  <div
-                    className={
-                      modal
-                        ? 'modal__wrapper'
-                        : 'modal__wrapper modal__wrapper--close'
-                    }
-                  >
-                    <div
-                      className={
-                        modal
-                          ? 'modal__wrapper__backdrop'
-                          : 'modal__wrapper__backdrop modal__wrapper__backdrop--close'
-                      }
-                    ></div>
-                    <div
-                      className={
-                        modal
-                          ? 'modal__sheets modal__sheets--open'
-                          : 'modal__sheets'
-                      }
-                    >
-                      <div className="modal__sheets__header">
-                        <div className="nav__link-icon-box">
-                          <svg className="icon">
-                            <use href={sprite + '#icon-cross'} />
+                  <ModalSlideToLeft
+                    modal={modal}
+                    title="Shopping cart"
+                    body={
+                      <div className="modal__sheets__content__btn">
+                        <button
+                          className="btn modal__sheets__content__btn--btn"
+                          onClick={_emptyCart}
+                        >
+                          <svg className="icon modal__sheets__content__btn__icon">
+                            <use href={sprite + '#icon-bin'} />
                           </svg>
-                        </div>
-                        <div className="modal__sheets__header__title__wrapper">
-                          <span className="modal__sheets__header__title__wrapper--text">
-                            Shopping cart
-                          </span>
-                        </div>
-                        <div className="nav__link-icon-box">
-                          <svg className="icon ">
-                            <use href={sprite + '#icon-arrow-left2'} />
-                          </svg>
-                        </div>
-                      </div>
-                      <div className="modal__sheets__content">
-                        <div className="modal__sheets__content__btn">
-                          <button
-                            className="btn modal__sheets__content__btn--btn"
-                            onClick={_emptyCart}
-                          >
-                            <svg className="icon modal__sheets__content__btn__icon">
-                              <use href={sprite + '#icon-bin'} />
-                            </svg>
-                            <span className="modal__sheets__content__btn__text">
-                              <span className="modal__sheets__content__btn__text--text">
-                                Empty Cart
-                              </span>
+                          <span className="modal__sheets__content__btn__text">
+                            <span className="modal__sheets__content__btn__text--text">
+                              Empty Cart
                             </span>
-                          </button>
-                        </div>
+                          </span>
+                        </button>
                       </div>
-                    </div>
-                  </div>
+                    }
+                  />
+
                   {/* MODAL END  */}
                   <div className="shoppingcart__header ">
                     <div className="heading-2 shoppingcart__header--text">
@@ -436,7 +402,7 @@ const ShoppingCart = (props) => {
                         Subtotal
                       </span>
                       <span className="shoppingcart__ordersummary__total-price">
-                        ${totalPrice.toFixed(2)}
+                        ${totalPrice}
                       </span>
                     </div>
                   </div>

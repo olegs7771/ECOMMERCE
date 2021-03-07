@@ -1,24 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { drawerToggle } from '../../store/actions/drawerAction';
 
+import ModalSlideToLeft from '../../utils/ModalSlideToLeft';
+import { getAllOrdersAction } from '../../store/actions/orderAction';
 export default function Dashboard(props) {
   // REDUX
   const dispatch = useDispatch();
-  const drawerRedux = useSelector((state) => state.drawer.drawer);
+  const authRedux = useSelector((state) => state.auth);
+  const ordersRedux = useSelector((state) => state.order.orders);
 
   // STATE
-  const [showDetails, setShowDetails] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [showOrders, setShowOrders] = useState(false);
+
+  // TOGGLE MODAL
+  const _openModelOrders = (e) => {
+    e.stopPropagation();
+    setModal(true);
+    setShowOrders(true);
+  };
+  const _closeModal = (e) => {
+    e.stopPropagation();
+    setModal(false);
+  };
+
+  //LOAD ALL ORDERS FOR USER
+  useEffect(() => {
+    const data = {
+      userId: authRedux.user.id,
+    };
+    dispatch(getAllOrdersAction(data));
+  }, [authRedux.user.id, dispatch]);
 
   return (
-    <div className="page dashboard">
+    <div className="page dashboard" onClick={_closeModal}>
+      <ModalSlideToLeft
+        modal={modal}
+        title="Orders"
+        body={ordersRedux.map((order, index) => (
+          <ul className="dashboard__modal__list" key={index}>
+            <li className="dashboard__modal__item">
+              <span className="dashboard__modal--order">Payment at </span>{' '}
+              <span className="dashboard__modal--order-date">
+                {new Date(order.paymentAt).toLocaleString()}
+              </span>
+            </li>
+          </ul>
+        ))}
+      />
       <div className="container">
         <div className="dashboard__wrapper">
           <div className="dashboard__nav">
             <ul className="dashboard__nav__list">
-              <li className="dashboard__nav__item dashboard__nav__item__orders">
+              <li
+                className="dashboard__nav__item dashboard__nav__item__orders"
+                onClick={_openModelOrders}
+              >
                 <a href="#!" className="dashboard__nav__link">
-                  Orders
+                  My Orders
                 </a>
               </li>
               <li className="dashboard__nav__item">
@@ -33,7 +72,7 @@ export default function Dashboard(props) {
               </li>
             </ul>
           </div>
-          <div className="dashboard__details">
+          {/* <div className="dashboard__details">
             <ul className="dashboard__details__list">
               <li className="dashboard__details__item">
                 <a href="#!" className="dashboard__details__link">
@@ -46,7 +85,7 @@ export default function Dashboard(props) {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

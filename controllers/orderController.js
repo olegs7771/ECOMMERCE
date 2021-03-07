@@ -92,7 +92,7 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
     if (typeof req.user === 'object') {
       //User
       order = await Order.findOneAndUpdate(
-        { userId: req.user },
+        { userId: req.user._id },
         {
           payment: true,
           paymentAt: Date.now(),
@@ -130,7 +130,7 @@ const getOrder = asyncCatch(async (req, res, next) => {
 
   if (typeof req.user === 'object') {
     //User
-    order = await Order.findOne({ userId: req.params.userId });
+    order = await Order.findOne({ userId: req.user._id });
     console.log('order', order);
     if (!order) return next(new AppErrorHandler('No order found', 400));
     //Find Cart to show in receipt page
@@ -140,7 +140,7 @@ const getOrder = asyncCatch(async (req, res, next) => {
     res.status(200).json({ status: 'success', data: { order, cart } });
   } else {
     //Guest
-    order = await Order.findOne({ guestId: req.params.guestId });
+    order = await Order.findOne({ guestId: req.user });
     console.log('order', order);
     if (!order) return next(new AppErrorHandler('No order found', 400));
     //Find Cart to show in receipt page
@@ -151,4 +151,12 @@ const getOrder = asyncCatch(async (req, res, next) => {
   }
 });
 
-module.exports = { createOrder, getOrder, paymentIntent };
+const getAllOrders = asyncCatch(async (req, res, next) => {
+  // 1)Fetch all existing orders for user
+  // console.log('req.user', req.user);
+  const orders = await Order.find({ userId: req.body._id, payment: true });
+  console.log(orders);
+  res.status(200).json({ status: 'success', data: orders });
+});
+
+module.exports = { createOrder, getOrder, paymentIntent, getAllOrders };
