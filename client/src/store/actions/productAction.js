@@ -376,7 +376,7 @@ export const getProductInCartAction = (data) => async (dispatch) => {
   }
 };
 
-// GET PRODUCT FROM SHOPPING CART
+// GET PRODUCT FROM SHOPPING CART FOR GUEST
 export const getProductsCartGuestAction = (data) => async (dispatch) => {
   // console.log('getProductsCartGuestAction data', data);
   dispatch({
@@ -384,8 +384,6 @@ export const getProductsCartGuestAction = (data) => async (dispatch) => {
     payload: true,
   });
   try {
-    //GET GUEST SHOPPING CART
-    // console.log('guest get productCart');
     const res = await axios.get(`/api/v1/product/cart/${data.guestId}`);
     // console.log('res.data getProductsCartGuestAction', res.data);
 

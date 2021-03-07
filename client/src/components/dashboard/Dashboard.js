@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DashboardNav from './DashboardNav';
+import OrderProductItem from '../order/OrderProductItem';
 
 import ModalSlideToLeft from '../../utils/ModalSlideToLeft';
 import {
@@ -23,7 +24,6 @@ export default function Dashboard(props) {
   const _openModelOrders = (e) => {
     e.stopPropagation();
     setModal(true);
-    setShowOrders(true);
   };
   const _closeModal = (e) => {
     e.stopPropagation();
@@ -48,6 +48,13 @@ export default function Dashboard(props) {
     dispatch(getOrderByIdAction(data));
   };
 
+  //Show Order In Dasgboard
+  useEffect(() => {
+    if (Object.keys(orderRedux).length !== 0) {
+      setShowOrders(true);
+    }
+  }, [orderRedux]);
+
   return (
     <div className="page dashboard" onClick={_closeModal}>
       <ModalSlideToLeft
@@ -71,7 +78,61 @@ export default function Dashboard(props) {
         <div className="dashboard__wrapper">
           <DashboardNav openModelOrders={_openModelOrders} />
 
-          <div className="dashboard__order">Order</div>
+          <div className="dashboard__order__details">
+            {!showOrders ? (
+              <div>My Dashboard</div>
+            ) : (
+              <div className="dashboard__order__details__block">
+                <div className="order__receipt__main__delivery__address__address">
+                  <div className="order__receipt__main__delivery__address__date__title">
+                    Client Address
+                  </div>
+                  <p className="order__receipt__main__delivery__address__address--text">
+                    {orderRedux.suit} {orderRedux.street}
+                  </p>
+                  <p className="order__receipt__main__delivery__address__address--text">
+                    {orderRedux.city} {orderRedux.province} ,{' '}
+                    {orderRedux.zipcode} , {orderRedux.country}
+                  </p>
+                </div>
+                <ul className="order__receipt__main__order__list">
+                  <li className="order__receipt__main__order__item">
+                    <span className="order__receipt__main__order__title">
+                      Items in cart
+                    </span>
+                    <span className="order__receipt__main__order__text">2</span>
+                  </li>
+                  <li className="order__receipt__main__order__item">
+                    <span className="order__receipt__main__order__title">
+                      Delivery
+                    </span>
+                    <span className="order__receipt__main__order__text">
+                      $10.00
+                    </span>
+                  </li>
+                  <li className="order__receipt__main__order__item mb-md">
+                    <span className="order__receipt__main__order__title-total ">
+                      Total
+                    </span>
+                    &nbsp;
+                    <span className="order__receipt__main__order__text-total">
+                      $30.00
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {/* <div className="dashboard__order__products">
+            <div className="order__cart">
+              <div className="productlist">
+                {cartRedux.products.map((item, index) => (
+                  <OrderProductItem key={index} item={item} />
+                ))}
+              </div>
+            </div>
+          </div> */}
         </div>
       </div>
     </div>

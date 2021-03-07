@@ -324,7 +324,7 @@ const getProductsCart = asyncCatch(async (req, res, next) => {
   // console.log(' req.user', req.user);
   if (typeof req.user === 'object') {
     //For AUth User
-    const cart = await Cart.findOne({ userId: req.user._id });
+    const cart = await Cart.findOne({ userId: req.user._id, cartPaid: false });
     // console.log('user cart', cart);
     if (!cart)
       // return next(new AppErrorHandler(`Shoppingcart not found for ${req.user}`));
@@ -341,7 +341,7 @@ const getProductsCart = asyncCatch(async (req, res, next) => {
     // console.log('guest cart req.user', req.user);
     //For Guest
     //1) Find Shopping Cart by req.user coming from protectGuest
-    const cart = await Cart.findOne({ guestId: req.user });
+    const cart = await Cart.findOne({ guestId: req.user, cartPaid: false });
     if (!cart)
       // return next(new AppErrorHandler(`Shoppingcart not found for ${req.user}`));
       return res.status(200).json({
