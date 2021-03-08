@@ -8,7 +8,7 @@ export default function OrderReceipt(props) {
   const dispatch = useDispatch();
   // REDUX
 
-  const cartRedux = useSelector((state) => state.product.cart_paid);
+  const cartRedux = useSelector((state) => state.cart.cart_paid);
   const orderRedux = useSelector((state) => state.order.order);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const authRedux = useSelector((state) => state.auth);

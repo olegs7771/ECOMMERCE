@@ -107,7 +107,7 @@ export const getOrderByIdAction = (data) => async (dispatch) => {
     });
     //GET ORDER INTO REDUX
     dispatch({
-      type: GET_PRODUCTS_FROM_CART,
+      type: GET_PRODUCTS_FROM_CART_PAID,
       payload: res.data.data.cart,
     });
   } catch (error) {
@@ -167,12 +167,6 @@ export const paymentIntentAction = (data, history) => async (dispatch) => {
     }
     console.log('res.data paymentIntentAction', res.data);
 
-    // //GET ORDER INTO REDUX
-    // dispatch({
-    //   type: GET_ORDER,
-    //   payload: res.data.data,
-    // });
-    //GET MESSAGE INTO REDUX
     dispatch({
       type: GET_API_MESSAGE,
       payload: res.data.message,

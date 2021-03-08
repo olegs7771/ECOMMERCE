@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   shoppingcart: {},
-  cart_paid: {},
+  cart_paid: { products: [] },
 };
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {

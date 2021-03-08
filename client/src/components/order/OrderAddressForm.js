@@ -69,7 +69,6 @@ export default function OrderAddressForm({ cartId, history, total }) {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
   const _onChangePhone = (e, country) => {
-    console.log('e phone', e, country);
     dispatch(clearErrorReduxState());
     setValues({ ...values, phone: e, country: country.name }); //get number and country to state
   };
@@ -86,7 +85,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
 
   const _onChangeCity = (e) => {
     dispatch(clearErrorReduxState());
-    console.log('e.target.value city', e.target.value);
+
     if (e.target.value === 'other') {
       setShowCity(true);
       setValues({ ...values, [e.target.name]: e.target.value });

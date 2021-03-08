@@ -14,8 +14,7 @@ export default function Dashboard(props) {
   const authRedux = useSelector((state) => state.auth);
   const ordersRedux = useSelector((state) => state.order.orders);
   const orderRedux = useSelector((state) => state.order.order);
-
-  const cartRedux = useSelector((state) => state.cart.shoppingcart);
+  const cartRedux = useSelector((state) => state.cart.cart_paid);
 
   // STATE
   const [modal, setModal] = useState(false);
@@ -101,7 +100,9 @@ export default function Dashboard(props) {
                     <span className="order__receipt__main__order__title">
                       Items in cart
                     </span>
-                    <span className="order__receipt__main__order__text">2</span>
+                    <span className="order__receipt__main__order__text">
+                      {cartRedux.products.length}
+                    </span>
                   </li>
                   <li className="order__receipt__main__order__item">
                     <span className="order__receipt__main__order__title">
@@ -117,7 +118,7 @@ export default function Dashboard(props) {
                     </span>
                     &nbsp;
                     <span className="order__receipt__main__order__text-total">
-                      $30.00
+                      ${orderRedux.total}
                     </span>
                   </li>
                 </ul>
@@ -125,7 +126,7 @@ export default function Dashboard(props) {
             )}
           </div>
 
-          {/* <div className="dashboard__order__products">
+          <div className="dashboard__order__products">
             <div className="order__cart">
               <div className="productlist">
                 {cartRedux.products.map((item, index) => (
@@ -133,7 +134,7 @@ export default function Dashboard(props) {
                 ))}
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
