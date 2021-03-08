@@ -4,7 +4,7 @@ import {
   getProductsCartGuestAction,
   getProductsCartUserAction,
   deleteCartAction,
-} from '../../store/actions/productAction';
+} from '../../store/actions/cartAction';
 import { SpinnerPuffLoader } from '../../utils/LoadingComponent';
 import sprite_material from '../../img/sprite_material.svg';
 import sprite from '../../img/sprite.svg';
@@ -17,7 +17,7 @@ const ShoppingCart = (props) => {
   const dispatch = useDispatch();
   // REDUX
   const drawerRedux = useSelector((state) => state.drawer.drawer);
-  const cartRedux = useSelector((state) => state.product.shoppingcart);
+  const cartRedux = useSelector((state) => state.cart.shoppingcart);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const authRedux = useSelector((state) => state.auth);
   const messageRedux = useSelector((state) => state.message.message);

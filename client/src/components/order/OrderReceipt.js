@@ -2,18 +2,18 @@ import React, { useEffect } from 'react';
 import sprite from '../../img/sprite.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOrderAction } from '../../store/actions/orderAction';
-import { getProductsCartGuestAction } from '../../store/actions/productAction';
+import { getCartById } from '../../store/actions/productAction';
 
 export default function OrderReceipt(props) {
   const dispatch = useDispatch();
   // REDUX
 
-  const cartRedux = useSelector((state) => state.product.shoppingcart);
+  const cartRedux = useSelector((state) => state.product.cart_paid);
   const orderRedux = useSelector((state) => state.order.order);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const authRedux = useSelector((state) => state.auth);
 
-  // LOAD ORDER AND CART ON COMPONENT to show in receipt
+  // LOAD ORDER ON COMPONENT to show in receipt
   useEffect(() => {
     let data;
     if (authRedux.isAuthenticated) {
@@ -27,6 +27,7 @@ export default function OrderReceipt(props) {
         orderId: props.match.params.orderId,
       };
     }
+
     dispatch(getOrderAction(data));
   }, [
     authRedux.isAuthenticated,
@@ -36,7 +37,10 @@ export default function OrderReceipt(props) {
     dispatch,
   ]);
 
-  if (Object.keys(orderRedux).length === 0) {
+  if (
+    Object.keys(orderRedux).length === 0 ||
+    Object.keys(cartRedux).length === 0
+  ) {
     return (
       <div className="page">
         <div className="container">Loading</div>
@@ -148,7 +152,7 @@ export default function OrderReceipt(props) {
                         Items in cart
                       </span>
                       <span className="order__receipt__main__order__text">
-                        2
+                        {cartRedux.products.length}
                       </span>
                     </li>
                     <li className="order__receipt__main__order__item">
@@ -164,7 +168,7 @@ export default function OrderReceipt(props) {
                         Order Total
                       </span>
                       <span className="order__receipt__main__order__text-total">
-                        $30.00
+                        ${orderRedux.total}
                       </span>
                     </li>
                   </ul>
@@ -192,7 +196,7 @@ export default function OrderReceipt(props) {
               </div>
               <button
                 className="btn order__receipt__cta__btn"
-                onClick={props.history.push('/')}
+                onClick={() => props.history.push('/')}
               >
                 Continue Shopping
               </button>

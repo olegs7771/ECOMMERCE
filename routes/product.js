@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const { protect, restrictTo } = require('../controllers/authController');
-const { protectGuest } = require('../controllers/guestController');
 
 const {
   create,
@@ -16,35 +15,13 @@ const {
   uploadImage,
   deleteImage,
   lastAdded,
-  createCart,
-  getProductsCart,
-  deleteCart,
-  updateProduct,
-  removeProduct,
 } = require('../controllers/productController');
 
 // PUBLIC ROUTES
 router.route('/last-added').get(lastAdded); // get last added products for home page
 
-//Protect Guest VALIDATED ROUTES if guest token valid
-router
-  .route('/cart/:guestId')
-  .post(protectGuest, createCart)
-  .delete(protectGuest, deleteCart)
-  .put(protectGuest, updateProduct)
-  .get(protectGuest, getProductsCart)
-  .patch(protectGuest, removeProduct);
 router.route('/:subId').get(list); // get products by subId
 router.route('/:productId/:slug').get(getOne); //get one product
-
-// PROTECTED USER VALIDATED ROUTES  if user token Valid
-router
-  .route('/cart/user/:userId')
-  .get(protect, getProductsCart)
-  .post(protect, createCart)
-  .put(protect, updateProduct)
-  .patch(protect, removeProduct)
-  .delete(protect, deleteCart);
 
 router.use(protect, restrictTo('admin'));
 //PROTECTED ROUTES

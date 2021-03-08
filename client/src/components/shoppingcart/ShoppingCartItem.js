@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   updateProductCartAction,
   removeProductAction,
-} from '../../store/actions/productAction';
+} from '../../store/actions/cartAction';
 import { SpinnerPuffLoader } from '../../utils/LoadingComponent';
 
 export default function ShoppingCartItem({ item }) {

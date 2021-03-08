@@ -5,7 +5,7 @@ import {
   getProductsCartGuestAction,
   getProductsCartUserAction,
   // deleteCartAction,
-} from '../../store/actions/productAction';
+} from '../../store/actions/cartAction';
 
 import OrderProductItem from './OrderProductItem';
 import OrderAddressForm from './OrderAddressForm';
@@ -16,7 +16,7 @@ const Order = (props) => {
   const dispatch = useDispatch();
   // REDUX
 
-  const cartRedux = useSelector((state) => state.product.shoppingcart);
+  const cartRedux = useSelector((state) => state.cart.shoppingcart);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const authRedux = useSelector((state) => state.auth);
   // const messageRedux = useSelector((state) => state.message.message);

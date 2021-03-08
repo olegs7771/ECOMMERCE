@@ -14,7 +14,8 @@ export default function Dashboard(props) {
   const authRedux = useSelector((state) => state.auth);
   const ordersRedux = useSelector((state) => state.order.orders);
   const orderRedux = useSelector((state) => state.order.order);
-  const cartRedux = useSelector((state) => state.product.shoppingcart);
+
+  const cartRedux = useSelector((state) => state.cart.shoppingcart);
 
   // STATE
   const [modal, setModal] = useState(false);

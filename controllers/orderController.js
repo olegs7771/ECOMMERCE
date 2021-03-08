@@ -115,6 +115,15 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
       );
     }
 
+    //UPDATE CART AS PAID IN DB
+    const cart = await Cart.findOneAndUpdate(
+      { _id: order.cartId },
+      { cartPaid: true },
+      { new: true }
+    );
+
+    console.log('cart updated', cart);
+
     //Send Email To Client with Receipt
     res.status(200).json({
       status: 'success',

@@ -4,7 +4,7 @@ import { setCookieAction } from '../store/actions/cookieAction';
 import {
   getProductsCartGuestAction,
   getProductsCartUserAction,
-} from '../store/actions/productAction';
+} from '../store/actions/cartAction';
 import jwt_decode from 'jwt-decode';
 const store = configureStore();
 

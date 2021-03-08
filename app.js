@@ -16,6 +16,7 @@ const users = require('./routes/users');
 const category = require('./routes/category');
 const sub = require('./routes/sub');
 const product = require('./routes/product');
+const cart = require('./routes/cart');
 const order = require('./routes/order');
 
 //FOR UPLOADING FILES
@@ -50,6 +51,7 @@ app.use('/api/v1/users', users);
 app.use('/api/v1/category', category);
 app.use('/api/v1/sub', sub);
 app.use('/api/v1/product', product);
+app.use('/api/v1/cart', cart);
 app.use('/api/v1/order', order);
 
 //Errors for missing routes

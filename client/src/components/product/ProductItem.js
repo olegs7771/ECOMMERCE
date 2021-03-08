@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Image } from 'cloudinary-react';
 import sprite from '../../img/sprite.svg';
 import sprite_material from '../../img/sprite_material.svg';
-import { getProductInCartAction } from '../../store/actions/productAction';
+import { getProductInCartAction } from '../../store/actions/cartAction';
 
 export default function ProductItem({
   image,

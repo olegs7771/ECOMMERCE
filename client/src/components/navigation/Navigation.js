@@ -13,7 +13,7 @@ const Navigation = ({ history }) => {
   const dispatch = useDispatch();
   const drawerRedux = useSelector((state) => state.drawer.drawer);
   const auth = useSelector((state) => state.auth);
-  const cartRedux = useSelector((state) => state.product.shoppingcart);
+  const cartRedux = useSelector((state) => state.cart.shoppingcart);
 
   // STATE
   const [drawer, setDrawer] = useState(false);

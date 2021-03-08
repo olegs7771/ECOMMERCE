@@ -3,10 +3,8 @@ import BreadCrumbs from '../navigation/BreadCrumbs';
 import { Image } from 'cloudinary-react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getOneProduct,
-  getProductInCartAction,
-} from '../../store/actions/productAction';
+import { getProductInCartAction } from '../../store/actions/cartAction';
+import { getOneProduct } from '../../store/actions/productAction';
 import SlideInMessage from '../../utils/SlideInMessage';
 
 import sprite from '../../img/sprite.svg';
