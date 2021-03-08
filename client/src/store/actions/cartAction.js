@@ -25,15 +25,15 @@ export const getProductInCartAction = (data) => async (dispatch) => {
     // CREATE CART AS GUEST
     if (data.guestId) {
       console.log('guest');
-      res = await axios.post(`/api/v1/cart/cart/${data.guestId}`, data);
+      res = await axios.post(`/api/v1/cart/guest/${data.guestId}`, data);
       // FETCH PRODUCTS FROM NEWLY CREATED CART TO SHOW IN HEADER
-      list = await axios.get(`/api/v1/cart/cart/${data.guestId}`);
+      list = await axios.get(`/api/v1/cart/guest/${data.guestId}`);
       // CREATE CART AS AN AUTH USER
     } else if (data.userId) {
       console.log('user');
-      res = await axios.post(`/api/v1/cart/cart/user/${data.userId}`, data);
+      res = await axios.post(`/api/v1/cart/user/${data.userId}`, data);
       // FETCH PRODUCTS FROM NEWLY CREATED CART TO SHOW IN HEADER
-      list = await axios.get(`/api/v1/cart/cart/user/${data.userId}`);
+      list = await axios.get(`/api/v1/cart/user/${data.userId}`);
     }
     dispatch({
       type: GET_PRODUCTS_FROM_CART,

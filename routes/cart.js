@@ -24,7 +24,7 @@ router
 
 //Protect Guest VALIDATED ROUTES if guest token valid
 router
-  .route('/:guestId')
+  .route('/guest/:guestId')
   .post(protectGuest, createCart)
   .delete(protectGuest, deleteCart)
   .put(protectGuest, updateProduct)

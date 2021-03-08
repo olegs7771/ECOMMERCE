@@ -1,12 +1,13 @@
 const AppErrorHandler = require('../utils/AppError');
 const Cart = require('../models/Cart');
+const Product = require('../models/Product');
 const asyncCatch = require('../utils/asyncCatch');
 
 // // SHOPPING CART 🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒🛒
 
 // CREATE GUEST CART by adding one product or by adding single products
 const createCart = asyncCatch(async (req, res, next) => {
-  console.log('req.body createCart', req.body);
+  console.log('req.body createCart!', req.body);
   console.log('createCart params', req.params);
   console.log('req.user', req.user);
 
@@ -17,6 +18,7 @@ const createCart = asyncCatch(async (req, res, next) => {
     //User
     // // //1) Check if guest already has Cart
     cart = await Cart.findOne({ userId: req.user._id });
+
     // //2) FInd Product
     product = await Product.findById(req.body.productId);
   } else {
