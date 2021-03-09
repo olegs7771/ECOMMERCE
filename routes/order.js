@@ -10,11 +10,11 @@ const {
   paymentIntent,
   getAllOrders,
   getOrderById,
-  ProductManipulate,
+  productManipulate,
 } = require('../controllers/orderController');
 
 //TEST MANIPULATE PRODUCTS
-router.route('/test').post();
+router.route('/test').post(productManipulate);
 
 // User Order
 router
