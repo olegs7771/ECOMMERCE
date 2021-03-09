@@ -4,6 +4,7 @@ const asyncCatch = require('../utils/asyncCatch');
 const AppErrorHandler = require('../utils/AppError');
 const Cart = require('../models/Cart');
 const Order = require('../models/Order');
+const Product = require('../models/Product');
 const { findOneAndUpdate } = require('../models/Order');
 
 //Create Order By Guest/User
@@ -194,7 +195,17 @@ const getAllOrders = asyncCatch(async (req, res, next) => {
 
 // TEST MANIPULATE PRODUCTS QUANTITY AND INSTOCK
 const productManipulate = asyncCatch(async (req, res, next) => {
-  console.log('manipulate products');
+  console.log('req.body', req.body);
+
+  req.body.products.forEach(async (p) => {
+    console.log('p', p);
+    let product = await Product.findOneAndUpdate(
+      { _id: p },
+      { instock: 5 },
+      { new: true }
+    );
+    console.log('product', product);
+  });
 });
 
 module.exports = {
@@ -205,4 +216,11 @@ module.exports = {
   getOrderById,
   productManipulate,
 };
-///
+//  updated {
+//    cartPaid: true,
+//    _id: 6047c1834ae7fb31804a153e,
+//    userId: '5fd39c009e1ae53a545b80ca',
+//    products: [ { quantity: 1, _id: 602677011141b239d4ec857a, product: [Object] } ],
+//    createdAt: 2021-03-09T18:42:11.281Z,
+//    updatedAt: 2021-03-09T18:42:44.595Z
+//  }
