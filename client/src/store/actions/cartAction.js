@@ -124,14 +124,14 @@ export const updateProductCartAction = (data) => async (dispatch) => {
     let res;
     if (data.userId) {
       //User
-      update = await axios.put(`/api/v1/cart/cart/user/${data.userId}`, data);
+      update = await axios.put(`/api/v1/cart/user/${data.userId}`, data);
       //RELOAD SHOPPING CART
-      res = await axios.get(`/api/v1/cart/cart/user/${data.userId}`);
+      res = await axios.get(`/api/v1/cart/user/${data.userId}`);
     } else {
       //Guest
-      update = await axios.put(`/api/v1/cart/cart/${data.guestId}`, data);
+      update = await axios.put(`/api/v1/cart/guest/${data.guestId}`, data);
       //RELOAD SHOPPING CART
-      res = await axios.get(`/api/v1/cart/cart/${data.guestId}`);
+      res = await axios.get(`/api/v1/cart/guest/${data.guestId}`);
     }
 
     dispatch({

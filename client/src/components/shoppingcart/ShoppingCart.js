@@ -60,6 +60,7 @@ const ShoppingCart = (props) => {
             (elem) => parseFloat(elem.product.price) * elem.quantity
           );
         };
+
         totalPrice = total(arrOfProducts).reduce((acc, val) => acc + val);
 
         totalPrice = Math.round((totalPrice + Number.EPSILON) * 1000) / 1000;
@@ -205,7 +206,7 @@ const ShoppingCart = (props) => {
                         Subtotal
                       </span>
                       <span className="shoppingcart__ordersummary__total-price">
-                        ${totalPrice}
+                        ${totalPrice.toFixed(2)}
                       </span>
                     </div>
                   </div>
@@ -402,7 +403,7 @@ const ShoppingCart = (props) => {
                         Subtotal
                       </span>
                       <span className="shoppingcart__ordersummary__total-price">
-                        ${totalPrice}
+                        ${totalPrice.toFixed(2)}
                       </span>
                     </div>
                   </div>

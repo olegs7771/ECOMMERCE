@@ -17,14 +17,14 @@ const createCart = asyncCatch(async (req, res, next) => {
   if (typeof req.user === 'object') {
     //User
     // // //1) Check if guest already has Cart
-    cart = await Cart.findOne({ userId: req.user._id });
+    cart = await Cart.findOne({ userId: req.user._id, cartPaid: false });
 
     // //2) FInd Product
     product = await Product.findById(req.body.productId);
   } else {
     //Guest
     // // //1) Check if guest already has Cart
-    cart = await Cart.findOne({ guestId: req.user });
+    cart = await Cart.findOne({ guestId: req.user, cartPaid: false });
     // //2) FInd Product
     product = await Product.findById(req.body.productId);
   }
@@ -109,10 +109,10 @@ const updateProduct = asyncCatch(async (req, res, next) => {
   let cart;
   if (typeof req.user === 'object') {
     //User
-    cart = await Cart.findOne({ userId: req.user.id });
+    cart = await Cart.findOne({ userId: req.user.id, cartPaid: false });
   } else {
     //Guest
-    cart = await Cart.findOne({ guestId: req.user });
+    cart = await Cart.findOne({ guestId: req.user, cartPaid: false });
   }
   console.log('cart to update', cart);
   cart.updateProduct(req.body.productId, req.body.amountUpdate);

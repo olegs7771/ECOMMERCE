@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import sprite from '../../img/sprite.svg';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOrderAction } from '../../store/actions/orderAction';
+import { getOrderByIdAction } from '../../store/actions/orderAction';
 import { getCartById } from '../../store/actions/productAction';
 
 export default function OrderReceipt(props) {
@@ -28,7 +28,7 @@ export default function OrderReceipt(props) {
       };
     }
 
-    dispatch(getOrderAction(data));
+    dispatch(getOrderByIdAction(data));
   }, [
     authRedux.isAuthenticated,
     authRedux.user.id,

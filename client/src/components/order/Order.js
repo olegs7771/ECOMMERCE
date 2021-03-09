@@ -49,7 +49,6 @@ const Order = (props) => {
         totalPrice = total(arrOfProducts).reduce((acc, val) => acc + val);
 
         totalPrice = Math.round((totalPrice + Number.EPSILON) * 1000) / 1000;
-        //Clear Order in redux for editing new one with updated total
       }
     }
   }

@@ -36,12 +36,16 @@ const createOrder = asyncCatch(async (req, res, next) => {
       ...orderObj,
       userId: req.user._id,
     };
-    //Check if user/guest already has order created by cartId
+    //Check if user/guest already has Order created by cartId
     //Order Exists -> Update Order
-    newOrder = await Order.findOneAndUpdate({ userId: req.user._id }, data, {
-      runValidators: true,
-      new: true,
-    });
+    newOrder = await Order.findOneAndUpdate(
+      { userId: req.user._id, payment: false },
+      data,
+      {
+        runValidators: true,
+        new: true,
+      }
+    );
     // if null than create new order
     if (!newOrder) {
       console.log('data to db ', data);
@@ -56,10 +60,14 @@ const createOrder = asyncCatch(async (req, res, next) => {
     //Check if user/guest already has order created by cartId
     //Order Exists -> Update Order
     console.log('update data', data);
-    newOrder = await Order.findOneAndUpdate({ guestId: req.user }, data, {
-      runValidators: true,
-      new: true,
-    });
+    newOrder = await Order.findOneAndUpdate(
+      { guestId: req.user, payment: false },
+      data,
+      {
+        runValidators: true,
+        new: true,
+      }
+    );
 
     // if null than create new order
     if (!newOrder) {
@@ -92,7 +100,7 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
     if (typeof req.user === 'object') {
       //User
       order = await Order.findOneAndUpdate(
-        { userId: req.user._id },
+        { userId: req.user._id, payment: false },
         {
           payment: true,
           paymentAt: Date.now(),
@@ -104,7 +112,7 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
     } else {
       //Guest
       order = await Order.findOneAndUpdate(
-        { guestId: req.user },
+        { guestId: req.user, payment: false },
         {
           payment: true,
           paymentAt: Date.now(),

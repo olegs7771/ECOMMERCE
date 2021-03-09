@@ -24,9 +24,7 @@ const orderSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      unique: true,
       lowercase: true,
-
       validate: {
         validator: function (value) {
           return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);

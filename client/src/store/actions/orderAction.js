@@ -30,7 +30,7 @@ export const createOrderAction = (data) => async (dispatch) => {
     } else {
       //Guest
       res = await axios.post(`/api/v1/order/guest/${data.guestId}`, data);
-      console.log('createOrderGuestAction res.data guest', res.data);
+      console.log('createOrderAction res.data guest', res.data);
     }
 
     //GET MESSAGE TO PUSH CHECKOUT PAGE after order created

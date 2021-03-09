@@ -380,8 +380,9 @@ input[type='radio' i] {
       // background-color: cadetblue;
       height: 100%;
       display: flex;
-      align-items: flex-start;
-      justify-content: center;
+      align-items: center;
+
+      flex-direction: column;
       &__btn {
         width: 80%;
         margin-top: 4rem;
