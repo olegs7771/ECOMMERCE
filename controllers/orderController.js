@@ -129,6 +129,7 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
       { cartPaid: true },
       { new: true }
     );
+    //Update Products (sold,quantity)
 
     console.log('cart updated', cart);
 
@@ -191,10 +192,16 @@ const getAllOrders = asyncCatch(async (req, res, next) => {
   res.status(200).json({ status: 'success', data: orders });
 });
 
+// TEST MANIPULATE PRODUCTS QUANTITY AND INSTOCK
+const productManipulate = asyncCatch(async (req, res, next) => {
+  console.log('manipulate products');
+});
+
 module.exports = {
   createOrder,
   getOrder,
   paymentIntent,
   getAllOrders,
   getOrderById,
+  productManipulate,
 };

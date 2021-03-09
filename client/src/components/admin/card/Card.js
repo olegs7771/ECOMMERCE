@@ -35,7 +35,7 @@ export default function Card(props) {
       price: product.price,
       brand: product.brand,
       description: product.description,
-      quantity: product.quantity,
+      instock: product.instock,
       shipping: product.shipping,
       color: product.color,
       createdAt: product.createdAt,
@@ -110,11 +110,11 @@ export default function Card(props) {
     if (values.description.length === 0) {
       errors.description = 'Please leave some description about product';
     }
-    if (values.quantity.length === 0) {
-      errors.quantity = '0';
+    if (values.instock.length === 0) {
+      errors.instock = '0';
     }
-    if (!/^[0-9]*$/.test(values.quantity)) {
-      errors.quantity = 'only numbers';
+    if (!/^[0-9]*$/.test(values.instock)) {
+      errors.instock = 'only numbers';
     }
 
     if (values.color === 'Select Color') {
@@ -407,7 +407,7 @@ export default function Card(props) {
                     </div>
                     <div className="card__container__detail-body--item">
                       <span className="card__container__detail-body--item-title">
-                        Quantity
+                        instock
                       </span>
                       <span
                         className={
@@ -420,16 +420,14 @@ export default function Card(props) {
                           <div className="card__container__detail-body--item-text-edit-form">
                             <input
                               type="text"
-                              name="quantity"
+                              name="instock"
                               className={
-                                errors.quantity
+                                errors.instock
                                   ? ' card__input card__input--invalid'
                                   : ' card__input '
                               }
                               value={
-                                errors.quantity
-                                  ? errors.quantity
-                                  : values.quantity
+                                errors.instock ? errors.instock : values.instock
                               }
                               onChange={_onChange}
                               required
@@ -440,7 +438,7 @@ export default function Card(props) {
                           </div>
                         ) : (
                           <div className="card__container__detail-body--item-text-edit-text">
-                            {product.quantity}
+                            {product.instock}
                           </div>
                         )}
                       </span>
