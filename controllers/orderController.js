@@ -201,7 +201,7 @@ const productManipulate = asyncCatch(async (req, res, next) => {
     console.log('p', p);
     let product = await Product.findOneAndUpdate(
       { _id: p },
-      { instock: 5 },
+      { $inc: { instock: 50 } },
       { new: true }
     );
     console.log('product', product);
