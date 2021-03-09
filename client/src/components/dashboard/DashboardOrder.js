@@ -2,6 +2,9 @@ import React from 'react';
 import OrderProductItem from '../order/OrderProductItem';
 
 export default function DashboardOrder({ order, cart }) {
+  const getItemsCount = (arr) =>
+    arr.map((elem) => elem.quantity).reduce((acc, val) => acc + val);
+
   return (
     <div className="dashboard__order__block">
       <div className="dashboard__order__details">
@@ -24,7 +27,7 @@ export default function DashboardOrder({ order, cart }) {
                 Items in cart
               </span>{' '}
               <span className="order__receipt__main__order__text">
-                {cart.products.length}
+                {getItemsCount(cart.products)}
               </span>
             </li>
             <li className="dashboard__order__details__address__item">
