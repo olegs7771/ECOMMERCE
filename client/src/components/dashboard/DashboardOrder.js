@@ -1,5 +1,6 @@
 import React from 'react';
-import OrderProductItem from '../order/OrderProductItem';
+// import OrderProductItem from '../order/OrderProductItem';
+import DashboardCart from './DashboardCart';
 
 export default function DashboardOrder({ order, cart }) {
   const getItemsCount = (arr) =>
@@ -60,7 +61,7 @@ export default function DashboardOrder({ order, cart }) {
             <div className=" dashboard__order__cart">
               <div className="productlist">
                 {cart.products.map((item, index) => (
-                  <OrderProductItem key={index} item={item} />
+                  <DashboardCart key={index} item={item} />
                 ))}
               </div>
             </div>

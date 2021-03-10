@@ -5,7 +5,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  shoppingcart: {},
+  shoppingcart: { products: [] },
   cart_paid: { products: [] },
 };
 const cartReducer = (state = initialState, action) => {

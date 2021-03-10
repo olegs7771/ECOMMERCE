@@ -171,6 +171,7 @@ export const paymentIntentAction = (data, history) => async (dispatch) => {
       type: GET_API_MESSAGE,
       payload: res.data.message,
     });
+
     //PUSH TO RECIEPT PAGE
     history.push({
       pathname: `/receipt/${res.data.data._id}`,

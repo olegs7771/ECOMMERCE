@@ -234,3 +234,12 @@ export const deleteCartAction = (data) => async (dispatch) => {
     console.log('error to delete ', error.response.data);
   }
 };
+
+// CLEAR shoppingcart IN REDUX
+
+export const clearCartAction = () => (dispatch) => {
+  dispatch({
+    type: GET_PRODUCTS_FROM_CART,
+    payload: { products: [] },
+  });
+};

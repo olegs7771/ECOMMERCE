@@ -73,7 +73,7 @@
       padding: 2rem 0;
       background-color: $color-grey;
       max-width: 120rem;
-      margin: 1rem auto;
+      // margin: 1rem auto;
     }
     &__title {
       display: flex;
@@ -108,8 +108,33 @@
         }
       }
     }
-    &__cart {
-      padding: 0;
+  }
+
+  // DashboarCart
+  &__cart {
+    min-width: 24rem;
+
+    &__image__container {
+      margin: 0 1rem;
+    }
+    &__content {
+      margin-bottom: 1rem;
+    }
+  }
+  &__list {
+    list-style: none;
+    &__title {
+      display: flex;
+      justify-content: space-between;
+      &--title {
+        font-size: 1.6rem;
+        font-weight: 700;
+      }
+    }
+  }
+  &__price {
+    &--price {
+      font-size: 1.6rem;
     }
   }
 }

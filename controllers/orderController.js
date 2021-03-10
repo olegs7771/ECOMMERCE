@@ -131,6 +131,16 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
       { new: true }
     );
     //Update Products (sold,quantity)
+    cart.products.forEach(async (p) => {
+      console.log('p', p);
+      console.log('p.quantity', p.quantity);
+      let product = await Product.findOneAndUpdate(
+        { _id: p },
+        { $inc: { instock: -p.quantity, sold: p.quantity } },
+        { new: true }
+      );
+      console.log('product', product);
+    });
 
     console.log('cart updated', cart);
 
@@ -199,9 +209,10 @@ const productManipulate = asyncCatch(async (req, res, next) => {
 
   req.body.products.forEach(async (p) => {
     console.log('p', p);
+    console.log('p.quantity', p.quantity);
     let product = await Product.findOneAndUpdate(
       { _id: p },
-      { $inc: { instock: 50 } },
+      { $inc: { instock: -p.quantity, sold: p.quantity } },
       { new: true }
     );
     console.log('product', product);

@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import sprite from '../../img/sprite.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { getOrderByIdAction } from '../../store/actions/orderAction';
-import { getCartById } from '../../store/actions/productAction';
+// import { getCartById } from '../../store/actions/productAction';
+import { clearCartAction } from '../../store/actions/cartAction';
 
 export default function OrderReceipt(props) {
   const dispatch = useDispatch();
@@ -12,6 +13,20 @@ export default function OrderReceipt(props) {
   const orderRedux = useSelector((state) => state.order.order);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const authRedux = useSelector((state) => state.auth);
+
+  //GET PRODUCTS COUNT
+  let count;
+  const arr = cartRedux.products;
+  if (cartRedux.products.length !== 0) {
+    (() => {
+      count = arr.map((elem) => elem.quantity).reduce((acc, val) => acc + val);
+    })();
+  }
+
+  //CLEAR shopping cart. Not to show in navigation icon. Cause user already had paid.
+  useEffect(() => {
+    dispatch(clearCartAction());
+  }, [dispatch]);
 
   // LOAD ORDER ON COMPONENT to show in receipt
   useEffect(() => {
@@ -151,9 +166,12 @@ export default function OrderReceipt(props) {
                       <span className="order__receipt__main__order__title">
                         Items in cart
                       </span>
-                      <span className="order__receipt__main__order__text">
-                        {cartRedux.products.length}
-                      </span>
+                      {/* {getItemsCount(cartRedux.products)} */}
+                      {cartRedux.products.length !== 0 && (
+                        <span className="order__receipt__main__order__text">
+                          {count}
+                        </span>
+                      )}
                     </li>
                     <li className="order__receipt__main__order__item">
                       <span className="order__receipt__main__order__title">
