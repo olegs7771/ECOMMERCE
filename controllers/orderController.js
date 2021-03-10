@@ -5,7 +5,7 @@ const AppErrorHandler = require('../utils/AppError');
 const Cart = require('../models/Cart');
 const Order = require('../models/Order');
 const Product = require('../models/Product');
-const { findOneAndUpdate } = require('../models/Order');
+const Email = require('../utils/mail');
 
 //Create Order By Guest/User
 const createOrder = asyncCatch(async (req, res, next) => {
@@ -145,6 +145,7 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
     console.log('cart updated', cart);
 
     //Send Email To Client with Receipt
+
     res.status(200).json({
       status: 'success',
       message: 'Thank you for purchase',
@@ -203,20 +204,15 @@ const getAllOrders = asyncCatch(async (req, res, next) => {
   res.status(200).json({ status: 'success', data: orders });
 });
 
-// TEST MANIPULATE PRODUCTS QUANTITY AND INSTOCK
-const productManipulate = asyncCatch(async (req, res, next) => {
-  console.log('req.body', req.body);
+// TEST EMAIL
+const testEmail = asyncCatch(async (req, res, next) => {
+  const newUser = {
+    user: 'John Brown',
+    email: 'olegs7771@gmail.com',
+  };
+  const url = 'some url';
 
-  req.body.products.forEach(async (p) => {
-    console.log('p', p);
-    console.log('p.quantity', p.quantity);
-    let product = await Product.findOneAndUpdate(
-      { _id: p },
-      { $inc: { instock: -p.quantity, sold: p.quantity } },
-      { new: true }
-    );
-    console.log('product', product);
-  });
+  await new Email(newUser, url).sendWelcome();
 });
 
 module.exports = {
@@ -225,13 +221,5 @@ module.exports = {
   paymentIntent,
   getAllOrders,
   getOrderById,
-  productManipulate,
+  testEmail,
 };
-//  updated {
-//    cartPaid: true,
-//    _id: 6047c1834ae7fb31804a153e,
-//    userId: '5fd39c009e1ae53a545b80ca',
-//    products: [ { quantity: 1, _id: 602677011141b239d4ec857a, product: [Object] } ],
-//    createdAt: 2021-03-09T18:42:11.281Z,
-//    updatedAt: 2021-03-09T18:42:44.595Z
-//  }
