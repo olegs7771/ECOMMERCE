@@ -41,6 +41,6 @@ module.exports = class Email {
     this.createTransportMethod().sendMail(mailOptions);
   }
   async sendWelcome() {
-    await this.send('welcome', 'Welcome to Ecommerce!');
+    await this.send('order', 'Welcome to Ecommerce!');
   }
 };

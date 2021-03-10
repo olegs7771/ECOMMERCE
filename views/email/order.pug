@@ -1,3 +1,37 @@
 extends baseEmail 
 
 block content 
+  p Hi there,
+  p Thank you for your purchase! Please review your order.
+
+    div(class='order__content')
+      div(class='order__header')
+        div(class='order__header__text')
+          | Your Order Number :
+        div(class='order__header__number')
+          | 25253533364
+      div(class='order__details')
+        ul(class='order__list')
+          li(class='order__item')
+            span(class='order__title') Address
+            div(class='order__item__block')
+              span(class='order_text') suit street city province
+              span(class='order_text')  zipcode ,Country
+          li(class='order__item')
+            span(class='order__title') Delivery Time
+            div(class='order__item__block')
+              span(class='order_text') date
+              span(class='order_text')  time
+          div(class='order__tittle__wrapper')
+            span(class='order__title') Order Summary
+          li(class='order__item')
+            div(class='order__text') Items
+            div(class='order__text')
+              span(class='order__text') 1
+              span(class='order__text') x
+              span(class='order__text') $10.00
+          li(class='order__item')
+            div(class='order__text') Delivery
+            div(class='order__text') $10.00
+          li(class='order__item')
+            div(class='order__text__total') Total
