@@ -3,11 +3,24 @@ const pug = require('pug');
 const htmlToText = require('html-to-text');
 
 module.exports = class Email {
-  constructor(user, url) {
-    this.to = user.email;
-    this.firstName = user.user.split(' ')[0];
-    this.url = url;
+  constructor(data) {
+    this.to = data.newUser.email;
+    this.firstName = data.newUser.user.split(' ')[0];
+    this.url = data.url;
     this.from = `Ecommerce<${process.env.EMAIL_FROM}>`;
+    this.orderNumber = data.orderNumber;
+    this.suit = data.suit;
+    this.street = data.street;
+    this.city = data.city;
+    this.zipecode = data.zipecode;
+    this.province = data.province;
+    this.country = data.country;
+    this.delivery_date = data.delivery_date;
+    this.delivery_time = data.delivery_time;
+    this.delivery = data.delivery;
+    this.items = data.items;
+    this.product_price = data.product_price;
+    this.total = data.total;
   }
 
   createTransportMethod() {
@@ -26,6 +39,19 @@ module.exports = class Email {
     //1) RENDER HTML BASED ON THE PUG TEMPLATE
     const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
       firstName: this.firstName,
+      orderNumber: this.orderNumber,
+      suit: this.suit,
+      street: this.street,
+      city: this.city,
+      zipecode: this.zipecode,
+      province: this.province,
+      country: this.country,
+      delivery_date: this.delivery_date,
+      delivery_time: this.delivery_time,
+      delivery: this.delivery,
+      items: this.items,
+      product_price: this.product_price,
+      total: this.total,
       url: this.url,
       subject,
     });
@@ -41,6 +67,10 @@ module.exports = class Email {
     this.createTransportMethod().sendMail(mailOptions);
   }
   async sendWelcome() {
-    await this.send('order', 'Welcome to Ecommerce!');
+    await this.send('welcome', 'Welcome to Ecommerce!');
+  }
+
+  async sendOrder() {
+    await this.send('order', ` Ecommerce Order Receipt # ${this.orderNumber}`);
   }
 };

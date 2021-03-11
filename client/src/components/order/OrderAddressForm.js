@@ -17,7 +17,12 @@ import OrderPayment from './OrderPayment';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
-export default function OrderAddressForm({ cartId, history, total }) {
+export default function OrderAddressForm({
+  cartId,
+  history,
+  total,
+  totalItems,
+}) {
   const dispatch = useDispatch();
   // REDUX
   const authRedux = useSelector((state) => state.auth);
@@ -110,6 +115,7 @@ export default function OrderAddressForm({ cartId, history, total }) {
       province: values.province,
       cartId,
       total,
+      totalItems,
     };
     if (authRedux.isAuthenticated) {
       data = {

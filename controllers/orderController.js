@@ -26,6 +26,7 @@ const createOrder = asyncCatch(async (req, res, next) => {
     cartId: req.body.cartId,
     total: req.body.total.toFixed(2),
     country: req.body.country,
+    items: req.body.totalItems,
   };
   let data;
   let newOrder;
@@ -145,6 +146,25 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
     console.log('cart updated', cart);
 
     //Send Email To Client with Receipt
+    const data = {
+      newUser: { user: `${order.fname} ${order.lname}`, email: order.email },
+      url: 'https://some url', //use for link
+      orderNumber: order.orderNumber,
+      suit: order.suit,
+      street: order.street,
+      city: order.city,
+      zipecode: order.zipcode,
+      province: order.province,
+      country: order.country,
+      delivery_date: 'Mon 5 2021',
+      delivery_time: '12:00',
+      delivery: '10.00',
+      items: order.items,
+      product_price: '10.00',
+      total: '20.00',
+    };
+
+    await new Email(data).sendOrder();
 
     res.status(200).json({
       status: 'success',
@@ -206,13 +226,25 @@ const getAllOrders = asyncCatch(async (req, res, next) => {
 
 // TEST EMAIL
 const testEmail = asyncCatch(async (req, res, next) => {
-  const newUser = {
-    user: 'John Brown',
-    email: 'olegs7771@gmail.com',
+  const data = {
+    newUser: { user: 'Oleg', email: 'someemail@gmai.com' },
+    url: 'https://some url',
+    orderNumber: '222222222222',
+    suit: '2',
+    street: 'Fox Meadow',
+    city: 'Winnipeg',
+    zipecode: '1V1 V1V',
+    province: 'MN',
+    country: 'Canada',
+    delivery_date: 'Mon 5 2021',
+    delivery_time: '12:00',
+    delivery: '10.00',
+    items: '2',
+    product_price: '10.00',
+    total: '20.00',
   };
-  const url = 'some url';
 
-  await new Email(newUser, url).sendWelcome();
+  await new Email(data).sendOrder();
 });
 
 module.exports = {

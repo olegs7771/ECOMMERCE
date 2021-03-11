@@ -37,6 +37,7 @@ const Order = (props) => {
 
   //  FUNCTION TO CALCULATE TOTAL
   let totalPrice;
+  let totalItems;
   if (Object.keys(cartRedux).length !== 0) {
     const arrOfProducts = cartRedux.products;
     if (arrOfProducts) {
@@ -46,9 +47,14 @@ const Order = (props) => {
             (elem) => parseFloat(elem.product.price) * elem.quantity
           );
         };
+        const totalItemFunc = (arr) => {
+          return arr.map((elem) => 1 * elem.quantity);
+        };
         totalPrice = total(arrOfProducts).reduce((acc, val) => acc + val);
-
         totalPrice = Math.round((totalPrice + Number.EPSILON) * 1000) / 1000;
+        totalItems = totalItemFunc(arrOfProducts).reduce(
+          (acc, val) => acc + val
+        );
       }
     }
   }
@@ -76,6 +82,7 @@ const Order = (props) => {
                 cartId={cartRedux._id}
                 history={props.history}
                 total={totalPrice}
+                totalItems={totalItems}
               />
             </div>
             <div className="order__cart">

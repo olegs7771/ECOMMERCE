@@ -164,7 +164,11 @@ const signup = asyncCatch(async (req, res, next) => {
   console.log('url', url);
   // //SEND EMAIL WITH CONFIRMATION LINK
   console.log('newUser', newUser);
-  await new Email(newUser, url).sendWelcome();
+  const data = {
+    newUser,
+    url,
+  };
+  await new Email(data).sendWelcome();
 
   const message = `User ${req.body.user} was created. 
   Pleace check your email ${req.body.email} `;

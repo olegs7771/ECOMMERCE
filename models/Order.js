@@ -102,6 +102,10 @@ const orderSchema = new mongoose.Schema(
     orderNumber: {
       type: Number,
     },
+    items: {
+      type: Number,
+      default: 0,
+    },
   },
 
   {
