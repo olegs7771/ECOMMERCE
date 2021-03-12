@@ -24,14 +24,16 @@ block content
               span(class='order_text')  #{delivery_time}
           div(class='order__tittle__wrapper')
             span(class='order__title') Order Summary
-          li(class='order__item')
-            each  product in products
+          li(class='order__item__items')
+            each  item in products
               div(class='order__item__product')
-                div(class='order__text__product') Item Name
+                div(class='order__text__product') #{item.product.title}
                 div(class='order__text__item')
-                  span(class='order__text ml-sm') 1
                   span(class='order__text ml-sm') x
-                  span(class='order__text__total ml-sm') $10.00
+                  span(class='order__text ml-sm') #{item.quantity}
+                  div(class='order__text__price__wrapper')
+                   
+                   span(class='order__text__total ml-sm') $#{item.product.price}
           li(class='order__item')
             div(class='order__text') Delivery
             div(class='order__text') $10.00

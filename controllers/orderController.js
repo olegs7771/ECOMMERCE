@@ -87,7 +87,7 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
   console.log('payment intent');
 
   const payment = await stripe.paymentIntents.create({
-    amount: req.body.total,
+    amount: Math.trunc(req.body.total),
     currency: 'cad',
     description: 'some description',
     payment_method: req.body.paymentMethod.id,
@@ -132,6 +132,7 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
       { new: true }
     );
     //Update Products (sold,quantity)
+
     cart.products.forEach(async (p) => {
       console.log('p', p);
       console.log('p.quantity', p.quantity);
@@ -143,7 +144,7 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
       console.log('product', product);
     });
 
-    console.log('cart updated', cart);
+    console.log('cart updated products', cart.products);
 
     //Send Email To Client with Receipt
     const data = {
@@ -162,6 +163,7 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
       items: order.items,
       product_price: '10.00',
       total: '20.00',
+      products: cart.products,
     };
 
     await new Email(data).sendOrder();
@@ -242,6 +244,80 @@ const testEmail = asyncCatch(async (req, res, next) => {
     items: '2',
     product_price: '10.00',
     total: '20.00',
+    products: [
+      {
+        quantity: 1,
+        _id: '600c4d4d6fd9c538a4b16a60',
+        product: {
+          sold: 7,
+          images: [Array],
+          _id: '600c4d4d6fd9c538a4b16a60',
+          title: 'LED light panel',
+          description:
+            'The light panel brings light to your darkest spaces – connect one or more and steer the light via your remote or smartphone. Dim up or down and set ',
+          price: '39.99',
+          shipping: 'Yes',
+          color: 'White',
+          brand: 'Microsoft',
+          category: '5ffb1ebc87c4513a0c578ee6',
+          sub: '5ffb26bdb83f1b1c20e18303',
+          ratings: [],
+          createdAt: '2021-01-23T16:22:37.945Z',
+          updatedAt: '2021-03-12T06:40:14.619Z',
+          slug: 'led-light-panel',
+          __v: 3,
+          instock: 13,
+        },
+      },
+      {
+        quantity: 2,
+        _id: '600c4d4d6fd9c538a4b16a60',
+        product: {
+          sold: 7,
+          images: [Array],
+          _id: '600c4d4d6fd9c538a4b16a60',
+          title: 'Light Wireless',
+          description:
+            'The light panel brings light to your darkest spaces – connect one or more and steer the light via your remote or smartphone. Dim up or down and set ',
+          price: '59.99',
+          shipping: 'Yes',
+          color: 'White',
+          brand: 'Microsoft',
+          category: '5ffb1ebc87c4513a0c578ee6',
+          sub: '5ffb26bdb83f1b1c20e18303',
+          ratings: [],
+          createdAt: '2021-01-23T16:22:37.945Z',
+          updatedAt: '2021-03-12T06:40:14.619Z',
+          slug: 'led-light-panel',
+          __v: 3,
+          instock: 13,
+        },
+      },
+      {
+        quantity: 2,
+        _id: '600c270427be51376816705a',
+        product: {
+          sold: 3,
+          images: [Array],
+          _id: '600c270427be51376816705a',
+          title: 'Wireless motion sensor1',
+          description:
+            "Now it's really easy for anyone to use smart lighting. With the remote you can control your light sources. Turn on, turn off, choose colors and warm or cold light – and dim for the right mood.",
+          price: '100.50',
+          shipping: 'Yes',
+          color: 'White',
+          brand: 'Microsoft',
+          category: '5ffb1ebc87c4513a0c578ee6',
+          sub: '5ffb26bdb83f1b1c20e18303',
+          ratings: [],
+          createdAt: '2021-01-23T13:39:16.489Z',
+          updatedAt: '2021-03-10T11:10:52.615Z',
+          slug: 'wireless-motion-sensor1',
+          __v: 5,
+          instock: 17,
+        },
+      },
+    ],
   };
 
   await new Email(data).sendOrder();

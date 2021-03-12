@@ -21,6 +21,7 @@ module.exports = class Email {
     this.items = data.items;
     this.product_price = data.product_price;
     this.total = data.total;
+    this.products = data.products;
   }
 
   createTransportMethod() {
@@ -54,6 +55,7 @@ module.exports = class Email {
       total: this.total,
       url: this.url,
       subject,
+      products: this.products,
     });
     //2) DEFINE EMAIL OPTIONS
     const mailOptions = {
