@@ -61,6 +61,8 @@ export default function OrderAddressForm({
     country: '',
     zipcode: '',
     phone: '',
+    delivery_options: ['Pick-up yourself at store', 'Delivery by our staff'],
+    delivery: '',
   };
 
   const [values, setValues] = useState(initialState);
@@ -68,6 +70,8 @@ export default function OrderAddressForm({
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   //disable edit fields after user opened payment form
   const [disable, setDisable] = useState(false);
+  //If client did choosed delivery by staff then add to subtotal
+  const [showDelivery, setShowDelivery] = useState(false);
 
   const _onChange = (e) => {
     dispatch(clearErrorReduxState());
@@ -99,6 +103,18 @@ export default function OrderAddressForm({
     }
   };
 
+  //Delivery Options and Prices
+  const _onChangeDelivery = (e) => {
+    console.log('e delivery', e.target.value);
+    if (e.target.value === 'Delivery by our staff') {
+      setShowDelivery(true);
+      setValues({ ...values, [e.target.name]: e.target.value });
+    } else {
+      setShowDelivery(false);
+      setValues({ ...values, [e.target.name]: e.target.value });
+    }
+  };
+
   //Cretate Order in DB
   const _orderDetails = () => {
     let data;
@@ -113,6 +129,7 @@ export default function OrderAddressForm({
       zipcode: values.zipcode,
       country: values.country,
       province: values.province,
+      delivery: values.delivery,
       cartId,
       total,
       totalItems,
@@ -344,6 +361,29 @@ export default function OrderAddressForm({
           disabled={disable}
         />
       </div>
+
+      <div className="order__buyer__address__row">
+        <div className="order__buyer__address__row__wrapper">
+          <SelectInputForm
+            _onChange={_onChangeDelivery}
+            array={initialState.delivery_options}
+            value={values.delivery}
+            styles={{
+              title: 'form-label--name form-label--name__select',
+              form_input: 'form-input-select ',
+              form_group: 'form-group order__buyer__address__form-group-select',
+            }}
+            name="delivery"
+            label="Delivery Options"
+            select="Delivery Options"
+            title="Delivery"
+            required={true}
+            error={errorsRedux.delivery}
+            disabled={disable}
+          />
+        </div>
+      </div>
+
       <div
         className={
           showPaymentForm

@@ -20,6 +20,7 @@ module.exports = class Email {
     this.delivery = data.delivery;
     this.items = data.items;
     this.product_price = data.product_price;
+    this.delivery = data.delivery;
     this.total = data.total;
     this.products = data.products;
   }
@@ -56,6 +57,7 @@ module.exports = class Email {
       url: this.url,
       subject,
       products: this.products,
+      delivery: this.delivery,
     });
     //2) DEFINE EMAIL OPTIONS
     const mailOptions = {

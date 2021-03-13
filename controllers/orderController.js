@@ -27,6 +27,7 @@ const createOrder = asyncCatch(async (req, res, next) => {
     total: req.body.total.toFixed(2),
     country: req.body.country,
     items: req.body.totalItems,
+    delivery: req.body.delivery,
   };
   let data;
   let newOrder;
@@ -162,7 +163,7 @@ const paymentIntent = asyncCatch(async (req, res, next) => {
       delivery: '10.00',
       items: order.items,
       product_price: '10.00',
-      total: '20.00',
+      total: order.total,
       products: cart.products,
     };
 
