@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SpinnerPuffLoader } from '../../utils/LoadingComponent';
 import {
@@ -21,6 +21,17 @@ const Order = (props) => {
   const authRedux = useSelector((state) => state.auth);
   // const messageRedux = useSelector((state) => state.message.message);
 
+  // STATE
+  // SHOW DELIVERY PRICE IF USER CHOOSES DELIVERY SERVICE
+  const [showDelivery, setShowDelivery] = useState(false);
+  const [deliveryPrice, setDeliveryPrice] = useState('0.00');
+
+  const _showDelivery = (data) => {
+    console.log('state _showDelivery state', data.state);
+    setShowDelivery(data.state);
+    setDeliveryPrice(data.delivery_price);
+    console.log('state _showDelivery price', data.delivery_price);
+  };
   // GET SHOPPINGCART ITEMS FROM DB
   useEffect(() => {
     if (authRedux.isAuthenticated) {
@@ -52,6 +63,11 @@ const Order = (props) => {
         };
         totalPrice = total(arrOfProducts).reduce((acc, val) => acc + val);
         totalPrice = Math.round((totalPrice + Number.EPSILON) * 1000) / 1000;
+        totalPrice = showDelivery
+          ? Math.round(
+              (totalPrice + parseFloat(deliveryPrice) + Number.EPSILON) * 1000
+            ) / 1000 //add delivery to the total
+          : Math.round((totalPrice + Number.EPSILON) * 1000) / 1000;
         totalItems = totalItemFunc(arrOfProducts).reduce(
           (acc, val) => acc + val
         );
@@ -83,6 +99,7 @@ const Order = (props) => {
                 history={props.history}
                 total={totalPrice}
                 totalItems={totalItems}
+                delivery={_showDelivery} //show delevery price and add to total
               />
             </div>
             <div className="order__cart">
@@ -108,10 +125,22 @@ const Order = (props) => {
                   </div>
                 </div>
                 <hr className="shoppingcart__ordersummary__divider mb-sm" />
+                {/* SHOW DELIVERY IF CLIENT HAD CHOOSED  */}
+                {showDelivery && (
+                  <div className="shoppingcart__ordertotal__row">
+                    <span className="shoppingcart__ordersummary__total-lable">
+                      Delivery cost
+                    </span>
+                    <span className="shoppingcart__ordersummary__total-price">
+                      ${deliveryPrice}
+                    </span>
+                  </div>
+                )}
                 <div className="shoppingcart__ordertotal__row">
                   <span className="shoppingcart__ordersummary__total-lable">
                     Subtotal
                   </span>
+
                   <span className="shoppingcart__ordersummary__total-price">
                     ${totalPrice ? totalPrice.toFixed(2) : ''}
                   </span>

@@ -22,6 +22,7 @@ export default function OrderAddressForm({
   history,
   total,
   totalItems,
+  delivery,
 }) {
   const dispatch = useDispatch();
   // REDUX
@@ -70,8 +71,6 @@ export default function OrderAddressForm({
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   //disable edit fields after user opened payment form
   const [disable, setDisable] = useState(false);
-  //If client did choosed delivery by staff then add to subtotal
-  const [showDelivery, setShowDelivery] = useState(false);
 
   const _onChange = (e) => {
     dispatch(clearErrorReduxState());
@@ -103,14 +102,24 @@ export default function OrderAddressForm({
     }
   };
 
-  //Delivery Options and Prices
+  //Delivery Options and Prices.If client chooses delivery add 10$
   const _onChangeDelivery = (e) => {
     console.log('e delivery', e.target.value);
     if (e.target.value === 'Delivery by our staff') {
-      setShowDelivery(true);
-      setValues({ ...values, [e.target.name]: e.target.value });
+      setValues({ ...values, [e.target.name]: '10.00' });
+      //CHANGE IN PARENT COMPONENT SHOW DELIVERY PRICE + ADD TO TOTAL PRICE
+
+      const data = {
+        state: true,
+        delivery_price: '10.00',
+      };
+      delivery(data);
     } else {
-      setShowDelivery(false);
+      const data = {
+        state: false,
+        delivery_price: '0',
+      };
+      delivery(data);
       setValues({ ...values, [e.target.name]: e.target.value });
     }
   };
@@ -192,19 +201,34 @@ export default function OrderAddressForm({
         />
       </div>
       <div className="order__buyer__address__row">
-        <TextInputForm
-          value={values.business_name}
-          _onChange={_onChange}
-          label="Business Name"
-          name="business_name"
-          placeholder="Your business name.. (optional)"
-          styles={{
-            title: 'form-label--name',
-            form_group: 'form-group order__buyer__address__form-group',
-          }}
-          error={errorsRedux.business_name}
-          disabled={disable}
-        />
+        <div className="order__buyer__address__row__wrapper ">
+          <div className="order__buyer__address__row__phone--lable">
+            Phone
+            <span className="order__buyer__address__row__phone--lable-icon">
+              *
+            </span>
+          </div>
+          <div className="order__buyer__address__row__wrapper--phone">
+            <PhoneInput
+              value={values.phone}
+              onChange={(phone, country) => _onChangePhone(phone, country)}
+              onlyCountries={['ca', 'us']}
+              enableAreaCodes={['ca', 'usa']}
+              country={'ca'}
+              inputClass="order__buyer__address__row__phone"
+              required={true}
+              isValid={!errorsRedux.phone}
+            />
+            {errorsRedux.phone ? (
+              <div className="form-input__error">
+                <div className="form-input__error--text order__buyer__address__row__phone--error ">
+                  {errorsRedux.phone}
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </div>
+
         <div className="order__buyer__address__row__gap"></div>
 
         <TextInputForm
@@ -317,33 +341,19 @@ export default function OrderAddressForm({
         />
       </div>
       <div className="order__buyer__address__row">
-        <div className="order__buyer__address__row__wrapper ">
-          <div className="order__buyer__address__row__phone--lable">
-            Phone
-            <span className="order__buyer__address__row__phone--lable-icon">
-              *
-            </span>
-          </div>
-          <div className="order__buyer__address__row__wrapper--phone">
-            <PhoneInput
-              value={values.phone}
-              onChange={(phone, country) => _onChangePhone(phone, country)}
-              onlyCountries={['ca', 'us']}
-              enableAreaCodes={['ca', 'usa']}
-              country={'ca'}
-              inputClass="order__buyer__address__row__phone"
-              required={true}
-              isValid={!errorsRedux.phone}
-            />
-            {errorsRedux.phone ? (
-              <div className="form-input__error">
-                <div className="form-input__error--text order__buyer__address__row__phone--error ">
-                  {errorsRedux.phone}
-                </div>
-              </div>
-            ) : null}
-          </div>
-        </div>
+        <TextInputForm
+          value={values.business_name}
+          _onChange={_onChange}
+          label="Business Name"
+          name="business_name"
+          placeholder="Your business name.. (optional)"
+          styles={{
+            title: 'form-label--name',
+            form_group: 'form-group order__buyer__address__form-group',
+          }}
+          error={errorsRedux.business_name}
+          disabled={disable}
+        />
         <div className="order__buyer__address__row__gap"></div>
         <TextInputForm
           value={values.zipcode}
@@ -362,7 +372,7 @@ export default function OrderAddressForm({
         />
       </div>
 
-      <div className="order__buyer__address__row">
+      <div className="order__buyer__address__row order__buyer__address__row__delivery">
         <div className="order__buyer__address__row__wrapper">
           <SelectInputForm
             _onChange={_onChangeDelivery}

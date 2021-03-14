@@ -178,7 +178,7 @@ export default function OrderReceipt(props) {
                         Delivery
                       </span>
                       <span className="order__receipt__main__order__text">
-                        $10.00
+                        {/* $10.00 */}${orderRedux.delivery}
                       </span>
                     </li>
                     <li className="order__receipt__main__order__item mb-md">
