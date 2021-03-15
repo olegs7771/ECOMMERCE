@@ -108,7 +108,7 @@ const orderSchema = new mongoose.Schema(
     },
     delivery: {
       type: String,
-      default: 0,
+      required: [true, 'Choose delivery option'],
     },
   },
 
@@ -142,6 +142,7 @@ orderSchema.post('save', function (err, doc, next) {
   errors.street = err.errors.street ? err.errors.street.message : '';
   errors.phone = err.errors.phone ? err.errors.phone.message : '';
   errors.zipcode = err.errors.zipcode ? err.errors.zipcode.message : '';
+  errors.delivery = err.errors.delivery ? err.errors.delivery.message : '';
 
   console.log('errors', errors);
   next(errors);
@@ -163,6 +164,7 @@ orderSchema.post('findOneAndUpdate', function (err, doc, next) {
   errors.street = err.errors.street ? err.errors.street.message : '';
   errors.phone = err.errors.phone ? err.errors.phone.message : '';
   errors.zipcode = err.errors.zipcode ? err.errors.zipcode.message : '';
+  errors.delivery = err.errors.delivery ? err.errors.delivery.message : '';
 
   console.log('errors in model update', errors);
   next(errors);

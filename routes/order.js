@@ -15,6 +15,7 @@ const {
 
 //TEST MANIPULATE PRODUCTS
 router.route('/testEmail').post(testEmail);
+
 // User Order
 router
   .route('/user/:userId/')
@@ -22,7 +23,7 @@ router
   .get(protect, getOrder); // getOrderAction
 router.route('/user/orders/:userId').get(protect, getAllOrders); //show all users orders
 router.route('/user/payment/:userId').post(protect, paymentIntent);
-router.route('/order/:userId/:orderId').get(protect, getOrderById);
+router.route('/order/:userId/:orderId').get(protect, getOrderById); //get order for user
 
 // Guestr Order
 router
@@ -31,5 +32,6 @@ router
   .get(protectGuest, getOrder);
 
 router.route('/guest/payment/:guestId').post(protectGuest, paymentIntent);
+router.route('/order/guest/:guestId/:orderId').get(protectGuest, getOrderById); //get order for user
 
 module.exports = router;

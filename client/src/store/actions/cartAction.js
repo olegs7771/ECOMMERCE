@@ -12,7 +12,7 @@ import {
 
 // CREATE CART FOR GUEST BY ADDING NEW PRODUCT data={guestId,productId} 🛒
 export const getProductInCartAction = (data) => async (dispatch) => {
-  console.log('getProductInCartAction data userId', data.userId);
+  console.log('getProductInCartAction data ', data);
   console.log('getProductInCartAction data guestId', data.guestId);
   dispatch({
     type: LOADING_PRODUCT_CART,
@@ -73,7 +73,7 @@ export const getProductsCartGuestAction = (data) => async (dispatch) => {
     payload: true,
   });
   try {
-    const res = await axios.get(`/api/v1/cart/cart/${data.guestId}`);
+    const res = await axios.get(`/api/v1/cart/guest/${data.guestId}`);
     // console.log('res.data getProductsCartGuestAction', res.data);
 
     dispatch({
@@ -167,12 +167,12 @@ export const removeProductAction = (data) => async (dispatch) => {
     let list;
     if (data.userId) {
       //User
-      res = await axios.patch(`/api/v1/cart/cart/user/${data.userId}`, data);
-      list = await axios.get(`/api/v1/cart/cart/user/${data.userId}`);
+      res = await axios.patch(`/api/v1/cart/user/${data.userId}`, data);
+      list = await axios.get(`/api/v1/cart/user/${data.userId}`);
     } else {
       //Guest
-      res = await axios.patch(`/api/v1/cart/cart/${data.guestId}`, data);
-      list = await axios.get(`/api/v1/cart/cart/${data.guestId}`);
+      res = await axios.patch(`/api/v1/cart/guest/${data.guestId}`, data);
+      list = await axios.get(`/api/v1/cart/guest/${data.guestId}`);
     }
     dispatch({
       type: GET_API_MESSAGE,
@@ -205,12 +205,12 @@ export const deleteCartAction = (data) => async (dispatch) => {
   try {
     if (data.userId) {
       //User
-      res = await axios.delete(`/api/v1/cart/cart/user/${data.userId}`);
-      list = await axios.get(`/api/v1/cart/cart/user/${data.userId}`);
+      res = await axios.delete(`/api/v1/cart/user/${data.userId}`);
+      list = await axios.get(`/api/v1/cart/user/${data.userId}`);
     } else {
       //Guest
-      res = await axios.delete(`/api/v1/cart/cart/${data.guestId}`);
-      list = await axios.get(`/api/v1/cart/cart/${data.guestId}`);
+      res = await axios.delete(`/api/v1/cart/guest/${data.guestId}`);
+      list = await axios.get(`/api/v1/cart/guest/${data.guestId}`);
     }
     console.log('res.data deleteCartAction ', res.data);
     dispatch({

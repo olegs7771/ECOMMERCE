@@ -91,13 +91,22 @@ export const getOrderAction = (data) => async (dispatch) => {
     console.log('error to get order', error.response.data);
   }
 };
-// FETCH ORDER FOR DASHBOARD BY orderId FOR USER
+// FETCH ORDER FOR DASHBOARD BY orderId FOR USER or Guest for receipt page
 export const getOrderByIdAction = (data) => async (dispatch) => {
   console.log('getOrderByidAction data', data);
   let res;
   try {
     //User
-    res = await axios.get(`/api/v1/order/order/${data.userId}/${data.orderId}`);
+    if (data.userId) {
+      res = await axios.get(
+        `/api/v1/order/order/${data.userId}/${data.orderId}`
+      );
+    } else {
+      //Guest
+      res = await axios.get(
+        `/api/v1/order/order/guest/${data.guestId}/${data.orderId}`
+      );
+    }
     console.log('res.data getOrderAction', res.data);
 
     //GET ORDER INTO REDUX

@@ -9,14 +9,13 @@ import { SpinnerPuffLoader } from '../../utils/LoadingComponent';
 import sprite_material from '../../img/sprite_material.svg';
 import sprite from '../../img/sprite.svg';
 import ShoppingCartItem from './ShoppingCartItem';
-import { drawerToggle } from '../../store/actions/drawerAction';
 import { withRouter } from 'react-router-dom';
 import ModalSlideToLeft from '../../utils/ModalSlideToLeft';
 
 const ShoppingCart = (props) => {
   const dispatch = useDispatch();
   // REDUX
-  const drawerRedux = useSelector((state) => state.drawer.drawer);
+
   const cartRedux = useSelector((state) => state.cart.shoppingcart);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const authRedux = useSelector((state) => state.auth);
@@ -91,10 +90,6 @@ const ShoppingCart = (props) => {
   if (Object.keys(cartRedux).length !== 0) {
     return (
       <div className="page shoppingcart" onClick={_closeModal}>
-        <div
-          className={drawerRedux ? 'overlay overlay--visible' : 'overlay'}
-          onClick={() => dispatch(drawerToggle(false))}
-        ></div>
         {/* SHOW MESSAGE ON BUYING PRODUCT  */}
 
         <div

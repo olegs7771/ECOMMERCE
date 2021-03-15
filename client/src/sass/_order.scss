@@ -87,16 +87,86 @@
           transform: translateY(0.6rem);
         }
       }
+
+      /////////////////
+      // DATE COMPONENT
+      &__date {
+        position: relative;
+        z-index: 1;
+        background-color: $color-grey;
+        transition: 0.2s;
+        // transform: translateY(-5rem);
+        display: none;
+
+        &__title {
+          margin: 2rem 0;
+
+          &--title {
+            font-size: 1.6rem;
+            text-transform: uppercase;
+          }
+        }
+        &__calendar {
+          &-tile {
+            padding: 1rem 0;
+            font-size: 1.8rem;
+          }
+        }
+
+        &--visible {
+          transition: 0.2s;
+          // transform: translateY(0);
+          display: block;
+        }
+
+        &__delivery {
+          display: none;
+          // background-color: darkgrey;
+          &__wrapper {
+            width: 100%;
+            // border: 1px solid black;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 2rem 3rem;
+          }
+
+          &__date {
+            &--date {
+              font-size: 2rem;
+              font-weight: 700;
+            }
+          }
+          &__time {
+            &--time {
+              font-size: 2rem;
+              font-weight: 700;
+              padding: 1rem;
+            }
+            &--elements {
+              padding: 3rem;
+            }
+          }
+
+          &--visible {
+            display: flex;
+          }
+        }
+      }
     }
   }
   &__cart {
     width: 100%;
     padding: 3rem;
+
+    &--sticky {
+      top: 10rem;
+      position: sticky;
+    }
   }
 
   //ORDER PAYMENT FORM
   &__payment__wrapper {
-    border: 1px solid black;
     transform: translateY(-10rem);
     background-color: $color-grey;
 

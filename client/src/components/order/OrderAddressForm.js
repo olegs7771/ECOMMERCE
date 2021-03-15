@@ -13,6 +13,7 @@ import {
   // clearMessageReduxState,
 } from '../../store/actions/categoryAction';
 import OrderPayment from './OrderPayment';
+import OrderCalendar from './OrderCalendar';
 
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -63,12 +64,14 @@ export default function OrderAddressForm({
     zipcode: '',
     phone: '',
     delivery_options: ['Pick-up yourself at store', 'Delivery by our staff'],
-    delivery: '',
+    deliveryPrice: '',
   };
 
   const [values, setValues] = useState(initialState);
   const [showCity, setShowCity] = useState(false); //toggle open input field for other city
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+
   //disable edit fields after user opened payment form
   const [disable, setDisable] = useState(false);
 
@@ -105,8 +108,16 @@ export default function OrderAddressForm({
   //Delivery Options and Prices.If client chooses delivery add 10$
   const _onChangeDelivery = (e) => {
     console.log('e delivery', e.target.value);
+    dispatch(clearErrorReduxState());
+
     if (e.target.value === 'Delivery by our staff') {
-      setValues({ ...values, [e.target.name]: '10.00' });
+      setShowCalendar(true);
+      setValues({
+        ...values,
+        [e.target.name]: e.target.value,
+        deliveryPrice: '10.00',
+      });
+
       //CHANGE IN PARENT COMPONENT SHOW DELIVERY PRICE + ADD TO TOTAL PRICE
 
       const data = {
@@ -115,12 +126,17 @@ export default function OrderAddressForm({
       };
       delivery(data);
     } else {
+      setShowCalendar(false);
       const data = {
         state: false,
         delivery_price: '0',
       };
       delivery(data);
-      setValues({ ...values, [e.target.name]: e.target.value });
+      setValues({
+        ...values,
+        [e.target.name]: e.target.value,
+        deliveryPrice: '0.00',
+      });
     }
   };
 
@@ -138,7 +154,7 @@ export default function OrderAddressForm({
       zipcode: values.zipcode,
       country: values.country,
       province: values.province,
-      delivery: values.delivery,
+      deliveryPrice: values.deliveryPrice,
       cartId,
       total,
       totalItems,
@@ -166,6 +182,11 @@ export default function OrderAddressForm({
       setShowPaymentForm(true);
     }
   }, [orderRedux._id, dispatch]);
+
+  // SET DATE AND TIME
+  const _setDate = (e) => {
+    console.log('date_time e', e.toDateString());
+  };
 
   return (
     <div className="order__buyer__address">
@@ -394,6 +415,11 @@ export default function OrderAddressForm({
         </div>
       </div>
 
+      {/* CALENDAR  */}
+
+      <OrderCalendar showCalendar={showCalendar} date_time={_setDate} />
+
+      {/* PAYMENT BLOCK  */}
       <div
         className={
           showPaymentForm

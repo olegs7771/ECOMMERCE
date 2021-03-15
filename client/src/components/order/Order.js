@@ -103,47 +103,49 @@ const Order = (props) => {
               />
             </div>
             <div className="order__cart">
-              <div className="productlist">
-                {cartRedux.products.map((item, index) => (
-                  <OrderProductItem key={index} item={item} />
-                ))}
-              </div>
-              <div className="shoppingcart__ordersummary">
-                <div className="mb-sm">
-                  <strong>Order summary</strong>
+              <div className="order__cart--sticky">
+                <div className="productlist">
+                  {cartRedux.products.map((item, index) => (
+                    <OrderProductItem key={index} item={item} />
+                  ))}
                 </div>
-                <div className="shoppingcart__ordertotal__row ">
-                  <span></span>
-                </div>
+                <div className="shoppingcart__ordersummary">
+                  <div className="mb-sm">
+                    <strong>Order summary</strong>
+                  </div>
+                  <div className="shoppingcart__ordertotal__row ">
+                    <span></span>
+                  </div>
 
-                <div className="shoppingcart__ordertotal__row mb-sm">
-                  <div className="shoppingcart__ordertotal-delivery-lable">
-                    Total delivery cost
+                  <div className="shoppingcart__ordertotal__row mb-sm">
+                    <div className="shoppingcart__ordertotal-delivery-lable">
+                      Total delivery cost
+                    </div>
+                    <div className="shoppingcart__ordertotal-delivery-price">
+                      Exluding delivery
+                    </div>
                   </div>
-                  <div className="shoppingcart__ordertotal-delivery-price">
-                    Exluding delivery
-                  </div>
-                </div>
-                <hr className="shoppingcart__ordersummary__divider mb-sm" />
-                {/* SHOW DELIVERY IF CLIENT HAD CHOOSED  */}
-                {showDelivery && (
+                  <hr className="shoppingcart__ordersummary__divider mb-sm" />
+                  {/* SHOW DELIVERY IF CLIENT HAD CHOOSED  */}
+                  {showDelivery && (
+                    <div className="shoppingcart__ordertotal__row">
+                      <span className="shoppingcart__ordersummary__total-lable">
+                        Delivery cost
+                      </span>
+                      <span className="shoppingcart__ordersummary__total-price">
+                        ${deliveryPrice}
+                      </span>
+                    </div>
+                  )}
                   <div className="shoppingcart__ordertotal__row">
                     <span className="shoppingcart__ordersummary__total-lable">
-                      Delivery cost
+                      Subtotal
                     </span>
+
                     <span className="shoppingcart__ordersummary__total-price">
-                      ${deliveryPrice}
+                      ${totalPrice ? totalPrice.toFixed(2) : ''}
                     </span>
                   </div>
-                )}
-                <div className="shoppingcart__ordertotal__row">
-                  <span className="shoppingcart__ordersummary__total-lable">
-                    Subtotal
-                  </span>
-
-                  <span className="shoppingcart__ordersummary__total-price">
-                    ${totalPrice ? totalPrice.toFixed(2) : ''}
-                  </span>
                 </div>
               </div>
             </div>

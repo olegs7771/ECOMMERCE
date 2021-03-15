@@ -115,7 +115,7 @@ export default function ProductItem({
               $
             </span>
             <span className="pub-category__p-card__details__price--integer">
-              {price.substring(-3, 2)}
+              {price}
             </span>
             <span className="pub-category__p-card__details__price--decimals">
               {price.substring(price.length - 3)}

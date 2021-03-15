@@ -27,7 +27,7 @@ const createOrder = asyncCatch(async (req, res, next) => {
     total: req.body.total.toFixed(2),
     country: req.body.country,
     items: req.body.totalItems,
-    delivery: req.body.delivery,
+    delivery: req.body.deliveryPrice,
   };
   let data;
   let newOrder;
@@ -49,6 +49,7 @@ const createOrder = asyncCatch(async (req, res, next) => {
         new: true,
       }
     );
+    console.log('newOrder', newOrder);
     // if null than create new order
     if (!newOrder) {
       console.log('data to db ', data);
@@ -205,9 +206,7 @@ const getOrder = asyncCatch(async (req, res, next) => {
 });
 //GET ORDER AND CART FOR USER DASHBOARD BY orderId
 const getOrderById = asyncCatch(async (req, res, next) => {
-  let order;
-
-  order = await Order.findById(req.params.orderId);
+  const order = await Order.findById(req.params.orderId);
   console.log('order', order);
   if (!order) return next(new AppErrorHandler('No order found', 400));
   //Find Cart to show in receipt page

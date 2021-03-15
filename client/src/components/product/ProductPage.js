@@ -17,6 +17,7 @@ export default function ProductPage(props) {
   const productRedux = useSelector((state) => state.product.product);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const messageRedux = useSelector((state) => state.message.message);
+  const authRedux = useSelector((state) => state.auth);
 
   // STATE
   const [favorite, setFavorite] = useState(false);
@@ -38,10 +39,20 @@ export default function ProductPage(props) {
   };
   // ADD PRODUCT TO SHOPPING CART
   const _addProductToCart = (e) => {
-    const data = {
-      productId: productRedux._id,
-      guestId: cookieRedux.guestId,
-    };
+    let data;
+    if (authRedux.isAuthenticated) {
+      //User
+      data = {
+        productId: productRedux._id,
+        userId: authRedux.user.id,
+      };
+    } else {
+      //Guest
+      data = {
+        productId: productRedux._id,
+        guestId: cookieRedux.guestId,
+      };
+    }
 
     dispatch(getProductInCartAction(data));
   };
@@ -112,7 +123,7 @@ export default function ProductPage(props) {
                       $
                     </span>
                     <span className="pub-category__p-card__details__price--integer">
-                      {productRedux.price.substring(-3, 2)}
+                      {productRedux.price}
                     </span>
                     <span className="pub-category__p-card__details__price--decimals">
                       {productRedux.price.substring(
