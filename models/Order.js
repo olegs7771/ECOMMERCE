@@ -106,9 +106,19 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    delivery: {
+    delivery_method: {
       type: String,
-      required: [true, 'Choose delivery option'],
+      required: [true, 'Choose delivery method'],
+    },
+    delivery_date: {
+      type: Date,
+    },
+    delivery_time: {
+      type: String,
+    },
+    deliveryPrice: {
+      type: String,
+      default: '0.00',
     },
   },
 

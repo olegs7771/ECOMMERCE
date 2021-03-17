@@ -117,13 +117,25 @@ export default function OrderReceipt(props) {
                 <div className="order__receipt__main__delivery__date">
                   <div className="order__receipt__main__delivery__date__block">
                     <div className="order__receipt__main__delivery__date--weekday">
-                      Wed
+                      {
+                        new Date(orderRedux.delivery_date)
+                          .toDateString()
+                          .split(' ')[0]
+                      }
                     </div>
                     <div className="order__receipt__main__delivery__date--day">
-                      22
+                      {
+                        new Date(orderRedux.delivery_date)
+                          .toDateString()
+                          .split(' ')[2]
+                      }
                     </div>
                     <div className="order__receipt__main__delivery__date--month">
-                      MAY
+                      {
+                        new Date(orderRedux.delivery_date)
+                          .toDateString()
+                          .split(' ')[1]
+                      }
                     </div>
                   </div>
                 </div>
@@ -134,7 +146,7 @@ export default function OrderReceipt(props) {
                       Delivery Time
                     </p>
                     <p className="order__receipt__main__delivery__address__date--text">
-                      14:00 - 15:00
+                      {orderRedux.delivery_time}
                     </p>
                   </div>
                   <div className="order__receipt__main__delivery__address__address">
@@ -178,7 +190,7 @@ export default function OrderReceipt(props) {
                         Delivery
                       </span>
                       <span className="order__receipt__main__order__text">
-                        {/* $10.00 */}${orderRedux.delivery}
+                        {/* $10.00 */}${orderRedux.deliveryPrice}
                       </span>
                     </li>
                     <li className="order__receipt__main__order__item mb-md">

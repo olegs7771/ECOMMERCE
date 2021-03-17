@@ -65,6 +65,9 @@ export default function OrderAddressForm({
     phone: '',
     delivery_options: ['Pick-up yourself at store', 'Delivery by our staff'],
     deliveryPrice: '',
+    date: '',
+    time: '',
+    delivery: '',
   };
 
   const [values, setValues] = useState(initialState);
@@ -74,6 +77,8 @@ export default function OrderAddressForm({
 
   //disable edit fields after user opened payment form
   const [disable, setDisable] = useState(false);
+
+  const [showDisplay, _showDateDisplay] = useState(false);
 
   const _onChange = (e) => {
     dispatch(clearErrorReduxState());
@@ -155,9 +160,12 @@ export default function OrderAddressForm({
       country: values.country,
       province: values.province,
       deliveryPrice: values.deliveryPrice,
+      date: values.date,
+      time: values.time,
       cartId,
       total,
       totalItems,
+      deliveryMethod: values.delivery,
     };
     if (authRedux.isAuthenticated) {
       data = {
@@ -183,9 +191,15 @@ export default function OrderAddressForm({
     }
   }, [orderRedux._id, dispatch]);
 
-  // SET DATE AND TIME
+  // SET DATE
   const _setDate = (e) => {
-    console.log('date_time e', e.toDateString());
+    console.log('date e', e.toDateString());
+    setValues({ ...values, date: e.toDateString() });
+  };
+  // SET  TIME
+  const _setTime = (e) => {
+    console.log('time e', e);
+    setValues({ ...values, time: e });
   };
 
   return (
@@ -417,7 +431,30 @@ export default function OrderAddressForm({
 
       {/* CALENDAR  */}
 
-      <OrderCalendar showCalendar={showCalendar} date_time={_setDate} />
+      <OrderCalendar
+        showCalendar={showCalendar}
+        setDate={_setDate}
+        setTime={_setTime}
+        showDate={_showDateDisplay}
+        hideCalendar={setShowCalendar}
+      />
+      {showDisplay && (
+        <div className="order__buyer__address__date__delivery__display">
+          <span className="order__buyer__address__date__delivery__display--title">
+            Delivery on :
+          </span>
+          <div className="order__buyer__address__date__delivery__display__date">
+            <span className="order__buyer__address__date__delivery__display__date--date">
+              {values.date}
+            </span>
+          </div>
+          <div className="order__buyer__address__date__delivery__display__time">
+            <span className="order__buyer__address__date__delivery__display__time--time">
+              {values.time}
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* PAYMENT BLOCK  */}
       <div

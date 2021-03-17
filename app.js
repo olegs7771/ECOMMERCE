@@ -18,6 +18,7 @@ const sub = require('./routes/sub');
 const product = require('./routes/product');
 const cart = require('./routes/cart');
 const order = require('./routes/order');
+const rating = require('./routes/rating');
 
 //FOR UPLOADING FILES
 app.use(fileUpload());
@@ -53,6 +54,7 @@ app.use('/api/v1/sub', sub);
 app.use('/api/v1/product', product);
 app.use('/api/v1/cart', cart);
 app.use('/api/v1/order', order);
+app.use('/api/v1/rating', rating);
 
 //Errors for missing routes
 

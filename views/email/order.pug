@@ -9,19 +9,19 @@ block content
         div(class='order__header__text')
           | Your Order Number : 
         div(class='order__header__number')
-          | #{orderNumber}
+          | #{order.orderNumber}
       div(class='order__details')
         ul(class='order__list')
           li(class='order__item')
             span(class='order__title') Address
             div(class='order__item__block')
-              span(class='order_text') #{suit} #{street} #{city} #{province}
-              span(class='order_text')  #{zipecode} , #{country}
+              span(class='order_text') #{order.suit} #{order.street} #{order.city} #{order.province}
+              span(class='order_text')  #{order.zipecode} , #{order.country}
           li(class='order__item')
             span(class='order__title') Delivery Time
             div(class='order__item__block')
-              span(class='order_text') #{delivery_date}
-              span(class='order_text')  #{delivery_time}
+              span(class='order_text') #{order.delivery_date.toDateString()}
+              span(class='order_text')  #{order.delivery_time}
           div(class='order__tittle__wrapper')
             span(class='order__title') Order Summary
           li(class='order__item__items')
@@ -35,8 +35,11 @@ block content
                    
                    span(class='order__text__total ml-sm') $#{item.product.price}
           li(class='order__item')
+            div(class='order__text') Delivery Method 
+            div(class='order__text') #{order.delivery_method}
+          li(class='order__item')
             div(class='order__text') Delivery
-            div(class='order__text') $#{delivery}
+            div(class='order__text') $#{order.deliveryPrice}
           li(class='order__item')
             div(class='order__text__total') Total
-            div(class='order__text__total') $#{total}
+            div(class='order__text__total') $#{order.total}
