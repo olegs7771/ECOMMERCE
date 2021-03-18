@@ -210,6 +210,83 @@ export default function ProductPage(props) {
                   )}
                 </div>
               </div>
+              <div className="pub-product__details__rating">
+                <div className="pub-product__details__rating__title">
+                  <h3 className="heading-4 mb-sm">Rate product</h3>
+                </div>
+                <span className="pub-category__p-card__details__rating__bar">
+                  <svg
+                    className={
+                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
+                    }
+                  >
+                    <use href={sprite + '#icon-star-empty'} />
+                  </svg>
+                  <svg
+                    className={
+                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
+                    }
+                  >
+                    <use href={sprite + '#icon-star-empty'} />
+                  </svg>
+                  <svg
+                    className={
+                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
+                    }
+                  >
+                    <use href={sprite + '#icon-star-empty'} />
+                  </svg>
+                  <svg
+                    className={
+                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
+                    }
+                  >
+                    <use href={sprite + '#icon-star-empty'} />
+                  </svg>
+                  <svg
+                    className={
+                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
+                    }
+                  >
+                    <use href={sprite + '#icon-star-empty'} />
+                  </svg>
+                  <svg
+                    className={
+                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
+                    }
+                  >
+                    <use href={sprite + '#icon-star-empty'} />
+                  </svg>
+                  <svg
+                    className={
+                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
+                    }
+                  >
+                    <use href={sprite + '#icon-star-empty'} />
+                  </svg>
+                  <svg
+                    className={
+                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
+                    }
+                  >
+                    <use href={sprite + '#icon-star-empty'} />
+                  </svg>
+                  <svg
+                    className={
+                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
+                    }
+                  >
+                    <use href={sprite + '#icon-star-empty'} />
+                  </svg>
+                  <svg
+                    className={
+                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
+                    }
+                  >
+                    <use href={sprite + '#icon-star-empty'} />
+                  </svg>
+                </span>
+              </div>
             </div>
             {/* LEFT IN GRID  */}
             <div className="pub-product__product-summary mb-sm">

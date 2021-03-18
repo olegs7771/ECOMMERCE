@@ -60,6 +60,12 @@
         &--active {
           fill: red;
         }
+        &--scaleup {
+          &:hover {
+            transform: scale(1.1);
+            fill: red;
+          }
+        }
       }
 
       &--amount {
@@ -93,6 +99,9 @@
         margin-right: 2rem;
         border-radius: 3rem;
       }
+    }
+    &__rating__title {
+      margin-top: 4rem;
     }
   }
 
