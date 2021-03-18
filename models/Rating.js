@@ -21,5 +21,8 @@ const ratingSchema = new mongoose.Schema(
   }
 );
 
+// PREVENT FROM SAME USER LEAVING RATING FOR SAME PRODUCT
+ratingSchema.index({ user: 1, product: 1 }, { unique: true });
+
 const Rating = mongoose.model('Rating', ratingSchema);
 module.exports = Rating;

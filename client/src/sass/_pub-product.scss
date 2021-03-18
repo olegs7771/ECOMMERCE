@@ -55,8 +55,11 @@
     &__rating-bar {
       display: flex;
 
-      &--icon {
+      &__icon {
         cursor: auto;
+        &--active {
+          fill: red;
+        }
       }
 
       &--amount {

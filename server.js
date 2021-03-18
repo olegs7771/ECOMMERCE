@@ -23,7 +23,3 @@ mongoose
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
-
-// console.log(validator.isMobilePhone('+1 204-943-9151', ['en-CA', 'en-US']));
-
-// console.log(new Date('2021-03-06T11:42:26.221Z').toLocaleString());

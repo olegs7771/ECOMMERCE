@@ -9,6 +9,7 @@ import SlideInMessage from '../../utils/SlideInMessage';
 
 import sprite from '../../img/sprite.svg';
 import sprite_material from '../../img/sprite_material.svg';
+
 export default function ProductPage(props) {
   // REDUX
   const dispatch = useDispatch();
@@ -66,6 +67,20 @@ export default function ProductPage(props) {
     }, 3000);
   }, [messageRedux, loadingRedux]);
 
+  const RatingTotal = () => {
+    let rating;
+    if (productRedux.ratings.length > 0) {
+      rating = productRedux.ratings
+        .map((elem) => elem.rating)
+        .reduce((acc, val) => acc + val);
+
+      return rating / productRedux.ratings.length;
+    } else {
+      return (rating = 0);
+    }
+  };
+
+  // COMPONENT
   if (!productRedux) {
     return <div className="pub-product page">Loading...</div>;
   } else {
@@ -136,16 +151,20 @@ export default function ProductPage(props) {
               {/* RATING STARS */}
               <div className="pub-product__details__rating-bar mb-sm">
                 <span className="pub-category__p-card__details__rating__bar">
-                  <svg className="icon pub-product__details__rating-bar--icon">
-                    <use href={sprite + '#icon-star-full'} />
-                  </svg>
-                  <svg className="icon pub-product__details__rating-bar--icon">
-                    <use href={sprite + '#icon-star-half'} />
-                  </svg>
-                  <svg className="icon pub-product__details__rating-bar--icon">
-                    <use href={sprite + '#icon-star-empty'} />
-                  </svg>
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((star, i) => (
+                    <svg
+                      className={
+                        star <= RatingTotal()
+                          ? 'icon pub-product__details__rating-bar__icon--active'
+                          : 'icon pub-product__details__rating-bar__icon'
+                      }
+                      key={i}
+                    >
+                      <use href={sprite + '#icon-star-empty'} />
+                    </svg>
+                  ))}
                 </span>
+
                 <div className="pub-category__p-card__details__rating__reviews">
                   <span>(</span>
                   <span
@@ -153,7 +172,7 @@ export default function ProductPage(props) {
                            pub-product__details__rating-bar--amount
                     "
                   >
-                    30
+                    {productRedux.ratings.length}
                   </span>
                   <span>)</span>
                 </div>

@@ -76,8 +76,8 @@ const productSchema = new mongoose.Schema(
     },
     ratings: [
       {
-        star: Number,
-        user: { type: ObjectId, ref: 'User' },
+        type: ObjectId,
+        ref: 'Rating',
       },
     ],
   },
@@ -128,9 +128,16 @@ productSchema.post('save', function (err, doc, next) {
   next(errors);
 });
 
-// productSchema.pre('find', function (next) {
-//   console.log('this', this);
-// });
+productSchema.methods.addRating = async function (user) {
+  console.log('modal rating.user', user);
+  console.log('this addRating', this);
+  this.ratings.push(user);
+};
+
+productSchema.pre(/find/, function (next) {
+  this.populate('ratings').select('-__v');
+  next();
+});
 
 const Product = mongoose.model('Product', productSchema);
 module.exports = Product;
