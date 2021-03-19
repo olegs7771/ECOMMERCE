@@ -5,6 +5,7 @@ import { Image } from 'cloudinary-react';
 import sprite from '../../img/sprite.svg';
 import sprite_material from '../../img/sprite_material.svg';
 import { getProductInCartAction } from '../../store/actions/cartAction';
+import { RatingBarShow } from '../../utils/RatingBar';
 
 export default function ProductItem({
   image,
@@ -16,6 +17,7 @@ export default function ProductItem({
   categoryId,
   categorySlug,
   history,
+  ratings,
 }) {
   // REDUX
   const dispatch = useDispatch();
@@ -77,6 +79,20 @@ export default function ProductItem({
     }
   }, [messageRedux]);
 
+  //Rating Total
+  const RatingTotal = () => {
+    let rating;
+    if (ratings.length > 0) {
+      rating = ratings
+        .map((elem) => elem.rating)
+        .reduce((acc, val) => acc + val);
+
+      return rating / ratings.length;
+    } else {
+      return (rating = 0);
+    }
+  };
+
   return (
     <div
       className="pub-category__p-card"
@@ -123,21 +139,11 @@ export default function ProductItem({
           </div>
           {/* RATING  */}
           <div className="pub-category__p-card__details__rating">
-            <span className="pub-category__p-card__details__rating__bar">
-              <svg className="icon">
-                <use href={sprite + '#icon-star-full'} />
-              </svg>
-              <svg className="icon">
-                <use href={sprite + '#icon-star-half'} />
-              </svg>
-              <svg className="icon">
-                <use href={sprite + '#icon-star-empty'} />
-              </svg>
-            </span>
+            <RatingBarShow RatingTotal={RatingTotal} />
             <div className="pub-category__p-card__details__rating__reviews">
               <span>(</span>
               <span className="pub-category__p-card__details__rating__reviews--amount">
-                30
+                {ratings.length}
               </span>
               <span>)</span>
             </div>

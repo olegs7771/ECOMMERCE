@@ -54,17 +54,25 @@
     }
     &__rating-bar {
       display: flex;
+      align-items: center;
+      height: 4rem;
 
       &__icon {
-        cursor: auto;
+        height: 1.5rem;
+        width: 1.5rem;
+        cursor: pointer;
+        fill: $color-grey-dark2;
         &--active {
-          fill: red;
+          fill: $color-yellow;
         }
-        &--scaleup {
-          &:hover {
-            transform: scale(1.1);
-            fill: red;
-          }
+        &--active {
+          height: 1.5rem;
+          width: 1.5rem;
+        }
+        &:hover {
+          transition: 0.2s;
+          transform: scale(1.2);
+          fill: $color-yellow;
         }
       }
 
@@ -102,6 +110,9 @@
     }
     &__rating__title {
       margin-top: 4rem;
+    }
+    &__rating__icon-check {
+      margin-left: 1rem;
     }
   }
 

@@ -14,7 +14,7 @@ export const Spinner = (props) => {
     <div className="sweet-loading">
       <ClipLoader
         css={override}
-        size={50}
+        size={30}
         color={'#227c9d'}
         loading={props.loading}
       />

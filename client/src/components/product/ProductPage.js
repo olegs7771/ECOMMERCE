@@ -6,19 +6,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductInCartAction } from '../../store/actions/cartAction';
 import { getOneProduct } from '../../store/actions/productAction';
 import SlideInMessage from '../../utils/SlideInMessage';
+import { Spinner } from '../../utils/LoadingComponent';
 
 import sprite from '../../img/sprite.svg';
 import sprite_material from '../../img/sprite_material.svg';
+
+import { RatingBar, RatingBarShow } from '../../utils/RatingBar';
 
 export default function ProductPage(props) {
   // REDUX
   const dispatch = useDispatch();
 
+  const authRedux = useSelector((state) => state.auth);
   const loadingRedux = useSelector((state) => state.loading.loadingProductCart);
+  const loadingRatingRedux = useSelector(
+    (state) => state.loading.loadingRating
+  );
   const productRedux = useSelector((state) => state.product.product);
   const cookieRedux = useSelector((state) => state.cookie.cookie);
   const messageRedux = useSelector((state) => state.message.message);
-  const authRedux = useSelector((state) => state.auth);
+  const messageRatingRedux = useSelector(
+    (state) => state.message.messageRating
+  );
 
   // STATE
   const [favorite, setFavorite] = useState(false);
@@ -150,20 +159,7 @@ export default function ProductPage(props) {
               </div>
               {/* RATING STARS */}
               <div className="pub-product__details__rating-bar mb-sm">
-                <span className="pub-category__p-card__details__rating__bar">
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((star, i) => (
-                    <svg
-                      className={
-                        star <= RatingTotal()
-                          ? 'icon pub-product__details__rating-bar__icon--active'
-                          : 'icon pub-product__details__rating-bar__icon'
-                      }
-                      key={i}
-                    >
-                      <use href={sprite + '#icon-star-empty'} />
-                    </svg>
-                  ))}
-                </span>
+                <RatingBarShow RatingTotal={RatingTotal} />
 
                 <div className="pub-category__p-card__details__rating__reviews">
                   <span>(</span>
@@ -210,82 +206,25 @@ export default function ProductPage(props) {
                   )}
                 </div>
               </div>
+              {/* RATING  */}
               <div className="pub-product__details__rating">
                 <div className="pub-product__details__rating__title">
-                  <h3 className="heading-4 mb-sm">Rate product</h3>
+                  <h3 className="heading-4 ">Rate product</h3>
                 </div>
-                <span className="pub-category__p-card__details__rating__bar">
-                  <svg
-                    className={
-                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
-                    }
-                  >
-                    <use href={sprite + '#icon-star-empty'} />
-                  </svg>
-                  <svg
-                    className={
-                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
-                    }
-                  >
-                    <use href={sprite + '#icon-star-empty'} />
-                  </svg>
-                  <svg
-                    className={
-                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
-                    }
-                  >
-                    <use href={sprite + '#icon-star-empty'} />
-                  </svg>
-                  <svg
-                    className={
-                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
-                    }
-                  >
-                    <use href={sprite + '#icon-star-empty'} />
-                  </svg>
-                  <svg
-                    className={
-                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
-                    }
-                  >
-                    <use href={sprite + '#icon-star-empty'} />
-                  </svg>
-                  <svg
-                    className={
-                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
-                    }
-                  >
-                    <use href={sprite + '#icon-star-empty'} />
-                  </svg>
-                  <svg
-                    className={
-                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
-                    }
-                  >
-                    <use href={sprite + '#icon-star-empty'} />
-                  </svg>
-                  <svg
-                    className={
-                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
-                    }
-                  >
-                    <use href={sprite + '#icon-star-empty'} />
-                  </svg>
-                  <svg
-                    className={
-                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
-                    }
-                  >
-                    <use href={sprite + '#icon-star-empty'} />
-                  </svg>
-                  <svg
-                    className={
-                      'icon pub-product__details__rating-bar__icon icon pub-product__details__rating-bar__icon--scaleup'
-                    }
-                  >
-                    <use href={sprite + '#icon-star-empty'} />
-                  </svg>
-                </span>
+                <div className="pub-product__details__rating-bar">
+                  <RatingBar
+                    productId={props.match.params.productId}
+                    slug={props.match.params.slug}
+                  />
+                  {loadingRatingRedux && <Spinner />}
+                  {messageRatingRedux && (
+                    <span className="icon btn-link__icon pub-product__details__rating__icon-check">
+                      <svg className="icon pub-product__details__buy-module__icon--icon">
+                        <use href={sprite_material + '#icon-check'} />
+                      </svg>
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
             {/* LEFT IN GRID  */}

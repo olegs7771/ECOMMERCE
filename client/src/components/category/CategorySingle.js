@@ -137,6 +137,7 @@ export default function CategorySingle(props) {
                           history={props.history}
                           categoryId={props.match.params.categoryId}
                           categorySlug={props.match.params.slug}
+                          ratings={p.ratings}
                         />
                       ))}
                     </div>
