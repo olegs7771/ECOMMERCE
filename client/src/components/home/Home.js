@@ -16,9 +16,9 @@ const Home = () => {
   // const loadingRedux = useSelector((state) => state.loading.loading);
 
   // GET PRODUST ON LOAD TO SHOW 3 LAST ADDED PRODUCTS
-  useEffect(() => {
-    dispatch(getLast3ProductAction());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getLast3ProductAction());
+  // }, [dispatch]);
 
   return (
     <div className="home page">
