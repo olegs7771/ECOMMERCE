@@ -16,6 +16,7 @@ const findJwtToken = (cookies) => {
 // ON LOADING APP GET sessionId,userId,token TO COOKIES
 const getGuestCookieToken = asyncCatch(async (req, res, next) => {
   console.log('get guest cookies');
+  //
   // const sessionId = crypto.randomBytes(10).toString('hex');
   // const guestId = uuidv4();
   // const payload = {
