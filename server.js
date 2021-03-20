@@ -1,7 +1,7 @@
 const app = require('./app');
 
 // require('dotenv').config();
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 // const { promisify } = require('util');
 const PORT = process.env.PORT || 5000;
 

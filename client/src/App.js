@@ -1,10 +1,10 @@
 import React from 'react';
-import { withCookies } from 'react-cookie';
+// import { withCookies } from 'react-cookie';
 import MainApp from './components/MainApp';
-import axios from 'axios';
-import { reload } from './utils/reloadUserAuth';
+// import axios from 'axios';
+// import { reload } from './utils/reloadUserAuth';
 import './App.scss';
-import { Provider } from 'react-redux';
+// import { Provider } from 'react-redux';
 
 const App = (props) => {
   // const store = reload(props.allCookies); //ON EVERY RELOAD RESET AUTH USER REDUX STATE
@@ -37,4 +37,5 @@ const App = (props) => {
   );
 };
 
-export default withCookies(App);
+// export default withCookies(App);
+export default App;
