@@ -35,6 +35,7 @@ app.use(cookieParser());
 
 app.all('/', (req, res, next) => {
   console.log('req.headers main ecommerce', req.headers);
+  next();
 });
 
 //Public Folder
