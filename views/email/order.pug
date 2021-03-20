@@ -1,0 +1,45 @@
+extends baseEmail 
+
+block content 
+  p Dear #{firstName}
+  p Thank you for your purchase! Please review your order.
+
+    div(class='order__content')
+      div(class='order__header')
+        div(class='order__header__text')
+          | Your Order Number : 
+        div(class='order__header__number')
+          | #{order.orderNumber}
+      div(class='order__details')
+        ul(class='order__list')
+          li(class='order__item')
+            span(class='order__title') Address
+            div(class='order__item__block')
+              span(class='order_text') #{order.suit} #{order.street} #{order.city} #{order.province}
+              span(class='order_text')  #{order.zipecode} , #{order.country}
+          li(class='order__item')
+            span(class='order__title') Delivery Time
+            div(class='order__item__block')
+              span(class='order_text') #{order.delivery_date.toDateString()}
+              span(class='order_text')  #{order.delivery_time}
+          div(class='order__tittle__wrapper')
+            span(class='order__title') Order Summary
+          li(class='order__item__items')
+            each  item in products
+              div(class='order__item__product')
+                div(class='order__text__product') #{item.product.title}
+                div(class='order__text__item')
+                  span(class='order__text ml-sm') x
+                  span(class='order__text ml-sm') #{item.quantity}
+                  div(class='order__text__price__wrapper')
+                   
+                   span(class='order__text__total ml-sm') $#{item.product.price}
+          li(class='order__item')
+            div(class='order__text') Delivery Method 
+            div(class='order__text') #{order.delivery_method}
+          li(class='order__item')
+            div(class='order__text') Delivery
+            div(class='order__text') $#{order.deliveryPrice}
+          li(class='order__item')
+            div(class='order__text__total') Total
+            div(class='order__text__total') $#{order.total}

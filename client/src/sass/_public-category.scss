@@ -1,0 +1,204 @@
+.pub-category {
+  &__wrapper {
+    margin: 3rem 0;
+  }
+
+  &__container {
+  }
+
+  &__heading {
+    display: inline-block;
+    margin: 0 auto;
+    margin-bottom: 4rem;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+    grid-gap: 2rem;
+    justify-items: center;
+  }
+
+  &__card {
+    background-color: #eee;
+    width: 100%;
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+
+    &--img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+
+      position: absolute;
+      overflow: hidden;
+      filter: brightness(0.6);
+    }
+    &--name {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $color-grey-light;
+      position: absolute;
+      transform: translateY(-4rem);
+      text-transform: uppercase;
+    }
+  }
+
+  // EDIT CategorySingle
+
+  &__wrapper {
+    &__top {
+      // background-color: $color-grey;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 60%;
+    }
+
+    &__description {
+      width: 60%;
+      &--text {
+        font-size: 1.6rem;
+      }
+    }
+
+    &__sublist {
+      // background-color: $color-yellow;
+      padding: 5rem 0;
+      &--block {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+        grid-gap: 2rem;
+        justify-items: center;
+        cursor: pointer;
+      }
+      &--card {
+        background-color: $color-grey;
+        padding: 1rem 2rem;
+        border-radius: 3rem;
+      }
+      &--item {
+        font-size: 1.6rem;
+        text-decoration: none;
+        color: $color-black;
+      }
+    }
+
+    &__productlist {
+      min-height: 40rem;
+      &__spinner {
+        display: flex;
+        justify-content: center;
+      }
+
+      &__block {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+        grid-gap: 2rem;
+      }
+    }
+  }
+  // PRODUCT CARD
+
+  &__p-card {
+    // background-color: cadetblue;
+    // height: 40rem;
+    cursor: pointer;
+
+    &--image {
+      width: 100%;
+    }
+    &__bottom {
+      display: flex;
+    }
+    &__details {
+      // border: 1px solid black;
+      width: 80%;
+      padding: 0 2rem;
+      & > * {
+        &:not(:last-child) {
+          margin-bottom: 1rem;
+        }
+      }
+
+      &--name {
+        font-size: 1.6rem;
+        font-weight: bold;
+        &-visible {
+          font-size: 1.6rem;
+          font-weight: bold;
+          text-decoration: 2px underline;
+        }
+      }
+      &--brand {
+        font-size: 1.4rem;
+      }
+      &__price {
+        display: inline-block;
+        white-space: pre;
+        font-size: 1.1rem;
+        font-weight: 700;
+
+        &--simbol {
+          line-height: 0.1;
+          vertical-align: text-top;
+        }
+        &--integer {
+          font-size: 2.3rem;
+          line-height: 1.1;
+        }
+        &--decimals {
+          line-height: 0.1;
+          vertical-align: text-top;
+          margin-left: 1px;
+        }
+      }
+
+      &__rating {
+        display: flex;
+        align-items: center;
+
+        &__reviews {
+          margin-left: 1rem;
+          font-size: 1.4rem;
+          color: $color-grey-dark;
+        }
+      }
+    }
+    &__cart {
+      // border: 1px solid black;
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      &--icon {
+        transition: 0.2s;
+        opacity: 0;
+        background-color: $color-blue-3;
+        fill: $color-grey;
+        &:hover {
+          background-color: #0755a3ed;
+        }
+
+        &-spinner {
+          animation: rotate-spinner 1s infinite linear;
+          fill: $color-grey;
+        }
+      }
+      &--visible {
+        transition: 0.2s;
+        opacity: 1;
+        background-color: $color-blue-3;
+        fill: $color-grey;
+        &:hover {
+          background-color: #0755a3ed;
+        }
+      }
+    }
+  }
+}

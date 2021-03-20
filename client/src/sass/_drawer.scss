@@ -1,0 +1,45 @@
+.drawer {
+  grid-column: 1;
+  grid-row: 1;
+  background-color: #fff;
+  min-height: 120vh;
+  position: fixed;
+  z-index: 8000;
+  visibility: hidden;
+  transform: translate(-47rem, -10rem);
+  transition: 0.2s;
+  width: 30rem;
+  right: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  top: 10rem;
+  &--open {
+    visibility: visible;
+    transform: translate(0, -10rem);
+  }
+
+  &__header {
+    // border-bottom: 1px solid #eee;
+    padding: 1.45rem 2rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+
+    &-list {
+      list-style: none;
+    }
+    &-item {
+      list-style: none;
+    }
+    &-link {
+      text-decoration: none;
+      font-size: 2rem;
+      text-transform: uppercase;
+    }
+  }
+}

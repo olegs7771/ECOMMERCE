@@ -1,0 +1,175 @@
+.product {
+  height: 100vh;
+  padding: 4rem;
+  text-align: center;
+  max-width: 120rem;
+  margin: 0 auto;
+
+  &__form {
+    background-color: $color-yellow;
+    border-radius: 3px;
+    padding: 1rem 1rem;
+    height: 41.5rem;
+    transition: 1s;
+    margin-bottom: 2rem;
+
+    &-container {
+      display: flex;
+      justify-content: space-evenly;
+      margin: 2rem 0 0 0;
+    }
+
+    &-l-block,
+    &-c-block,
+    &-r-block {
+      // border: 1px solid black;
+      width: 100%;
+      padding: 0 2rem;
+    }
+    &--close {
+      height: 0;
+      padding: 0 1rem;
+      margin-bottom: 0;
+    }
+  }
+
+  &__cta {
+    &-control {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    &-btn {
+      display: flex;
+      align-items: center;
+      width: 20rem;
+    }
+    &-icon {
+      fill: #fff;
+      margin-right: 1rem;
+    }
+  }
+  &__list-box {
+    position: relative;
+    background-color: #fff;
+    min-height: 53vh;
+    border-top: 1px solid black;
+    padding: 2rem 0;
+  }
+  &__list-option {
+    // border: 1px solid black;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__list-btn {
+    padding: 0.3rem 2rem;
+    text-transform: uppercase;
+    border-radius: 3px;
+    border: none;
+    &:hover {
+      background-color: $color-grey-light-2;
+      color: $color-grey-dark;
+    }
+
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////
+  // PRODUCT TILES VIEW
+  &__tiles-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+    grid-gap: 2rem;
+    justify-items: center;
+    position: relative;
+    // SMALL
+    &-tile {
+      width: 25rem;
+      transition: 0.2s;
+      border-radius: 5px;
+      background-color: $color-blue;
+      border: 1px solid $color-blue;
+      padding: 1rem;
+
+      &:hover {
+        transform: translateY(-0.1rem);
+        box-shadow: $box-shadow-big;
+      }
+      // SHOW ONE TILE BIG
+      &--focus {
+        position: absolute;
+        width: 101%;
+        // min-height: 50rem;
+        background-color: $color-blue;
+        padding: 4rem 2rem;
+
+        &:hover {
+          transform: translateY(0);
+          box-shadow: none;
+        }
+
+        z-index: 100;
+        font-size: 3rem;
+      }
+
+      &-top {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      &-header {
+        height: 5rem;
+
+        &--text {
+          color: #eee;
+        }
+      }
+
+      &-body {
+        font-size: 1.2rem;
+        text-align: left;
+        padding: 2rem;
+        background-color: #fff;
+        &--focus {
+          text-align: left;
+          font-size: 2rem;
+          // border: 1px solid black;
+          padding: 4rem;
+          height: 90%;
+          background-color: #fff;
+        }
+      }
+      &-footer {
+        // border: 1px solid black;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-around;
+
+        &--focus {
+          display: none;
+        }
+      }
+      &-icon {
+        fill: #fff;
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+    }
+  }
+
+  &__item {
+    &:hover {
+      background-color: $color-grey-light-2;
+    }
+
+    &-text {
+      font-size: 1.4rem;
+      font-weight: 700;
+      border-right: 1px solid $color-grey-dark;
+      padding: 0 1rem;
+    }
+  }
+}

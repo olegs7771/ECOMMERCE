@@ -1,0 +1,47 @@
+.confirmation {
+  background-color: $color-grey-light;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  line-height: 1;
+
+  &__heading {
+    &-container {
+      position: relative;
+      height: 18.5rem;
+    }
+
+    border-bottom: 5px solid $color-valid;
+    padding: 5rem;
+    text-align: center;
+    width: 100%;
+    //ON LOADING BOTTOM BORDER ANIMATION
+    &--loading {
+      border-bottom: none;
+    }
+
+    &--animation-line {
+      position: absolute;
+      height: 5px;
+      width: 10%;
+      background-color: $color-valid;
+      transform: translate(-5rem, 9rem);
+      margin: 0 auto;
+      animation: pulsate 2s infinite;
+    }
+
+    &-text {
+      font-size: 4rem;
+      text-transform: uppercase;
+      color: $color-valid;
+    }
+  }
+
+  &__heading {
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: $color-grey-dark;
+  }
+}

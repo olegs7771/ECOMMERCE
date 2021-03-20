@@ -1,0 +1,128 @@
+.pub-product {
+  &__container {
+  }
+
+  &__wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  &__gallery {
+    grid-column: 1/3;
+    &__block {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 25vw;
+      grid-gap: 2rem;
+    }
+
+    &--image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  &__details {
+    // background-color: lightblue;
+    position: sticky;
+    grid-column: 3;
+    padding: 0 4rem;
+    top: 6rem;
+
+    &__name-wrapper {
+      display: flex;
+      justify-content: space-between;
+
+      &__content-left {
+        &__name {
+          &--title {
+            padding: 0 2rem 0 0;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+          }
+          &--brand {
+            font-size: 1.6rem;
+          }
+        }
+      }
+      &__content-right {
+        &__price {
+          font-weight: 700;
+          margin-top: 0.5rem;
+        }
+      }
+    }
+    &__rating-bar {
+      display: flex;
+      align-items: center;
+      height: 4rem;
+
+      &__icon {
+        height: 1.5rem;
+        width: 1.5rem;
+        cursor: pointer;
+        fill: $color-grey-dark2;
+        &--active {
+          fill: $color-yellow;
+        }
+        &--active {
+          height: 1.5rem;
+          width: 1.5rem;
+        }
+        &:hover {
+          transition: 0.2s;
+          transform: scale(1.2);
+          fill: $color-yellow;
+        }
+      }
+
+      &--amount {
+        &:hover {
+          cursor: pointer;
+          text-decoration: 2px black underline;
+        }
+      }
+    }
+    // BUY MODULE
+    &__buy-module {
+      display: flex;
+      justify-content: space-between;
+      // align-items: center;
+      &__icon {
+        border: 1px solid $color-grey-light-2;
+        border-radius: 64px;
+        padding: 2rem 2rem 1.5rem 2rem;
+        &:hover {
+          border: 1px solid $color-grey-dark;
+        }
+
+        &--icon {
+          width: 2.2rem;
+          height: 2.2rem;
+        }
+      }
+      &--btn {
+        background-color: $color-blue-3;
+        width: 100%;
+        margin-right: 2rem;
+        border-radius: 3rem;
+      }
+    }
+    &__rating__title {
+      margin-top: 4rem;
+    }
+    &__rating__icon-check {
+      margin-left: 1rem;
+    }
+  }
+
+  &__product-summary {
+    padding: 4rem 0;
+    max-width: 60rem;
+    grid-column: 1/3;
+    height: 50rem;
+    &--text {
+      font-size: 1.6rem;
+    }
+  }
+}

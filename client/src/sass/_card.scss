@@ -1,0 +1,230 @@
+.card {
+  &-wrapper {
+    background-color: $color-grey;
+    min-height: 100vh;
+    padding: 4rem;
+    text-align: center;
+    max-width: 160rem;
+    margin: 0 auto;
+  }
+
+  &__container {
+    display: flex;
+    height: 58vh;
+    //////////////////////////////////
+    &__gallery {
+      width: 60%;
+      padding: 0 3rem 0 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      // SHOW LIST OF IMAGES
+      &-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(10vw, 1fr));
+        grid-gap: 1rem;
+        justify-items: left;
+        padding: 1rem 1rem 7rem 1rem;
+      }
+      &-single {
+        &-icon {
+          position: absolute;
+          width: 1rem;
+          height: 1rem;
+          margin-left: 1rem;
+          // transform: translate(-3rem, 1rem);
+          // fill: #eee;
+        }
+      }
+
+      &-container {
+        //
+      }
+
+      &--image {
+        transition: 0.2s;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+        &:hover {
+          filter: brightness(0.9);
+        }
+        &-large {
+          width: 100%;
+          position: relative;
+        }
+      }
+
+      //icons in checking images for delete
+      &-icon {
+        margin-left: 0.5rem;
+        padding: 0.75rem;
+        border: 1px solid $color-grey-dark;
+        &--checked {
+          padding: 0.5rem;
+        }
+
+        &--dot {
+          content: '';
+          width: 0.5rem;
+          height: 0.5rem;
+          background-color: $color-grey-dark;
+          border-radius: 50%;
+        }
+      }
+    }
+    //////////////////////////////////
+    &__detail {
+      width: 40%;
+      padding: 0 2rem;
+      position: relative;
+      height: 100%;
+      // border: 1px solid black;
+
+      &-header {
+        border-bottom: 1px solid black;
+        height: 10rem;
+        display: flex;
+        flex-direction: column;
+
+        // TITLE
+        &--title {
+          height: 5.9rem;
+
+          &-text {
+            height: 6rem;
+            padding: 0 2rem;
+            border: 1px solid transparent;
+            transform: translateX(-1rem);
+          }
+          &-edit {
+            display: flex;
+            align-items: center;
+          }
+        }
+
+        // PRICE
+        &--price {
+          &-edit {
+          }
+          &-text {
+            height: 3.4rem;
+            transform: translateX(-1rem);
+          }
+        }
+      }
+
+      &-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+
+        &--item {
+          min-height: 3rem;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          border-bottom: 1px solid #eee;
+
+          &-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            width: 30%;
+            display: inline-block;
+            justify-self: flex-start;
+          }
+          &-text {
+            width: 70%;
+            font-size: 1.6rem;
+            justify-self: center;
+            display: inline-block;
+            padding: 1rem 2rem;
+            text-align: left;
+            &--edit {
+              padding: 0.5rem 2rem;
+            }
+          }
+        }
+      }
+    }
+    &-cta {
+      display: flex;
+      justify-content: space-evenly;
+
+      align-items: flex-start;
+
+      &-btn--accept {
+        background-color: $color-green;
+      }
+      &-btn--cancel {
+        background-color: $color-grey-dark;
+        margin-left: 1rem;
+      }
+    }
+  }
+  &__input {
+    text-align: center;
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-family: $font-primary;
+    margin: 0;
+    border: 1px solid $color-grey-dark;
+    padding: 0.2rem 2rem;
+
+    &--invalid {
+      border: 1px solid $color-red;
+      color: $color-red;
+    }
+    // small font size feilds
+    &-fss {
+      font-size: 1.6rem;
+      text-transform: lowercase;
+    }
+  }
+  &__icon {
+    transform: translateX(-4rem);
+  }
+
+  // ADD IMAGE FORM <CardImageForm/>
+
+  &__form {
+    margin-top: 4rem;
+    transition: 0.2s;
+    position: relative;
+    border: 1px solid #eee;
+    &-btn-group {
+      display: flex;
+    }
+
+    &-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    &-preview {
+      width: 60%;
+      margin: 0 auto;
+    }
+  }
+  &__message {
+    // background-color: lightblue;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -6.9rem;
+    &--text {
+      font-size: 1.6rem;
+      color: $color-valid;
+    }
+    &--btn {
+      margin-left: 2rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+}
