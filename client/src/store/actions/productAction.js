@@ -299,9 +299,7 @@ export const getLast3ProductAction = () => async (dispatch) => {
   });
 
   try {
-    const res = await axios.get(
-      '/https://still-headland-86091.herokuapp.com/api/v1/product/last-added'
-    );
+    const res = await axios.get('/api/v1/product/last-added');
 
     dispatch({
       type: LOADING,
