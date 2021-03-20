@@ -25,13 +25,14 @@ const Home = () => {
       <article className="home__container container">
         <div className="home__container__main">
           <h1 className="heading-1 mb-md">Welcome</h1>
-          {/* LAST ADDED PRODUCTS  */}
+
           {productsRedux.length !== 0 && (
             <div className="home__container__1">
               <h2 className="h2 heading-2 mb-sm">Last Added Products</h2>
-              {/* SECTION  GRID */}
+
               <section className="home__container__1-block">
-                {productsRedux.map((product, i) => (
+                products
+                {/* {productsRedux.map((product, i) => (
                   <figure className="home__container__1-block-L" key={i}>
                     <Image
                       cloudName="dyl4kpmie"
@@ -40,7 +41,7 @@ const Home = () => {
                       crop="scale"
                       className="home__container__1-block-L--img"
                     />
-                    {/* CAPTION  */}
+
                     <div className="home__container__1-block-caption">
                       <p className="home__container__1-block-caption--title">
                         {product.title}
@@ -50,7 +51,7 @@ const Home = () => {
                       </p>
                     </div>
                   </figure>
-                ))}
+                ))} */}
               </section>
             </div>
           )}
