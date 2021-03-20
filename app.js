@@ -40,6 +40,13 @@ app.all('/test', (req, res, next) => {
   next();
 });
 
+app.use('/api/v1/users', users);
+app.use('/api/v1/category', category);
+app.use('/api/v1/sub', sub);
+app.use('/api/v1/product', product);
+app.use('/api/v1/cart', cart);
+app.use('/api/v1/order', order);
+app.use('/api/v1/rating', rating);
 //Public Folder
 
 if (process.env.NODE_ENV === 'production') {
@@ -52,14 +59,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-
-app.use('/api/v1/users', users);
-app.use('/api/v1/category', category);
-app.use('/api/v1/sub', sub);
-app.use('/api/v1/product', product);
-app.use('/api/v1/cart', cart);
-app.use('/api/v1/order', order);
-app.use('/api/v1/rating', rating);
 
 //Errors for missing routes
 
