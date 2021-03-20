@@ -12,11 +12,11 @@ import {
 
 // Create Order for Guest
 export const createOrderAction = (data) => async (dispatch) => {
+  console.log('createOrderGuestAction data', data);
   dispatch({
     type: LOADING,
     payload: true,
   });
-  console.log('createOrderGuestAction data', data);
   let res;
   try {
     dispatch({

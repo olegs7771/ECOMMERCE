@@ -423,7 +423,7 @@ export default function OrderAddressForm({
             select="Delivery Options"
             title="Delivery"
             required={true}
-            error={errorsRedux.delivery}
+            error={errorsRedux.delivery_method}
             disabled={disable}
           />
         </div>

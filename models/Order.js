@@ -152,9 +152,11 @@ orderSchema.post('save', function (err, doc, next) {
   errors.street = err.errors.street ? err.errors.street.message : '';
   errors.phone = err.errors.phone ? err.errors.phone.message : '';
   errors.zipcode = err.errors.zipcode ? err.errors.zipcode.message : '';
-  errors.delivery = err.errors.delivery ? err.errors.delivery.message : '';
+  errors.delivery_method = err.errors.delivery_method
+    ? err.errors.delivery_method.message
+    : '';
 
-  console.log('errors', errors);
+  console.log('errors save', errors);
   next(errors);
 });
 
@@ -174,7 +176,9 @@ orderSchema.post('findOneAndUpdate', function (err, doc, next) {
   errors.street = err.errors.street ? err.errors.street.message : '';
   errors.phone = err.errors.phone ? err.errors.phone.message : '';
   errors.zipcode = err.errors.zipcode ? err.errors.zipcode.message : '';
-  errors.delivery = err.errors.delivery ? err.errors.delivery.message : '';
+  errors.delivery_method = err.errors.delivery_method
+    ? err.errors.delivery_method.message
+    : '';
 
   console.log('errors in model update', errors);
   next(errors);

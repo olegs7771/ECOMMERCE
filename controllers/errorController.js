@@ -13,9 +13,11 @@ const sendErrorProd = (err, res) => {
   console.log('err in prod', err);
   //only oprational errors leaked to client!
   if (err.isOperational) {
+    console.log('err operational');
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
+      error: err,
     });
   } else {
     // unknown errors
@@ -24,7 +26,7 @@ const sendErrorProd = (err, res) => {
     res.status(500).json({
       status: 'error',
       message: 'not operational error in prod',
-      // err: err.message,
+      error: err,
     });
   }
 };
@@ -46,6 +48,7 @@ module.exports = (err, req, res, next) => {
     ///////////////////////////
     ///////////PROD///////////////////
   } else if (process.env.NODE_ENV === 'production') {
+    console.log('err in prod ❗', err);
     ///////////////////////////////////
     //Handle Mongoose Errors in Prod
     // For CastError if wrong id param
