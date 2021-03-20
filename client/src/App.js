@@ -12,8 +12,8 @@ const App = (props) => {
   if (!props.allCookies.sessionId) {
     const fetchUserId = async () => {
       try {
-        const res = await axios.get('/api/v1/users');
-        console.log('res.data fetchUserId', res.data);
+        await axios.get('/api/v1/users');
+        // console.log('res.data fetchUserId', res.data);
       } catch (error) {
         console.log('error fetchUserId', error.response.data);
       }
