@@ -31,8 +31,7 @@ const Home = () => {
               <h2 className="h2 heading-2 mb-sm">Last Added Products</h2>
 
               <section className="home__container__1-block">
-                products
-                {/* {productsRedux.map((product, i) => (
+                {productsRedux.map((product, i) => (
                   <figure className="home__container__1-block-L" key={i}>
                     <Image
                       cloudName="dyl4kpmie"
@@ -51,7 +50,7 @@ const Home = () => {
                       </p>
                     </div>
                   </figure>
-                ))} */}
+                ))}
               </section>
             </div>
           )}
