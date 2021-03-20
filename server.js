@@ -20,7 +20,11 @@ const PORT = process.env.PORT || 5000;
 //   .then(() => console.log(`connected to ${DB}`))
 //   .catch((err) => console.log('error to connect to DB', err));
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server listening on port ${PORT}`);
+// });
 /////////
+const server = app.listen(PORT, () => {
+  console.log(`HourManager listening on port  ${PORT}`);
+});
+console.log('NODE_ENV', process.env.NODE_ENV);
