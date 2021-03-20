@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.all('/', (req, res, next) => {
-  console.log('re.headers', req.headers);
+  console.log('req.headers main ecommerce', req.headers);
 });
 
 //Public Folder
