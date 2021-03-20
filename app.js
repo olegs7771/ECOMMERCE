@@ -33,11 +33,6 @@ app.use(express.urlencoded({ extended: true }));
 //Cookie Parsing
 app.use(cookieParser());
 
-app.all('/', (req, res, next) => {
-  console.log('req.headers main ecommerce', req.headers);
-  next();
-});
-
 //Public Folder
 
 if (process.env.NODE_ENV === 'production') {
