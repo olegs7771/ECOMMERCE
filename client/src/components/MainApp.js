@@ -31,40 +31,40 @@ import { reloadCart } from '../utils/reloadUserAuth';
 
 const MainApp = (props) => {
   // REDUX
-  const drawerRedux = useSelector((state) => state.drawer.drawer);
-  const authRedux = useSelector((state) => state.auth);
-  // RELOAD SHOPPING CART FOR AUTH USER.IF NOT LOGGED GET CART FOR GUEST
-  if (authRedux.isAuthenticated) {
-    // console.log('products in cart for user');
-    setTimeout(() => {
-      reloadCart(authRedux.user.id, 'user'); //delay to let Login.js render its state
-    }, 0);
-  } else {
-    if (
-      Object.keys(props.cookies.allCookies).some((el) =>
-        el.startsWith('productId')
-      )
-    ) {
-      // console.log('products in cart for guest');
-      reloadCart(props.cookies.allCookies.guestId, 'guest');
-    }
-  }
+  // const drawerRedux = useSelector((state) => state.drawer.drawer);
+  // const authRedux = useSelector((state) => state.auth);
+  // // RELOAD SHOPPING CART FOR AUTH USER.IF NOT LOGGED GET CART FOR GUEST
+  // if (authRedux.isAuthenticated) {
+  //   // console.log('products in cart for user');
+  //   setTimeout(() => {
+  //     reloadCart(authRedux.user.id, 'user'); //delay to let Login.js render its state
+  //   }, 0);
+  // } else {
+  //   if (
+  //     Object.keys(props.cookies.allCookies).some((el) =>
+  //       el.startsWith('productId')
+  //     )
+  //   ) {
+  //     // console.log('products in cart for guest');
+  //     reloadCart(props.cookies.allCookies.guestId, 'guest');
+  //   }
+  // }
 
-  // NO SCROLL ON DRAWER ON
-  useEffect(() => {
-    if (drawerRedux) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'visible';
-    }
-  }, [drawerRedux]);
+  // // NO SCROLL ON DRAWER ON
+  // useEffect(() => {
+  //   if (drawerRedux) {
+  //     document.body.style.overflow = 'hidden';
+  //   } else {
+  //     document.body.style.overflow = 'visible';
+  //   }
+  // }, [drawerRedux]);
 
   return (
     <Router>
       <Navigation />
       <Drawer />
       <Switch>
-        <Route
+        {/* <Route
           exact
           path="/"
           // component={Home}
@@ -114,7 +114,8 @@ const MainApp = (props) => {
           exact
           path="/product/:productId/:slug/:categoryId/:category/:subId"
           component={Card}
-        />
+        />{' '}
+        */}
       </Switch>
       <Footer />
     </Router>
