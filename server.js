@@ -5,10 +5,10 @@ const mongoose = require('mongoose');
 const { promisify } = require('util');
 const PORT = process.env.PORT || 5000;
 
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
-);
+// const DB = process.env.DATABASE.replace(
+//   '<PASSWORD>',
+//   process.env.DATABASE_PASSWORD
+// );
 
 // mongoose
 //   .connect(DB, {
