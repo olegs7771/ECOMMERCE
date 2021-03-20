@@ -48,6 +48,9 @@ if (process.env.NODE_ENV === 'production') {
   //   res.setHeader('set-cookie', ['SameSite=Strict;SameSite=Strict']);
   //   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   // });
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
 }
 
 app.use('/api/v1/users', users);
