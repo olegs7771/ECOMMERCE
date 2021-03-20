@@ -30,7 +30,6 @@ const sendErrorProd = (err, res) => {
 };
 
 module.exports = (err, req, res, next) => {
-  console.log('error new', error);
   //define error status code if there no status
   // 500 internal server error
   // define error status as well
