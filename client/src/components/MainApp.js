@@ -60,65 +60,66 @@ const MainApp = (props) => {
   // }, [drawerRedux]);
 
   return (
-    <Router>
-      <Navigation />
-      <Drawer />
-      <Switch>
-        {/* <Route
-          exact
-          path="/"
-          // component={Home}
-          render={() => <Home cookies={props.cookies} />}
-        />
-        <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/category" component={CategoryPage} />
-        <Route
-          exact
-          path="/product/:productId/:slug/:categoryId/:categorySlug"
-          component={ProductPage}
-        />
-        <Route
-          exact
-          path="/shoppingcart"
-          render={() => <ShoppingCart cookies={props.cookies} />}
-        />
-        <Route
-          exact
-          path="/order"
-          render={() => <Order cookies={props.cookies} />}
-        />
-        <Route exact path="/order" component={Order} />
-        <Route exact path="/receipt/:orderId" component={OrderReceipt} />
+    <div>test1</div>
+    // <Router>
+    //   <Navigation />
+    //   <Drawer />
+    //   <Switch>
+    //     {/* <Route
+    //       exact
+    //       path="/"
+    //       // component={Home}
+    //       render={() => <Home cookies={props.cookies} />}
+    //     />
+    //     <Route exact path="/dashboard" component={Dashboard} />
+    //     <Route exact path="/category" component={CategoryPage} />
+    //     <Route
+    //       exact
+    //       path="/product/:productId/:slug/:categoryId/:categorySlug"
+    //       component={ProductPage}
+    //     />
+    //     <Route
+    //       exact
+    //       path="/shoppingcart"
+    //       render={() => <ShoppingCart cookies={props.cookies} />}
+    //     />
+    //     <Route
+    //       exact
+    //       path="/order"
+    //       render={() => <Order cookies={props.cookies} />}
+    //     />
+    //     <Route exact path="/order" component={Order} />
+    //     <Route exact path="/receipt/:orderId" component={OrderReceipt} />
 
-        <Route
-          exact
-          path="/category/:slug/:categoryId"
-          component={CategorySingle}
-          // render={() => <CategorySingle cookies={props.cookies} />}
-        />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/confirm/:id/:token" component={Confirmation} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/profile" component={Profile} />
+    //     <Route
+    //       exact
+    //       path="/category/:slug/:categoryId"
+    //       component={CategorySingle}
+    //       // render={() => <CategorySingle cookies={props.cookies} />}
+    //     />
+    //     <Route exact path="/register" component={Register} />
+    //     <Route exact path="/confirm/:id/:token" component={Confirmation} />
+    //     <Route exact path="/login" component={Login} />
+    //     <Route exact path="/profile" component={Profile} />
 
-        {/* ADMIN  */}
-        <Route exact path="/admin" component={DashboardAdmin} />
-        <Route exact path="/admin/category" component={Category} />
-        <Route exact path="/admin/sub/:categoryId/:slug" component={Sub} />
-        <Route
-          exact
-          path="/admin/:subId/:category/:categoryId/:slug"
-          component={Product}
-        />
-        <Route
-          exact
-          path="/product/:productId/:slug/:categoryId/:category/:subId"
-          component={Card}
-        />{' '}
-        */}
-      </Switch>
-      <Footer />
-    </Router>
+    //     {/* ADMIN  */}
+    //     <Route exact path="/admin" component={DashboardAdmin} />
+    //     <Route exact path="/admin/category" component={Category} />
+    //     <Route exact path="/admin/sub/:categoryId/:slug" component={Sub} />
+    //     <Route
+    //       exact
+    //       path="/admin/:subId/:category/:categoryId/:slug"
+    //       component={Product}
+    //     />
+    //     <Route
+    //       exact
+    //       path="/product/:productId/:slug/:categoryId/:category/:subId"
+    //       component={Card}
+    //     />{' '}
+    //     */}
+    //   </Switch>
+    //   <Footer />
+    // </Router>
   );
 };
 

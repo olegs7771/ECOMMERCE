@@ -30,9 +30,10 @@ const App = (props) => {
     // <Provider store={store}>
     //   <MainApp cookies={props} />
     // </Provider>
-    <Provider>
-      <MainApp cookies={props} />
-    </Provider>
+    // <Provider>
+    // <MainApp cookies={props} />
+    <MainApp />
+    // </Provider>
   );
 };
 
