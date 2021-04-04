@@ -59,6 +59,9 @@ module.exports = class Email {
   }
 
   async sendOrder() {
-    await this.send('order', ` Ecommerce Order Receipt # ${this.orderNumber}`);
+    await this.send(
+      'order',
+      ` Ecommerce Order Receipt # ${this.order.orderNumber}`
+    );
   }
 };

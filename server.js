@@ -23,3 +23,15 @@ mongoose
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+const evenNumber = () => {
+  let numbers = [];
+  for (let index = 1; index < 100; index++) {
+    if (index % 2 === 0) {
+      numbers.push(index);
+    }
+  }
+  return numbers;
+};
+
+console.log('evenNumber', evenNumber());

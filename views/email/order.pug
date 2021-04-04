@@ -20,7 +20,7 @@ block content
           li(class='order__item')
             span(class='order__title') Delivery Time
             div(class='order__item__block')
-              span(class='order_text') #{order.delivery_date.toDateString()}
+              span(class='order_text') #{order.delivery_date?order.delivery_date.toDateString():null}
               span(class='order_text')  #{order.delivery_time}
           div(class='order__tittle__wrapper')
             span(class='order__title') Order Summary

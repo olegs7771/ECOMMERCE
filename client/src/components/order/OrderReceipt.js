@@ -112,57 +112,63 @@ export default function OrderReceipt(props) {
                 </div>
               </div>
               {/* DELIVERY BLOCK  */}
-              <div className="order__receipt__main__delivery__block">
-                {/* DATE  */}
-                <div className="order__receipt__main__delivery__date">
-                  <div className="order__receipt__main__delivery__date__block">
-                    <div className="order__receipt__main__delivery__date--weekday">
-                      {
-                        new Date(orderRedux.delivery_date)
-                          .toDateString()
-                          .split(' ')[0]
-                      }
+              {orderRedux.delivery_method === 'Pick-up yourself at store' ? (
+                <div>
+                  <h3>Pick up at store by client</h3>
+                </div>
+              ) : (
+                <div className="order__receipt__main__delivery__block">
+                  {/* DATE  */}
+                  <div className="order__receipt__main__delivery__date">
+                    <div className="order__receipt__main__delivery__date__block">
+                      <div className="order__receipt__main__delivery__date--weekday">
+                        {
+                          new Date(orderRedux.delivery_date)
+                            .toDateString()
+                            .split(' ')[0]
+                        }
+                      </div>
+                      <div className="order__receipt__main__delivery__date--day">
+                        {
+                          new Date(orderRedux.delivery_date)
+                            .toDateString()
+                            .split(' ')[2]
+                        }
+                      </div>
+                      <div className="order__receipt__main__delivery__date--month">
+                        {
+                          new Date(orderRedux.delivery_date)
+                            .toDateString()
+                            .split(' ')[1]
+                        }
+                      </div>
                     </div>
-                    <div className="order__receipt__main__delivery__date--day">
-                      {
-                        new Date(orderRedux.delivery_date)
-                          .toDateString()
-                          .split(' ')[2]
-                      }
+                  </div>
+                  {/* ADDRESS  */}
+                  <div className="order__receipt__main__delivery__address">
+                    <div className="order__receipt__main__delivery__address__date mb-xsm">
+                      <p className="order__receipt__main__delivery__address__date__title">
+                        Delivery Time
+                      </p>
+                      <p className="order__receipt__main__delivery__address__date--text">
+                        {orderRedux.delivery_time}
+                      </p>
                     </div>
-                    <div className="order__receipt__main__delivery__date--month">
-                      {
-                        new Date(orderRedux.delivery_date)
-                          .toDateString()
-                          .split(' ')[1]
-                      }
+                    <div className="order__receipt__main__delivery__address__address">
+                      <div className="order__receipt__main__delivery__address__date__title">
+                        Address
+                      </div>
+                      <p className="order__receipt__main__delivery__address__address--text">
+                        {orderRedux.suit} {orderRedux.street}
+                      </p>
+                      <p className="order__receipt__main__delivery__address__address--text">
+                        {orderRedux.city} {orderRedux.province} ,{' '}
+                        {orderRedux.zipcode} , {orderRedux.country}
+                      </p>
                     </div>
                   </div>
                 </div>
-                {/* ADDRESS  */}
-                <div className="order__receipt__main__delivery__address">
-                  <div className="order__receipt__main__delivery__address__date mb-xsm">
-                    <p className="order__receipt__main__delivery__address__date__title">
-                      Delivery Time
-                    </p>
-                    <p className="order__receipt__main__delivery__address__date--text">
-                      {orderRedux.delivery_time}
-                    </p>
-                  </div>
-                  <div className="order__receipt__main__delivery__address__address">
-                    <div className="order__receipt__main__delivery__address__date__title">
-                      Address
-                    </div>
-                    <p className="order__receipt__main__delivery__address__address--text">
-                      {orderRedux.suit} {orderRedux.street}
-                    </p>
-                    <p className="order__receipt__main__delivery__address__address--text">
-                      {orderRedux.city} {orderRedux.province} ,{' '}
-                      {orderRedux.zipcode} , {orderRedux.country}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
             {/* MAIN RIGHT  */}
             <div className="order__receipt__main__order__wrapper">
